@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="Protobuf JS" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/protobuf/js/debug.js" />
+        <item url="file://$PROJECT_DIR$/protobuf/js/message.js" />
+        <item url="file://$PROJECT_DIR$/protobuf/js/google" />
+        <item url="file://$PROJECT_DIR$/protobuf/js/map.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/protobuf/js/debug.js" />
+      <root url="file://$PROJECT_DIR$/protobuf/js/message.js" />
+      <root url="file://$PROJECT_DIR$/protobuf/js/google" />
+      <root url="file://$PROJECT_DIR$/protobuf/js/map.js" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

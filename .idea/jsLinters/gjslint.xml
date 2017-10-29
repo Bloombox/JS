@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JSClosureLinterConfiguration">
+    <config-file>$USER_HOME$/Workspace/Bloombox/Client/JS/.gjslint</config-file>
+  </component>
+</project>

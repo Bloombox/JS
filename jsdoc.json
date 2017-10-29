@@ -1,0 +1,39 @@
+{
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "source": {
+        "include": [
+            "src/base/init.js",
+            "src/base/logging.js",
+            "src/base/rpc.js",
+            "src/base/setup.js",
+            "src/identity/id.js",
+            "src/identity/person.js",
+            "src/identity/rec.js",
+            "src/product/product.js",
+            "src/shop/accounts/enroll.js",
+            "src/shop/accounts/verify.js",
+            "src/shop/base.js",
+            "src/shop/customer.js",
+            "src/shop/item.js",
+            "src/shop/ordering/delivery.js",
+            "src/shop/ordering/orders.js",
+            "src/shop/ordering/shopinfo.js",
+            "src/shop/ordering/zipcheck.js",
+            "src/shop/rpc.js",
+            "src/shop/setup.js"
+        ],
+        "exclude": [ "gulpfile.js", "node_modules/", "functions/node_modules/" ],
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    }
+}
