@@ -41,7 +41,7 @@ all: $(GOAL) $(DOCS)
 	@echo "Bloombox JS is ready."
 
 docs: $(DOCS)
-$(DOCS):
+$(DOCS): clean-docs
 	@echo "Building docs..."
 	@mkdir -p $(DOCS)
 	@-./node_modules/.bin/jsdoc \
@@ -49,9 +49,23 @@ $(DOCS):
 		--readme README.md \
 		--configure jsdoc.json;
 
+publish-docs: docs
+	@echo "Publishing docs..."
+	@cd $(DOCS) && git init && \
+	    git remote add origin git@github.com:bloombox/js.git && \
+	    git checkout -b gh-pages && \
+	    git add . && \
+	    git commit -m "Update docs" && \
+	    git push origin gh-pages --force
+	@rm -fr $(DOCS)/.git
+
 clean:
 	@echo "Cleaning targets..."
 	@-rm $(RM_FLAGS) $(TARGET)
+
+clean-docs:
+	@echo "Cleaning docs..."
+	@rm -fr $(DOCS)
 
 distclean: clean
 	@echo "Cleaning dependencies..."
