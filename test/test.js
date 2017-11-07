@@ -265,8 +265,7 @@ function doEnrollTest(callback) {
 }
 
 function test() {
-  // do an info test w/no followup
-  doInfoTest(function(next){ }, function() { });
+  doInfoTest(doEnrollTest, doOrderTest);
 }
 
 test();
