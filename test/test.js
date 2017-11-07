@@ -32,7 +32,7 @@ let doctorWebsite = 'https://bloombox.io';
 
 let licenseID = 'D7566786';
 let licenseExpiration = '2020-12-23';
-let licenseJurisdiction = state;
+let licenseJurisdiction = 'CALIFORNIA';
 
 
 // test logic

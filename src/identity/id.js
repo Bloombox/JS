@@ -49,7 +49,7 @@ bloombox.identity.IDType = {
  * @param {string} expirationDate Expiration date, in YYYY-MM-DD format.
  * @param {string} birthDate Birth date, in YYYY-MM-DD format.
  * @param {string} jurisdiction State jurisdiction that issued the license,
- *        for instance, "CA".
+ *        for instance, "CALIFORNIA".
  * @param {?string=} country Country of issuance, defaults to "USA".
  * @throws {bloombox.identity.IDException} If the provided data is invalid.
  * @constructor
