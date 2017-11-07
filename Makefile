@@ -127,7 +127,7 @@ serve:
 publish: build release
 	@echo "Publishing Bloombox JS $(VERSION)..."
 	@cd target && gsutil $(GSUTIL_FLAGS) \
-	    ./*.min.js gs://k9-cdn-bloombox-embed/client/
+	    ./*.min.js gs://k9-cdn-bloombox-embed/embed/client/
 
 
 .PHONY: docs publish build release
