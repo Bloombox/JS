@@ -105,8 +105,6 @@ build: dependencies
 	@echo "Building schema..."
 	@$(MAKE) -C schema
 	@rm -fr schema/languages/js/{browser,es6,closure,commonjs}
-	@echo "Cleaning closure lib..."
-	@#bash ./clean_closure.sh
 	@echo "Building Bloombox JS..."
 	@gulp $(GULP_FLAGS)
 	@echo "Copying source files..."
@@ -114,8 +112,6 @@ build: dependencies
 	@cp -fr src/ $(TARGET)/src/
 	@echo "Copying test files..."
 	@sed 's/__VERSION__/$(VERSION)/g' test/index.html | sed 's/__HOST__/$(DEV_HOST)/g' > $(TARGET)/index.html
-	@echo "//# sourceMappingURL=./bloombox-js-$(VERSION).map" >> $(TARGET)/bloombox-js-$(VERSION).min.js
-	@cp -fv $(TARGET)/bloombox-js-$(VERSION).min.js $(TARGET)/bloombox-js-$(VERSION)-debug.min.js
 	@echo "Build complete."
 
 release: dependencies

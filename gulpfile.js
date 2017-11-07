@@ -34,7 +34,7 @@ function closureBuilder(entrypoint) {
       "debug": false,
       "dependency_mode": "STRICT",
       "entry_point": "goog:bloombox.setup",
-      "output_manifest": "target/manifest.MF",
+      "output_manifest": "target/manifest-" + entrypoint + ".MF",
       "charset": "UTF-8",
       "use_types_for_optimization": true,
       "compilation_level": "ADVANCED",
@@ -48,10 +48,8 @@ function closureBuilder(entrypoint) {
       "assume_function_wrapper": true,
       "process_closure_primitives": true,
       "rewrite_polyfills": true,
-      "define": [
-        "bloombox.DEBUG=false",
-        "bloombox.VERSION='" + version + "'"
-      ],
+      "D": "bloombox.DEBUG=false",
+      "define": "bloombox.VERSION='" + version + "'",
       "hide_warnings_for": [
         "goog/json/json_perf",
         "goog/storage/mechanism",
@@ -85,10 +83,8 @@ function closureBuilder(entrypoint) {
       "assume_function_wrapper": true,
       "process_closure_primitives": true,
       "rewrite_polyfills": true,
-      "define": [
-        "bloombox.DEBUG",
-        "bloombox.VERSION='" + version + "'"
-      ],
+      "D": "bloombox.DEBUG",
+      "define": "bloombox.VERSION='" + version + "'",
       "hide_warnings_for": [
         "goog/json/json_perf",
         "goog/storage/mechanism",
@@ -131,7 +127,7 @@ function closureBuilder(entrypoint) {
       "protobuf/js/google/protobuf/wrappers.js"
     ]),
     "options": config,
-    "out": buildRootDirectory + "/bloombox-js-" + entrypoint + "-" + version + ".min.js",
+    "out": buildRootDirectory + "/" + (entrypoint == "full" ? "" : (entrypoint + "-")) + version + ".min.js",
     "license": "src/license.txt",
     "out_source_map": buildRootDirectory + "/bloombox-js-" + entrypoint + "-" + version + ".map"
   }, (function(errors, warnings, files, results) {
