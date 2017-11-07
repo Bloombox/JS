@@ -21,8 +21,10 @@ CACHE_CONTROL += s-max-age=$(CACHE_CONTROL_TIMEOUT_SHARED), $(CACHE_CONTROL_TRAI
 
 ifeq ($(RELEASE),yes)
 GOAL ?= release
+DEV_HOST ?= https://app.bloomware.media/embed/client/
 else
 GOAL ?= build
+DEV_HOST ?=
 endif
 
 ifeq ($(VERBOSE),yes)
@@ -111,7 +113,7 @@ build: dependencies
 	@mkdir -p $(TARGET)/src
 	@cp -fr src/ $(TARGET)/src/
 	@echo "Copying test files..."
-	@sed 's/__VERSION__/$(VERSION)/g' test/index.html > $(TARGET)/index.html
+	@sed 's/__VERSION__/$(VERSION)/g' test/index.html | sed 's/__HOST__/$(DEV_HOST)/g' > $(TARGET)/index.html
 	@echo "//# sourceMappingURL=./bloombox-js-$(VERSION).map" >> $(TARGET)/bloombox-js-$(VERSION).min.js
 	@cp -fv $(TARGET)/bloombox-js-$(VERSION).min.js $(TARGET)/bloombox-js-$(VERSION)-debug.min.js
 	@echo "Build complete."
@@ -120,7 +122,7 @@ release: dependencies
 	@echo "Building Bloombox JS (RELEASE)..."
 	@gulp --release $(GULP_FLAGS)
 	@echo "Copying test files..."
-	@sed 's/__VERSION__/$(VERSION)/g' test/index.html > $(TARGET)/index.html
+	@sed 's/__VERSION__/$(VERSION)/g' test/index.html | sed 's/__HOST__/$(DEV_HOST)/g' > $(TARGET)/index.html
 	@echo "Build complete."
 
 serve:
