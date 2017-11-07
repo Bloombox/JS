@@ -218,9 +218,7 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
         'iso8601': this.license.birthDate.getIso8601()
       },
       'jurisdiction': this.license.jurisdiction
-    },
-    'partnerCode': partner,
-    'locationCode': location
+    }
   };
 
   // copy in password, if it's there
@@ -240,7 +238,10 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
 
   const rpc = new bloombox.shop.rpc.ShopRPC(
     /** @type {bloombox.shop.Routine} */ (bloombox.shop.Routine.ENROLL_USER),
-    'POST', 'members', rawObject);
+    'POST', [
+      'partners', partner,
+      'locations', location,
+      'members'].join('/'), rawObject);
 
   let done = false;
   let personObj = this.person;
