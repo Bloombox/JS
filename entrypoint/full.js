@@ -1,12 +1,13 @@
 
 /**
- * Bloombox: Setup
+ * Bloombox: Full Entrypoint
  *
- * @fileoverview Provides logic for setup of Bloombox JS.
+ * @fileoverview Provides unified setup of the entire client lib.
  */
 
 /*global goog */
 
+goog.provide('bloombox.VARIANT');
 goog.provide('bloombox.setup');
 
 goog.require('bloombox.DEBUG');
@@ -15,9 +16,21 @@ goog.require('bloombox.VERSION');
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
-// force-load closure and closure UI libraries
-goog.require('goog.proto');
-goog.require('goog.ui.INLINE_BLOCK_CLASSNAME');
+// Module: Shop
+goog.require('bloombox.shop.setup');
+
+// Module: Telemetry
+goog.require('bloombox.telemetry.setup');
+
+
+/**
+ * Global library variant.
+ *
+ * @define {string} VARIANT Global variant string.
+ * @export
+ */
+bloombox.VARIANT = 'full';
+
 
 
 /**
@@ -40,9 +53,18 @@ bloombox.setup = function(partner, location, apikey, callback) {
   bloombox.config.partner = partner;
   bloombox.config.location = location;
 
-  bloombox.logging.log('BBJS is ready for use.',
+  bloombox.logging.log('BBJS is initializing.',
     {'version': bloombox.VERSION,
      'debug': bloombox.DEBUG,
-     'config': bloombox.config});
-  callback();
+     'config': bloombox.config,
+     'variant': bloombox.VARIANT});
+
+  // setup telemetry first
+  bloombox.telemetry.setup(partner, location, apikey, function() {
+    // setup the shop
+    bloombox.shop.setup(partner, location, apikey, function() {
+      // dispatch user callback
+      callback();
+    });
+  });
 };

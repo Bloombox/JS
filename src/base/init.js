@@ -19,7 +19,8 @@ goog.require('goog.ui.INLINE_BLOCK_CLASSNAME');
 /**
  * Global debug flag.
  *
- * @define {boolean} Global switch for logging and other debug features.
+ * @define {boolean} DEBUG Global switch for logging and other debug
+ *         features.
  * @public
  */
 bloombox.DEBUG = true;
@@ -28,7 +29,7 @@ bloombox.DEBUG = true;
 /**
  * Global library version.
  *
- * @define {string} Global version string.
+ * @define {string} VERSION Global version string.
  * @export
  */
 bloombox.VERSION = 'v1.0.0';
@@ -38,7 +39,13 @@ bloombox.VERSION = 'v1.0.0';
  * Holds global configuration for the library.
  *
  * @nocollapse
- * @type {{key: ?string, partner: ?string, location: ?string, channel: ?string, endpoints: {shop: ?string, telemetry: ?string}}}
+ * @type {{key: ?string,
+ *         partner: ?string,
+ *         location: ?string,
+ *         channel: ?string,
+ *         endpoints: {
+ *           shop: ?string,
+ *           telemetry: ?string}}}
  */
 bloombox.config = {
   key: null,

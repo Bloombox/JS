@@ -8,9 +8,9 @@
 /*global goog */
 
 goog.provide('bloombox.telemetry.DEBUG');
-goog.provide('bloombox.telemetry.VERSION');
-goog.provide('bloombox.telemetry.TELEMETRY_API_VERSION');
 goog.provide('bloombox.telemetry.TELEMETRY_API_ENDPOINT');
+goog.provide('bloombox.telemetry.TELEMETRY_API_VERSION');
+goog.provide('bloombox.telemetry.VERSION');
 
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.VERSION');
@@ -32,7 +32,7 @@ bloombox.telemetry.DEBUG = bloombox.DEBUG;
  * @const {string} Telemetry client version string.
  * @export
  */
-bloombox.telemetry.VERSION = "v1beta1r1";
+bloombox.telemetry.VERSION = 'v1beta1r1';
 
 
 /**
@@ -41,7 +41,8 @@ bloombox.telemetry.VERSION = "v1beta1r1";
  * @define {string} Prefix for API interactions.
  * @public
  */
-bloombox.telemetry.TELEMETRY_API_ENDPOINT = 'https://telemetry.api.bloombox.cloud';
+bloombox.telemetry.TELEMETRY_API_ENDPOINT = (
+  'https://telemetry.api.bloombox.cloud');
 
 
 /**
@@ -50,4 +51,4 @@ bloombox.telemetry.TELEMETRY_API_ENDPOINT = 'https://telemetry.api.bloombox.clou
  * @define {string} Version of the API to use.
  * @public
  */
-bloombox.telemetry.TELEMETRY_API_VERSION = "v1";
+bloombox.telemetry.TELEMETRY_API_VERSION = 'v1beta1';

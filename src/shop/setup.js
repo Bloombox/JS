@@ -11,13 +11,18 @@
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
-goog.require('bloombox.setup');
-
+// - Base
 goog.require('bloombox.shop.DEBUG');
 goog.require('bloombox.shop.SHOP_API_ENDPOINT');
 goog.require('bloombox.shop.VERSION');
 
+// - Shop Library
+goog.require('bloombox.shop.enroll.Enrollment');
+goog.require('bloombox.shop.info');
+goog.require('bloombox.shop.order.Order');
 goog.provide('bloombox.shop.setup');
+goog.require('bloombox.shop.verify');
+goog.require('bloombox.shop.zipcheck');
 
 
 /**
@@ -37,13 +42,10 @@ bloombox.shop.setup = function(partner, location, apikey, callback, endpoint) {
     return;
   }
 
-  const resolvedEndpoint = endpoint || bloombox.shop.SHOP_API_ENDPOINT;
-  bloombox.setup(partner, location, apikey, function() {
-    bloombox.config.endpoints.shop = resolvedEndpoint;
-    bloombox.logging.log('Shop is ready for use.',
-      {'version': bloombox.shop.VERSION,
-       'debug': bloombox.shop.DEBUG,
-       'config': bloombox.config});
-    callback();
-  });
+  bloombox.config.endpoints.shop = endpoint || bloombox.shop.SHOP_API_ENDPOINT;
+  bloombox.logging.log('Shop is ready for use.',
+    {'version': bloombox.shop.VERSION,
+      'debug': bloombox.shop.DEBUG,
+      'config': bloombox.config});
+  callback();
 };

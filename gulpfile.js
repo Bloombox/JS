@@ -14,11 +14,13 @@ const version = argv.libversion;
 if (typeof version !== "string")
   throw "Cannot resolve version.";
 
+const permutations = ['full'];
+
 
 /**
  * Generate a new closure build routine.
  */
-function closureBuilder() {
+function closureBuilder(entrypoint) {
   const isRelease = argv.buildtype === "RELEASE" || argv.release;
   const config = isRelease ? {
     /** -- Release Config -- **/
@@ -30,6 +32,9 @@ function closureBuilder() {
     },
     "closure": {
       "debug": false,
+      "dependency_mode": "STRICT",
+      "entry_point": "goog:bloombox.setup",
+      "output_manifest": "target/manifest.MF",
       "charset": "UTF-8",
       "use_types_for_optimization": true,
       "compilation_level": "ADVANCED",
@@ -63,7 +68,9 @@ function closureBuilder() {
       "shouldProvideRequireJsFunctions": true
     },
     "closure": {
-      "debug": true,
+      "dependency_mode": "STRICT",
+      "entry_point": "goog:bloombox.setup",
+      "output_manifest": "target/manifest-" + entrypoint + ".MF",
       "formatting": "PRETTY_PRINT",
       "charset": "UTF-8",
       "use_types_for_optimization": true,
@@ -96,7 +103,8 @@ function closureBuilder() {
     'name': 'bloombox',
     'srcs': glob([
       'src/**/*.soy',
-      'src/**/*.js'
+      'src/**/*.js',
+      'entrypoint/' + entrypoint + '.js'
     ]),
     'exclude_test': true,
     "deps": glob([
@@ -123,9 +131,9 @@ function closureBuilder() {
       "protobuf/js/google/protobuf/wrappers.js"
     ]),
     "options": config,
-    "out": buildRootDirectory + "/bloombox-js-" + version + ".min.js",
+    "out": buildRootDirectory + "/bloombox-js-" + entrypoint + "-" + version + ".min.js",
     "license": "src/license.txt",
-    "out_source_map": buildRootDirectory + "/bloombox-js-" + version + ".map"
+    "out_source_map": buildRootDirectory + "/bloombox-js-" + entrypoint + "-" + version + ".map"
   }, (function(errors, warnings, files, results) {
     if (errors) {
       reject();
@@ -137,9 +145,18 @@ function closureBuilder() {
 }
 
 
-gulp.task('closure', gulp.series(() => {
-  return closureBuilder();
-}));
+let taskname;
+let tasks = [];
+permutations.map(function(variant) {
+  taskname = ['closure', variant].join(':');
 
-gulp.task('build', gulp.series(['closure']));
+  gulp.task(taskname, gulp.series(() => {
+    return closureBuilder(variant);
+  }));
+
+  tasks.push(taskname);
+});
+
+gulp.task('build', gulp.series(tasks));
 gulp.task('default', gulp.series('build'));
+

@@ -91,7 +91,7 @@ bloombox.product.Key.prototype.export = function() {
   protobuf.setId(this.id);
 
   let protoType = new proto.base.ProductType();
-  protoType.setKind(/** @type {protobuf.base.ProductKind} */ (this.kind));
+  protoType.setKind(/** @type {proto.base.ProductKind} */ (this.kind));
   protobuf.setType(protoType);
   return protobuf;
 };
