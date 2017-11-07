@@ -109,6 +109,7 @@ build: dependencies
 	@mkdir -p $(TARGET)/src
 	@cp -fr src/ $(TARGET)/src/
 	@echo "Copying test files..."
+	@cp -f test/test.js $(TARGET)/test.js
 	@sed 's/__VERSION__/$(VERSION)/g' test/index.html > $(TARGET)/index.html
 	@echo "Build complete."
 
@@ -116,6 +117,7 @@ release: dependencies
 	@echo "Building Bloombox JS (RELEASE)..."
 	@gulp --release $(GULP_FLAGS)
 	@echo "Copying test files..."
+	@cp -f test/test.js $(TARGET)/test.js
 	@sed 's/__VERSION__/$(VERSION)/g' test/index.html > $(TARGET)/index.html
 	@sed 's/__VERSION__/$(VERSION)/g' test/prod.html > $(TARGET)/prod.html
 	@echo "Build complete."
