@@ -190,14 +190,6 @@ bloombox.rpc.RPC = function RPC(httpMethod, endpoint, opt_payload, opt_keep) {
     'Accept': bloombox.rpc.ACCEPT_HEADER
   };
 
-  // attach debug headers if running in debug mode
-  if (bloombox.DEBUG) {
-    // attach API key and client as headers when operating in debug mode
-    this.headers[bloombox.rpc.API_KEY_HEADER] = apiKey;
-    this.headers[bloombox.rpc.API_CLIENT_HEADER] = [
-      'js-client', bloombox.VERSION].join('/');
-  }
-
   bloombox.logging.log('Constructed RPC for endpoint \'' +
       this.endpoint + '\'.', {'rpc': this});
 };
@@ -206,37 +198,67 @@ bloombox.rpc.RPC = function RPC(httpMethod, endpoint, opt_payload, opt_keep) {
 /**
  * RPC onload callback.
  *
- * @param {function()} success Success callback to bind in.
- * @param {function(number=)} error Error callback to bind in.
- * @return {function()} On-load callback function.
+ * @param {function(?Object)} success Success callback to bind in.
+ * @param {function(?number=)} error Error callback to bind in.
+ * @return {function(goog.events.Event)} On-load callback function.
  */
 bloombox.rpc.RPC.prototype.onload = function(success, error) {
   return onload.bind(this);
 
-  function onload() {
-    if (this.xhr.readyState !== 4) return;
-    if (!this.xhr.status) return;
+  /**
+   * @this {bloombox.rpc.RPC}
+   * @param {goog.events.Event} event
+   */
+  function onload(event) {
+    // if we're done, begin responding
+    if (event && this.done === false) {
+      this.done = true;
+      let contentType = this.xhr.getResponseHeader('Content-Type');
+      let contentLength = this.xhr.getResponseHeader('Content-Length');
+      let response = this.xhr.getResponseJson();
 
-    // parse status
-    let status = /** @type {number} */ (typeof this.xhr.status === 'number' ?
-      this.xhr.status :
-      parseInt(this.xhr.status, 10));
+      // parse status
+      let status = this.xhr.getStatus();
 
-    if (status === 200 || status === 201 || status === 202 || status === 204) {
-      bloombox.logging.log('RPC received status ' +
-          this.xhr.status, {'xhr': this.xhr});
+      if (status === 200 ||
+          status === 201 ||
+          status === 202 ||
+          status === 204) {
+        bloombox.logging.log('RPC received successful status ' +
+          status, {'xhr': this.xhr});
 
-      // we're good to go
-      success();
+        if (!response &&
+           (!contentLength || parseInt(contentLength, 10) === 0)) {
+          // no response body means a successful transaction, technically
+          bloombox.logging.warn(
+            'Response returned for RPC was empty or invalid.', this);
+          success(null);
+        } else {
+          // parse response text
+          if (contentType === 'application/json' ||
+            contentType.startsWith('application/json')) {
+            bloombox.logging.log(
+              'Loaded payload for successful RPC transaction.',
+              {'rpc': this, 'response': response});
+            success(/** @type {Object} */ (response));
+          } else {
+            bloombox.logging.error(
+              'Server indicated unrecognized content type:',
+              contentType);
+            error(null);
+          }
+        }
+      } else {
+        // some error event i.e. unrecognized status code
+        bloombox.logging.error('Failed to resolve RPC: unrecognized status ' +
+          status, {'xhr': this.xhr});
+        error(status);
+      }
     } else {
       // check for error
-      bloombox.logging.error('Failed to resolve RPC: status ' +
-          this.xhr.status, {'xhr': this.xhr});
-      error(this.xhr.status);
     }
 
-    if (!this.keep)
-      this.xhr = null;
+    if (!this.keep) this.xhr = null;
   }
 };
 
@@ -254,44 +276,6 @@ bloombox.rpc.RPC.prototype.send = function(callback, error) {
     throw new bloombox.rpc.RPCException(
       'Cannot re-send an already-sent RPC without \'keep\' mode active.');
 
-  // attach the on-load handler
-  goog.events.listen(
-    this.xhr,
-    goog.net.EventType.COMPLETE,
-    this.onload((function(event) {
-
-    // if we're done, dispatch the user callback
-    if (event && this.done === false) {
-      this.done = true;
-      let contentType = this.xhr.getResponseHeader('Content-Type');
-      let contentLength = this.xhr.getResponseHeader('Content-Length');
-      let response = this.xhr.getResponseJson();
-
-      if (!response && (!contentLength || parseInt(contentLength, 10) === 0)) {
-        // no response body means a successful transaction, technically
-        bloombox.logging.warn(
-          'Response returned for RPC was empty or invalid.', this);
-        callback(null);
-      } else {
-        // parse response text
-        if (contentType === 'application/json' ||
-            contentType.startsWith('application/json')) {
-          bloombox.logging.log(
-            'Loaded payload for successful RPC transaction.',
-            {'rpc': this, 'response': response});
-          callback(/** @type {Object} */ (response));
-        } else {
-          bloombox.logging.error(
-            'Server indicated unrecognized content type:',
-            contentType);
-          error(null);
-        }
-      }
-    }
-  }).bind(this), function(error) {
-
-  }));
-
   // check API key
   if (!this.apiKey)
     throw new bloombox.rpc.RPCException(
@@ -302,6 +286,12 @@ bloombox.rpc.RPC.prototype.send = function(callback, error) {
   if (!this.location)
     throw new bloombox.rpc.RPCException(
       'Location was not set.');
+
+  // attach the on-load handler
+  goog.events.listen(
+    this.xhr,
+    goog.net.EventType.COMPLETE,
+    this.onload(callback.bind(this), error.bind(this)));
 
   // open the XHR
   let targetEndpoint = [

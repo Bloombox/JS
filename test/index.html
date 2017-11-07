@@ -3,7 +3,7 @@
 <head>
     <title>Shop API Test</title>
     <!--suppress HtmlUnknownTarget -->
-    <script type="text/javascript" src="bloombox-js-full-__VERSION__-debug.min.js"></script>
+    <script type="text/javascript" src="bloombox-js-full-__VERSION__.min.js"></script>
 </head>
 <body>
 <b>check the console</b>
@@ -49,7 +49,7 @@
    * Run a test where a user that doesn't exist tries to verify.
    */
   function doFailureTest() {
-    bloombox.shop.setup(partnerCode, locationCode, apiKey, function() {
+    bloombox.setup(partnerCode, locationCode, apiKey, function() {
       // test a failure case
       bloombox.shop.verify(failureAccount, function(verified, err, customer) {
         if (verified === true) {
@@ -67,7 +67,7 @@
    * Run a test that queries shop info, then runs a callback.
    */
   function doInfoTest(callback, nextCallback) {
-    bloombox.shop.setup(partnerCode, locationCode, apiKey, function() {
+    bloombox.setup(partnerCode, locationCode, apiKey, function() {
       bloombox.shop.info(function(pickup, delivery, err) {
         if (err) {
           console.log("%cThere was an error retrieving shop status: ", "color: red", err);
@@ -91,7 +91,7 @@
         }
 
         // report the shop status
-        console.log("The shop is currently open for: " + label);
+        console.log("%cThe shop is currently open for: " + label + ".", "color: green");
 
         // proceed w/zipcheck, verify, and order
         bloombox.shop.zipcheck(zipToCheck, function (zipcodeEligible) {
@@ -174,7 +174,7 @@
    * Run a test where a new user attempts to enroll.
    */
   function doEnrollTest(callback) {
-    bloombox.shop.setup(partnerCode, locationCode, apiKey, function() {
+    bloombox.setup(partnerCode, locationCode, apiKey, function() {
       // test data
       let firstName = enrollFirstName;
       let lastName = enrollLastName;

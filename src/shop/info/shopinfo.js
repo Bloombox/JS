@@ -93,7 +93,6 @@ bloombox.shop.info = function(callback) {
   let done = false;
   rpc.send(function(response) {
     if (done) return;
-
     if (response != null) {
       done = true;
 

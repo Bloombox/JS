@@ -135,12 +135,12 @@ bloombox.shop.rpc.ShopRPC.prototype.send = function(callback, error) {
   // send underlying RPC w/callback and errors passed through
   this.rpc.send((function(response) {
     bloombox.logging.log(
-      'Shop RPC for method \'' + this.rpcMethod + '\' ' + ' completed.');
+      'Shop RPC for method \'' + this.rpcMethod + '\' completed.');
     callback(response);
-  }).bind(this), /** @type {function(?number=)} */ ((function(errcode) {
+  }).bind(this), /** @type {function(?number=)} */ ((function(error_code) {
     bloombox.logging.error(
       'Failed to resolve Shop API RPC for method \'' +
-        this.rpcMethod + '\': status ' + errcode);
-    error(errcode);
+        this.rpcMethod + '\': status ' + error_code);
+    error(error_code);
   }).bind(this)));
 };

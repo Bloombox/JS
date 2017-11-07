@@ -86,7 +86,7 @@ function closureBuilder(entrypoint) {
       "process_closure_primitives": true,
       "rewrite_polyfills": true,
       "define": [
-        "bloombox.DEBUG=true",
+        "bloombox.DEBUG",
         "bloombox.VERSION='" + version + "'"
       ],
       "hide_warnings_for": [
