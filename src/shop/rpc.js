@@ -47,8 +47,8 @@ bloombox.shop.Routine = {
  */
 bloombox.shop.endpoint = function(endpoint) {
   return [
-    "shop",
     bloombox.shop.SHOP_API_ENDPOINT,
+    "shop",
     bloombox.shop.SHOP_API_VERSION,
     endpoint.startsWith('/') ? endpoint.slice(1) : endpoint
   ].join('/');

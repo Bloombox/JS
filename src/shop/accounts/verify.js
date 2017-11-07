@@ -62,10 +62,21 @@ bloombox.shop.verify = function(email,
     throw new bloombox.shop.order.VerifyException(
       'Email was found to be empty or invalid, cannot verify.');
 
+  let partner = bloombox.config.partner;
+  let location = bloombox.config.location;
+
+  if (!partner || !location) {
+    bloombox.logging.error('Partner or location code is not defined.');
+    return;
+  }
+
   const encodedEmail = btoa(email);
   const rpc = new bloombox.shop.rpc.ShopRPC(
     /** @type {bloombox.shop.Routine} */ (bloombox.shop.Routine.VERIFY),
-    'GET', ['members', encodedEmail, 'verify'].join('/'));
+    'GET', [
+      'partners', partner,
+      'locations', location,
+      'members', encodedEmail, 'verify'].join('/'));
 
   bloombox.logging.log('Verifying user...', {'email': email});
 
