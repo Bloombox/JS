@@ -21,7 +21,7 @@ CACHE_CONTROL += s-max-age=$(CACHE_CONTROL_TIMEOUT_SHARED), $(CACHE_CONTROL_TRAI
 
 ifeq ($(RELEASE),yes)
 GOAL ?= release
-DEV_HOST ?= https://app.bloomware.media/embed/client/
+DEV_HOST ?= https://app.bloomware.media/embed/client
 else
 GOAL ?= build
 DEV_HOST ?=
@@ -128,9 +128,7 @@ serve:
 publish: build release
 	@echo "Publishing Bloombox JS $(VERSION)..."
 	@cd target && gsutil $(GSUTIL_FLAGS) \
-	    ./bloombox-js-$(VERSION).min.js gs://k9-cdn-bloombox-embed/client/$(VERSION).min.js
-	@cd target && gsutil $(GSUTIL_FLAGS) \
-	    ./bloombox-js-$(VERSION)-debug.min.js gs://k9-cdn-bloombox-embed/client/$(VERSION)-debug.min.js
+	    ./*.min.js gs://k9-cdn-bloombox-embed/client/
 
 
 .PHONY: docs publish build release

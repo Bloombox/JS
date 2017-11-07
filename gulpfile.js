@@ -129,7 +129,7 @@ function closureBuilder(entrypoint) {
     "options": config,
     "out": buildRootDirectory + "/" + (entrypoint == "full" ? "" : (entrypoint + "-")) + version + ".min.js",
     "license": "src/license.txt",
-    "out_source_map": buildRootDirectory + "/bloombox-js-" + entrypoint + "-" + version + ".map"
+    "out_source_map": buildRootDirectory + "/" + (entrypoint == "full" ? "" : (entrypoint + "-")) + version + ".map"
   }, (function(errors, warnings, files, results) {
     if (errors) {
       reject();
