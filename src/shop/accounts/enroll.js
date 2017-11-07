@@ -209,7 +209,7 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
         }
       }
     },
-    'license': {
+    'governmentId': {
       'id': this.license.id,
       'expireDate': {
         'iso8601': this.license.expirationDate.getIso8601()
@@ -217,7 +217,9 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
       'birthDate': {
         'iso8601': this.license.birthDate.getIso8601()
       },
-      'jurisdiction': this.license.jurisdiction
+      'license': {
+        'jurisdiction': this.license.jurisdiction.toUpperCase()
+      }
     }
   };
 
