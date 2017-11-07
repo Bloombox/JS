@@ -34,7 +34,7 @@ CP_FLAGS ?= -fr
 endif
 
 GULP_FLAGS ?= --libversion "$(VERSION)" --buildtype "$(GOAL)"
-GSUTIL_FLAGS ?= -h "Content-Type: text/javascript" -h "Cache-Control $(CACHE_CONTROL)" cp -z js -a public-read
+GSUTIL_FLAGS ?= -h "Content-Type: text/javascript" -h "Cache-Control: $(CACHE_CONTROL)" cp -z js -a public-read
 
 
 all: $(GOAL) $(DOCS)
