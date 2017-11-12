@@ -190,6 +190,13 @@ bloombox.rpc.RPC = function RPC(httpMethod, endpoint, opt_payload, opt_keep) {
     'Accept': bloombox.rpc.ACCEPT_HEADER
   };
 
+  if (opt_payload !== undefined &&
+      opt_payload !== null &&
+      (typeof opt_payload === 'object')) {
+    bloombox.logging.log('RPC has payload, attaching Content-Type header.');
+    this.headers['Content-Type'] = 'application/json';
+  }
+
   bloombox.logging.log('Constructed RPC for endpoint \'' +
       this.endpoint + '\'.', {'rpc': this});
 };
