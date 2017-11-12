@@ -507,7 +507,13 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
   // make the RPC
   new bloombox.shop.rpc.ShopRPC(
     /** @type {bloombox.shop.Routine} */ (
-      bloombox.shop.Routine.SUBMIT_ORDER), 'POST', 'orders', payloadObject)
+      bloombox.shop.Routine.SUBMIT_ORDER), 'POST', [
+        'partners',
+        partner,
+        'locations',
+        location,
+        'orders'
+    ].join('/'), payloadObject)
     .send((function(response) {
       if (done) return;
       if (response != null) {
