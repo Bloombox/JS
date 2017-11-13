@@ -207,8 +207,7 @@ bloombox.shop.Customer.prototype.export = function() {
   // casting this because orders require an email address
   if (!(typeof this.person.contactInfo.emailAddress === 'string') ||
       (this.person.contactInfo.emailAddress.length < 3) ||
-      (this.person.contactInfo.emailAddress.split('@').length !== 2) ||
-      (this.person.contactInfo.emailAddress.split('.').length > 2))
+      (this.person.contactInfo.emailAddress.split('@').length !== 2))
     throw new bloombox.shop.CustomerException(
       'Must provide a valid email address.');
   emailAddress.setAddress(/** @type {string} */ (
