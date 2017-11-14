@@ -98,6 +98,7 @@ protobuf/js/node_modules:
 	@cd protobuf/js && npm install
 	@echo "Building ProtobufJS..."
 	@cd protobuf/js && PROTOC=$(PROTOC) gulp dist && PROTOC=$(PROTOC) gulp genproto_well_known_types_closure
+	@cd protobuf && rm -fv js/package.json js/package-lock.json
 
 build: dependencies
 	@echo "Building schema..."
