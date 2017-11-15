@@ -90,6 +90,8 @@ sources:
 	@sed 's/__VERSION__/$(VERSION)/g' .tpl/license.txt.tpl > src/license.txt
 	@sed 's/__VERSION__/$(VERSION)/g' .tpl/README.md.tpl > README.md
 
+sync-schema: submodules
+
 submodules:
 	@git submodule update --init --remote
 
