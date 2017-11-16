@@ -101,8 +101,8 @@ bloombox.shop.zipcheck = function(zipcode, callback) {
             deliveryMinimum = /** @type {number} */ (
               response['deliveryMinimum']);
 
-            bloombox.logging.log('Resolved delivery minimum.',
-              deliveryMinimum);
+            bloombox.logging.log('Resolved delivery minimum: $' +
+                                 deliveryMinimum + '.');
           } else if (response['deliveryMinimum'] === undefined ||
                      response['deliveryMinimum'] === null ||
                      response['deliveryMinimum'] === 0.0 ||
