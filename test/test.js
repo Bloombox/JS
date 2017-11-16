@@ -18,7 +18,7 @@ let addressTwo = '2nd Floor';
 let city = 'San Jose';
 let state = 'CA';
 let zip = zipToCheck;
-let deliveryInstructions = 'TESTING TESTING DO NOT FULFILL (DELIVERY INSTRUCTIONS)';
+let deliveryInstructions = 'TESTING TESTING DO NOT FULFILL (DELIVERY NOTES)';
 
 let doctorRecID = 'recid123';
 let doctorID = 'doctorid123';
@@ -301,9 +301,13 @@ function doEnrollTest(callback) {
   });
 }
 
-function test() {
+function full() {
   doInfoTest(doEnrollTest, doOrderTest);
 }
 
-//test();
-console.log("Call the following to run: test()");
+function simple() {
+  doInfoTest(function(next) { next(); }, function() { });
+}
+
+console.log("Call the following to run a full test: full()");
+console.log("Call the following to run a limited test: simple()");
