@@ -139,6 +139,21 @@ function doOrderTest() {
         // ok the user is verified
         console.log("%cThe user '" + enrollAccount + "' is valid and eligible to submit orders.", "color: green", {"customer": customer});
 
+        if (customer.person.contactInfo.phoneNumber) {
+          console.log("User already has a phone number present.");
+          if (customer.person.contactInfo.phoneNumber !== (
+               enrollPhone)) {
+            // replace it
+            console.log("Replacing phone number w/test number, they do not match.",
+              {"customer": customer.person.contactInfo.phoneNumber,
+               "order": enrollPhone});
+            customer.setPhoneNumber(enrollPhone);
+          }
+        } else {
+          console.log("Replacing missing phone number w/test number.");
+          customer.setPhoneNumber(enrollPhone);
+        }
+
         let streetAddress = new bloombox.identity.StreetAddress(
           addressOne,
           addressTwo,
