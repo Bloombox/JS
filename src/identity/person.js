@@ -65,42 +65,42 @@ bloombox.identity.StreetAddress = function StreetAddress(firstLine,
   /**
    * First address line.
    * @type {string}
-   * @public
+   * @export
    */
   this.firstLine = firstLine;
 
   /**
    * Second address line, if any.
    * @type {?string}
-   * @public
+   * @export
    */
   this.secondLine = secondLine || null;
 
   /**
    * City name.
    * @type {string}
-   * @public
+   * @export
    */
   this.city = city;
 
   /**
    * State code, like "CA" for California.
    * @type {string}
-   * @public
+   * @export
    */
   this.state = state;
 
   /**
    * USPS zipcode.
    * @type {string}
-   * @public
+   * @export
    */
   this.zip = zip;
 
   /**
    * Country code, like "US" for United States.
    * @type {string}
-   * @public
+   * @export
    */
   this.country = country || 'USA';
 };
@@ -129,21 +129,21 @@ bloombox.identity.ContactInfo = function ContactInfo(emailAddress,
   /**
    * Email address.
    * @type {string}
-   * @public
+   * @export
    */
   this.emailAddress = emailAddress;
 
   /**
    * Phone number.
    * @type {?string}
-   * @public
+   * @export
    */
   this.phoneNumber = phoneNumber || null;
 
   /**
    * Street address.
    * @type {?bloombox.identity.StreetAddress}
-   * @public
+   * @export
    */
   this.streetAddress = streetAddress || null;
 };
@@ -196,18 +196,21 @@ bloombox.identity.Person = function Person(firstName,
   /**
    * Person's name.
    * @type {proto.person.Name}
+   * @export
    */
   this.name = name;
 
   /**
    * Person's contact info.
    * @type {bloombox.identity.ContactInfo}
+   * @export
    */
   this.contactInfo = contactInfo;
 
   /**
    * Person's date of birth.
    * @type {?proto.temporal.Date}
+   * @export
    */
   this.dateOfBirth = dateOfBirth !== null ? instant : null;
 };

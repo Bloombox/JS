@@ -70,14 +70,14 @@ bloombox.shop.Customer = function Customer(person,
   /**
    * Human being who is this customer.
    * @type {bloombox.identity.Person}
-   * @public
+   * @export
    */
   this.person = person;
 
   /**
    * Foreign ID for this customer.
    * @type {string}
-   * @public
+   * @export
    */
   this.foreignId = foreignID;
 };
