@@ -33,18 +33,34 @@ goog.provide('bloombox.identity.ProfileException');
  * @export
  * @typedef {proto.identity.EnrollmentSource}
  */
-bloombox.identity.EnrollmentSource;
+bloombox.identity.EnrollmentSource = {
+  'ONLINE': proto.identity.EnrollmentSource.ONLINE,
+  'INTERNAL_APP': proto.identity.EnrollmentSource.INTERNAL_APP,
+  'PARTNER_APP': proto.identity.EnrollmentSource.PARTNER_APP,
+  'IN_STORE': proto.identity.EnrollmentSource.IN_STORE
+};
 
-goog.exportSymbol('bloombox.identity.EnrollmentSource.ONLINE',
+goog.exportSymbol('bloombox.identity.EnrollmentSource',
+  proto.identity.EnrollmentSource);
+
+goog.exportProperty(
+  bloombox.identity.EnrollmentSource,
+  'ONLINE',
   proto.identity.EnrollmentSource.ONLINE);
 
-goog.exportSymbol('bloombox.identity.EnrollmentSource.INTERNAL_APP',
+goog.exportProperty(
+  bloombox.identity.EnrollmentSource,
+  'INTERNAL_APP',
   proto.identity.EnrollmentSource.INTERNAL_APP);
 
-goog.exportSymbol('bloombox.identity.EnrollmentSource.PARTNER_APP',
+goog.exportProperty(
+  bloombox.identity.EnrollmentSource,
+  'PARTNER_APP',
   proto.identity.EnrollmentSource.PARTNER_APP);
 
-goog.exportSymbol('bloombox.identity.EnrollmentSource.IN_STORE',
+goog.exportProperty(
+  bloombox.identity.EnrollmentSource,
+  'IN_STORE',
   proto.identity.EnrollmentSource.IN_STORE);
 
 

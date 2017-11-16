@@ -17,28 +17,56 @@ goog.provide('bloombox.menu.Section');
  * @export
  * @typedef {proto.products.menu.section.Section}
  */
-bloombox.menu.Section;
+bloombox.menu.Section = {
+  'FLOWERS': proto.products.menu.section.Section.FLOWERS,
+  'EXTRACTS': proto.products.menu.section.Section.EXTRACTS,
+  'EDIBLES': proto.products.menu.section.Section.EDIBLES,
+  'CARTRIDGES': proto.products.menu.section.Section.CARTRIDGES,
+  'APOTHECARY': proto.products.menu.section.Section.APOTHECARY,
+  'PREROLLS': proto.products.menu.section.Section.PREROLLS,
+  'PLANTS': proto.products.menu.section.Section.PLANTS,
+  'MERCHANDISE': proto.products.menu.section.Section.MERCHANDISE
+};
 
-goog.exportSymbol('bloombox.menu.Section.FLOWERS',
+goog.exportSymbol('bloombox.menu.Section',
+  proto.products.menu.section.Section);
+
+goog.exportProperty(
+  bloombox.menu.Section,
+  'FLOWERS',
   proto.products.menu.section.Section.FLOWERS);
 
-goog.exportSymbol('bloombox.menu.Section.EXTRACTS',
+goog.exportProperty(
+  bloombox.menu.Section,
+  'EXTRACTS',
   proto.products.menu.section.Section.EXTRACTS);
 
-goog.exportSymbol('bloombox.menu.Section.EDIBLES',
+goog.exportProperty(
+  bloombox.menu.Section,
+  'EDIBLES',
   proto.products.menu.section.Section.EDIBLES);
 
-goog.exportSymbol('bloombox.menu.Section.CARTRIDGES',
+goog.exportProperty(
+  bloombox.menu.Section,
+  'CARTRIDGES',
   proto.products.menu.section.Section.CARTRIDGES);
 
-goog.exportSymbol('bloombox.menu.Section.APOTHECARY',
+goog.exportProperty(
+  bloombox.menu.Section,
+  'APOTHECARY',
   proto.products.menu.section.Section.APOTHECARY);
 
-goog.exportSymbol('bloombox.menu.Section.PREROLLS',
+goog.exportProperty(
+  bloombox.menu.Section,
+  'PREROLLS',
   proto.products.menu.section.Section.PREROLLS);
 
-goog.exportSymbol('bloombox.menu.Section.PLANTS',
+goog.exportProperty(
+  bloombox.menu.Section,
+  'PLANTS',
   proto.products.menu.section.Section.PLANTS);
 
-goog.exportSymbol('bloombox.menu.Section.MERCHANDISE',
+goog.exportProperty(
+  bloombox.menu.Section,
+  'MERCHANDISE',
   proto.products.menu.section.Section.MERCHANDISE);
