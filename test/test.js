@@ -11,14 +11,14 @@ let enrollLastName = 'Obama';
 let birthDate = '1961-08-04';
 let failureAccount = 'failure@suckstosuck.com';
 
-let notes = 'Another Indica is fine if you\'re out of Cookie Creek';
+let notes = 'TESTING TESTING DO NOT FULFILL (ORDER NOTES)';
 
 let addressOne = '214 Dupont Street';
 let addressTwo = '2nd Floor';
 let city = 'San Jose';
 let state = 'CA';
 let zip = zipToCheck;
-let deliveryInstructions = 'Call Matt to get in';
+let deliveryInstructions = 'TESTING TESTING DO NOT FULFILL (DELIVERY INSTRUCTIONS)';
 
 let doctorRecID = 'recid123';
 let doctorID = 'doctorid123';
