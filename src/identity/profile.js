@@ -173,9 +173,9 @@ bloombox.identity.MenuPreferences = function MenuPreferences(opt_sections,
  */
 bloombox.identity.MenuPreferences.prototype.export = function() {
   return {
-    'section': this.sections ? new Set(this.sections) : [],
-    'feeling': this.feelings ? new Set(this.feelings) : [],
-    'tasteNote': this.tastes ? new Set(this.tastes) : [],
+    'section': this.sections ? Array.from(this.sections) : [],
+    'feeling': this.feelings ? Array.from(this.feelings) : [],
+    'tasteNote': this.tastes ? Array.from(this.tastes) : [],
     'desiredPotency': this.potency
   };
 };
