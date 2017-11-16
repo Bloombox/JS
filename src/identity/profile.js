@@ -22,10 +22,19 @@ goog.require('proto.structs.labtesting.Subjective.TasteNote');
 
 goog.provide('bloombox.identity.ConsumerProfile');
 goog.provide('bloombox.identity.EnrollmentSource');
+goog.provide('bloombox.identity.MenuPreferences');
 goog.provide('bloombox.identity.ProfileException');
 
 
 // -- Enrollment Sources -- //
+/**
+ * Sources for an enrollment.
+ *
+ * @export
+ * @typedef {proto.identity.EnrollmentSource}
+ */
+bloombox.identity.EnrollmentSource;
+
 goog.exportSymbol('bloombox.identity.EnrollmentSource',
   proto.identity.EnrollmentSource);
 
@@ -123,7 +132,7 @@ bloombox.identity.ConsumerProfile.prototype.export = function() {
  *        initialize.
  * @param {Array<bloombox.testing.subjective.TasteNote>=} opt_tastes Taste notes
  *        to initialize.
- * @param {Array<bloombox.testing.subjective.PotencyEstimate>=} opt_potency
+ * @param {?bloombox.testing.subjective.PotencyEstimate=} opt_potency
  *        Desired potency level.
  * @constructor
  */
@@ -159,9 +168,10 @@ bloombox.identity.MenuPreferences = function MenuPreferences(opt_sections,
    * Desired potency level.
    *
    * @export
-   * @type {Set<bloombox.testing.subjective.PotencyEstimate>}
+   * @type {bloombox.testing.subjective.PotencyEstimate}
    */
-  this.potency = new Set(opt_potency || []);
+  this.potency = (
+    opt_potency || bloombox.testing.subjective.PotencyEstimate.LIGHT);
 };
 
 /**
@@ -175,8 +185,7 @@ bloombox.identity.MenuPreferences.prototype.export = function() {
     'section': this.sections ? new Set(this.sections) : [],
     'feeling': this.feelings ? new Set(this.feelings) : [],
     'tasteNote': this.tastes ? new Set(this.tastes) : [],
-    'desiredPotency': (
-      this.potency || bloombox.testing.subjective.PotencyEstimate.LIGHT)
+    'desiredPotency': this.potency
   };
 };
 

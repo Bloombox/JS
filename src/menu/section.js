@@ -11,6 +11,14 @@ goog.provide('bloombox.menu.Section');
 
 
 // -- Menu Sections -- //
+/**
+ * Menu sections.
+ *
+ * @export
+ * @typedef {proto.products.menu.section.Section}
+ */
+bloombox.menu.Section;
+
 goog.exportSymbol('bloombox.menu.Section',
   proto.products.menu.section.Section);
 

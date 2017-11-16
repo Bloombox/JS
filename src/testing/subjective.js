@@ -15,6 +15,14 @@ goog.provide('bloombox.testing.subjective.TasteNote');
 
 
 // -- Feelings -- //
+/**
+ * Subjective feelings experienced during testing.
+ *
+ * @export
+ * @typedef {proto.structs.labtesting.Subjective.Feeling}
+ */
+bloombox.testing.subjective.Feeling;
+
 goog.exportSymbol('bloombox.testing.subjective.Feeling',
   proto.structs.labtesting.Subjective.Feeling);
 
@@ -41,6 +49,14 @@ goog.exportSymbol('bloombox.testing.subjective.Feeling.PASSION',
 
 
 // -- Potency Estimate -- //
+/**
+ * General potency level estimate.
+ *
+ * @export
+ * @typedef {proto.structs.labtesting.Subjective.PotencyEstimate}
+ */
+bloombox.testing.subjective.PotencyEstimate;
+
 goog.exportSymbol('bloombox.testing.subjective.PotencyEstimate',
   proto.structs.labtesting.Subjective.PotencyEstimate);
 
@@ -58,6 +74,14 @@ goog.exportSymbol('bloombox.testing.subjective.PotencyEstimate.SUPER',
 
 
 // -- Taste Notes -- //
+/**
+ * Aroma and flavor notes.
+ *
+ * @export
+ * @typedef {proto.structs.labtesting.Subjective.TasteNote}
+ */
+bloombox.testing.subjective.TasteNote;
+
 goog.exportSymbol('bloombox.testing.subjective.TasteNote',
   proto.structs.labtesting.Subjective.TasteNote);
 

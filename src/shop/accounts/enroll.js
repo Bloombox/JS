@@ -83,7 +83,7 @@ bloombox.shop.enroll.EnrollmentSource = {
  * @param {bloombox.identity.DoctorRec} rec Person's doctor rec.
  * @param {bloombox.identity.ID} license Person's driver's license or other ID.
  * @param {?string=} opt_password User's password. Optional.
- * @param {bloombox.identity.ConsumerProfile} profile Consumer profile.
+ * @param {?bloombox.identity.ConsumerProfile=} opt_profile Consumer profile.
  * @constructor
  * @export
  */
@@ -93,7 +93,7 @@ bloombox.shop.enroll.Enrollment = function Enrollment(source,
                                                       rec,
                                                       license,
                                                       opt_password,
-                                                      profile) {
+                                                      opt_profile) {
   /**
    * Enrollment source.
    *
@@ -149,7 +149,7 @@ bloombox.shop.enroll.Enrollment = function Enrollment(source,
    * @export
    * @type {?bloombox.identity.ConsumerProfile}
    */
-  this.profile = profile || null;
+  this.profile = opt_profile || null;
 
   /**
    * Dry-run status for this enrollment. When truthy, this will prevent the
