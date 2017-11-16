@@ -4,7 +4,7 @@ let partnerCode = 'mm';
 let locationCode = 'san-francisco';
 let apiKey = 'AIzaSyB_-R9mmvOy7HdyKEbhJOKIoDYFDOt0740';
 let zipToCheck = '95126';
-let enrollAccount = 'info+enrolltest@bloombox.io';
+let enrollAccount = 'sam+test@bloombox.io';
 let enrollPhone = '+19163419482';
 let enrollFirstName = 'Barack';
 let enrollLastName = 'Obama';
@@ -234,6 +234,18 @@ function doEnrollTest(callback) {
       contactInfo,
       birthDate);
 
+    let consumerProfile = new bloombox.identity.ConsumerProfile(
+      bloombox.identity.EnrollmentSource.ONLINE,
+      'test',
+      new bloombox.identity.MenuPreferences()
+        .addSection(bloombox.menu.Section.FLOWERS)
+        .addFeeling(bloombox.testing.subjective.Feeling.FOCUS)
+        .addFeeling(bloombox.testing.subjective.Feeling.GROUNDING)
+        .addTaste(bloombox.testing.subjective.TasteNote.PINE)
+        .addTaste(bloombox.testing.subjective.TasteNote.SWEET)
+        .addTaste(bloombox.testing.subjective.TasteNote.CITRUS)
+        .setPotency(bloombox.testing.subjective.PotencyEstimate.HEAVY));
+
     // enrollment
     let enrollment = new bloombox.shop.enroll.Enrollment(
       bloombox.shop.enroll.EnrollmentSource.ONLINE,
@@ -241,9 +253,12 @@ function doEnrollTest(callback) {
       enrollee,
       rec,
       id,
-      'password123');
+      'password123',
+      consumerProfile);
 
     console.log('%cPreparing enrollment...', 'color: blue', enrollment);
+
+    debugger;
 
     enrollment.send(function(success, err, customer) {
       if (success === true && err === null && customer) {
@@ -268,4 +283,5 @@ function test() {
   doInfoTest(doEnrollTest, doOrderTest);
 }
 
-test();
+//test();
+console.log("Call the following to run: test()");
