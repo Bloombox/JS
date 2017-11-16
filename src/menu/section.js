@@ -19,9 +19,6 @@ goog.provide('bloombox.menu.Section');
  */
 bloombox.menu.Section;
 
-goog.exportSymbol('bloombox.menu.Section',
-  proto.products.menu.section.Section);
-
 goog.exportSymbol('bloombox.menu.Section.FLOWERS',
   proto.products.menu.section.Section.FLOWERS);
 

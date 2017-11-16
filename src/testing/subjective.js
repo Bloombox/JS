@@ -5,6 +5,7 @@
  * @fileoverview User-subjective testing.
  */
 
+goog.require('proto.structs.labtesting.Subjective');
 goog.require('proto.structs.labtesting.Subjective.Feeling');
 goog.require('proto.structs.labtesting.Subjective.PotencyEstimate');
 goog.require('proto.structs.labtesting.Subjective.TasteNote');
@@ -22,9 +23,6 @@ goog.provide('bloombox.testing.subjective.TasteNote');
  * @typedef {proto.structs.labtesting.Subjective.Feeling}
  */
 bloombox.testing.subjective.Feeling;
-
-goog.exportSymbol('bloombox.testing.subjective.Feeling',
-  proto.structs.labtesting.Subjective.Feeling);
 
 goog.exportSymbol('bloombox.testing.subjective.Feeling.GROUNDING',
   proto.structs.labtesting.Subjective.Feeling.GROUNDING);
@@ -57,12 +55,6 @@ goog.exportSymbol('bloombox.testing.subjective.Feeling.PASSION',
  */
 bloombox.testing.subjective.PotencyEstimate;
 
-goog.exportSymbol('bloombox.testing.subjective.PotencyEstimate',
-  proto.structs.labtesting.Subjective.PotencyEstimate);
-
-goog.exportSymbol('bloombox.testing.subjective.PotencyEstimate.LIGHT',
-  proto.structs.labtesting.Subjective.PotencyEstimate.LIGHT);
-
 goog.exportSymbol('bloombox.testing.subjective.PotencyEstimate.MEDIUM',
   proto.structs.labtesting.Subjective.PotencyEstimate.MEDIUM);
 
@@ -81,9 +73,6 @@ goog.exportSymbol('bloombox.testing.subjective.PotencyEstimate.SUPER',
  * @typedef {proto.structs.labtesting.Subjective.TasteNote}
  */
 bloombox.testing.subjective.TasteNote;
-
-goog.exportSymbol('bloombox.testing.subjective.TasteNote',
-  proto.structs.labtesting.Subjective.TasteNote);
 
 goog.exportSymbol('bloombox.testing.subjective.TasteNote.SWEET',
   proto.structs.labtesting.Subjective.TasteNote.SWEET);

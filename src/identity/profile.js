@@ -35,9 +35,6 @@ goog.provide('bloombox.identity.ProfileException');
  */
 bloombox.identity.EnrollmentSource;
 
-goog.exportSymbol('bloombox.identity.EnrollmentSource',
-  proto.identity.EnrollmentSource);
-
 goog.exportSymbol('bloombox.identity.EnrollmentSource.ONLINE',
   proto.identity.EnrollmentSource.ONLINE);
 
@@ -169,10 +166,9 @@ bloombox.identity.MenuPreferences = function MenuPreferences(opt_sections,
    * Desired potency level.
    *
    * @export
-   * @type {bloombox.testing.subjective.PotencyEstimate}
+   * @type {?bloombox.testing.subjective.PotencyEstimate}
    */
-  this.potency = (
-    opt_potency || bloombox.testing.subjective.PotencyEstimate.LIGHT);
+  this.potency = opt_potency || null;
 };
 
 /**
