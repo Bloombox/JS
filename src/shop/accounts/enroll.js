@@ -14,6 +14,7 @@ goog.provide('bloombox.shop.enroll.EnrollmentSource');
 
 goog.require('bloombox.config');
 
+goog.require('bloombox.identity.ConsumerProfile');
 goog.require('bloombox.identity.ContactInfo');
 goog.require('bloombox.identity.DoctorRec');
 goog.require('bloombox.identity.ID');
@@ -78,10 +79,11 @@ bloombox.shop.enroll.EnrollmentSource = {
  * @param {bloombox.shop.enroll.EnrollmentSource} source Source type for this
  *        enrollment.
  * @param {string} channel Channel source identifier for this enrollment.
- * @param {bloombox.identity.Person} person
- * @param {bloombox.identity.DoctorRec} rec
- * @param {bloombox.identity.ID} license
- * @param {string=} password
+ * @param {bloombox.identity.Person} person Person enrolling for the account.
+ * @param {bloombox.identity.DoctorRec} rec Person's doctor rec.
+ * @param {bloombox.identity.ID} license Person's driver's license or other ID.
+ * @param {?string=} opt_password User's password. Optional.
+ * @param {bloombox.identity.ConsumerProfile} profile Consumer profile.
  * @constructor
  * @export
  */
@@ -90,49 +92,71 @@ bloombox.shop.enroll.Enrollment = function Enrollment(source,
                                                       person,
                                                       rec,
                                                       license,
-                                                      password) {
+                                                      opt_password,
+                                                      profile) {
   /**
    * Enrollment source.
+   *
+   * @export
    * @type {bloombox.shop.enroll.EnrollmentSource}
    */
   this.source = source;
 
   /**
    * Channel source identifier.
+   *
+   * @export
    * @type {string}
    */
   this.channel = channel;
 
   /**
    * Person who is enrolling.
+   *
+   * @export
    * @type {bloombox.identity.Person}
    */
   this.person = person;
 
   /**
    * Doctor's recommendation.
+   *
+   * @export
    * @type {bloombox.identity.DoctorRec}
    */
   this.doctorRec = rec;
 
   /**
    * Person's driver's license.
+   *
+   * @export
    * @type {bloombox.identity.ID}
    */
   this.license = license;
 
   /**
    * Base64-encoded account password, if provided.
+   *
+   * @public
    * @type {?string}
    */
-  this.password = password !== null ? btoa(
-      /** @type {string} */ (password)) : null;
+  this.password = (opt_password !== null && opt_password !== undefined) ? btoa(
+      /** @type {string} */ (opt_password)) : null;
+
+  /**
+   * User's profile. Defaults to null.
+   *
+   * @export
+   * @type {?bloombox.identity.ConsumerProfile}
+   */
+  this.profile = profile || null;
 
   /**
    * Dry-run status for this enrollment. When truthy, this will prevent the
    * subject user from being written to any persistence or external systems.
    * The enrollment is still verified and logged, though, for testing.
    *
+   * @export
    * @type {boolean}
    */
   this.dryRun = false;
@@ -142,6 +166,7 @@ bloombox.shop.enroll.Enrollment = function Enrollment(source,
 // noinspection JSUnusedGlobalSymbols
 /**
  * Activate dry run mode.
+ *
  * @return {bloombox.shop.enroll.Enrollment} Self, for chain-ability.
  * @export
  */
@@ -222,6 +247,11 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
       }
     }
   };
+
+  // copy in user profile
+  if (this.profile !== null) {
+    rawObject['consumerProfile'] = this.profile.export();
+  }
 
   // copy in password, if it's there
   if (this.password !== null) rawObject['password'] = this.password;

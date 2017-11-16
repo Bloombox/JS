@@ -16,6 +16,8 @@ goog.require('proto.contact.EmailAddress');
 goog.require('proto.contact.PhoneNumber');
 goog.require('proto.geo.Address');
 goog.require('proto.geo.Location');
+goog.require('proto.identity.ConsumerProfile');
+
 goog.require('proto.person.Name');
 
 goog.provide('bloombox.shop.Customer');
