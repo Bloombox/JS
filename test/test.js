@@ -99,18 +99,27 @@ function doInfoTest(callback, nextCallback) {
         'color: green');
 
       // proceed w/zipcheck, verify, and order
-      bloombox.shop.zipcheck(zipToCheck, function(zipcodeEligible) {
+      bloombox.shop.zipcheck(zipToCheck, function(zipcodeEligible, minimumDeliverySubtotal) {
         if (zipcodeEligible !== true) {
           console.log(
             '%cThe zipcode \'' +
             zipToCheck + '\' was found to be ineligible. Cannot proceed.',
             'color: red');
         } else {
-          console.log(
-            '%cThe zipcode \'' +
-            zipToCheck +
-            '\' is eligible for delivery orders.',
-            'color: green');
+          if (minimumDeliverySubtotal !== null && minimumDeliverySubtotal > 0.0) {
+            console.log(
+              '%cThe zipcode \'' +
+              zipToCheck +
+              '\' is eligible for delivery orders, with a delivery minimum of' +
+              ' $' + minimumDeliverySubtotal.toString() + '.',
+              'color: green');
+          } else {
+            console.log(
+              '%cThe zipcode \'' +
+              zipToCheck +
+              '\' is eligible for delivery orders.',
+              'color: green');
+          }
         }
         callback(nextCallback);
       });
