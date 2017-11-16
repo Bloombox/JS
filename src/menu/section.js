@@ -18,6 +18,7 @@ goog.provide('bloombox.menu.Section');
  * @enum {proto.products.menu.section.Section}
  */
 bloombox.menu.Section = {
+  'UNSPECIFIED': proto.products.menu.section.Section.UNSPECIFIED,
   'FLOWERS': proto.products.menu.section.Section.FLOWERS,
   'EXTRACTS': proto.products.menu.section.Section.EXTRACTS,
   'EDIBLES': proto.products.menu.section.Section.EDIBLES,
