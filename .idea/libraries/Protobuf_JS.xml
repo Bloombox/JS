@@ -3,9 +3,9 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/protobuf/js/debug.js" />
-        <item url="file://$PROJECT_DIR$/protobuf/js/message.js" />
         <item url="file://$PROJECT_DIR$/protobuf/js/google" />
         <item url="file://$PROJECT_DIR$/protobuf/js/map.js" />
+        <item url="file://$PROJECT_DIR$/protobuf/js/message.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
