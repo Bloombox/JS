@@ -13,7 +13,7 @@ or you can use the CDN, which is the simplest and usually the most performant wa
 <html>
   <head>
 
-  <script type="text/javascript" src="https://app.bloomware.media/client/v1.0.0-alpha5.min.js"></script>
+  <script type="text/javascript" src="https://app.bloomware.media/client/v1.0.0-alpha6.min.js"></script>
   <script type="text/javascript">
     bloombox.setup("<partner>", "<location>", "<apikey>", function() {
       // use the library
@@ -108,7 +108,7 @@ they are. You can re-use this object to submit an order.
 If you are having trouble getting things working correctly, you can use the debug copy, by prepending `-debug` before
 the `.min` in the script URL:
 ```html
-  <script type="text/javascript" src="https://app.bloomware.media/embed/client/shop/v1.0.0-alpha5-debug.min.js"></script>
+  <script type="text/javascript" src="https://app.bloomware.media/embed/client/shop/v1.0.0-alpha6-debug.min.js"></script>
 ```
 
 Then, you'll see debug logs in your console that describe what's going on.
