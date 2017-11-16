@@ -34,6 +34,7 @@ goog.provide('bloombox.identity.ProfileException');
  * @enum {proto.identity.EnrollmentSource}
  */
 bloombox.identity.EnrollmentSource = {
+  'UNSPECIFIED': proto.identity.EnrollmentSource.UNSPECIFIED,
   'ONLINE': proto.identity.EnrollmentSource.ONLINE,
   'INTERNAL_APP': proto.identity.EnrollmentSource.INTERNAL_APP,
   'PARTNER_APP': proto.identity.EnrollmentSource.PARTNER_APP,

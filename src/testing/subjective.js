@@ -23,6 +23,8 @@ goog.provide('bloombox.testing.subjective.TasteNote');
  * @enum {proto.structs.labtesting.Subjective.Feeling}
  */
 bloombox.testing.subjective.Feeling = {
+  'NO_FEELING_PREFERENCE': (
+    proto.structs.labtesting.Subjective.Feeling.NO_FEELING_PREFERENCE),
   'GROUNDING': proto.structs.labtesting.Subjective.Feeling.GROUNDING,
   'SLEEP': proto.structs.labtesting.Subjective.Feeling.SLEEP,
   'CALMING': proto.structs.labtesting.Subjective.Feeling.CALMING,
@@ -56,6 +58,8 @@ bloombox.testing.subjective.PotencyEstimate = {
  * @enum {proto.structs.labtesting.Subjective.TasteNote}
  */
 bloombox.testing.subjective.TasteNote = {
+  'NO_TASTE_PREFERENCE': (
+    proto.structs.labtesting.Subjective.TasteNote.NO_TASTE_PREFERENCE),
   'SWEET': proto.structs.labtesting.Subjective.TasteNote.SWEET,
   'SOUR': proto.structs.labtesting.Subjective.TasteNote.SOUR,
   'SPICE': proto.structs.labtesting.Subjective.TasteNote.SPICE,
