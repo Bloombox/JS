@@ -263,6 +263,10 @@ function doEnrollTest(callback) {
       'test',
       new bloombox.identity.MenuPreferences()
         .addSection(bloombox.menu.Section.FLOWERS)
+        .addSpecies(bloombox.product.Species.SATIVA)
+        .addSpecies(bloombox.product.Species.HYBRID_SATIVA)
+        .addSpecies(bloombox.product.Species.HYBRID_INDICA)
+        .addGrow(bloombox.product.Grow.INDOOR)
         .addFeeling(bloombox.testing.subjective.Feeling.FOCUS)
         .addFeeling(bloombox.testing.subjective.Feeling.GROUNDING)
         .addTaste(bloombox.testing.subjective.TasteNote.PINE)

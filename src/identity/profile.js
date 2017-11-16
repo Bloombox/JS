@@ -7,6 +7,9 @@
 
 goog.require('bloombox.menu.Section');
 
+goog.require('bloombox.product.Grow');
+goog.require('bloombox.product.Species');
+
 goog.require('bloombox.testing.subjective.Feeling');
 goog.require('bloombox.testing.subjective.PotencyEstimate');
 goog.require('bloombox.testing.subjective.TasteNote');
@@ -119,6 +122,8 @@ bloombox.identity.ConsumerProfile.prototype.export = function() {
  * preferences for their consumption profile.
  *
  * @param {Array<bloombox.menu.Section>=} opt_sections Sections to initialize.
+ * @param {Array<bloombox.product.Species>=} opt_species Species to initialize.
+ * @param {Array<bloombox.product.Grow>=} opt_grows Grows to initialize.
  * @param {Array<bloombox.testing.subjective.Feeling>=} opt_feelings Feelings to
  *        initialize.
  * @param {Array<bloombox.testing.subjective.TasteNote>=} opt_tastes Taste notes
@@ -129,6 +134,8 @@ bloombox.identity.ConsumerProfile.prototype.export = function() {
  * @export
  */
 bloombox.identity.MenuPreferences = function MenuPreferences(opt_sections,
+                                                             opt_species,
+                                                             opt_grows,
                                                              opt_feelings,
                                                              opt_tastes,
                                                              opt_potency) {
@@ -155,6 +162,22 @@ bloombox.identity.MenuPreferences = function MenuPreferences(opt_sections,
    * @type {Set<bloombox.testing.subjective.TasteNote>}
    */
   this.tastes = new Set(opt_tastes || []);
+
+  /**
+   * Preferred species types.
+   *
+   * @export
+   * @type {Set<bloombox.product.Species>}
+   */
+  this.species = new Set(opt_species || []);
+
+  /**
+   * Preferred grow types.
+   *
+   * @export
+   * @type {Set<bloombox.product.Grow>}
+   */
+  this.grows = new Set(opt_grows || []);
 
   /**
    * Desired potency level.
@@ -202,6 +225,56 @@ bloombox.identity.MenuPreferences.prototype.clearSections = function() {
  */
 bloombox.identity.MenuPreferences.prototype.addSection = function(section) {
   this.sections.add(section);
+  return this;
+};
+
+// noinspection JSUnusedGlobalSymbols
+/**
+ * Clear all current preferred species.
+ *
+ * @export
+ * @return {bloombox.identity.MenuPreferences} Self, for chainability.
+ */
+bloombox.identity.MenuPreferences.prototype.clearSpecies = function() {
+  this.species.clear();
+  return this;
+};
+
+// noinspection JSUnusedGlobalSymbols
+/**
+ * Add a preferred species type.
+ *
+ * @param {bloombox.product.Species} species Species to add.
+ * @export
+ * @return {bloombox.identity.MenuPreferences} Self, for chainability.
+ */
+bloombox.identity.MenuPreferences.prototype.addSpecies = function(species) {
+  this.species.add(species);
+  return this;
+};
+
+// noinspection JSUnusedGlobalSymbols
+/**
+ * Clear all current preferred grow types.
+ *
+ * @export
+ * @return {bloombox.identity.MenuPreferences} Self, for chainability.
+ */
+bloombox.identity.MenuPreferences.prototype.clearGrows = function() {
+  this.grows.clear();
+  return this;
+};
+
+// noinspection JSUnusedGlobalSymbols
+/**
+ * Add a preferred grow type.
+ *
+ * @param {bloombox.product.Grow} grow Grow type to add.
+ * @export
+ * @return {bloombox.identity.MenuPreferences} Self, for chainability.
+ */
+bloombox.identity.MenuPreferences.prototype.addGrow = function(grow) {
+  this.grows.add(grow);
   return this;
 };
 
