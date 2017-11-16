@@ -1,10 +1,10 @@
 
 // demo config
-let partnerCode = 'mm';
-let locationCode = 'san-francisco';
+let partnerCode = 'caliva';
+let locationCode = 'sjc';
 let apiKey = 'AIzaSyB_-R9mmvOy7HdyKEbhJOKIoDYFDOt0740';
 let zipToCheck = '95126';
-let enrollAccount = 'info+enrolltest@bloombox.io';
+let enrollAccount = 'info+barack@bloombox.io';
 let enrollPhone = '+19163419482';
 let enrollFirstName = 'Barack';
 let enrollLastName = 'Obama';
