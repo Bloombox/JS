@@ -282,8 +282,6 @@ function doEnrollTest(callback) {
 
     console.log('%cPreparing enrollment...', 'color: blue', enrollment);
 
-    debugger;
-
     enrollment.send(function(success, err, customer) {
       if (success === true && err === null && customer) {
         // enrollment succeeded
