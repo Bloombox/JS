@@ -135,6 +135,7 @@ bloombox.identity.ConsumerProfile.prototype.export = function() {
  * @param {?bloombox.testing.subjective.PotencyEstimate=} opt_potency
  *        Desired potency level.
  * @constructor
+ * @export
  */
 bloombox.identity.MenuPreferences = function MenuPreferences(opt_sections,
                                                              opt_feelings,
