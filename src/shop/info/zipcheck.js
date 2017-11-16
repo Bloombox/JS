@@ -26,7 +26,7 @@ goog.require('bloombox.shop.rpc.ShopRPC');
 /**
  * Callback function type declaration for zipcode checking.
  *
- * @typedef {function(?boolean)}
+ * @typedef {function(?boolean, ?number)}
  */
 bloombox.shop.ZipCheckCallback;
 
@@ -95,11 +95,32 @@ bloombox.shop.zipcheck = function(zipcode, callback) {
       if ((typeof response === 'object')) {
         // interrogate response for zipcode support status
         let supported = response['supported'] === true;
-        callback(supported);
+        let deliveryMinimum = /** @type {?number} */ (null);
+        if ('deliveryMinimum' in response) {
+          if (typeof response['deliveryMinimum'] === 'number') {
+            deliveryMinimum = /** @type {number} */ (
+              response['deliveryMinimum']);
+
+            bloombox.logging.log('Resolved delivery minimum.',
+              deliveryMinimum);
+          } else if (response['deliveryMinimum'] === undefined ||
+                     response['deliveryMinimum'] === null ||
+                     response['deliveryMinimum'] === 0.0 ||
+                     response['deliveryMinimum'] === 0) {
+            // there is no delivery minimum
+            deliveryMinimum = null;
+
+            bloombox.logging.log('No delivery minimum specified.');
+          } else {
+            bloombox.logging.warn('Unrecognized delivery minimum.',
+              response['deliveryMinimum']);
+          }
+        }
+        callback(supported, deliveryMinimum);
       } else {
         bloombox.logging.error(
           'Received unrecognized response payload for zipcheck.', response);
-        callback(null);
+        callback(null, null);
       }
     }
   }, function(status) {
@@ -108,6 +129,6 @@ bloombox.shop.zipcheck = function(zipcode, callback) {
         status + '\'.');
 
     // pass null to indicate an error
-    callback(null);
+    callback(null, null);
   });
 };
