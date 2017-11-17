@@ -199,6 +199,8 @@ bloombox.identity.MenuPreferences.prototype.export = function() {
     'section': this.sections ? Array.from(this.sections) : [],
     'feeling': this.feelings ? Array.from(this.feelings) : [],
     'tasteNote': this.tastes ? Array.from(this.tastes) : [],
+    'grow': this.grows ? Array.from(this.grows) : [],
+    'species': this.species ? Array.from(this.species) : [],
     'desiredPotency': this.potency
   };
 };
