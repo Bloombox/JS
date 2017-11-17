@@ -10,6 +10,7 @@ goog.require('bloombox.menu.Section');
 goog.require('bloombox.product.Grow');
 goog.require('bloombox.product.Species');
 
+goog.require('bloombox.testing.CannabinoidRatio');
 goog.require('bloombox.testing.subjective.Feeling');
 goog.require('bloombox.testing.subjective.PotencyEstimate');
 goog.require('bloombox.testing.subjective.TasteNote');
@@ -18,10 +19,6 @@ goog.require('proto.identity.ConsumerPreferences');
 goog.require('proto.identity.ConsumerProfile');
 goog.require('proto.identity.EnrollmentSource');
 goog.require('proto.identity.MenuPreferences');
-goog.require('proto.products.menu.section.Section');
-goog.require('proto.structs.labtesting.Subjective.Feeling');
-goog.require('proto.structs.labtesting.Subjective.PotencyEstimate');
-goog.require('proto.structs.labtesting.Subjective.TasteNote');
 
 goog.provide('bloombox.identity.ConsumerProfile');
 goog.provide('bloombox.identity.EnrollmentSource');
@@ -130,6 +127,7 @@ bloombox.identity.ConsumerProfile.prototype.export = function() {
  *        to initialize.
  * @param {?bloombox.testing.subjective.PotencyEstimate=} opt_potency
  *        Desired potency level.
+ * @param {?bloombox.testing.CannabinoidRatio=} opt_ratio Ratio to initialize.
  * @constructor
  * @export
  */
@@ -138,7 +136,8 @@ bloombox.identity.MenuPreferences = function MenuPreferences(opt_sections,
                                                              opt_grows,
                                                              opt_feelings,
                                                              opt_tastes,
-                                                             opt_potency) {
+                                                             opt_potency,
+                                                             opt_ratio) {
   /**
    * Preferred menu sections/product types.
    *
@@ -183,9 +182,18 @@ bloombox.identity.MenuPreferences = function MenuPreferences(opt_sections,
    * Desired potency level.
    *
    * @export
-   * @type {?bloombox.testing.subjective.PotencyEstimate}
+   * @type {bloombox.testing.subjective.PotencyEstimate}
    */
-  this.potency = opt_potency || null;
+  this.potency = (opt_potency ||
+    bloombox.testing.subjective.PotencyEstimate.LIGHT);
+
+  /**
+   * Desired cannabinoid ratio.
+   *
+   * @type {bloombox.testing.CannabinoidRatio}
+   */
+  this.ratio = (opt_ratio ||
+    bloombox.testing.CannabinoidRatio.NO_CANNABINOID_PREFERENCE);
 };
 
 /**
@@ -201,6 +209,7 @@ bloombox.identity.MenuPreferences.prototype.export = function() {
     'tasteNote': this.tastes ? Array.from(this.tastes) : [],
     'grow': this.grows ? Array.from(this.grows) : [],
     'species': this.species ? Array.from(this.species) : [],
+    'cannabinoidRatio': this.ratio,
     'desiredPotency': this.potency
   };
 };

@@ -5,10 +5,9 @@
  * @fileoverview User-subjective testing.
  */
 
-goog.require('proto.structs.labtesting.Subjective');
-goog.require('proto.structs.labtesting.Subjective.Feeling');
-goog.require('proto.structs.labtesting.Subjective.PotencyEstimate');
-goog.require('proto.structs.labtesting.Subjective.TasteNote');
+goog.require('proto.structs.labtesting.Feeling');
+goog.require('proto.structs.labtesting.PotencyEstimate');
+goog.require('proto.structs.labtesting.TasteNote');
 
 goog.provide('bloombox.testing.subjective.Feeling');
 goog.provide('bloombox.testing.subjective.PotencyEstimate');
@@ -20,18 +19,18 @@ goog.provide('bloombox.testing.subjective.TasteNote');
  * Subjective feelings experienced during testing.
  *
  * @export
- * @enum {proto.structs.labtesting.Subjective.Feeling}
+ * @enum {proto.structs.labtesting.Feeling}
  */
 bloombox.testing.subjective.Feeling = {
   'NO_FEELING_PREFERENCE': (
-    proto.structs.labtesting.Subjective.Feeling.NO_FEELING_PREFERENCE),
-  'GROUNDING': proto.structs.labtesting.Subjective.Feeling.GROUNDING,
-  'SLEEP': proto.structs.labtesting.Subjective.Feeling.SLEEP,
-  'CALMING': proto.structs.labtesting.Subjective.Feeling.CALMING,
-  'STIMULATING': proto.structs.labtesting.Subjective.Feeling.STIMULATING,
-  'FUNNY': proto.structs.labtesting.Subjective.Feeling.FUNNY,
-  'FOCUS': proto.structs.labtesting.Subjective.Feeling.FOCUS,
-  'PASSION': proto.structs.labtesting.Subjective.Feeling.PASSION
+    proto.structs.labtesting.Feeling.NO_FEELING_PREFERENCE),
+  'GROUNDING': proto.structs.labtesting.Feeling.GROUNDING,
+  'SLEEP': proto.structs.labtesting.Feeling.SLEEP,
+  'CALMING': proto.structs.labtesting.Feeling.CALMING,
+  'STIMULATING': proto.structs.labtesting.Feeling.STIMULATING,
+  'FUNNY': proto.structs.labtesting.Feeling.FUNNY,
+  'FOCUS': proto.structs.labtesting.Feeling.FOCUS,
+  'PASSION': proto.structs.labtesting.Feeling.PASSION
 };
 
 
@@ -40,13 +39,13 @@ bloombox.testing.subjective.Feeling = {
  * General potency level estimate.
  *
  * @export
- * @enum {proto.structs.labtesting.Subjective.PotencyEstimate}
+ * @enum {proto.structs.labtesting.PotencyEstimate}
  */
 bloombox.testing.subjective.PotencyEstimate = {
-  'LIGHT': proto.structs.labtesting.Subjective.PotencyEstimate.LIGHT,
-  'MEDIUM': proto.structs.labtesting.Subjective.PotencyEstimate.MEDIUM,
-  'HEAVY': proto.structs.labtesting.Subjective.PotencyEstimate.HEAVY,
-  'SUPER': proto.structs.labtesting.Subjective.PotencyEstimate.SUPER
+  'LIGHT': proto.structs.labtesting.PotencyEstimate.LIGHT,
+  'MEDIUM': proto.structs.labtesting.PotencyEstimate.MEDIUM,
+  'HEAVY': proto.structs.labtesting.PotencyEstimate.HEAVY,
+  'SUPER': proto.structs.labtesting.PotencyEstimate.SUPER
 };
 
 
@@ -55,43 +54,20 @@ bloombox.testing.subjective.PotencyEstimate = {
  * Aroma and flavor notes.
  *
  * @export
- * @enum {proto.structs.labtesting.Subjective.TasteNote}
+ * @enum {proto.structs.labtesting.TasteNote}
  */
 bloombox.testing.subjective.TasteNote = {
   'NO_TASTE_PREFERENCE': (
-    proto.structs.labtesting.Subjective.TasteNote.NO_TASTE_PREFERENCE),
-  'SWEET': proto.structs.labtesting.Subjective.TasteNote.SWEET,
-  'SOUR': proto.structs.labtesting.Subjective.TasteNote.SOUR,
-  'SPICE': proto.structs.labtesting.Subjective.TasteNote.SPICE,
-  'SMOOTH': proto.structs.labtesting.Subjective.TasteNote.SMOOTH,
-  'CITRUS': proto.structs.labtesting.Subjective.TasteNote.CITRUS,
-  'PINE': proto.structs.labtesting.Subjective.TasteNote.PINE,
-  'FRUIT': proto.structs.labtesting.Subjective.TasteNote.FRUIT,
-  'TROPICS': proto.structs.labtesting.Subjective.TasteNote.TROPICS,
-  'FLORAL': proto.structs.labtesting.Subjective.TasteNote.FLORAL,
-  'HERB': proto.structs.labtesting.Subjective.TasteNote.HERB,
-  'EARTH': proto.structs.labtesting.Subjective.TasteNote.EARTH
-};
-
-
-// -- Cannabinoid Ratio -- //
-/**
- * THC to CBD cannabinoid ratio.
- *
- * @export
- * @enum {proto.structs.labtesting.Subjective.CannabinoidRatio}
- */
-bloombox.testing.subjective.TasteNote = {
-  'NO_CANNABINOID_PREFERENCE': (
-proto.structs.labtesting.Subjective.CannabinoidRatio.NO_CANNABINOID_PREFERENCE),
-  'THC_ONLY': (
-    proto.structs.labtesting.Subjective.CannabinoidRatio.THC_ONLY),
-  'THC_OVER_CBD': (
-    proto.structs.labtesting.Subjective.CannabinoidRatio.THC_OVER_CBD),
-  'EQUAL': (
-    proto.structs.labtesting.Subjective.CannabinoidRatio.EQUAL),
-  'CBD_OVER_THC': (
-    proto.structs.labtesting.Subjective.CannabinoidRatio.THC_ONLY),
-  'CBD_ONLY': (
-    proto.structs.labtesting.Subjective.CannabinoidRatio.CBD_ONLY)
+    proto.structs.labtesting.TasteNote.NO_TASTE_PREFERENCE),
+  'SWEET': proto.structs.labtesting.TasteNote.SWEET,
+  'SOUR': proto.structs.labtesting.TasteNote.SOUR,
+  'SPICE': proto.structs.labtesting.TasteNote.SPICE,
+  'SMOOTH': proto.structs.labtesting.TasteNote.SMOOTH,
+  'CITRUS': proto.structs.labtesting.TasteNote.CITRUS,
+  'PINE': proto.structs.labtesting.TasteNote.PINE,
+  'FRUIT': proto.structs.labtesting.TasteNote.FRUIT,
+  'TROPICS': proto.structs.labtesting.TasteNote.TROPICS,
+  'FLORAL': proto.structs.labtesting.TasteNote.FLORAL,
+  'HERB': proto.structs.labtesting.TasteNote.HERB,
+  'EARTH': proto.structs.labtesting.TasteNote.EARTH
 };
