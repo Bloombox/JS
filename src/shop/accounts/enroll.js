@@ -31,6 +31,7 @@ goog.require('bloombox.shop.Customer');
 goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
+goog.require('proto.identity.EnrollmentSource');
 goog.require('proto.services.shop.v1.EnrollMember');
 goog.require('proto.services.shop.v1.EnrollmentError');
 
@@ -59,14 +60,15 @@ bloombox.shop.enroll.EnrollmentException = function VerifyException(message) {
 /**
  * Source attribution for the enrollment.
  *
- * @enum {string}
+ * @enum {proto.identity.EnrollmentSource}
  * @export
  */
 bloombox.shop.enroll.EnrollmentSource = {
-  'ONLINE': 'ONLINE',
-  'INTERNAL_APP': 'INTERNAL_APP',
-  'PARTNER_APP': 'PARTNER_APP',
-  'IN_STORE': 'IN_STORE'
+  'UNSPECIFIED': proto.identity.EnrollmentSource.UNSPECIFIED,
+  'ONLINE': proto.identity.EnrollmentSource.ONLINE,
+  'INTERNAL_APP': proto.identity.EnrollmentSource.INTERNAL_APP,
+  'PARTNER_APP': proto.identity.EnrollmentSource.PARTNER_APP,
+  'IN_STORE': proto.identity.EnrollmentSource.IN_STORE
 };
 
 

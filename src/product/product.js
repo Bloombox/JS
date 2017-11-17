@@ -20,7 +20,7 @@ goog.require('proto.commerce.ProductWeight');
 /**
  * Specifies kinds of products.
  *
- * @enum {number}
+ * @enum {proto.base.ProductKind}
  * @export
  */
 bloombox.product.Kind = {
@@ -38,7 +38,7 @@ bloombox.product.Kind = {
 /**
  * Specifies weights products are sold at.
  *
- * @enum {number}
+ * @enum {proto.commerce.ProductWeight}
  * @export
  */
 bloombox.product.Weight = {

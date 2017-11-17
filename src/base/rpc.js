@@ -254,11 +254,8 @@ bloombox.rpc.RPC.prototype.onload = function(success, error) {
           status, {'xhr': this.xhr});
         error(status);
       }
-    } else {
-      // check for error
+      if (!this.keep) this.xhr = null;
     }
-
-    if (!this.keep) this.xhr = null;
   }
 };
 

@@ -24,8 +24,25 @@ goog.require('proto.temporal.Instant');
  */
 bloombox.shop.Item = function Item(key,
                                    count) {
+  /**
+   * Key for this product item.
+   *
+   * @type {bloombox.product.Key}
+   */
   this.key = key;
+
+  /**
+   * Count of this item to be ordered.
+   *
+   * @type {number}
+   */
   this.count = count;
+
+  /**
+   * Variant specifications for this item.
+   *
+   * @type {Array<!proto.commerce.VariantSpec>}
+   */
   this.variants = [];
 };
 

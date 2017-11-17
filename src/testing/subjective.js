@@ -72,3 +72,26 @@ bloombox.testing.subjective.TasteNote = {
   'HERB': proto.structs.labtesting.Subjective.TasteNote.HERB,
   'EARTH': proto.structs.labtesting.Subjective.TasteNote.EARTH
 };
+
+
+// -- Cannabinoid Ratio -- //
+/**
+ * THC to CBD cannabinoid ratio.
+ *
+ * @export
+ * @enum {proto.structs.labtesting.Subjective.CannabinoidRatio}
+ */
+bloombox.testing.subjective.TasteNote = {
+  'NO_CANNABINOID_PREFERENCE': (
+proto.structs.labtesting.Subjective.CannabinoidRatio.NO_CANNABINOID_PREFERENCE),
+  'THC_ONLY': (
+    proto.structs.labtesting.Subjective.CannabinoidRatio.THC_ONLY),
+  'THC_OVER_CBD': (
+    proto.structs.labtesting.Subjective.CannabinoidRatio.THC_OVER_CBD),
+  'EQUAL': (
+    proto.structs.labtesting.Subjective.CannabinoidRatio.EQUAL),
+  'CBD_OVER_THC': (
+    proto.structs.labtesting.Subjective.CannabinoidRatio.THC_ONLY),
+  'CBD_ONLY': (
+    proto.structs.labtesting.Subjective.CannabinoidRatio.CBD_ONLY)
+};

@@ -31,7 +31,7 @@ bloombox.identity.IDException = function IDException(message) {
 /**
  * Specifies supported types of government ID.
  *
- * @enum {number}
+ * @enum {proto.identity.IDType}
  * @export
  */
 bloombox.identity.IDType = {
