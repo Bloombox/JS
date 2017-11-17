@@ -25,8 +25,12 @@
             "src/shop/ordering/orders.js",
             "src/shop/rpc.js",
             "src/shop/setup.js",
+            "src/telemetry/internals/http.js",
+            "src/telemetry/internals/pool.js",
+            "src/telemetry/internals/queue.js",
+            "src/telemetry/internals/serializer.js",
+            "src/telemetry/internals/state.js",
             "src/telemetry/base.js",
-            "src/telemetry/pool.js",
             "src/telemetry/rpc.js",
             "src/telemetry/setup.js"
         ],
