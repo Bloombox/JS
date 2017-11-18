@@ -206,8 +206,9 @@ bloombox.telemetry.internals.statistics = function() {
  *
  * @type {boolean}
  * @private
+ * @nocollapse
  */
-bloombox.telemetry.internals.state.ENABLED_ = false;
+bloombox.telemetry.internals.state.ENABLED_ = true;
 
 
 /**
@@ -217,8 +218,9 @@ bloombox.telemetry.internals.state.ENABLED_ = false;
  *
  * @type {boolean}
  * @private
+ * @nocollapse
  */
-bloombox.telemetry.internals.state.ACTIVE_ = false;
+bloombox.telemetry.internals.state.ACTIVE_ = true;
 
 
 /**

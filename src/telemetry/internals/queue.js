@@ -8,6 +8,7 @@
 goog.require('bloombox.logging.log');
 
 goog.require('bloombox.telemetry.BATCH_SIZE');
+goog.require('bloombox.telemetry.internals.stats.updateRPCQueued');
 goog.require('bloombox.telemetry.rpc.TelemetryRPC');
 goog.require('bloombox.util.generateUUID');
 
@@ -71,6 +72,13 @@ bloombox.telemetry.internals.EventQueue = function EventQueue() {
   * @type {goog.structs.PriorityQueue<bloombox.telemetry.internals.QueuedEvent>}
   */
  this.queue = new goog.structs.PriorityQueue();
+
+  /**
+   * Current count of queued events.
+   *
+   * @type {number}
+   */
+ this.count = 0;
 };
 
 
@@ -84,6 +92,9 @@ bloombox.telemetry.internals.EventQueue = function EventQueue() {
 bloombox.telemetry.internals.EventQueue.prototype.enqueue = function(priority,
                                                                      ev) {
   this.queue.enqueue(priority, ev);
+  this.count++;
+
+  bloombox.telemetry.internals.stats.updateRPCQueued(this.count);
   bloombox.logging.log('Enqueued telemetry event with UUID: ' + ev.uuid + '.');
 };
 
@@ -105,6 +116,8 @@ bloombox.telemetry.internals.EventQueue.prototype.dequeue = function(mapper,
 
   while (countToDequeue > 0) {
     let ev = this.queue.dequeue();
+    this.count--;
+    bloombox.telemetry.internals.stats.updateRPCQueued(this.count);
     mapper(ev);
 
     // ok dequeue the next one

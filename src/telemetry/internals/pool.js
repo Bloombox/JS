@@ -8,6 +8,7 @@
 /*global goog */
 
 goog.require('bloombox.logging.log');
+goog.require('bloombox.logging.warn');
 
 goog.require('bloombox.telemetry.MAX_XHRs');
 goog.require('bloombox.telemetry.Routine');
@@ -227,12 +228,18 @@ bloombox.telemetry.internals._doTick = function() {
         } else {
           // we can send events - we have space
           bloombox.logging.log('We can send events!');
+          debugger;
         }
+      } else {
+        bloombox.logging.log('No telemetry RPCs to send.');
       }
     } else {
+      bloombox.logging.log('Tick skipped: telemetry is not active.');
       // system is enabled but not active. wait until the next tick.
       bloombox.telemetry.internals.tick();
     }
+  } else {
+    bloombox.logging.warn('Tick skipped: telemetry is not enabled.');
   }
 };
 
@@ -264,6 +271,7 @@ bloombox.telemetry.enqueue = function(rpc) {
 
   // enqueue the event
   bloombox.telemetry.internals.EVENT_QUEUE.enqueue(priority, ev);
+  bloombox.telemetry.internals.stats.updateRPCQueued()
 
   // trigger one tick
   bloombox.telemetry.internals.tick();
