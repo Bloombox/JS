@@ -7,7 +7,7 @@
 
 /*global goog */
 
-goog.require('goog.object.createImmutableView');
+goog.require('goog.object');
 
 goog.provide('bloombox.telemetry.internals.LocalStats');
 goog.provide('bloombox.telemetry.internals.activate');
@@ -57,7 +57,7 @@ bloombox.telemetry.internals.LocalStats;
  * Query whether the telemetry system is enabled.
  *
  * @return {boolean}
- * @package
+ * @public
  */
 bloombox.telemetry.internals.enabled = function() {
   return bloombox.telemetry.internals.state.ENABLED_;
@@ -67,7 +67,7 @@ bloombox.telemetry.internals.enabled = function() {
 /**
  * Disable the telemetry system.
  *
- * @package
+ * @public
  */
 bloombox.telemetry.internals.disable = function() {
   bloombox.telemetry.internals.state.ENABLED_ = false;
@@ -77,7 +77,7 @@ bloombox.telemetry.internals.disable = function() {
 /**
  * Enable the telemetry system.
  *
- * @package
+ * @public
  */
 bloombox.telemetry.internals.enable = function() {
   bloombox.telemetry.internals.state.ENABLED_ = true;
@@ -86,6 +86,8 @@ bloombox.telemetry.internals.enable = function() {
 
 /**
  * Record that a ping was sent.
+ *
+ * @public
  */
 bloombox.telemetry.internals.stats.recordPing = function() {
   bloombox.telemetry.internals.state.LAST_PING_SENT_ = +(new Date());
@@ -94,6 +96,8 @@ bloombox.telemetry.internals.stats.recordPing = function() {
 
 /**
  * Record that a pong was received.
+ *
+ * @public
  */
 bloombox.telemetry.internals.stats.recordPong = function() {
   bloombox.telemetry.internals.state.LAST_PONG_RECEIVED_ = +(new Date());
@@ -103,6 +107,8 @@ bloombox.telemetry.internals.stats.recordPong = function() {
 
 /**
  * Record that an RPC error happened.
+ *
+ * @public
  */
 bloombox.telemetry.internals.stats.recordRPCError = function() {
   bloombox.telemetry.internals.state.EVENT_ERROR_COUNT_++;
@@ -111,6 +117,8 @@ bloombox.telemetry.internals.stats.recordRPCError = function() {
 
 /**
  * Record that an RPC success happened.
+ *
+ * @public
  */
 bloombox.telemetry.internals.stats.recordRPCSuccess = function() {
   bloombox.telemetry.internals.state.EVENT_SUCCESS_COUNT_++;
@@ -121,6 +129,7 @@ bloombox.telemetry.internals.stats.recordRPCSuccess = function() {
  * Update queued RPC count.
  *
  * @param {number} queued_count Current count of queued RPCs.
+ * @public
  */
 bloombox.telemetry.internals.stats.updateRPCQueued = function(queued_count) {
   bloombox.telemetry.internals.state.QUEUED_EVENT_COUNT_ = queued_count;
@@ -131,6 +140,7 @@ bloombox.telemetry.internals.stats.updateRPCQueued = function(queued_count) {
  * Update sent RPC count.
  *
  * @param {number} sent_count Current count of sent RPCs.
+ * @public
  */
 bloombox.telemetry.internals.stats.updateRPCSent = function(sent_count) {
   bloombox.telemetry.internals.state.SENT_EVENT_COUNT_ = sent_count;
@@ -142,7 +152,7 @@ bloombox.telemetry.internals.stats.updateRPCSent = function(sent_count) {
  * Query whether the telemetry system is currently active or paused.
  *
  * @return {boolean}
- * @package
+ * @public
  */
 bloombox.telemetry.internals.active = function() {
   return (
@@ -153,7 +163,7 @@ bloombox.telemetry.internals.active = function() {
 /**
  * Activate the telemetry system.
  *
- * @package
+ * @public
  */
 bloombox.telemetry.internals.activate = function() {
   bloombox.telemetry.internals.state.ACTIVE_ = true;
@@ -162,7 +172,7 @@ bloombox.telemetry.internals.activate = function() {
 /**
  * Deactivate the telemetry system.
  *
- * @package
+ * @public
  */
 bloombox.telemetry.internals.deactivate = function() {
   bloombox.telemetry.internals.state.ACTIVE_ = false;
@@ -174,17 +184,17 @@ bloombox.telemetry.internals.deactivate = function() {
  * Return stats about the local telemetry subsystem.
  *
  * @return {bloombox.telemetry.internals.LocalStats}
- * @package
+ * @public
  */
 bloombox.telemetry.internals.statistics = function() {
-  let stats = (/** @type {bloombox.telemetry.internals.LocalStats} */ {
+  let stats = (/** @type {bloombox.telemetry.internals.LocalStats} */ ({
     'queued': bloombox.telemetry.internals.state.QUEUED_EVENT_COUNT_,
     'sent': bloombox.telemetry.internals.state.SENT_EVENT_COUNT_,
     'errors': bloombox.telemetry.internals.state.EVENT_ERROR_COUNT_,
     'success': bloombox.telemetry.internals.state.EVENT_SUCCESS_COUNT_,
     'lastPing': bloombox.telemetry.internals.state.LAST_PING_SENT_,
     'lastPong': bloombox.telemetry.internals.state.LAST_PONG_RECEIVED_
-  });
+  }));
 
   return /** @type {bloombox.telemetry.internals.LocalStats} */ (
     goog.object.createImmutableView(stats));

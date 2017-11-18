@@ -7,15 +7,28 @@
 
 /*global goog */
 
+goog.require('bloombox.logging.log');
+
 goog.require('bloombox.telemetry.MAX_XHRs');
 goog.require('bloombox.telemetry.Routine');
+goog.require('bloombox.telemetry.XHR_DEBOUNCE');
 goog.require('bloombox.telemetry.XHR_RETRIES');
 goog.require('bloombox.telemetry.XHR_TIMEOUT');
 
 goog.require('bloombox.telemetry.internals.EventQueue');
 goog.require('bloombox.telemetry.internals.HTTP_HEADERS');
 
-goog.require('goog.net.XhrIoManager');
+goog.require('bloombox.telemetry.internals.LocalStats');
+goog.require('bloombox.telemetry.internals.active');
+goog.require('bloombox.telemetry.internals.enabled');
+
+goog.require('bloombox.telemetry.internals.statistics');
+
+goog.require('bloombox.util.debounced');
+
+goog.require('goog.net.XhrManager');
+
+goog.provide('bloombox.telemetry.enqueue');
 
 goog.provide('bloombox.telemetry.internals.rpcpool.MAX_XHRs');
 goog.provide('bloombox.telemetry.internals.rpcpool.MIN_XHRs');
@@ -25,6 +38,7 @@ goog.provide('bloombox.telemetry.internals.rpcpool.XHR_RETRIES');
 goog.provide('bloombox.telemetry.internals.rpcpool.XHR_TIMEOUT');
 
 
+// - Constants and Types - //
 /**
  * Minimum number of XHRs to create.
  *
@@ -162,19 +176,24 @@ bloombox.telemetry.internals.RoutinePriority = {
 };
 
 
+// - Internals - //
 /**
  * Main RPC pool for sending telemetry RPCs.
  *
- * @type {goog.net.XhrIoPool}
- * @private
+ * @type {goog.net.XhrManager}
+ * @package
  */
-bloombox.telemetry.internals.RPC_POOL_ = new goog.net.XhrManager(
+bloombox.telemetry.internals.RPC_POOL = new goog.net.XhrManager(
   bloombox.telemetry.internals.rpcpool.XHR_RETRIES,
   bloombox.telemetry.internals.HTTP_HEADERS,
   bloombox.telemetry.internals.rpcpool.MIN_XHRs,
   bloombox.telemetry.internals.rpcpool.MAX_XHRs,
   bloombox.telemetry.internals.rpcpool.XHR_TIMEOUT,
   bloombox.telemetry.internals.rpcpool.WITH_CREDENTIALS);
+
+
+bloombox.telemetry.internals.RPC_POOL
+  .setTimeoutInterval(bloombox.telemetry.internals.rpcpool.XHR_TIMEOUT);
 
 
 /**
@@ -187,6 +206,50 @@ bloombox.telemetry.internals.EVENT_QUEUE = (
   new bloombox.telemetry.internals.EventQueue());
 
 
+// - Tick - //
+/**
+ * Internal tick dispatch function. Called when the debouncer is triggered.
+ *
+ * @package
+ */
+bloombox.telemetry.internals._doTick = function() {
+  // check if we are enabled
+  if (bloombox.telemetry.internals.enabled()) {
+    if (bloombox.telemetry.internals.active()) {
+      // we are active and enabled. gather subsystem stats.
+      let stats = bloombox.telemetry.internals.statistics();
+      if (stats.queued > 0) {
+        // we have events to send
+        if (bloombox.telemetry.internals.RPC_POOL.getOutstandingCount() <= (
+            bloombox.telemetry.internals.rpcpool.MAX_XHRs)) {
+          // we already have the max number of XHRs. wait until the next tick.
+          bloombox.telemetry.internals.tick();
+        } else {
+          // we can send events - we have space
+        }
+      }
+    } else {
+      // system is enabled but not active. wait until the next tick.
+      bloombox.telemetry.internals.tick();
+    }
+  }
+};
+
+/**
+ * Advance the telemetry subsystem by one step. This involves checking if the
+ * pool has any room for work, then adding a batch of events to the pool if it
+ * does, or aborting if it doesn't.
+ *
+ * @package
+ */
+bloombox.telemetry.internals.tick = bloombox.util.debounced(
+  bloombox.telemetry.XHR_DEBOUNCE, function() {
+  // perform one tick
+  bloombox.telemetry.internals._doTick();
+}, true);
+
+
+// - Enqueue - //
 /**
  * Enqueue an event to eventually be sent.
  *
@@ -198,5 +261,9 @@ bloombox.telemetry.enqueue = function(rpc) {
   let priority = (
     bloombox.telemetry.internals.RoutinePriority[rpc.rpcMethod]);
 
+  // enqueue the event
   bloombox.telemetry.internals.EVENT_QUEUE.enqueue(priority, ev);
+
+  // trigger one tick
+  bloombox.telemetry.internals.tick();
 };

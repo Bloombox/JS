@@ -17,8 +17,6 @@ goog.require('bloombox.telemetry.TELEMETRY_API_ENDPOINT');
 goog.require('bloombox.telemetry.TELEMETRY_API_VERSION');
 goog.require('bloombox.telemetry.VERSION');
 
-goog.require('bloombox.telemetry.enqueue');
-
 goog.require('proto.services.telemetry.v1beta1.OperationStatus');
 goog.require('proto.services.telemetry.v1beta1.TelemetryError');
 goog.require('proto.services.telemetry.v1beta1.TelemetryResponse');
@@ -137,10 +135,10 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(rpcMethod,
   if (typeof endpoint !== 'string')
     throw new bloombox.rpc.RPCException(
       'Invalid RPC endpoint: ' + endpoint);
-  if (payload !== null && payload !== undefined && (
-      typeof payload !== 'object'))
+  if (opt_payload !== null && opt_payload !== undefined && (
+      typeof opt_payload !== 'object'))
     throw new bloombox.rpc.RPCException(
-      'Cannot provide non-object type as payload: ' + payload);
+      'Cannot provide non-object type as payload: ' + opt_payload);
 
   /**
    * RPC routine we're calling.
@@ -186,12 +184,4 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(rpcMethod,
    * @public
    */
   this.failureCallback = failure;
-};
-
-
-/**
- * Send a prepared RPC.
- */
-bloombox.telemetry.rpc.TelemetryRPC.prototype.send = function() {
-  bloombox.telemetry.enqueue(this);
 };

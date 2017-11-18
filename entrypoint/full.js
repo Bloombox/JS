@@ -20,6 +20,7 @@ goog.require('bloombox.logging.log');
 goog.require('bloombox.shop.setup');
 
 // Module: Telemetry
+goog.require('bloombox.telemetry.optout');
 goog.require('bloombox.telemetry.setup');
 
 
@@ -67,4 +68,6 @@ bloombox.setup = function(partner, location, apikey, callback) {
       callback();
     });
   });
+
+  bloombox.telemetry.boot();
 };

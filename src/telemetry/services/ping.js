@@ -7,7 +7,11 @@
 
 /*global goog */
 
+goog.require('bloombox.logging.warn');
+
 goog.require('bloombox.telemetry.Routine');
+
+goog.require('bloombox.telemetry.enqueue');
 
 goog.require('bloombox.telemetry.internals.statistics');
 goog.require('bloombox.telemetry.internals.stats.recordPing');
@@ -39,7 +43,7 @@ bloombox.telemetry.ping = function(callback) {
     bloombox.telemetry.onPingError_);
 
   bloombox.telemetry.internals.stats.recordPing();
-  rpc.send();
+  bloombox.telemetry.enqueue(rpc);
 };
 
 
@@ -49,6 +53,7 @@ bloombox.telemetry.ping = function(callback) {
  * @private
  */
 bloombox.telemetry.onPingError_ = function() {
+  bloombox.logging.warn('Telemetry ping failed.');
   bloombox.telemetry.internals.stats.recordRPCError();
 };
 
