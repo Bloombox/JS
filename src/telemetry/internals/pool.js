@@ -226,6 +226,7 @@ bloombox.telemetry.internals._doTick = function() {
           bloombox.telemetry.internals.tick();
         } else {
           // we can send events - we have space
+          bloombox.logging.log('We can send events!');
         }
       }
     } else {

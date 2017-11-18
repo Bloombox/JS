@@ -68,6 +68,4 @@ bloombox.setup = function(partner, location, apikey, callback) {
       callback();
     });
   });
-
-  bloombox.telemetry.boot();
 };

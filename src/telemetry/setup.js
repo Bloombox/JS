@@ -52,6 +52,7 @@ bloombox.telemetry.setup = function(partner,
       'debug': bloombox.telemetry.DEBUG,
       'config': bloombox.config});
   callback();
+  bloombox.telemetry.boot();
 };
 
 
