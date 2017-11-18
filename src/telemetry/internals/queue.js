@@ -48,6 +48,7 @@ bloombox.telemetry.internals.QueuedEvent = function QueuedEvent(uuid, rpc) {
    * RPC that is enqueued-to-send.
    *
    * @type {bloombox.telemetry.rpc.TelemetryRPC}
+   * @package
    */
   this.rpc = rpc;
 
@@ -55,6 +56,7 @@ bloombox.telemetry.internals.QueuedEvent = function QueuedEvent(uuid, rpc) {
    * UUID for this event.
    *
    * @type {string}
+   * @package
    */
   this.uuid = uuid;
 };
@@ -104,23 +106,28 @@ bloombox.telemetry.internals.EventQueue.prototype.enqueue = function(priority,
  *
  * @param {function(bloombox.telemetry.internals.QueuedEvent)} mapper Mapper
  *        function to handle each dequeued event.
- * @param {number=} opt_amt Number of events to dequeue. Defaults to the
+ * @param {?number=} opt_amt Number of events to dequeue. Defaults to the
  *        default batch size which is configurable from the telemetry base
  *        settings.
  * @package
  */
 bloombox.telemetry.internals.EventQueue.prototype.dequeue = function(mapper,
                                                                      opt_amt) {
-  let countToDequeue = opt_amt === undefined ? (
-    bloombox.telemetry.BATCH_SIZE) : opt_amt;
+  let countToDequeue = opt_amt ? opt_amt : (
+    bloombox.telemetry.BATCH_SIZE), i = 0;
 
-  while (countToDequeue > 0) {
+  while (i < countToDequeue) {
     let ev = this.queue.dequeue();
-    this.count--;
-    bloombox.telemetry.internals.stats.updateRPCQueued(this.count);
-    mapper(ev);
+    if (ev) {
+      // did we get an event?
+      this.count--;
+      bloombox.telemetry.internals.stats.updateRPCQueued(this.count);
+      mapper(ev);
 
-    // ok dequeue the next one
-    countToDequeue--;
+      // ok dequeue the next one
+      i++;
+    } else {
+      break;
+    }
   }
 };

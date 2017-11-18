@@ -7,8 +7,6 @@
 
 /*global goog */
 
-goog.require('goog.object');
-
 goog.provide('bloombox.telemetry.internals.LocalStats');
 goog.provide('bloombox.telemetry.internals.activate');
 goog.provide('bloombox.telemetry.internals.active');
@@ -188,16 +186,18 @@ bloombox.telemetry.internals.deactivate = function() {
  */
 bloombox.telemetry.internals.statistics = function() {
   let stats = (/** @type {bloombox.telemetry.internals.LocalStats} */ ({
-    'queued': bloombox.telemetry.internals.state.QUEUED_EVENT_COUNT_,
-    'sent': bloombox.telemetry.internals.state.SENT_EVENT_COUNT_,
-    'errors': bloombox.telemetry.internals.state.EVENT_ERROR_COUNT_,
-    'success': bloombox.telemetry.internals.state.EVENT_SUCCESS_COUNT_,
-    'lastPing': bloombox.telemetry.internals.state.LAST_PING_SENT_,
-    'lastPong': bloombox.telemetry.internals.state.LAST_PONG_RECEIVED_
+    queued: bloombox.telemetry.internals.state.QUEUED_EVENT_COUNT_,
+    sent: bloombox.telemetry.internals.state.SENT_EVENT_COUNT_,
+    errors: bloombox.telemetry.internals.state.EVENT_ERROR_COUNT_,
+    success: bloombox.telemetry.internals.state.EVENT_SUCCESS_COUNT_,
+    lastPing: bloombox.telemetry.internals.state.LAST_PING_SENT_,
+    lastPong: bloombox.telemetry.internals.state.LAST_PONG_RECEIVED_
   }));
 
-  return /** @type {bloombox.telemetry.internals.LocalStats} */ (
-    goog.object.createImmutableView(stats));
+  if (Object.isFrozen && !Object.isFrozen(stats)) {
+    Object.freeze(stats);
+  }
+  return stats;
 };
 
 

@@ -20,6 +20,7 @@ goog.require('bloombox.telemetry.internals.EventQueue');
 goog.require('bloombox.telemetry.internals.HTTP_HEADERS');
 
 goog.require('bloombox.telemetry.internals.LocalStats');
+goog.require('bloombox.telemetry.internals.QueuedEvent');
 goog.require('bloombox.telemetry.internals.active');
 goog.require('bloombox.telemetry.internals.enabled');
 
@@ -30,6 +31,8 @@ goog.require('bloombox.util.debounced');
 goog.require('goog.net.XhrManager');
 
 goog.provide('bloombox.telemetry.enqueue');
+
+goog.provide('bloombox.telemetry.internals._sendEvent');
 
 goog.provide('bloombox.telemetry.internals.rpcpool.MAX_XHRs');
 goog.provide('bloombox.telemetry.internals.rpcpool.MIN_XHRs');
@@ -207,6 +210,40 @@ bloombox.telemetry.internals.EVENT_QUEUE = (
   new bloombox.telemetry.internals.EventQueue());
 
 
+// - Flush - //
+/**
+ * Flush any queued events by sending them to the RPC pool. By default, this
+ * will follow the configured batching rules, unless `opt_all` is passed, in
+ * which case the system will try to flush all queued events at once.
+ *
+ * @param {boolean=} opt_all Optionally flush the entire queue.
+ */
+bloombox.telemetry.internals.flush = function(opt_all) {
+  let amountToFetch = 0;
+  if (opt_all) {
+    // get queue count as count to fetch
+    let stats = bloombox.telemetry.internals.statistics();
+    amountToFetch = stats.queued;
+  }
+  bloombox.telemetry.internals.EVENT_QUEUE.dequeue(function(queuedEvent) {
+    // for each event that we de-queue,
+    bloombox.telemetry.internals._sendEvent(queuedEvent);
+  }, amountToFetch || null);
+};
+
+
+/**
+ * Send a single event to the RPC pool.
+ *
+ * @param {bloombox.telemetry.internals.QueuedEvent} queuedEvent Event to send.
+ * @package
+ */
+bloombox.telemetry.internals._sendEvent = function(queuedEvent) {
+  bloombox.logging.log(
+    'Sending telemetry event.', queuedEvent.uuid, queuedEvent.rpc);
+};
+
+
 // - Tick - //
 /**
  * Internal tick dispatch function. Called when the debouncer is triggered.
@@ -221,20 +258,20 @@ bloombox.telemetry.internals._doTick = function() {
       let stats = bloombox.telemetry.internals.statistics();
       if (stats.queued > 0) {
         // we have events to send
-        if (bloombox.telemetry.internals.RPC_POOL.getOutstandingCount() <= (
+        if (bloombox.telemetry.internals.RPC_POOL.getOutstandingCount() >= (
             bloombox.telemetry.internals.rpcpool.MAX_XHRs)) {
           // we already have the max number of XHRs. wait until the next tick.
           bloombox.telemetry.internals.tick();
         } else {
           // we can send events - we have space
-          bloombox.logging.log('We can send events!');
-          debugger;
+          bloombox.telemetry.internals.flush();
         }
       } else {
         bloombox.logging.log('No telemetry RPCs to send.');
       }
     } else {
       bloombox.logging.log('Tick skipped: telemetry is not active.');
+
       // system is enabled but not active. wait until the next tick.
       bloombox.telemetry.internals.tick();
     }
@@ -271,7 +308,6 @@ bloombox.telemetry.enqueue = function(rpc) {
 
   // enqueue the event
   bloombox.telemetry.internals.EVENT_QUEUE.enqueue(priority, ev);
-  bloombox.telemetry.internals.stats.updateRPCQueued()
 
   // trigger one tick
   bloombox.telemetry.internals.tick();
