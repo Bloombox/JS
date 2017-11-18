@@ -68,6 +68,9 @@ bloombox.telemetry.onPingSuccess_ = function(callback) {
   bloombox.telemetry.internals.stats.recordRPCError();
   return respond;
 
+  /**
+   * Responder function.
+   */
   function respond() {
     // record the pong
     bloombox.telemetry.internals.stats.recordPong();

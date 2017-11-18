@@ -8,6 +8,8 @@
 /*global goog */
 goog.provide('bloombox.shop.Item');
 
+goog.require('bloombox.util.Exportable');
+
 goog.require('proto.commerce.Item');
 goog.require('proto.commerce.VariantSpec');
 goog.require('proto.temporal.Instant');
@@ -19,6 +21,7 @@ goog.require('proto.temporal.Instant');
  *
  * @param {bloombox.product.Key} key Key for the item.
  * @param {number} count Count of this item to add to the order.
+ * @implements {bloombox.util.Exportable}
  * @constructor
  * @export
  */

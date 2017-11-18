@@ -15,6 +15,9 @@ goog.require('bloombox.testing.subjective.Feeling');
 goog.require('bloombox.testing.subjective.PotencyEstimate');
 goog.require('bloombox.testing.subjective.TasteNote');
 
+goog.require('bloombox.util.Exportable');
+goog.require('bloombox.util.Serializable');
+
 goog.require('proto.identity.ConsumerPreferences');
 goog.require('proto.identity.ConsumerProfile');
 goog.require('proto.identity.EnrollmentSource');
@@ -64,6 +67,8 @@ bloombox.identity.ProfileException = function ProfileException(message) {
  * @param {bloombox.identity.MenuPreferences} menu_prefs User's menu prefs.
  * @throws {bloombox.identity.ProfileException} If params provided are invalid.
  * @constructor
+ * @implements {bloombox.util.Exportable}
+ * @implements {bloombox.util.Serializable}
  * @export
  */
 bloombox.identity.ConsumerProfile = function ConsumerProfile(source,
@@ -102,14 +107,24 @@ bloombox.identity.ConsumerProfile = function ConsumerProfile(source,
  * @public
  * @return {Object} Raw object representing this consumer profile.
  */
-bloombox.identity.ConsumerProfile.prototype.export = function() {
+bloombox.identity.ConsumerProfile.prototype.serialize = function() {
   return {
     'enrollmentSource': this.source,
     'enrollmentChannel': this.channel,
     'preferences': {
-      'menu': this.menuPreferences.export()
+      'menu': this.menuPreferences.serialize()
     }
   };
+};
+
+/**
+ * Export the current consumer profile into a Protobuf message structure.
+ *
+ * @public
+ * @return {proto.identity.ConsumerProfile} Consumer profile message.
+ */
+bloombox.identity.ConsumerProfile.prototype.export = function() {
+  // @TODO: implement
 };
 
 
@@ -128,6 +143,8 @@ bloombox.identity.ConsumerProfile.prototype.export = function() {
  * @param {?bloombox.testing.subjective.PotencyEstimate=} opt_potency
  *        Desired potency level.
  * @param {?bloombox.testing.CannabinoidRatio=} opt_ratio Ratio to initialize.
+ * @implements {bloombox.util.Exportable}
+ * @implements {bloombox.util.Serializable}
  * @constructor
  * @export
  */
@@ -202,7 +219,7 @@ bloombox.identity.MenuPreferences = function MenuPreferences(opt_sections,
  * @public
  * @return {Object} Raw object representing this set of menu prefs.
  */
-bloombox.identity.MenuPreferences.prototype.export = function() {
+bloombox.identity.MenuPreferences.prototype.serialize = function() {
   return {
     'section': this.sections ? Array.from(this.sections) : [],
     'feeling': this.feelings ? Array.from(this.feelings) : [],
@@ -212,6 +229,16 @@ bloombox.identity.MenuPreferences.prototype.export = function() {
     'cannabinoidRatio': this.ratio,
     'desiredPotency': this.potency
   };
+};
+
+/**
+ * Export the current consumer profile into a Protobuf message structure.
+ *
+ * @public
+ * @return {proto.identity.ConsumerProfile} Consumer profile message.
+ */
+bloombox.identity.MenuPreferences.prototype.export = function() {
+  // @TODO: implement
 };
 
 // noinspection JSUnusedGlobalSymbols
@@ -251,6 +278,7 @@ bloombox.identity.MenuPreferences.prototype.clearSpecies = function() {
   return this;
 };
 
+
 // noinspection JSUnusedGlobalSymbols
 /**
  * Add a preferred species type.
@@ -264,6 +292,7 @@ bloombox.identity.MenuPreferences.prototype.addSpecies = function(species) {
   return this;
 };
 
+
 // noinspection JSUnusedGlobalSymbols
 /**
  * Clear all current preferred grow types.
@@ -275,6 +304,7 @@ bloombox.identity.MenuPreferences.prototype.clearGrows = function() {
   this.grows.clear();
   return this;
 };
+
 
 // noinspection JSUnusedGlobalSymbols
 /**
@@ -289,6 +319,7 @@ bloombox.identity.MenuPreferences.prototype.addGrow = function(grow) {
   return this;
 };
 
+
 // noinspection JSUnusedGlobalSymbols
 /**
  * Clear all current preferred feelings.
@@ -300,6 +331,7 @@ bloombox.identity.MenuPreferences.prototype.clearFeelings = function() {
   this.feelings.clear();
   return this;
 };
+
 
 // noinspection JSUnusedGlobalSymbols
 /**
@@ -314,6 +346,7 @@ bloombox.identity.MenuPreferences.prototype.addFeeling = function(feeling) {
   return this;
 };
 
+
 // noinspection JSUnusedGlobalSymbols
 /**
  * Clear currently-set preferred tastes.
@@ -325,6 +358,7 @@ bloombox.identity.MenuPreferences.prototype.clearTastes = function() {
   this.tastes.clear();
   return this;
 };
+
 
 // noinspection JSUnusedGlobalSymbols
 /**
@@ -338,6 +372,7 @@ bloombox.identity.MenuPreferences.prototype.addTaste = function(taste) {
   this.tastes.add(taste);
   return this;
 };
+
 
 // noinspection JSUnusedGlobalSymbols
 /**

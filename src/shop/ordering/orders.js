@@ -29,7 +29,6 @@ goog.require('bloombox.shop.Item');
 goog.require('bloombox.shop.Routine');
 
 goog.require('bloombox.shop.order.DeliveryLocation');
-goog.require('bloombox.shop.order.customerFromResponse');
 
 goog.require('bloombox.shop.rpc.ShopRPC');
 

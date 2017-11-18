@@ -252,7 +252,7 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
 
   // copy in user profile
   if (this.profile !== null) {
-    rawObject['consumerProfile'] = this.profile.export();
+    rawObject['consumerProfile'] = this.profile.serialize();
   }
 
   // copy in password, if it's there
