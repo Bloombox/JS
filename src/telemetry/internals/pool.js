@@ -28,6 +28,8 @@ goog.require('bloombox.telemetry.internals.enabled');
 
 goog.require('bloombox.telemetry.internals.statistics');
 
+goog.require('bloombox.telemetry.internals.stats.recordPing');
+
 goog.require('bloombox.util.debounced');
 
 goog.require('goog.net.XhrManager');
@@ -254,6 +256,9 @@ bloombox.telemetry.internals._sendEvent = function(queuedEvent) {
 
   let serializedPayload = (rpc.payload ? JSON.stringify(rpc.payload) :
     undefined);
+
+  if (rpc.rpcMethod === bloombox.telemetry.Routine.PING)
+    bloombox.telemetry.internals.stats.recordPing();
 
   bloombox.telemetry.internals.RPC_POOL.send(
     queuedEvent.uuid,

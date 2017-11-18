@@ -14,7 +14,6 @@ goog.require('bloombox.telemetry.Routine');
 goog.require('bloombox.telemetry.enqueue');
 
 goog.require('bloombox.telemetry.internals.statistics');
-goog.require('bloombox.telemetry.internals.stats.recordPing');
 goog.require('bloombox.telemetry.internals.stats.recordPong');
 goog.require('bloombox.telemetry.internals.stats.recordRPCError');
 goog.require('bloombox.telemetry.internals.stats.recordRPCSuccess');
@@ -42,8 +41,6 @@ bloombox.telemetry.ping = function(callback) {
     'ping',
     bloombox.telemetry.onPingSuccess_(callback),
     bloombox.telemetry.onPingError_);
-
-  bloombox.telemetry.internals.stats.recordPing();
   bloombox.telemetry.enqueue(rpc);
 };
 
