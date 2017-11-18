@@ -7,6 +7,8 @@
 
 /*global goog */
 
+goog.require('bloombox.config');
+
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
@@ -92,16 +94,17 @@ bloombox.telemetry.TelemetryError = {
  * endpoint.
  *
  * @param {string} endpoint Method to generate an endpoint for.
+ * @param {string} apiKey API key to append to the URL.
  * @return {string} Calculated endpoint URI.
  * @package
  */
-bloombox.telemetry.endpoint = function(endpoint) {
-  return [
+bloombox.telemetry.endpoint = function(endpoint, apiKey) {
+  return [[
     bloombox.telemetry.TELEMETRY_API_ENDPOINT,
     'telemetry',
     bloombox.telemetry.TELEMETRY_API_VERSION,
     endpoint.startsWith('/') ? endpoint.slice(1) : endpoint
-  ].join('/');
+  ].join('/'), ['key', apiKey].join('=')].join('?');
 };
 
 
@@ -127,7 +130,7 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(rpcMethod,
                                                             success,
                                                             failure,
                                                             opt_payload) {
-  let targetEndpoint = bloombox.telemetry.endpoint(endpoint);
+  let apiKey = bloombox.config.key;
 
   if (typeof httpMethod !== 'string')
     throw new bloombox.rpc.RPCException(
@@ -139,6 +142,11 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(rpcMethod,
       typeof opt_payload !== 'object'))
     throw new bloombox.rpc.RPCException(
       'Cannot provide non-object type as payload: ' + opt_payload);
+  if (!apiKey || !(typeof apiKey === 'string'))
+    throw new bloombox.rpc.RPCException('API key could not be resolved.' +
+      ' Please call `setup` before any RPC methods.');
+
+  let targetEndpoint = bloombox.telemetry.endpoint(endpoint, apiKey);
 
   /**
    * RPC routine we're calling.

@@ -25,13 +25,14 @@ goog.provide('bloombox.telemetry.prepareQueuedEvent');
  * a UUID for the transaction if one is not provided.
  *
  * @param {bloombox.telemetry.rpc.TelemetryRPC} rpc RPC to fulfill.
+ * @param {number} priority Priority for the request.
  * @param {string=} opt_uuid UUID to use. If not provided, it will be generated.
  * @return {bloombox.telemetry.internals.QueuedEvent} Event, ready to send.
  * @public
  */
-bloombox.telemetry.prepareQueuedEvent = function(rpc, opt_uuid) {
+bloombox.telemetry.prepareQueuedEvent = function(rpc, priority, opt_uuid) {
   let uuid = opt_uuid === undefined ? bloombox.util.generateUUID() : opt_uuid;
-  return new bloombox.telemetry.internals.QueuedEvent(uuid, rpc);
+  return new bloombox.telemetry.internals.QueuedEvent(uuid, rpc, priority);
 };
 
 
@@ -40,10 +41,13 @@ bloombox.telemetry.prepareQueuedEvent = function(rpc, opt_uuid) {
  *
  * @param {string} uuid UUID for this event.
  * @param {bloombox.telemetry.rpc.TelemetryRPC} rpc RPC object to enqueue.
+ * @param {number} priority Priority for this event.
  * @constructor
  * @package
  */
-bloombox.telemetry.internals.QueuedEvent = function QueuedEvent(uuid, rpc) {
+bloombox.telemetry.internals.QueuedEvent = function QueuedEvent(uuid,
+                                                                rpc,
+                                                                priority) {
   /**
    * RPC that is enqueued-to-send.
    *
@@ -59,6 +63,14 @@ bloombox.telemetry.internals.QueuedEvent = function QueuedEvent(uuid, rpc) {
    * @package
    */
   this.uuid = uuid;
+
+  /**
+   * Priority for this event.
+   *
+   * @type {number}
+   * @package
+   */
+  this.priority = priority;
 };
 
 /**

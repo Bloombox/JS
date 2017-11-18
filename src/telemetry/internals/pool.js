@@ -7,10 +7,12 @@
 
 /*global goog */
 
+goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 goog.require('bloombox.logging.warn');
 
 goog.require('bloombox.telemetry.MAX_XHRs');
+goog.require('bloombox.telemetry.OperationStatus');
 goog.require('bloombox.telemetry.Routine');
 goog.require('bloombox.telemetry.XHR_DEBOUNCE');
 goog.require('bloombox.telemetry.XHR_RETRIES');
@@ -82,7 +84,7 @@ bloombox.telemetry.internals.rpcpool.XHR_TIMEOUT = (
  *
  * @const {boolean}
  */
-bloombox.telemetry.internals.rpcpool.WITH_CREDENTIALS = true;
+bloombox.telemetry.internals.rpcpool.WITH_CREDENTIALS = false;
 
 
 /**
@@ -241,6 +243,81 @@ bloombox.telemetry.internals.flush = function(opt_all) {
 bloombox.telemetry.internals._sendEvent = function(queuedEvent) {
   bloombox.logging.log(
     'Sending telemetry event.', queuedEvent.uuid, queuedEvent.rpc);
+  let rpc = queuedEvent.rpc;
+  let boundCallback = bloombox.telemetry.internals.rpcCallback(queuedEvent);
+
+  let serializedPayload = (rpc.payload ? JSON.stringify(rpc.payload) :
+    undefined);
+
+  bloombox.telemetry.internals.RPC_POOL.send(
+    queuedEvent.uuid,
+    rpc.endpoint,
+    rpc.httpMethod,
+    serializedPayload,
+    undefined,  // @TODO: support for additional headers
+    queuedEvent.priority,
+    boundCallback,
+    bloombox.telemetry.internals.rpcpool.XHR_RETRIES,
+    goog.net.XhrIo.ResponseType.TEXT,
+    bloombox.telemetry.internals.rpcpool.WITH_CREDENTIALS);
+};
+
+
+/**
+ * Prepare an RPC callback function.
+ *
+ * @param {bloombox.telemetry.internals.QueuedEvent} queuedEvent Event being
+ *        called back for.
+ * @return {function(goog.events.Event)} Responder function.
+ */
+bloombox.telemetry.internals.rpcCallback = function(queuedEvent) {
+  return respond;
+
+  /**
+   * Event responder.
+   *
+   * @param {goog.events.Event} event
+   */
+  function respond(event) {
+    if (event.type === goog.net.EventType.COMPLETE) {
+      let xhr = event.target;
+      let contentType = xhr.getResponseHeader('Content-Type');
+      let contentLength = xhr.getResponseHeader('Content-Length');
+
+      // parse status
+      let status = xhr.getStatus();
+      if (status === 200 ||
+          status === 201 ||
+          status === 202 ||
+          status === 204) {
+        bloombox.logging.log('Finished telemetry RPC.',
+          {'queuedEvent': queuedEvent, 'event': event, 'xhr': xhr});
+
+        if (!contentLength || parseInt(contentLength, 10) === 0) {
+          // no response body but still successful
+          let status = bloombox.telemetry.OperationStatus.OK;
+          queuedEvent.rpc.successCallback(status);
+        } else {
+          // we have a response body
+          if (contentType === 'application/json' ||
+              contentType.startsWith('application/json')) {
+
+            debugger;
+
+            let status = bloombox.telemetry.OperationStatus.OK;
+            queuedEvent.rpc.successCallback(status);
+          }
+        }
+      }
+    } else if (event.type === goog.net.EventType.ERROR) {
+      // the runtime reports that an error occurred
+      bloombox.logging.error('An error occurred while fulfilling a telemetry ' +
+                             'service RPC.',
+        {'queuedEvent': queuedEvent, 'event': event, 'xhr': event.target});
+      let err = bloombox.telemetry.TelemetryError.UNKNOWN;
+      queuedEvent.rpc.failureCallback(err);
+    }
+  }
 };
 
 
@@ -302,9 +379,9 @@ bloombox.telemetry.internals.tick = bloombox.util.debounced(
  * @public
  */
 bloombox.telemetry.enqueue = function(rpc) {
-  let ev = bloombox.telemetry.prepareQueuedEvent(rpc);
   let priority = (
     bloombox.telemetry.internals.RoutinePriority[rpc.rpcMethod]);
+  let ev = bloombox.telemetry.prepareQueuedEvent(rpc, priority);
 
   // enqueue the event
   bloombox.telemetry.internals.EVENT_QUEUE.enqueue(priority, ev);

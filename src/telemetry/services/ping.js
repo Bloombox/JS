@@ -32,6 +32,7 @@ goog.provide('bloombox.telemetry.ping');
  *
  * @param {function(number)} callback Callback to dispatch once we receive the
  *        corresponding PONG.
+ * @export
  */
 bloombox.telemetry.ping = function(callback) {
   // make an RPC so we can send it via the pool
