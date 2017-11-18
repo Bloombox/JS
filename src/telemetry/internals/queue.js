@@ -121,6 +121,7 @@ bloombox.telemetry.internals.EventQueue.prototype.enqueue = function(priority,
  * @param {?number=} opt_amt Number of events to dequeue. Defaults to the
  *        default batch size which is configurable from the telemetry base
  *        settings.
+ * @return {number} Count of events dequeued in this batch.
  * @package
  */
 bloombox.telemetry.internals.EventQueue.prototype.dequeue = function(mapper,
@@ -142,4 +143,5 @@ bloombox.telemetry.internals.EventQueue.prototype.dequeue = function(mapper,
       break;
     }
   }
+  return i;
 };

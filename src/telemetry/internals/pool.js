@@ -221,16 +221,22 @@ bloombox.telemetry.internals.EVENT_QUEUE = (
  * @param {boolean=} opt_all Optionally flush the entire queue.
  */
 bloombox.telemetry.internals.flush = function(opt_all) {
+  let stats = bloombox.telemetry.internals.statistics();
   let amountToFetch = 0;
   if (opt_all) {
     // get queue count as count to fetch
-    let stats = bloombox.telemetry.internals.statistics();
     amountToFetch = stats.queued;
   }
-  bloombox.telemetry.internals.EVENT_QUEUE.dequeue(function(queuedEvent) {
+  let dequeued = bloombox.telemetry.internals.EVENT_QUEUE.dequeue((
+    function(queuedEvent) {
     // for each event that we de-queue,
     bloombox.telemetry.internals._sendEvent(queuedEvent);
-  }, amountToFetch || null);
+  }), amountToFetch || null);
+
+  if ((stats.queued - dequeued) > 0) {
+    // we have tasks remaining in the queue - perform at least one more tick
+    bloombox.telemetry.internals.tick();
+  }
 };
 
 
