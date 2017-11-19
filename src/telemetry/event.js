@@ -160,10 +160,11 @@ bloombox.telemetry.TelemetryEvent.prototype.renderContext = function(global) {};
  * specification for the payload is event specific, so this method resolves that
  * for the generic case of rendering and sending those payloads.
  *
+ * @param {proto.analytics.Context} ctx Merged global and local context.
  * @return {?Object} Either `null`, indicating no payload should be attached, or
  * an object that is serializable via JSON.
  */
-bloombox.telemetry.TelemetryEvent.prototype.renderPayload = function() {};
+bloombox.telemetry.TelemetryEvent.prototype.renderPayload = function(ctx) {};
 
 
 /**
@@ -271,7 +272,7 @@ bloombox.telemetry.BaseEvent = function(context,
 /**
  * Retrieve this event's corresponding RPC method.
  *
- * @return {bloombox.telemetry.Routine} RPC routine for this event.
+ * @return {bloombox.telemetry.Routine} RPC routine for this ev ent.
  * @public
  * @abstract
  */
@@ -280,14 +281,28 @@ bloombox.telemetry.BaseEvent.prototype.rpcMethod = function() {};
 
 // noinspection GjsLint
 /**
- * Abstract base implementation of proto/struct export, which must be defined
- * on every event implementor of `BaseEvent`.
+ * Abstract base method of proto/struct export, which must be defined on every
+ * event implementor of `BaseEvent`.
  *
  * @return {T}
  * @public
  * @abstract
  */
 bloombox.telemetry.BaseEvent.prototype.export = function() {};
+
+
+// noinspection GjsLint
+/**
+ * Abstract base method to provide the attached payload, if any, as the final
+ * payload to send for the event.
+ *
+ * @abstract
+ * @param {proto.analytics.Context} context Context to render.
+ * @return {?Object} Either `null`, indicating no payload should be attached, or
+ * the attached payload object, provided at construction time.
+ * @public
+ */
+bloombox.telemetry.BaseEvent.prototype.renderPayload = function(context) {};
 
 
 // - Base Event: Default Implementations - //
@@ -332,13 +347,13 @@ bloombox.telemetry.BaseEvent.prototype.onFailure = function(op, error, code) {
  *         or context values are invalid.
  */
 bloombox.telemetry.BaseEvent.prototype.generateRPC = function() {
-  let rpcMethod = this.rpcMethod();
-  let rpcPayload = this.renderPayload();
-  let uuid = this.renderUUID();
-
   // fetch global context and render
   let globalContext = bloombox.telemetry.globalContext().export();
   let mergedContext = this.renderContext(globalContext);
+
+  let rpcMethod = this.rpcMethod();
+  let rpcPayload = this.renderPayload(mergedContext);
+  let uuid = this.renderUUID();
 
   return new bloombox.telemetry.rpc.TelemetryRPC(
     uuid,
@@ -414,9 +429,11 @@ bloombox.telemetry.BaseEvent.prototype.send = function() {
  * @public
  */
 bloombox.telemetry.BaseEvent.prototype.renderContext = function(global) {
+  debugger;
   let local = /** @type {proto.analytics.Context} */ (this.context.export());
   let merged = bloombox.util.proto.merge(local, global);
   this.validateContext(merged);
+  debugger;
   return merged;
 };
 
@@ -437,19 +454,6 @@ bloombox.telemetry.BaseEvent.prototype.validateContext = function(context) {
   if (!context.getGroup())
     throw new bloombox.telemetry.ContextException(
       'Missing device session ID.');
-};
-
-
-/**
- * Default implementation. Provide the attached payload, if any, as the final
- * payload to send for the event.
- *
- * @return {?Object} Either `null`, indicating no payload should be attached, or
- * the attached payload object, provided at construction time.
- * @public
- */
-bloombox.telemetry.BaseEvent.prototype.renderPayload = function() {
-  return this.payload;
 };
 
 

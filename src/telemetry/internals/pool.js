@@ -317,9 +317,6 @@ bloombox.telemetry.internals.rpcCallback = function(queuedEvent) {
           // we have a response body
           if (contentType === 'application/json' ||
               contentType.startsWith('application/json')) {
-
-            debugger;
-
             let status = bloombox.telemetry.OperationStatus.OK;
             bloombox.telemetry.internals.stats.recordRPCSuccess();
             queuedEvent.rpc.successCallback(status);

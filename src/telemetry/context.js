@@ -14,6 +14,8 @@ goog.require('bloombox.config');
 goog.require('bloombox.logging.log');
 
 goog.require('bloombox.util.Exportable');
+goog.require('bloombox.util.Inflatable');
+goog.require('bloombox.util.Serializable');
 goog.require('bloombox.util.b64');
 goog.require('bloombox.util.generateUUID');
 
@@ -54,18 +56,21 @@ goog.provide('bloombox.telemetry.resolveSessionID');
  * Named event collection.
  *
  * @param {string} name Name for this collection.
+ * @param {boolean=} opt_b64encode Whether to base64 encode. Pass as truthy when
+ *        the collection name is not already base64 encoded.
  * @constructor
  * @implements {bloombox.util.Exportable<proto.analytics.Collection>}
+ * @implements {bloombox.util.Serializable}
  * @public
  */
-bloombox.telemetry.Collection = function Collection(name) {
+bloombox.telemetry.Collection = function Collection(name, opt_b64encode) {
   /**
    * Name for this collection.
    *
    * @type {string}
    * @export
    */
-  this.name = bloombox.util.b64.encode(name);
+  this.name = !opt_b64encode ? bloombox.util.b64.encode(name) : name;
 };
 
 
@@ -77,7 +82,7 @@ bloombox.telemetry.Collection = function Collection(name) {
  * @export
  */
 bloombox.telemetry.Collection.named = function(name) {
-  return new bloombox.telemetry.Collection(name);
+  return new bloombox.telemetry.Collection(name, true);
 };
 
 
@@ -90,6 +95,20 @@ bloombox.telemetry.Collection.prototype.export = function() {
   let collection = new proto.analytics.Collection();
   collection.setName(this.name);
   return collection;
+};
+
+
+/**
+ * Render this collection object into a JSON-serializable structure suitable for
+ * use over-the-wire.
+ *
+ * @return {Object}
+ * @public
+ */
+bloombox.telemetry.Collection.prototype.serialize = function() {
+  return {
+    'name': this.name
+  };
 };
 
 
@@ -131,6 +150,8 @@ bloombox.telemetry.ContextException = function ContextException(message) {
  *        property is specified as the detected info.
  * @constructor
  * @implements {bloombox.util.Exportable<proto.analytics.Context>}
+ * @implements {bloombox.util.Inflatable<proto.analytics.Context, bloombox.telemetry.Context>}
+ * @implements {bloombox.util.Serializable}
  * @throws {bloombox.telemetry.ContextException}
  * @public
  */
@@ -207,6 +228,24 @@ bloombox.telemetry.Context = function(opt_collection,
    */
   this.location = locationKey;
 
+  // device the device key, if any
+  let deviceKey;
+  if (opt_device && typeof opt_device === 'string') {
+    deviceKey = new proto.partner.PartnerDeviceKey();
+    deviceKey.setUuid(/** @type {string} */ (opt_device));
+    deviceKey.setLocation(locationKey);
+  } else {
+    deviceKey = null;
+  }
+
+  /**
+   * Known device key or UUID to attribute this event to. Defaults to `null`,
+   * indicating an anonymous device, like a user's browser.
+   *
+   * @type {?proto.partner.PartnerDeviceKey}
+   * @public
+   */
+  this.device = deviceKey;
 
   // decode the user key, if any
   let user;
@@ -245,25 +284,6 @@ bloombox.telemetry.Context = function(opt_collection,
    */
   this.order = order;
 
-  // device the device key, if any
-  let deviceKey;
-  if (opt_device && typeof opt_device === 'string') {
-    deviceKey = new proto.partner.PartnerDeviceKey();
-    deviceKey.setUuid(/** @type {string} */ (opt_device));
-    deviceKey.setLocation(locationKey);
-  } else {
-    deviceKey = null;
-  }
-
-  /**
-   * Known device key or UUID to attribute this event to. Defaults to `null`,
-   * indicating an anonymous device, like a user's browser.
-   *
-   * @type {?proto.partner.PartnerDeviceKey}
-   * @public
-   */
-  this.device = deviceKey;
-
   // attach browser context, if any
   /**
    * Browser context, if any, or `null`.
@@ -271,6 +291,261 @@ bloombox.telemetry.Context = function(opt_collection,
    * @public
    */
   this.browser = opt_browser || null;
+};
+
+
+/**
+ * Inflate context from a Protobuf object.
+ *
+ * @param {proto.analytics.Context} protob Proto to copy from.
+ * @return {bloombox.telemetry.Context} Context object from its proto.
+ */
+bloombox.telemetry.Context.prototype.setFromProto = function(protob) {
+  // copy in partner, location, device keys
+  let partnerKey = (protob.getPartner().getCode() ||
+    protob.getLocation().getPartner().getCode() ||
+    protob.getDevice().getLocation().getPartner().getCode()) || null;
+
+  let locationKey = (protob.getLocation().getCode() ||
+    protob.getDevice().getLocation().getCode()) || null;
+
+  let deviceKey = protob.getDevice().getUuid() || null;
+
+  if (partnerKey) {
+    this.partner = (protob.getPartner() ||
+      protob.getLocation().getPartner() ||
+      protob.getDevice().getLocation().getPartner());
+  }
+
+  if (locationKey) {
+    this.location = (protob.getLocation() ||
+      protob.getDevice().getLocation());
+  }
+
+  if (deviceKey) {
+    this.device = protob.getDevice();
+  }
+
+  // copy in fingerprint and session
+  let sessionKey = protob.getGroup();
+  let fingerprintKey = protob.getFingerprint();
+  if (sessionKey) {
+    this.session = sessionKey;
+  }
+  if (fingerprintKey) {
+    this.fingerprint = fingerprintKey;
+  }
+
+  // copy in collection
+  let collectionName = protob.getCollection().getName();
+  if (collectionName) {
+    this.collection = new bloombox.telemetry.Collection(collectionName, false);
+  }
+
+  // resolve user
+  let userId = protob.getUser().getUid();
+  if (userId) {
+    this.user = protob.getUser();
+  }
+
+  // resolve order
+  let orderId = protob.getOrder().getId();
+  if (orderId) {
+    this.order = protob.getOrder();
+  }
+
+  // resolve browser context - if it's set at all it's browser context
+  if (protob.getDeviceContextCase() !== (
+      proto.analytics.Context.DeviceContextCase.DEVICE_CONTEXT_NOT_SET))
+    this.browser = protob.getBrowser();
+  return this;
+};
+
+
+/**
+ * Serialize the protobuf form of local browser context, into an object usable
+ * over-the-wire.
+ *
+ * @param {proto.analytics.BrowserDeviceContext} protob Browser context.
+ * @return {Object} Serialized browser context.
+ */
+bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
+  return {
+    'browserType': protob.getBrowserType(),
+    'deviceType': protob.getDeviceType(),
+    'version': {
+      'namedVersion': {
+        'name': protob.getVersion().getNamedVersion().getName()
+      }
+    },
+    'os': {
+      'type': protob.getOs().getType(),
+      'version': {
+        'namedVersion': {
+          'name': (
+            protob.getOs().getVersion().getNamedVersion().getName())
+        }
+      }
+    },
+    'app': {
+      'type': protob.getApp().getType(),
+      'origin': protob.getApp().getOrigin(),
+      'version': {
+        'namedVersion': {
+          'name': (
+            protob.getApp().getVersion().getNamedVersion().getName())
+        }
+      },
+    },
+    'library': {
+      'variant': protob.getLibrary().getVariant(),
+      'version': {
+        'namedVersion': {
+          'name': (
+            protob.getLibrary().getVersion().getNamedVersion().getName())
+        }
+      }
+    }
+  };
+};
+
+
+/**
+ * Render a protobuf message representing this context, into a native JavaScript
+ * object that is suitable for transmission over-the-wire.
+ *
+ * @param {proto.analytics.Context} context Context proto to render.
+ * @return {Object} Serialized version of the proto object.
+ * @public
+ */
+bloombox.telemetry.Context.serializeProto = function(context) {
+  let baseContext = {};
+
+  // string data
+  if (context.getCollection().getName())
+    baseContext['collection'] = {'name': context.getCollection().getName()};
+  if (context.getFingerprint())
+    baseContext['fingerprint'] = context.getFingerprint();
+  if (context.getGroup())
+    baseContext['group'] = context.getGroup();
+
+  // key contexts
+  if (context.getUser().getUid())
+    baseContext['user'] = {'uid': context.getUser().getUid()};
+  if (context.getOrder().getId())
+    baseContext['order'] = {'id': context.getOrder().getId()};
+
+  // setup partner context
+  switch (context.getPartnerContextCase()) {
+    case proto.analytics.Context.PartnerContextCase.PARTNER:
+      baseContext['partner'] = {'code': context.getPartner().getCode()};
+      break;
+    case proto.analytics.Context.PartnerContextCase.LOCATION:
+      baseContext['location'] = {
+        'code': context.getLocation().getCode(),
+        'partner': context.getLocation().getPartner().getCode()};
+      break;
+    case proto.analytics.Context.PartnerContextCase.DEVICE:
+      baseContext['device'] = {
+        'uuid': context.getDevice().getUuid(),
+        'location': {
+          'code': context.getDevice().getLocation().getCode(),
+          'partner': {
+            'code': context.getDevice().getLocation().getPartner().getCode()}}};
+      break;
+    default:
+      // it is unset: just continue onwards
+      break;
+  }
+
+  // setup browser context
+  switch (context.getDeviceContextCase()) {
+    case proto.analytics.Context.DeviceContextCase.BROWSER:
+      // browser is set
+      baseContext['browser'] = (
+        bloombox.telemetry.Context.serializeBrowserContext(
+          context.getBrowser()));
+      break;
+    default:
+      // it is unset: just continue onwards
+      break;
+  }
+  return baseContext;
+};
+
+
+/**
+ * Render this context object into a JSON-serializable structure suitable for
+ * use over-the-wire.
+ *
+ * @return {Object}
+ * @public
+ */
+bloombox.telemetry.Context.prototype.serialize = function() {
+  let baseContext = {};
+
+  // add collection, if present
+  if (this.collection)
+    baseContext['collection'] = this.collection.serialize();
+
+  // add fingerprint, if present
+  if (this.fingerprint)
+    baseContext['fingerprint'] = this.fingerprint;
+
+  // add session key, if present
+  if (this.session)
+    baseContext['group'] = this.session;
+
+  // add user key, if present
+  if (this.user)
+    baseContext['user'] = {
+      'uid': this.user.getUid()
+    };
+
+  // add order key, if present
+  if (this.order)
+    baseContext['order'] = {
+      'id': this.order.getId()
+    };
+
+  // consider partner context, etc
+  if (this.partner) {
+    if (this.location) {
+      if (this.device) {
+        // full device context
+        baseContext['device'] = {
+          'uuid': this.device.getUuid(),
+          'location': {
+            'code': this.device.getLocation().getCode(),
+            'partner': {
+              'code': this.device.getLocation().getPartner().getCode()
+            }
+          }
+        };
+      } else {
+        // location-only context
+        baseContext['location'] = {
+          'code': this.location.getCode(),
+          'partner': {
+            'code': this.location.getPartner().getCode()
+          }
+        };
+      }
+    } else {
+      // partner-only context
+      baseContext['partner'] = {
+        'code': this.partner.getCode()
+      };
+    }
+  } else {
+    // no partner/location/device context at all
+  }
+
+  // consider browser context
+  if (this.browser)
+    baseContext['browser'] = (
+      bloombox.telemetry.Context.serializeBrowserContext(this.browser));
+  return baseContext;
 };
 
 

@@ -62,13 +62,9 @@ bloombox.telemetry.Event = function Event(collection,
    */
   this.occurred = opt_occurred || +(new Date());
 
-  // build context from collection
-  let builtContext = (opt_context ||
-    new bloombox.telemetry.Context(collection));
-
   bloombox.telemetry.BaseEvent.apply(
     this,
-    [builtContext,
+    [new bloombox.telemetry.Context(),
      bloombox.telemetry.Routine.EVENT,
      opt_payload,
      this.occurred]);
@@ -157,8 +153,8 @@ bloombox.telemetry.Event.prototype.export = function() {
   let occurrence = new proto.temporal.Instant();
 
   // render local values
-  let payload = this.renderPayload();
   let renderedContext = this.renderContext(globalContextPb);
+  let payload = this.renderPayload(renderedContext);
   let occurred = this.renderOccurrence(+(new Date()));
   occurrence.setTimestamp(occurred);
 
@@ -172,6 +168,33 @@ bloombox.telemetry.Event.prototype.export = function() {
   event.setContext(renderedContext);
   return event;
 };
+
+
+/**
+ * Provide the attached payload, if any, as the final payload to send for the
+ * event, along with serialized event context.
+ *
+ * @param {proto.analytics.Context} ctx Merged global and local context.
+ * @return {?Object} Either `null`, indicating no payload should be attached, or
+ * the attached payload object, provided at construction time.
+ * @override
+ * @public
+ */
+bloombox.telemetry.Event.prototype.renderPayload = function(ctx) {
+  debugger;
+  let occurrence = this.renderOccurrence(+(new Date()));
+  let serializedContext = bloombox.telemetry.Context.serializeProto(ctx);
+
+  let basePayload = {
+    'context': serializedContext,
+    'occurred': occurrence
+  };
+
+  if (this.payload)
+    basePayload['payload'] = this.payload;
+  return basePayload;
+};
+
 
 
 /**
@@ -198,7 +221,7 @@ bloombox.telemetry.InternalCollectionSeparator_ = ':';
  * @const {string}
  * @private
  */
-bloombox.telemetry.InternalCollectionVersion_ = 'v1';
+bloombox.telemetry.InternalCollectionVersion_ = 'v1beta1';
 
 
 /**
