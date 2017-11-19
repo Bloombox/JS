@@ -112,12 +112,12 @@ bloombox.telemetry.ContextException = function ContextException(message) {
 /**
  * Gathered event context.
  *
- * @param {?bloombox.telemetry.Collection} collection Collection to file this
- *        event against.
- * @param {?string} partner Partner code to apply to this context.
- * @param {?string} location Location code to apply to this context.
- * @param {string} fingerprint Unique device UUID for the active device.
- * @param {string} session Unique session UUID for the active session.
+ * @param {?bloombox.telemetry.Collection=} opt_collection Collection to file
+ *        this event against.
+ * @param {?string=} opt_partner Partner code to apply to this context.
+ * @param {?string=} opt_location Location code to apply to this context.
+ * @param {?string=} opt_fingerprint Unique device UUID for the active device.
+ * @param {?string=} opt_session Unique session UUID for the active session.
  * @param {?string=} opt_user Optional. User key to apply to this context.
  * @param {?string=} opt_device Optional. Device key to apply to this context.
  *        This is different from the device fingerprint, in that it uniquely
@@ -129,15 +129,15 @@ bloombox.telemetry.ContextException = function ContextException(message) {
  *        info would normally be sent. When generating global context, this
  *        property is specified as the detected info.
  * @constructor
- * @implements {bloombox.util.Exportable}
+ * @implements {bloombox.util.Exportable<proto.analytics.Context>}
  * @throws {bloombox.telemetry.ContextException}
- * @package
+ * @public
  */
-bloombox.telemetry.Context = function(collection,
-                                      partner,
-                                      location,
-                                      fingerprint,
-                                      session,
+bloombox.telemetry.Context = function(opt_collection,
+                                      opt_partner,
+                                      opt_location,
+                                      opt_fingerprint,
+                                      opt_session,
                                       opt_user,
                                       opt_device,
                                       opt_order,
@@ -145,30 +145,32 @@ bloombox.telemetry.Context = function(collection,
   /**
    * Collection to apply this event to.
    *
-   * @type {?proto.analytics.Collection}
+   * @type {?bloombox.telemetry.Collection}
    * @public
    */
-  this.collection = collection.export();
+  this.collection = opt_collection || null;
 
   /**
    * Unique fingerprint for this device context. Always present.
    *
-   * @type {string}
+   * @type {?string}
+   * @public
    */
-  this.fingerprint = fingerprint;
+  this.fingerprint = opt_fingerprint || null;
 
   /**
    * Session ID for this user/browser session context.
    *
-   * @type {string}
+   * @type {?string}
+   * @public
    */
-  this.session = session;
+  this.session = opt_session || null;
 
   // make us a partner key
   let partnerKey;
-  if (partner !== null) {
+  if (opt_partner) {
     partnerKey = new proto.partner.PartnerKey();
-    partnerKey.setCode(partner);
+    partnerKey.setCode(opt_partner);
   } else {
     partnerKey = null;
   }
@@ -183,11 +185,11 @@ bloombox.telemetry.Context = function(collection,
 
   // make us a partner key
   let locationKey;
-  if (partner !== null && location !== null) {
+  if (opt_partner && opt_location) {
     locationKey = new proto.partner.PartnerLocationKey();
-    locationKey.setCode(location);
+    locationKey.setCode(opt_location);
     locationKey.setPartner(partnerKey);
-  } else if (partner === null && location !== null) {
+  } else if (opt_partner && opt_location) {
     // failure: must specify a partner to specify a location
     throw new bloombox.telemetry.ContextException(
       'Cannot provide location context without partner context.');
@@ -220,6 +222,7 @@ bloombox.telemetry.Context = function(collection,
    * currently-active user.
    *
    * @type {?proto.identity.UserKey}
+   * @public
    */
   this.user = user;
 
@@ -256,6 +259,7 @@ bloombox.telemetry.Context = function(collection,
    * indicating an anonymous device, like a user's browser.
    *
    * @type {?proto.partner.PartnerDeviceKey}
+   * @public
    */
   this.device = deviceKey;
 
@@ -263,6 +267,7 @@ bloombox.telemetry.Context = function(collection,
   /**
    * Browser context, if any, or `null`.
    * @type {?proto.analytics.BrowserDeviceContext}
+   * @public
    */
   this.browser = opt_browser || null;
 };
@@ -272,31 +277,24 @@ bloombox.telemetry.Context = function(collection,
  * Export the current analytics context as a protobuf message.
  *
  * @return {proto.analytics.Context}
+ * @public
  */
 bloombox.telemetry.Context.prototype.export = function() {
   let context = new proto.analytics.Context();
 
-  // resolve fingerprint and session
-  if (!this.fingerprint)
-    throw new bloombox.telemetry.ContextException(
-      'Missing device fingerprint ID.');
-  if (!this.session)
-    throw new bloombox.telemetry.ContextException(
-      'Missing device session ID.');
-
   // attach required client context, and group by session
-  context.setFingerprint(this.fingerprint);
-  context.setGroup(this.session);
+  if (this.fingerprint) context.setFingerprint(this.fingerprint);
+  if (this.session) context.setGroup(this.session);
 
   // attach misc context
-  if (this.collection !== null) context.setCollection(this.collection);
-  if (this.user !== null) context.setUser(this.user);
-  if (this.order !== null) context.setOrder(this.order);
+  if (this.collection) context.setCollection(this.collection.export());
+  if (this.user) context.setUser(this.user);
+  if (this.order) context.setOrder(this.order);
 
   // calculate partner context
-  if (this.partner !== null) {
-    if (this.location !== null) {
-      if (this.device !== null) {
+  if (this.partner) {
+    if (this.location) {
+      if (this.device) {
         // full device->location->partner context
         context.setDevice(this.device);
       } else {
@@ -310,7 +308,7 @@ bloombox.telemetry.Context.prototype.export = function() {
   }
 
   // device context
-
+  if (this.browser) context.setBrowser(this.browser);
   return context;
 };
 
