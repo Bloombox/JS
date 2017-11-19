@@ -414,10 +414,9 @@ bloombox.telemetry.BaseEvent.prototype.send = function() {
  * @public
  */
 bloombox.telemetry.BaseEvent.prototype.renderContext = function(global) {
-  debugger;
   let local = /** @type {proto.analytics.Context} */ (this.context.export());
   let merged = bloombox.util.proto.merge(local, global);
-  this.validateContext_(merged);
+  this.validateContext(merged);
   return merged;
 };
 
@@ -428,11 +427,10 @@ bloombox.telemetry.BaseEvent.prototype.renderContext = function(global) {
  * @param {proto.analytics.Context} context Final context to validate.
  * @throws {bloombox.telemetry.ContextException} If required context is missing
  *         or context values are invalid.
- * @private
+ * @protected
  */
-bloombox.telemetry.BaseEvent.prototype.validateContext_ = function(context) {
-  debugger;
-  // resolve fingerprint and session
+bloombox.telemetry.BaseEvent.prototype.validateContext = function(context) {
+  // fingerprint and session are always required
   if (!context.getFingerprint())
     throw new bloombox.telemetry.ContextException(
       'Missing device fingerprint ID.');

@@ -86,6 +86,57 @@ bloombox.telemetry.Event.prototype.rpcMethod = function() {
 
 
 /**
+ * Indicate whether this event is bound for an internal event collection.
+ *
+ * @return {boolean} True if this is an internal event.
+ * @private
+ */
+bloombox.telemetry.Event.prototype.isInternalEvent_ = function() {
+  return this.collection.name.startsWith((
+      bloombox.telemetry.InternalCollectionPrefix));
+};
+
+
+/**
+ * Additionally validate that partner and location codes are present for non-
+ * internal event collections.
+ *
+ * @param {proto.analytics.Context} context Final context to validate.
+ * @throws {bloombox.telemetry.ContextException} If required context is missing
+ *         or context values are invalid.
+ * @protected
+ * @override
+ */
+bloombox.telemetry.Event.prototype.validateContext = function(context) {
+  // validate context w/super method first
+  bloombox.telemetry.BaseEvent.prototype
+    .validateContext.apply(this, [context]);
+
+  // then validate that we're either pushing an internal event, or we have a
+  // valid partner and location code
+  if (!this.isInternalEvent_) {
+    // get location key
+    let locationKey = context.getLocation();
+    if (!locationKey || !locationKey.getCode()) {
+      // we are missing a location key or code
+      throw new bloombox.telemetry.ContextException(
+        'Must specify a location code before sending analytics events.');
+    } else {
+      // we have a location key and code
+      let partnerKey = locationKey.getPartner();
+      if (!partnerKey || !partnerKey.getCode()) {
+        // we are missing a partner key or code
+        throw new bloombox.telemetry.ContextException(
+          'Must specify a partner code before sending analytics events.');
+      }
+    }
+  }
+
+  // if we get here, everything is a-o-k.
+};
+
+
+/**
  * Export this generic event as a `proto.analytics.Event`, suitable for sending
  * to the telemetry service. This includes:
  * - Rendering the context with `renderContext`
@@ -127,9 +178,9 @@ bloombox.telemetry.Event.prototype.export = function() {
  * Prefix to use for internal collection names.
  *
  * @const {string}
- * @private
+ * @package
  */
-bloombox.telemetry.InternalCollectionPrefix_ = '_bloom_';
+bloombox.telemetry.InternalCollectionPrefix = '_bloom_';
 
 
 /**
@@ -158,7 +209,7 @@ bloombox.telemetry.InternalCollectionVersion_ = 'v1';
  */
 bloombox.telemetry.internalCollectionName = function(name) {
   return [
-    bloombox.telemetry.InternalCollectionPrefix_,
+    bloombox.telemetry.InternalCollectionPrefix,
     bloombox.telemetry.InternalCollectionVersion_,
     name
   ].join(bloombox.telemetry.InternalCollectionSeparator_);
