@@ -10,9 +10,9 @@
 
 goog.require('bloombox.telemetry.BaseEvent');
 goog.require('bloombox.telemetry.Collection');
-goog.require('bloombox.telemetry.Exportable');
-
 goog.require('bloombox.telemetry.globalContext');
+
+goog.require('bloombox.util.Exportable');
 
 goog.require('proto.analytics.Event');
 goog.require('proto.google.protobuf.Struct');
@@ -36,7 +36,7 @@ goog.provide('bloombox.telemetry.Event');
  *        construction.
  * @constructor
  * @extends {bloombox.telemetry.BaseEvent}
- * @implements {bloombox.telemetry.Exportable}
+ * @implements {bloombox.util.Exportable}
  * @public
  */
 bloombox.telemetry.Event = function Event(collection,

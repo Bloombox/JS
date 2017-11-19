@@ -105,6 +105,15 @@ bloombox.telemetry.TelemetryEvent = function() {};
 
 
 /**
+ * Generate an RPC transaction corresponding to this event, that reports its
+ * encapsulated information to the telemetry service.
+ *
+ * @return {bloombox.telemetry}
+ */
+bloombox.telemetry.TelemetryEvent.prototype.generateRPC = function() {};
+
+
+/**
  * Every event is associated with an RPC method that is used to transmit it.
  * This method resolves the associated method for a given event.
  *

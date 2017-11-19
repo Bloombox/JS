@@ -15,6 +15,7 @@ goog.require('bloombox.logging.log');
 goog.require('bloombox.rpc.RPC');
 goog.require('bloombox.rpc.RPCException');
 
+goog.require('bloombox.telemetry.Context');
 goog.require('bloombox.telemetry.TELEMETRY_API_ENDPOINT');
 goog.require('bloombox.telemetry.TELEMETRY_API_VERSION');
 goog.require('bloombox.telemetry.VERSION');
@@ -27,6 +28,7 @@ goog.provide('bloombox.telemetry.OperationStatus');
 goog.provide('bloombox.telemetry.Routine');
 goog.provide('bloombox.telemetry.TelemetryError');
 goog.provide('bloombox.telemetry.endpoint');
+goog.provide('bloombox.telemetry.renderEndpoint');
 goog.provide('bloombox.telemetry.rpc.TelemetryRPC');
 
 
@@ -46,6 +48,7 @@ bloombox.telemetry.Routine = {
   'PRODUCT_IMPRESSION': 'PRODUCT_IMPRESSION',
   'PRODUCT_VIEW': 'PRODUCT_VIEW',
   'PRODUCT_ACTION': 'PRODUCT_ACTION',
+  'USER_ACTION': 'USER_ACTION',
   'ORDER_ACTION': 'ORDER_ACTION'
 };
 
@@ -90,15 +93,71 @@ bloombox.telemetry.TelemetryError = {
 
 
 /**
+ * Specifies a function that can render an endpoint.
+ *
+ * @typedef {function(bloombox.telemetry.Context): string}
+ */
+bloombox.telemetry.TelemetryEndpointRenderer;
+
+
+/**
+ * Map of RPC routines to their respective endpoint renderer functions.
+ *
+ * @enum {bloombox.telemetry.TelemetryEndpointRenderer}
+ */
+bloombox.telemetry.TelemetryEndpoint = {
+  'PING': () => 'ping',
+  'EVENT': (context) => `events/${context.collection.name}`,
+  'EXCEPTION': (context) => `exceptions/${context.collection.name}`,
+  'SECTION_IMPRESSION': (context) =>
+    `${context.partner}/${context.location}/section/${context.section}/impress`,
+  'SECTION_VIEW': (context) =>
+    `${context.partner}/${context.location}/section/${context.section}/view`,
+  'SECTION_ACTION': (context) =>
+    `${context.partner}/${context.location}/section/${context.section}/action/${context.action}`,
+  'PRODUCT_IMPRESSION': (context) =>
+    `${context.partner}/${context.location}/product/${context.kind}/${context.key}/impress`,
+  'PRODUCT_VIEW': (context) =>
+    `${context.partner}/${context.location}/product/${context.kind}/${context.key}/view`,
+  'PRODUCT_ACTION': (context) =>
+    `${context.partner}/${context.location}/product/${context.kind}/${context.key}/action/${context.action}`,
+  'USER_ACTION': (context) =>
+    `${context.partner}/${context.location}/user/${context.key}/action/${context.action}`,
+  'ORDER_ACTION': (context) =>
+    `${context.partner}/${context.location}/order/${context.key}/action/${context.action}`
+};
+
+
+/**
+ * Render a URL endpoint for a given RPC type.
+ *
+ * @param {bloombox.telemetry.Routine} type RPC routine.
+ * @param {bloombox.telemetry.Context=} opt_context Contextual information that
+ *        may be needed to render the URL.
+ * @return {string} Rendered URL endpoint.
+ * @package
+ */
+bloombox.telemetry.renderEndpoint = function(type, opt_context) {
+  // fart
+};
+
+
+/**
  * Calculate a telemetry API endpoint, given an RPC method and the base API
  * endpoint.
  *
- * @param {string} endpoint Method to generate an endpoint for.
+ * @param {bloombox.telemetry.Routine} type RPC routine.
  * @param {string} apiKey API key to append to the URL.
+ * @param {bloombox.telemetry.Context=} opt_context Contextual information that
+ *        may be needed to render the URL.
+ * @param {string=} opt_target Explicit URL target. Optional.
  * @return {string} Calculated endpoint URI.
  * @package
  */
-bloombox.telemetry.endpoint = function(endpoint, apiKey) {
+bloombox.telemetry.endpoint = function(type, apiKey, opt_context, opt_target) {
+  let endpoint = (
+    opt_target || bloombox.telemetry.renderEndpoint(type, opt_context));
+
   return [[
     bloombox.telemetry.TELEMETRY_API_ENDPOINT,
     'telemetry',
@@ -113,12 +172,14 @@ bloombox.telemetry.endpoint = function(endpoint, apiKey) {
  *
  * @param {bloombox.telemetry.Routine} rpcMethod RPC routine.
  * @param {string} httpMethod HTTP method to use.
- * @param {string} endpoint URL endpoint to send the RPC to.
  * @param {function(bloombox.telemetry.OperationStatus)} success Callback to
  *        dispatch once we have a response.
  * @param {function(?bloombox.telemetry.TelemetryError)} failure Callback to
  *        dispatch if an error is encountered.
  * @param {Object=} opt_payload Payload to use if we're POST-ing or PUT-ing.
+ * @param {bloombox.telemetry.Context=} opt_context Contextual information to
+ *        provide to the URL renderer.
+ * @param {string=} opt_endpoint URL endpoint to send the RPC to.
  * @throws {bloombox.rpc.RPCException} If the provided values are invalid
  *         in some way.
  * @constructor
@@ -126,18 +187,19 @@ bloombox.telemetry.endpoint = function(endpoint, apiKey) {
  */
 bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(rpcMethod,
                                                             httpMethod,
-                                                            endpoint,
                                                             success,
                                                             failure,
-                                                            opt_payload) {
+                                                            opt_payload,
+                                                            opt_context,
+                                                            opt_endpoint) {
   let apiKey = bloombox.config.key;
 
   if (typeof httpMethod !== 'string')
     throw new bloombox.rpc.RPCException(
       'Invalid HTTP method: ' + httpMethod);
-  if (typeof endpoint !== 'string')
+  if (opt_endpoint && typeof opt_endpoint !== 'string')
     throw new bloombox.rpc.RPCException(
-      'Invalid RPC endpoint: ' + endpoint);
+      'Invalid explicit RPC endpoint: ' + opt_endpoint);
   if (opt_payload !== null && opt_payload !== undefined && (
       typeof opt_payload !== 'object'))
     throw new bloombox.rpc.RPCException(
@@ -146,7 +208,8 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(rpcMethod,
     throw new bloombox.rpc.RPCException('API key could not be resolved.' +
       ' Please call `setup` before any RPC methods.');
 
-  let targetEndpoint = bloombox.telemetry.endpoint(endpoint, apiKey);
+  let targetEndpoint = bloombox.telemetry.endpoint(
+    rpcMethod, apiKey, opt_context, opt_endpoint);
 
   /**
    * RPC routine we're calling.
@@ -160,6 +223,7 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(rpcMethod,
    * HTTP method to dispatch.
    *
    * @type {string}
+   * @public
    */
   this.httpMethod = httpMethod;
 
@@ -167,6 +231,7 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(rpcMethod,
    * Target endpoint to send our RPC to.
    *
    * @type {string}
+   * @public
    */
   this.endpoint = targetEndpoint;
 
@@ -174,6 +239,7 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(rpcMethod,
    * Payload to send with the request, if any.
    *
    * @type {?Object}
+   * @public
    */
   this.payload = opt_payload === undefined ? null : opt_payload;
 

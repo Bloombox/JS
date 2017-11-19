@@ -46,7 +46,7 @@ bloombox.shop.order.VerifyException = function VerifyException(message) {
 
 
 /**
- * Verify a user via the Greenbits backend for Caliva.
+ * Verify a user via Bloombox.
  *
  * @param {string} email Email address to verify.
  * @param {bloombox.shop.VerifyCallback} callback Optional endpoint override.

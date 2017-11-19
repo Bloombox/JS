@@ -38,7 +38,6 @@ bloombox.telemetry.ping = function(callback) {
   let rpc = new bloombox.telemetry.rpc.TelemetryRPC(
     bloombox.telemetry.Routine.PING,
     'GET',
-    'ping',
     bloombox.telemetry.onPingSuccess_(callback),
     bloombox.telemetry.onPingError_);
   bloombox.telemetry.enqueue(rpc);
