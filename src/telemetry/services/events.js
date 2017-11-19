@@ -20,6 +20,7 @@ goog.require('proto.services.telemetry.v1beta1.Event.Request');
 goog.require('proto.temporal.Instant');
 
 goog.provide('bloombox.telemetry.Event');
+goog.provide('bloombox.telemetry.InternalCollection');
 
 
 // - Generic Events - //
@@ -105,6 +106,61 @@ bloombox.telemetry.Event.prototype.export = function() {
   event.setOccurred(occurrence);
   event.setContext(renderedContext);
   return event;
+};
+
+
+/**
+ * Prefix to use for internal collection names.
+ *
+ * @const {string}
+ * @private
+ */
+bloombox.telemetry.InternalCollectionPrefix_ = '_bloom_';
+
+
+/**
+ * Separator to use for internal collection names.
+ *
+ * @const {string}
+ * @private
+ */
+bloombox.telemetry.InternalCollectionSeparator_ = ':';
+
+
+/**
+ * Separator to use for internal collection names.
+ *
+ * @const {string}
+ * @private
+ */
+bloombox.telemetry.InternalCollectionVersion_ = 'v1';
+
+
+/**
+ * Separator to use for internal collection names.
+ *
+ * @param {string} name Actual name to give the collection.
+ * @return {string} Constructed collection name.
+ */
+bloombox.telemetry.internalCollectionName = function(name) {
+  return [
+    bloombox.telemetry.InternalCollectionPrefix_,
+    bloombox.telemetry.InternalCollectionVersion_,
+    name
+  ].join(bloombox.telemetry.InternalCollectionSeparator_);
+};
+
+
+
+/**
+ * Internal event collections used for various metrics and counters.
+ *
+ * @enum {string}
+ * @public
+ */
+bloombox.telemetry.InternalCollection = {
+  LIBRARY: bloombox.telemetry.internalCollectionName('library'),
+  SERVICE: bloombox.telemetry.internalCollectionName('service')
 };
 
 
