@@ -58,9 +58,8 @@ bloombox.util.b64.encode = function(data, opt_dont_clean) {
 bloombox.util.b64.decode = function(data, opt_dont_append) {
   const paddingMissing = (data.length % 4);
   let target = !opt_dont_append ? (
-    !(data.endsWith('=') && (paddingMissing > 0) ?
-      `${data}${'='.repeat(paddingMissing)}` : data)) :
-    data;
+    (!data.endsWith('=') && (paddingMissing > 0) ?
+      `${data}${'='.repeat(paddingMissing)}` : data)) : data;
   return goog.crypt.base64.decodeString(target, false);
 };
 
