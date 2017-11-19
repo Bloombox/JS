@@ -12,6 +12,10 @@ goog.require('bloombox.telemetry.OperationStatus');
 
 goog.require('bloombox.telemetry.Routine');
 
+goog.require('bloombox.telemetry.abort');
+goog.require('bloombox.telemetry.enqueue');
+goog.require('bloombox.telemetry.globalContext');
+
 goog.require('bloombox.util.Exportable');
 goog.require('bloombox.util.generateUUID');
 
@@ -108,7 +112,7 @@ bloombox.telemetry.TelemetryEvent = function() {};
  * Generate an RPC transaction corresponding to this event, that reports its
  * encapsulated information to the telemetry service.
  *
- * @return {bloombox.telemetry}
+ * @return {bloombox.telemetry.rpc.TelemetryRPC}
  */
 bloombox.telemetry.TelemetryEvent.prototype.generateRPC = function() {};
 
@@ -172,6 +176,7 @@ bloombox.telemetry.TelemetryEvent.prototype.renderOccurrence = function(now) {};
 
 
 // - Base Classes: Base Event - //
+// noinspection GjsLint
 /**
  * Basic constructor for every kind of event. Context is accepted, along with
  * the option for a payload and an explicit timestamp. If a timestamp for event
@@ -237,32 +242,104 @@ bloombox.telemetry.BaseEvent = function(context,
    * @protected
    */
   this.occurred = opt_occurred || +(new Date);
+
+  /**
+   * Success callback to dispatch, if any.
+   *
+   * @type {?bloombox.telemetry.SuccessCallback}
+   */
+  this.successCallback = null;
+
+  /**
+   * Failure callback to dispatch, if any.
+   *
+   * @type {?bloombox.telemetry.FailureCallback}
+   */
+  this.failureCallback = null;
 };
 
 
 // - Base Event: Abstract Methods - //
+// noinspection GjsLint
 /**
  * Retrieve this event's corresponding RPC method.
  *
- * @abstract
  * @return {bloombox.telemetry.Routine} RPC routine for this event.
  * @public
+ * @abstract
  */
 bloombox.telemetry.BaseEvent.prototype.rpcMethod = function() {};
 
 
+// noinspection GjsLint
 /**
  * Abstract base implementation of proto/struct export, which must be defined
  * on every event implementor of `BaseEvent`.
  *
- * @abstract
  * @return {jspb.Message}
  * @public
+ * @abstract
  */
 bloombox.telemetry.BaseEvent.prototype.export = function() {};
 
 
 // - Base Event: Default Implementations - //
+/**
+ * Default implementation. Success callback dispatcher.
+ *
+ * @param {bloombox.telemetry.OperationStatus} status Status of the operation we
+ *        are calling back from.
+ * @public
+ */
+bloombox.telemetry.BaseEvent.prototype.onSuccess = function(status) {
+  // if there is a success callback attached, call it
+  if (this.successCallback !== null)
+    this.successCallback(status);
+  this.successCallback = null;
+};
+
+
+/**
+ * Default implementation. Failure callback dispatcher.
+ *
+ * @param {bloombox.telemetry.OperationStatus} op Status of the operation we are
+ *        calling back from.
+ * @param {?bloombox.telemetry.TelemetryError} error Known error, if any.
+ * @param {?number} code Status code of the underlying RPC, if any.
+ * @public
+ */
+bloombox.telemetry.BaseEvent.prototype.onFailure = function(op, error, code) {
+  // if there is a failure callback attached, call it
+  if (this.failureCallback !== null)
+    this.failureCallback(op, error, code);
+  this.failureCallback = null;
+};
+
+
+/**
+ * Default implementation. Generate a `TelemetryRPC` suitable for fulfilling
+ * the transmission of this `BaseEvent` to the telemetry service.
+ *
+ * @return {bloombox.telemetry.rpc.TelemetryRPC}
+ */
+bloombox.telemetry.BaseEvent.prototype.generateRPC = function() {
+  let rpcMethod = this.rpcMethod();
+  let rpcPayload = this.renderPayload();
+  let uuid = this.renderUUID();
+
+  // fetch global context and render
+  let globalContext = bloombox.telemetry.globalContext().export();
+  let mergedContext = this.renderContext(globalContext);
+
+  return new bloombox.telemetry.rpc.TelemetryRPC(
+    uuid,
+    rpcMethod,
+    this.onSuccess,
+    this.onFailure,
+    rpcPayload,
+    mergedContext);
+};
+
 /**
  * Default implementation. Send this data to the telemetry service, with an
  * attached success and failure callback.
@@ -274,7 +351,10 @@ bloombox.telemetry.BaseEvent.prototype.export = function() {};
  * @public
  */
 bloombox.telemetry.BaseEvent.prototype.dispatch = function(success, failure) {
-  // @todo: IMPLEMENT
+  this.successCallback = success || null;
+  this.failureCallback = failure || null;
+  let rpc = this.generateRPC();
+  bloombox.telemetry.enqueue(rpc);
 };
 
 /**
@@ -284,7 +364,8 @@ bloombox.telemetry.BaseEvent.prototype.dispatch = function(success, failure) {
  * @public
  */
 bloombox.telemetry.BaseEvent.prototype.abort = function() {
-  // @todo: IMPLEMENT
+  let uuid = this.renderUUID();
+  bloombox.telemetry.abort(uuid);
 };
 
 

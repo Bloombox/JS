@@ -20,6 +20,8 @@ goog.require('bloombox.telemetry.internals.stats.recordRPCSuccess');
 
 goog.require('bloombox.telemetry.rpc.TelemetryRPC');
 
+goog.require('bloombox.util.generateUUID');
+
 goog.require('proto.services.telemetry.v1beta1.Ping.Request');
 goog.require('proto.services.telemetry.v1beta1.Ping.Response');
 
@@ -36,8 +38,8 @@ goog.provide('bloombox.telemetry.ping');
 bloombox.telemetry.ping = function(callback) {
   // make an RPC so we can send it via the pool
   let rpc = new bloombox.telemetry.rpc.TelemetryRPC(
+    bloombox.util.generateUUID(),
     bloombox.telemetry.Routine.PING,
-    'GET',
     bloombox.telemetry.onPingSuccess_(callback),
     bloombox.telemetry.onPingError_);
   bloombox.telemetry.enqueue(rpc);

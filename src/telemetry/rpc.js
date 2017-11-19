@@ -20,6 +20,8 @@ goog.require('bloombox.telemetry.TELEMETRY_API_ENDPOINT');
 goog.require('bloombox.telemetry.TELEMETRY_API_VERSION');
 goog.require('bloombox.telemetry.VERSION');
 
+goog.require('bloombox.util.HTTPMethod');
+
 goog.require('proto.services.telemetry.v1beta1.OperationStatus');
 goog.require('proto.services.telemetry.v1beta1.TelemetryError');
 goog.require('proto.services.telemetry.v1beta1.TelemetryResponse');
@@ -93,52 +95,22 @@ bloombox.telemetry.TelemetryError = {
 
 
 /**
- * Specifies a function that can render an endpoint.
- *
- * @typedef {function(bloombox.telemetry.Context): string}
- */
-bloombox.telemetry.TelemetryEndpointRenderer;
-
-
-/**
- * Map of RPC routines to their respective endpoint renderer functions.
- *
- * @enum {bloombox.telemetry.TelemetryEndpointRenderer}
- */
-bloombox.telemetry.TelemetryEndpoint = {
-  'PING': () => 'ping',
-  'EVENT': (context) => `events/${context.collection.name}`,
-  'EXCEPTION': (context) => `exceptions/${context.collection.name}`,
-  'SECTION_IMPRESSION': (context) =>
-    `${context.partner}/${context.location}/section/${context.section}/impress`,
-  'SECTION_VIEW': (context) =>
-    `${context.partner}/${context.location}/section/${context.section}/view`,
-  'SECTION_ACTION': (context) =>
-    `${context.partner}/${context.location}/section/${context.section}/action/${context.action}`,
-  'PRODUCT_IMPRESSION': (context) =>
-    `${context.partner}/${context.location}/product/${context.kind}/${context.key}/impress`,
-  'PRODUCT_VIEW': (context) =>
-    `${context.partner}/${context.location}/product/${context.kind}/${context.key}/view`,
-  'PRODUCT_ACTION': (context) =>
-    `${context.partner}/${context.location}/product/${context.kind}/${context.key}/action/${context.action}`,
-  'USER_ACTION': (context) =>
-    `${context.partner}/${context.location}/user/${context.key}/action/${context.action}`,
-  'ORDER_ACTION': (context) =>
-    `${context.partner}/${context.location}/order/${context.key}/action/${context.action}`
-};
-
-
-/**
  * Render a URL endpoint for a given RPC type.
  *
  * @param {bloombox.telemetry.Routine} type RPC routine.
- * @param {bloombox.telemetry.Context=} opt_context Contextual information that
+ * @param {proto.analytics.Context=} opt_context Contextual information that
  *        may be needed to render the URL.
  * @return {string} Rendered URL endpoint.
+ * @throws {bloombox.rpc.RPCException} If the subject renderer cannot be found.
  * @package
  */
 bloombox.telemetry.renderEndpoint = function(type, opt_context) {
-  // fart
+  // retrieve renderer
+  let renderer = bloombox.telemetry.TelemetryEndpoint[type];
+  if (!renderer)
+    throw new bloombox.rpc.RPCException(
+      'Cannot render RPC of type "' + type + '".');
+  return renderer(opt_context);
 };
 
 
@@ -148,7 +120,7 @@ bloombox.telemetry.renderEndpoint = function(type, opt_context) {
  *
  * @param {bloombox.telemetry.Routine} type RPC routine.
  * @param {string} apiKey API key to append to the URL.
- * @param {bloombox.telemetry.Context=} opt_context Contextual information that
+ * @param {proto.analytics.Context=} opt_context Contextual information that
  *        may be needed to render the URL.
  * @param {string=} opt_target Explicit URL target. Optional.
  * @return {string} Calculated endpoint URI.
@@ -170,14 +142,14 @@ bloombox.telemetry.endpoint = function(type, apiKey, opt_context, opt_target) {
 /**
  * Return a `TelemetryRPC` instance for a generic HTTP RPC call.
  *
+ * @param {string} uuid Unique ID for this RPC transaction.
  * @param {bloombox.telemetry.Routine} rpcMethod RPC routine.
- * @param {string} httpMethod HTTP method to use.
  * @param {function(bloombox.telemetry.OperationStatus)} success Callback to
  *        dispatch once we have a response.
  * @param {function(?bloombox.telemetry.TelemetryError)} failure Callback to
  *        dispatch if an error is encountered.
  * @param {Object=} opt_payload Payload to use if we're POST-ing or PUT-ing.
- * @param {bloombox.telemetry.Context=} opt_context Contextual information to
+ * @param {proto.analytics.Context=} opt_context Contextual information to
  *        provide to the URL renderer.
  * @param {string=} opt_endpoint URL endpoint to send the RPC to.
  * @throws {bloombox.rpc.RPCException} If the provided values are invalid
@@ -185,8 +157,8 @@ bloombox.telemetry.endpoint = function(type, apiKey, opt_context, opt_target) {
  * @constructor
  * @struct
  */
-bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(rpcMethod,
-                                                            httpMethod,
+bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(uuid,
+                                                            rpcMethod,
                                                             success,
                                                             failure,
                                                             opt_payload,
@@ -194,9 +166,6 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(rpcMethod,
                                                             opt_endpoint) {
   let apiKey = bloombox.config.key;
 
-  if (typeof httpMethod !== 'string')
-    throw new bloombox.rpc.RPCException(
-      'Invalid HTTP method: ' + httpMethod);
   if (opt_endpoint && typeof opt_endpoint !== 'string')
     throw new bloombox.rpc.RPCException(
       'Invalid explicit RPC endpoint: ' + opt_endpoint);
@@ -222,10 +191,10 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(rpcMethod,
   /**
    * HTTP method to dispatch.
    *
-   * @type {string}
+   * @type {bloombox.util.HTTPMethod}
    * @public
    */
-  this.httpMethod = httpMethod;
+  this.httpMethod = bloombox.telemetry.TelemetryHTTPMethod[rpcMethod];
 
   /**
    * Target endpoint to send our RPC to.

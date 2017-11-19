@@ -34,6 +34,7 @@ goog.require('bloombox.util.debounced');
 
 goog.require('goog.net.XhrManager');
 
+goog.provide('bloombox.telemetry.abort');
 goog.provide('bloombox.telemetry.enqueue');
 
 goog.provide('bloombox.telemetry.internals._sendEvent');
@@ -399,4 +400,16 @@ bloombox.telemetry.enqueue = function(rpc) {
 
   // trigger one tick
   bloombox.telemetry.internals.tick();
+};
+
+
+// - Abort - //
+/**
+ * Abort an in-flight RPC by its UUID.
+ *
+ * @param {string} uuid UUID to abort.
+ * @public
+ */
+bloombox.telemetry.abort = function(uuid) {
+  bloombox.telemetry.internals.RPC_POOL.abort(uuid);
 };
