@@ -54,7 +54,7 @@ goog.provide('bloombox.telemetry.resolveSessionID');
  *
  * @param {string} name Name for this collection.
  * @constructor
- * @implements {bloombox.util.Exportable}
+ * @implements {bloombox.util.Exportable<proto.analytics.Collection>}
  * @public
  */
 bloombox.telemetry.Collection = function Collection(name) {

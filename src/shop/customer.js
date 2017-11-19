@@ -59,7 +59,7 @@ bloombox.shop.CustomerName;
  * @param {string} foreignID Foreign system ID, for submitting the order (i.e.
  *                 Greenbits).
  * @throws {bloombox.shop.CustomerException} If params provided are invalid.
- * @implements {bloombox.util.Exportable}
+ * @implements {bloombox.util.Exportable<proto.commerce.Customer>}
  * @constructor
  * @export
  */

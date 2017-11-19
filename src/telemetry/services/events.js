@@ -36,8 +36,7 @@ goog.provide('bloombox.telemetry.InternalCollection');
  *        event occurred. If none is provided, a timestamp is taken upon event
  *        construction.
  * @constructor
- * @extends {bloombox.telemetry.BaseEvent}
- * @implements {bloombox.util.Exportable}
+ * @extends {bloombox.telemetry.BaseEvent<proto.analytics.Event>}
  * @public
  */
 bloombox.telemetry.Event = function Event(collection,

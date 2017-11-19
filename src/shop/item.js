@@ -21,7 +21,7 @@ goog.require('proto.temporal.Instant');
  *
  * @param {bloombox.product.Key} key Key for the item.
  * @param {number} count Count of this item to add to the order.
- * @implements {bloombox.util.Exportable}
+ * @implements {bloombox.util.Exportable<proto.commerce.Item>}
  * @constructor
  * @export
  */

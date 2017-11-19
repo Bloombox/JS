@@ -67,7 +67,6 @@ bloombox.identity.ProfileException = function ProfileException(message) {
  * @param {bloombox.identity.MenuPreferences} menu_prefs User's menu prefs.
  * @throws {bloombox.identity.ProfileException} If params provided are invalid.
  * @constructor
- * @implements {bloombox.util.Exportable}
  * @implements {bloombox.util.Serializable}
  * @export
  */
@@ -117,16 +116,6 @@ bloombox.identity.ConsumerProfile.prototype.serialize = function() {
   };
 };
 
-/**
- * Export the current consumer profile into a Protobuf message structure.
- *
- * @public
- * @return {proto.identity.ConsumerProfile} Consumer profile message.
- */
-bloombox.identity.ConsumerProfile.prototype.export = function() {
-  // @TODO: implement
-};
-
 
 // -- Menu Preferences -- //
 /**
@@ -143,7 +132,6 @@ bloombox.identity.ConsumerProfile.prototype.export = function() {
  * @param {?bloombox.testing.subjective.PotencyEstimate=} opt_potency
  *        Desired potency level.
  * @param {?bloombox.testing.CannabinoidRatio=} opt_ratio Ratio to initialize.
- * @implements {bloombox.util.Exportable}
  * @implements {bloombox.util.Serializable}
  * @constructor
  * @export
@@ -229,16 +217,6 @@ bloombox.identity.MenuPreferences.prototype.serialize = function() {
     'cannabinoidRatio': this.ratio,
     'desiredPotency': this.potency
   };
-};
-
-/**
- * Export the current consumer profile into a Protobuf message structure.
- *
- * @public
- * @return {proto.identity.ConsumerProfile} Consumer profile message.
- */
-bloombox.identity.MenuPreferences.prototype.export = function() {
-  // @TODO: implement
 };
 
 // noinspection JSUnusedGlobalSymbols
