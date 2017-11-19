@@ -11,6 +11,7 @@
 goog.require('bloombox.telemetry.BaseEvent');
 goog.require('bloombox.telemetry.Collection');
 goog.require('bloombox.telemetry.Context');
+goog.require('bloombox.telemetry.ContextException');
 goog.require('bloombox.telemetry.globalContext');
 
 goog.require('bloombox.util.Exportable');
@@ -131,7 +132,6 @@ bloombox.telemetry.Event.prototype.validateContext = function(context) {
       }
     }
   }
-
   // if we get here, everything is a-o-k.
 };
 

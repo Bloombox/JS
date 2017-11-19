@@ -14,6 +14,7 @@ goog.require('bloombox.config');
 goog.require('bloombox.logging.log');
 
 goog.require('bloombox.util.Exportable');
+goog.require('bloombox.util.b64');
 goog.require('bloombox.util.generateUUID');
 
 goog.require('goog.labs.userAgent.device');
@@ -64,7 +65,7 @@ bloombox.telemetry.Collection = function Collection(name) {
    * @type {string}
    * @export
    */
-  this.name = name;
+  this.name = bloombox.util.b64.encode(name);
 };
 
 
