@@ -16,6 +16,7 @@ goog.require('bloombox.logging.log');
 goog.require('bloombox.util.Exportable');
 goog.require('bloombox.util.generateUUID');
 
+goog.require('goog.labs.userAgent.device');
 goog.require('goog.userAgent');
 goog.require('goog.userAgent.platform');
 goog.require('goog.userAgent.product');
@@ -24,6 +25,7 @@ goog.require('proto.analytics.BrowserDeviceContext');
 goog.require('proto.analytics.Collection');
 goog.require('proto.analytics.Context');
 goog.require('proto.analytics.DeviceApplication');
+goog.require('proto.analytics.DeviceLibrary');
 goog.require('proto.analytics.DeviceOS');
 goog.require('proto.analytics.DeviceType');
 goog.require('proto.analytics.OSType');
@@ -440,7 +442,7 @@ bloombox.telemetry.buildBrowserContext = function() {
   let browserType = proto.analytics.BrowserDeviceContext.Type.BROWSER_UNKNOWN;
   if (goog.userAgent.CHROME)
     browserType = proto.analytics.BrowserDeviceContext.Type.CHROME;
-  else if (goog.userAgent.SAFARI)
+  else if (goog.userAgent.product.SAFARI)
     browserType = proto.analytics.BrowserDeviceContext.Type.SAFARI;
   else if (goog.userAgent.FIREFOX)
     browserType = proto.analytics.BrowserDeviceContext.Type.FIREFOX;
@@ -448,7 +450,17 @@ bloombox.telemetry.buildBrowserContext = function() {
     browserType = proto.analytics.BrowserDeviceContext.Type.OPERA;
   else if (goog.userAgent.EDGE_OR_IE)
     browserType = proto.analytics.BrowserDeviceContext.Type.IE_OR_EDGE;
-  context.setType(browserType);
+  context.setBrowserType(browserType);
+
+  // detect device type
+  let deviceType = proto.analytics.DeviceType.UNKNOWN_DEVICE_TYPE;
+  if (goog.labs.userAgent.device.isDesktop)
+    deviceType = proto.analytics.DeviceType.DESKTOP;
+  else if (goog.labs.userAgent.device.isTablet)
+    deviceType = proto.analytics.DeviceType.TABLET;
+  else if (goog.labs.userAgent.device.isMobile)
+    deviceType = proto.analytics.DeviceType.PHONE;
+  context.setDeviceType(deviceType);
 
   let browserVersionObj = new proto.structs.VersionSpec();
   let browserVersionName = new proto.structs.NamedVersion();
