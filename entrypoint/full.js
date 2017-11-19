@@ -33,7 +33,6 @@ goog.require('bloombox.telemetry.setup');
 bloombox.VARIANT = 'full';
 
 
-
 /**
  * Setup Bloombox JS. Provide your API key and partner/location.
  *

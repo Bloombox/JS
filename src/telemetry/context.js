@@ -8,6 +8,7 @@
 
 /*global goog */
 
+goog.require('bloombox.VERSION');
 goog.require('bloombox.config');
 
 goog.require('bloombox.logging.log');
@@ -15,16 +16,24 @@ goog.require('bloombox.logging.log');
 goog.require('bloombox.util.Exportable');
 goog.require('bloombox.util.generateUUID');
 
+goog.require('goog.userAgent');
+goog.require('goog.userAgent.platform');
+goog.require('goog.userAgent.product');
+
 goog.require('proto.analytics.BrowserDeviceContext');
 goog.require('proto.analytics.Collection');
 goog.require('proto.analytics.Context');
 goog.require('proto.analytics.DeviceApplication');
 goog.require('proto.analytics.DeviceOS');
+goog.require('proto.analytics.DeviceType');
+goog.require('proto.analytics.OSType');
 goog.require('proto.commerce.OrderKey');
 goog.require('proto.identity.UserKey');
 goog.require('proto.partner.PartnerDeviceKey');
 goog.require('proto.partner.PartnerKey');
 goog.require('proto.partner.PartnerLocationKey');
+goog.require('proto.structs.NamedVersion');
+goog.require('proto.structs.VersionSpec');
 
 goog.provide('bloombox.telemetry.Collection');
 goog.provide('bloombox.telemetry.Context');
@@ -368,7 +377,7 @@ bloombox.telemetry.resolveFingerprint = function() {
     let existingFingerprint = (
      window['localStorage'].getItem(bloombox.telemetry.DEVICE_FINGERPRINT_KEY));
 
-    if (existingFingerprint && typeof existingFingerprint === "string") {
+    if (existingFingerprint && typeof existingFingerprint === 'string') {
       // we found it, load the existing one from local storage
       bloombox.telemetry.DEVICE_FINGERPRINT = existingFingerprint;
     } else {
@@ -399,7 +408,7 @@ bloombox.telemetry.resolveSessionID = function() {
     let existingID = (
       window['sessionStorage'].getItem(bloombox.telemetry.SESSION_ID_KEY));
 
-    if (existingID && typeof existingID === "string") {
+    if (existingID && typeof existingID === 'string') {
       // we found it, load the existing one from local storage
       bloombox.telemetry.SESSION_ID = existingID;
     } else {
@@ -427,12 +436,75 @@ bloombox.telemetry.buildBrowserContext = function() {
   let context = new proto.analytics.BrowserDeviceContext();
 
   // detect browser type and version
+  let browserVersion = goog.userAgent.VERSION;
+  let browserType = proto.analytics.BrowserDeviceContext.Type.BROWSER_UNKNOWN;
+  if (goog.userAgent.CHROME)
+    browserType = proto.analytics.BrowserDeviceContext.Type.CHROME;
+  else if (goog.userAgent.SAFARI)
+    browserType = proto.analytics.BrowserDeviceContext.Type.SAFARI;
+  else if (goog.userAgent.FIREFOX)
+    browserType = proto.analytics.BrowserDeviceContext.Type.FIREFOX;
+  else if (goog.userAgent.OPERA)
+    browserType = proto.analytics.BrowserDeviceContext.Type.OPERA;
+  else if (goog.userAgent.EDGE_OR_IE)
+    browserType = proto.analytics.BrowserDeviceContext.Type.IE_OR_EDGE;
+  context.setType(browserType);
+
+  let browserVersionObj = new proto.structs.VersionSpec();
+  let browserVersionName = new proto.structs.NamedVersion();
+  browserVersionName.setName(browserVersion);
+  browserVersionObj.setNamedVersion(browserVersionName);
+  context.setVersion(browserVersionObj);
 
   // detect OS type and version
+  let osType = proto.analytics.OSType.OS_UNKNOWN;
+  let osVersion = goog.userAgent.platform.VERSION;
+
+  if (goog.userAgent.IPAD ||
+      goog.userAgent.IPHONE ||
+      goog.userAgent.IPOD ||
+      goog.userAgent.IOS)
+    osType = proto.analytics.OSType.IOS;
+  else if ((goog.userAgent.WINDOWS ||
+            goog.userAgent.EDGE_OR_IE) &&
+            goog.userAgent.MOBILE)
+    osType = proto.analytics.OSType.WINDOWS_PHONE;
+  else if (goog.userAgent.WINDOWS ||
+           goog.userAgent.EDGE_OR_IE)
+    osType = proto.analytics.OSType.WINDOWS;
+  else if (goog.userAgent.product.ANDROID)
+    osType = proto.analytics.OSType.ANDROID;
+  else if (goog.userAgent.MAC)
+    osType = proto.analytics.OSType.MACOS;
+  else if (goog.userAgent.LINUX)
+    osType = proto.analytics.OSType.LINUX;
+
+  let osObj = new proto.analytics.DeviceOS();
+  let osVersionObj = new proto.structs.VersionSpec();
+  let osVersionName = new proto.structs.NamedVersion();
+  osVersionName.setName(osVersion);
+  osVersionObj.setNamedVersion(osVersionName);
+  osObj.setType(osType);
+  osObj.setVersion(osVersionObj);
 
   // detect application type and version
+  let origin = window['document'].origin;
+  let app = new proto.analytics.DeviceApplication();
+  app.setOrigin(origin);
+  context.setApp(app);
 
   // detect library type and version
+  let libraryVersion = bloombox.VERSION;
+  let libraryVariant = bloombox.VARIANT;
+
+  let libObj = new proto.analytics.DeviceLibrary();
+  let libVersionObj = new proto.structs.VersionSpec();
+  let libVersionName = new proto.structs.NamedVersion();
+  libVersionName.setName(libraryVersion);
+  libVersionObj.setNamedVersion(libVersionName);
+  libObj.setVersion(libVersionObj);
+  libObj.setVariant(libraryVariant);
+  context.setLibrary(libObj);
 
   return context;
 };
