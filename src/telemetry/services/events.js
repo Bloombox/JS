@@ -10,6 +10,7 @@
 
 goog.require('bloombox.telemetry.BaseEvent');
 goog.require('bloombox.telemetry.Collection');
+goog.require('bloombox.telemetry.Context');
 goog.require('bloombox.telemetry.globalContext');
 
 goog.require('bloombox.util.Exportable');
@@ -62,8 +63,7 @@ bloombox.telemetry.Event = function Event(collection,
 
   // build context from collection
   let builtContext = (opt_context ||
-    new proto.analytics.Context());
-  builtContext.setCollection(collection.export());
+    new bloombox.telemetry.Context(collection));
 
   bloombox.telemetry.BaseEvent.apply(
     this,
