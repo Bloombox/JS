@@ -66,22 +66,6 @@ bloombox.telemetry.TelemetryEndpointRenderer;
  */
 bloombox.telemetry.TelemetryEndpoint = {
   'PING': () => 'ping',
-  'EVENT': (context) => `events/${context.collection.name}`,
-  'EXCEPTION': (context) => `exceptions/${context.collection.name}`,
-  'SECTION_IMPRESSION': (context) =>
-    `${context.partner}/${context.location}/section/${context.section}/impress`,
-  'SECTION_VIEW': (context) =>
-    `${context.partner}/${context.location}/section/${context.section}/view`,
-  'SECTION_ACTION': (context) =>
-    `${context.partner}/${context.location}/section/${context.section}/action/${context.action}`,
-  'PRODUCT_IMPRESSION': (context) =>
-    `${context.partner}/${context.location}/product/${context.kind}/${context.key}/impress`,
-  'PRODUCT_VIEW': (context) =>
-    `${context.partner}/${context.location}/product/${context.kind}/${context.key}/view`,
-  'PRODUCT_ACTION': (context) =>
-    `${context.partner}/${context.location}/product/${context.kind}/${context.key}/action/${context.action}`,
-  'USER_ACTION': (context) =>
-    `${context.partner}/${context.location}/user/${context.key}/action/${context.action}`,
-  'ORDER_ACTION': (context) =>
-    `${context.partner}/${context.location}/order/${context.key}/action/${context.action}`
+  'EVENT': (context) => `events/${context.getCollection().getName()}`,
+  'EXCEPTION': (context) => `exceptions/${context.getCollection().getName()}`
 };
