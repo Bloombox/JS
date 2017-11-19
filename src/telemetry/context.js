@@ -8,7 +8,12 @@
 
 /*global goog */
 
+goog.require('bloombox.config');
+
+goog.require('bloombox.logging.log');
+
 goog.require('bloombox.util.Exportable');
+goog.require('bloombox.util.generateUUID');
 
 goog.require('proto.analytics.BrowserDeviceContext');
 goog.require('proto.analytics.Collection');
@@ -16,6 +21,9 @@ goog.require('proto.analytics.Context');
 goog.require('proto.commerce.OrderKey');
 goog.require('proto.identity.UserKey');
 
+goog.require('proto.analytics.BrowserDeviceContext');
+goog.require('proto.analytics.DeviceApplication');
+goog.require('proto.analytics.DeviceOS');
 goog.require('proto.partner.PartnerDeviceKey');
 goog.require('proto.partner.PartnerKey');
 goog.require('proto.partner.PartnerLocationKey');
@@ -234,6 +242,11 @@ bloombox.telemetry.Context = function(collection,
 };
 
 
+/**
+ * Export the current analytics context as a protobuf message.
+ *
+ * @return {proto.analytics.Context}
+ */
 bloombox.telemetry.Context.prototype.export = function() {
   let context = new proto.analytics.Context();
 
@@ -276,6 +289,118 @@ bloombox.telemetry.Context.prototype.export = function() {
 };
 
 
+// - Global Context - //
+/**
+ * Globally-cached context singleton for values that are detected or loaded or
+ * computed expensively by the runtime. Merged into event-level context before
+ * events are sent.
+ *
+ * @type {?bloombox.telemetry.Context}
+ * @package
+ */
+bloombox.telemetry.GLOBAL_CONTEXT = null;
+
+
+/**
+ * Globally-cached unique fingerprint for this device. Persisted in local
+ * browser storage. Null means it is not yet initialized.
+ *
+ * @type {?string}
+ * @package
+ */
+bloombox.telemetry.DEVICE_FINGERPRINT = null;
+
+
+/**
+ * Session-scoped token to indicate the border between different user sessions.
+ * Leverages session storage instead of local storage. Null means it is not yet
+ * initialized.
+ *
+ * @type {?string}
+ * @package
+ */
+bloombox.telemetry.SESSION_ID = null;
+
+
+/**
+ * The key used in local storage to locally fingerprint a web browser-based
+ * device.
+ *
+ * @const {string}
+ * @package
+ */
+bloombox.telemetry.DEVICE_FINGERPRINT_KEY = 'bb:v1:t.df';
+
+
+/**
+ * The key used in session storage to indicate the session ID.
+ *
+ * @const {string}
+ * @package
+ */
+bloombox.telemetry.SESSION_ID_KEY = 'bb:v1:t.sid';
+
+
+/**
+ * Resolve the device fingerprint, by creating it if it does not yet exist, or
+ * returning the existing one if it does.
+ *
+ * @return {string} Global device fingerprint.
+ */
+bloombox.telemetry.resolveFingerprint = function() {
+  if (bloombox.telemetry.DEVICE_FINGERPRINT === null) {
+    // try to fetch it from local storage
+    let existingFingerprint = (
+     window['localStorage'].getItem(bloombox.telemetry.DEVICE_FINGERPRINT_KEY));
+
+    if (existingFingerprint && typeof existingFingerprint === "string") {
+      // we found it, load the existing one from local storage
+      bloombox.telemetry.DEVICE_FINGERPRINT = existingFingerprint;
+    } else {
+      // we could not find one in local storage. generate one, persist it
+      // in local storage and locally, and return.
+      let newDeviceFingerprint = bloombox.util.generateUUID();
+      bloombox.telemetry.DEVICE_FINGERPRINT = newDeviceFingerprint;
+      window['localStorage'].setItem(
+        bloombox.telemetry.DEVICE_FINGERPRINT_KEY, newDeviceFingerprint);
+      bloombox.logging.log('Established device fingerprint: "' +
+        newDeviceFingerprint + "'.");
+    }
+  }
+  return bloombox.telemetry.DEVICE_FINGERPRINT;
+};
+
+
+/**
+ * Resolve the session ID, by creating it if it does not yet exist, or returning
+ * the existing one if it does.
+ *
+ * @return {string} Session-scoped UUID.
+ */
+bloombox.telemetry.resolveSessionID = function() {
+  if (bloombox.telemetry.SESSION_ID === null) {
+    // try to fetch it from local storage
+    let existingID = (
+      window['sessionStorage'].getItem(bloombox.telemetry.SESSION_ID_KEY));
+
+    if (existingID && typeof existingID === "string") {
+      // we found it, load the existing one from local storage
+      bloombox.telemetry.SESSION_ID = existingID;
+    } else {
+      // we could not find one in local storage. generate one, persist it
+      // in local storage and locally, and return.
+      let newSessionID = bloombox.util.generateUUID();
+      bloombox.telemetry.SESSION_ID = newSessionID;
+      window['localStorage'].setItem(
+        bloombox.telemetry.SESSION_ID_KEY, newSessionID);
+      bloombox.logging.log('Established user session at ID: "' +
+        newSessionID + "'.");
+    }
+  }
+  return bloombox.telemetry.SESSION_ID;
+};
+
+
 /**
  * Retrieve globally gathered/specified context. Caching is applied to reduce
  * overhead. To force a re-gather of expensively calculated information, pass
@@ -286,6 +411,22 @@ bloombox.telemetry.Context.prototype.export = function() {
  * @package
  */
 bloombox.telemetry.globalContext = function(opt_force_fresh) {
-  //let forceFresh = opt_force_fresh || false;
-  // @TODO: implement this
+  let forceFresh = opt_force_fresh || false;
+  if (bloombox.telemetry.GLOBAL_CONTEXT === null || forceFresh) {
+    // grab global config
+    let config = bloombox.config;
+    let partnerCode = config.partner || null;
+    let locationCode = config.location || null;
+    let deviceFingerprint = bloombox.telemetry.resolveFingerprint();
+    let sessionID = bloombox.telemetry.resolveSessionID();
+
+    // calculate global context
+    bloombox.telemetry.GLOBAL_CONTEXT = new bloombox.telemetry.Context(
+      null,
+      partnerCode,
+      locationCode,
+      deviceFingerprint,
+      sessionID);
+  }
+  return bloombox.telemetry.GLOBAL_CONTEXT;
 };
