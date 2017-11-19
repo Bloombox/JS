@@ -389,13 +389,7 @@ bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
     },
     'app': {
       'type': protob.getApp().getType(),
-      'origin': protob.getApp().getOrigin(),
-      'version': {
-        'namedVersion': {
-          'name': (
-            protob.getApp().getVersion().getNamedVersion().getName())
-        }
-      },
+      'origin': protob.getApp().getOrigin()
     },
     'library': {
       'variant': protob.getLibrary().getVariant(),
@@ -422,7 +416,7 @@ bloombox.telemetry.Context.serializeProto = function(context) {
   let baseContext = {};
 
   // string data
-  if (context.getCollection().getName())
+  if (context.getCollection() && context.getCollection().getName())
     baseContext['collection'] = {'name': context.getCollection().getName()};
   if (context.getFingerprint())
     baseContext['fingerprint'] = context.getFingerprint();
@@ -430,9 +424,9 @@ bloombox.telemetry.Context.serializeProto = function(context) {
     baseContext['group'] = context.getGroup();
 
   // key contexts
-  if (context.getUser().getUid())
+  if (context.getUser() && context.getUser().getUid())
     baseContext['user'] = {'uid': context.getUser().getUid()};
-  if (context.getOrder().getId())
+  if (context.getUser() && context.getOrder().getId())
     baseContext['order'] = {'id': context.getOrder().getId()};
 
   // setup partner context
@@ -714,13 +708,13 @@ bloombox.telemetry.buildBrowserContext = function() {
   // detect browser type and version
   let browserVersion = goog.userAgent.VERSION;
   let browserType = proto.analytics.BrowserDeviceContext.Type.BROWSER_UNKNOWN;
-  if (goog.userAgent.CHROME)
+  if (goog.userAgent.product.CHROME)
     browserType = proto.analytics.BrowserDeviceContext.Type.CHROME;
   else if (goog.userAgent.product.SAFARI)
     browserType = proto.analytics.BrowserDeviceContext.Type.SAFARI;
-  else if (goog.userAgent.FIREFOX)
+  else if (goog.userAgent.product.FIREFOX)
     browserType = proto.analytics.BrowserDeviceContext.Type.FIREFOX;
-  else if (goog.userAgent.OPERA)
+  else if (goog.userAgent.product.OPERA)
     browserType = proto.analytics.BrowserDeviceContext.Type.OPERA;
   else if (goog.userAgent.EDGE_OR_IE)
     browserType = proto.analytics.BrowserDeviceContext.Type.IE_OR_EDGE;
@@ -772,6 +766,7 @@ bloombox.telemetry.buildBrowserContext = function() {
   osVersionObj.setNamedVersion(osVersionName);
   osObj.setType(osType);
   osObj.setVersion(osVersionObj);
+  context.setOs(osObj);
 
   // detect application type and version
   let origin = window['document'].origin;

@@ -429,11 +429,9 @@ bloombox.telemetry.BaseEvent.prototype.send = function() {
  * @public
  */
 bloombox.telemetry.BaseEvent.prototype.renderContext = function(global) {
-  debugger;
   let local = /** @type {proto.analytics.Context} */ (this.context.export());
   let merged = bloombox.util.proto.merge(local, global);
   this.validateContext(merged);
-  debugger;
   return merged;
 };
 

@@ -181,7 +181,6 @@ bloombox.telemetry.Event.prototype.export = function() {
  * @public
  */
 bloombox.telemetry.Event.prototype.renderPayload = function(ctx) {
-  debugger;
   let occurrence = this.renderOccurrence(+(new Date()));
   let serializedContext = bloombox.telemetry.Context.serializeProto(ctx);
 
