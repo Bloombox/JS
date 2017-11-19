@@ -8,6 +8,7 @@
 /*global goog */
 
 goog.require('bloombox.telemetry.Context');
+goog.require('bloombox.telemetry.ContextException');
 goog.require('bloombox.telemetry.OperationStatus');
 
 goog.require('bloombox.telemetry.Routine');
@@ -20,8 +21,7 @@ goog.require('bloombox.telemetry.rpc.TelemetryRPC');
 
 goog.require('bloombox.util.Exportable');
 goog.require('bloombox.util.generateUUID');
-
-goog.require('jspb.Message');
+goog.require('bloombox.util.proto.merge');
 
 goog.require('proto.analytics.Context');
 
@@ -102,7 +102,6 @@ bloombox.telemetry.Sendable.prototype.abort = function() {};
  * Basic interface for a Telemetry event. Every event eventually complies with
  * this interface. Some comply with more.
  *
- * @extends {bloombox.util.Exportable}
  * @interface
  * @package
  */
@@ -113,6 +112,8 @@ bloombox.telemetry.TelemetryEvent = function() {};
  * Generate an RPC transaction corresponding to this event, that reports its
  * encapsulated information to the telemetry service.
  *
+ * @throws {bloombox.telemetry.ContextException} If required context is missing
+ *         or context values are invalid.
  * @return {bloombox.telemetry.rpc.TelemetryRPC}
  */
 bloombox.telemetry.TelemetryEvent.prototype.generateRPC = function() {};
@@ -147,6 +148,8 @@ bloombox.telemetry.TelemetryEvent.prototype.renderUUID = function() {};
  *
  * @param {proto.analytics.Context} global Global context to merge onto.
  * @return {proto.analytics.Context} Combined/rendered event context.
+ * @throws {bloombox.telemetry.ContextException} If required context is missing
+ *         or context values are invalid.
  */
 bloombox.telemetry.TelemetryEvent.prototype.renderContext = function(global) {};
 
@@ -325,6 +328,8 @@ bloombox.telemetry.BaseEvent.prototype.onFailure = function(op, error, code) {
  * the transmission of this `BaseEvent` to the telemetry service.
  *
  * @return {bloombox.telemetry.rpc.TelemetryRPC}
+ * @throws {bloombox.telemetry.ContextException} If required context is missing
+ *         or context values are invalid.
  */
 bloombox.telemetry.BaseEvent.prototype.generateRPC = function() {
   let rpcMethod = this.rpcMethod();
@@ -352,6 +357,8 @@ bloombox.telemetry.BaseEvent.prototype.generateRPC = function() {
  *        the underlying runtime reports success.
  * @param {?bloombox.telemetry.FailureCallback} failure Callback to dispatch if
  *        some error or failure is encountered.
+ * @throws {bloombox.telemetry.ContextException} If required context is missing
+ *         or context values are invalid.
  * @public
  */
 bloombox.telemetry.BaseEvent.prototype.dispatch = function(success, failure) {
@@ -388,6 +395,8 @@ bloombox.telemetry.BaseEvent.prototype.renderUUID = function() {
  * Default implementation. Fire-and-forget this data, by sending it to the
  * telemetry service.
  *
+ * @throws {bloombox.telemetry.ContextException} If required context is missing
+ *         or context values are invalid.
  * @public
  */
 bloombox.telemetry.BaseEvent.prototype.send = function() {
@@ -400,14 +409,36 @@ bloombox.telemetry.BaseEvent.prototype.send = function() {
  *
  * @param {proto.analytics.Context} global Global context.
  * @return {proto.analytics.Context} Combined/rendered event context.
+ * @throws {bloombox.telemetry.ContextException} If required context is missing
+ *         or context values are invalid.
  * @public
  */
 bloombox.telemetry.BaseEvent.prototype.renderContext = function(global) {
-  let fresh = new proto.analytics.Context();
+  debugger;
   let local = /** @type {proto.analytics.Context} */ (this.context.export());
-  jspb.Message.copyInto(global, fresh);
-  jspb.Message.copyInto(local, fresh);
-  return fresh;
+  let merged = bloombox.util.proto.merge(local, global);
+  this.validateContext_(merged);
+  return merged;
+};
+
+
+/**
+ * Validate final event context before allowing it to return.
+ *
+ * @param {proto.analytics.Context} context Final context to validate.
+ * @throws {bloombox.telemetry.ContextException} If required context is missing
+ *         or context values are invalid.
+ * @private
+ */
+bloombox.telemetry.BaseEvent.prototype.validateContext_ = function(context) {
+  debugger;
+  // resolve fingerprint and session
+  if (!context.getFingerprint())
+    throw new bloombox.telemetry.ContextException(
+      'Missing device fingerprint ID.');
+  if (!context.getGroup())
+    throw new bloombox.telemetry.ContextException(
+      'Missing device session ID.');
 };
 
 
