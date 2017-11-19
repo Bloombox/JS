@@ -41,17 +41,17 @@ goog.provide('bloombox.telemetry.rpc.TelemetryRPC');
  * @enum {string}
  */
 bloombox.telemetry.Routine = {
-  'PING': 'PING',
-  'EVENT': 'EVENT',
-  'EXCEPTION': 'EXCEPTION',
-  'SECTION_IMPRESSION': 'SECTION_IMPRESSION',
-  'SECTION_VIEW': 'SECTION_VIEW',
-  'SECTION_ACTION': 'SECTION_ACTION',
-  'PRODUCT_IMPRESSION': 'PRODUCT_IMPRESSION',
-  'PRODUCT_VIEW': 'PRODUCT_VIEW',
-  'PRODUCT_ACTION': 'PRODUCT_ACTION',
-  'USER_ACTION': 'USER_ACTION',
-  'ORDER_ACTION': 'ORDER_ACTION'
+  PING: 'PING',
+  EVENT: 'EVENT',
+  EXCEPTION: 'EXCEPTION',
+  SECTION_IMPRESSION: 'SECTION_IMPRESSION',
+  SECTION_VIEW: 'SECTION_VIEW',
+  SECTION_ACTION: 'SECTION_ACTION',
+  PRODUCT_IMPRESSION: 'PRODUCT_IMPRESSION',
+  PRODUCT_VIEW: 'PRODUCT_VIEW',
+  PRODUCT_ACTION: 'PRODUCT_ACTION',
+  USER_ACTION: 'USER_ACTION',
+  ORDER_ACTION: 'ORDER_ACTION'
 };
 
 
@@ -144,10 +144,10 @@ bloombox.telemetry.endpoint = function(type, apiKey, opt_context, opt_target) {
  *
  * @param {string} uuid Unique ID for this RPC transaction.
  * @param {bloombox.telemetry.Routine} rpcMethod RPC routine.
- * @param {function(bloombox.telemetry.OperationStatus)} success Callback to
- *        dispatch once we have a response.
- * @param {function(?bloombox.telemetry.TelemetryError)} failure Callback to
- *        dispatch if an error is encountered.
+ * @param {bloombox.telemetry.SuccessCallback} success Callback to dispatch once
+ *        we have a response.
+ * @param {bloombox.telemetry.FailureCallback} failure Callback to dispatch if
+ *        a failure happens.
  * @param {Object=} opt_payload Payload to use if we're POST-ing or PUT-ing.
  * @param {proto.analytics.Context=} opt_context Contextual information to
  *        provide to the URL renderer.
@@ -215,7 +215,7 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(uuid,
   /**
    * Callback to dispatch once the operation is complete.
    *
-   * @type {function(bloombox.telemetry.OperationStatus)}
+   * @type {bloombox.telemetry.SuccessCallback}
    * @public
    */
   this.successCallback = success;
@@ -223,7 +223,7 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(uuid,
   /**
    * Callback to dispatch if an error is encountered.
    *
-   * @type {function(bloombox.telemetry.TelemetryError)}
+   * @type {bloombox.telemetry.FailureCallback}
    * @public
    */
   this.failureCallback = failure;

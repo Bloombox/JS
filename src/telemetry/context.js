@@ -55,7 +55,7 @@ goog.provide('bloombox.telemetry.resolveSessionID');
  * @param {string} name Name for this collection.
  * @constructor
  * @implements {bloombox.util.Exportable}
- * @package
+ * @public
  */
 bloombox.telemetry.Collection = function Collection(name) {
   /**
@@ -529,7 +529,7 @@ bloombox.telemetry.buildBrowserContext = function() {
  *
  * @param {boolean=} opt_force_fresh Force a fresh load of global context.
  * @return {bloombox.telemetry.Context} Global context.
- * @package
+ * @public
  */
 bloombox.telemetry.globalContext = function(opt_force_fresh) {
   let forceFresh = opt_force_fresh || false;

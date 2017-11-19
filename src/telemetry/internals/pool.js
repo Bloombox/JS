@@ -29,6 +29,9 @@ goog.require('bloombox.telemetry.internals.enabled');
 goog.require('bloombox.telemetry.internals.statistics');
 
 goog.require('bloombox.telemetry.internals.stats.recordPing');
+goog.require('bloombox.telemetry.internals.stats.recordRPCError');
+goog.require('bloombox.telemetry.internals.stats.recordRPCSent');
+goog.require('bloombox.telemetry.internals.stats.recordRPCSuccess');
 
 goog.require('bloombox.util.debounced');
 
@@ -234,6 +237,7 @@ bloombox.telemetry.internals.flush = function(opt_all) {
     function(queuedEvent) {
     // for each event that we de-queue,
     bloombox.telemetry.internals._sendEvent(queuedEvent);
+      bloombox.telemetry.internals.stats.recordRPCSent();
   }), amountToFetch || null);
 
   if ((stats.queued - dequeued) > 0) {
@@ -295,9 +299,9 @@ bloombox.telemetry.internals.rpcCallback = function(queuedEvent) {
       let xhr = event.target;
       let contentType = xhr.getResponseHeader('Content-Type');
       let contentLength = xhr.getResponseHeader('Content-Length');
+      let status = xhr.getStatus();
 
       // parse status
-      let status = xhr.getStatus();
       if (status === 200 ||
           status === 201 ||
           status === 202 ||
@@ -307,8 +311,8 @@ bloombox.telemetry.internals.rpcCallback = function(queuedEvent) {
 
         if (!contentLength || parseInt(contentLength, 10) === 0) {
           // no response body but still successful
-          let status = bloombox.telemetry.OperationStatus.OK;
-          queuedEvent.rpc.successCallback(status);
+          let opStatus = bloombox.telemetry.OperationStatus.OK;
+          queuedEvent.rpc.successCallback(opStatus);
         } else {
           // we have a response body
           if (contentType === 'application/json' ||
@@ -317,17 +321,23 @@ bloombox.telemetry.internals.rpcCallback = function(queuedEvent) {
             debugger;
 
             let status = bloombox.telemetry.OperationStatus.OK;
+            bloombox.telemetry.internals.stats.recordRPCSuccess();
             queuedEvent.rpc.successCallback(status);
           }
         }
       }
     } else if (event.type === goog.net.EventType.ERROR) {
+      let xhr = event.target;
+      let status = xhr.getStatus();
+
       // the runtime reports that an error occurred
       bloombox.logging.error('An error occurred while fulfilling a telemetry ' +
                              'service RPC.',
         {'queuedEvent': queuedEvent, 'event': event, 'xhr': event.target});
+      let opStatus = bloombox.telemetry.OperationStatus.ERROR;
       let err = bloombox.telemetry.TelemetryError.UNKNOWN;
-      queuedEvent.rpc.failureCallback(err);
+      bloombox.telemetry.internals.stats.recordRPCError();
+      queuedEvent.rpc.failureCallback(opStatus, err, status);
     }
   }
 };

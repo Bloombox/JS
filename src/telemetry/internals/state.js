@@ -29,9 +29,9 @@ goog.provide('bloombox.telemetry.internals.statistics');
 goog.provide('bloombox.telemetry.internals.stats.recordPing');
 goog.provide('bloombox.telemetry.internals.stats.recordPong');
 goog.provide('bloombox.telemetry.internals.stats.recordRPCError');
+goog.provide('bloombox.telemetry.internals.stats.recordRPCSent');
 goog.provide('bloombox.telemetry.internals.stats.recordRPCSuccess');
 goog.provide('bloombox.telemetry.internals.stats.updateRPCQueued');
-goog.provide('bloombox.telemetry.internals.stats.updateRPCSent');
 
 
 /**
@@ -99,7 +99,6 @@ bloombox.telemetry.internals.stats.recordPing = function() {
  */
 bloombox.telemetry.internals.stats.recordPong = function() {
   bloombox.telemetry.internals.state.LAST_PONG_RECEIVED_ = +(new Date());
-  bloombox.telemetry.internals.stats.recordRPCSuccess();
 };
 
 
@@ -124,6 +123,16 @@ bloombox.telemetry.internals.stats.recordRPCSuccess = function() {
 
 
 /**
+ * Record that an RPC was sent.
+ *
+ * @public
+ */
+bloombox.telemetry.internals.stats.recordRPCSent = function() {
+  bloombox.telemetry.internals.state.SENT_EVENT_COUNT_++;
+};
+
+
+/**
  * Update queued RPC count.
  *
  * @param {number} queued_count Current count of queued RPCs.
@@ -131,17 +140,6 @@ bloombox.telemetry.internals.stats.recordRPCSuccess = function() {
  */
 bloombox.telemetry.internals.stats.updateRPCQueued = function(queued_count) {
   bloombox.telemetry.internals.state.QUEUED_EVENT_COUNT_ = queued_count;
-};
-
-
-/**
- * Update sent RPC count.
- *
- * @param {number} sent_count Current count of sent RPCs.
- * @public
- */
-bloombox.telemetry.internals.stats.updateRPCSent = function(sent_count) {
-  bloombox.telemetry.internals.state.SENT_EVENT_COUNT_ = sent_count;
 };
 
 
@@ -165,6 +163,9 @@ bloombox.telemetry.internals.active = function() {
  */
 bloombox.telemetry.internals.activate = function() {
   bloombox.telemetry.internals.state.ACTIVE_ = true;
+
+  // perform a tick to re-start the queue
+  bloombox.telemetry.internals.tick();
 };
 
 /**

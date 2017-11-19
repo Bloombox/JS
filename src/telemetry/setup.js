@@ -13,6 +13,7 @@ goog.require('bloombox.logging.log');
 goog.require('bloombox.logging.warn');
 
 goog.require('bloombox.telemetry.DEBUG');
+goog.require('bloombox.telemetry.InternalCollection');
 goog.require('bloombox.telemetry.TELEMETRY_API_ENDPOINT');
 goog.require('bloombox.telemetry.VERSION');
 
@@ -69,7 +70,9 @@ bloombox.telemetry.sendInitialEvents = function() {
       'User opted-out of telemetry, skipping initial events.');
   } else {
     // user has not yet opted out
-    bloombox.logging.log('Would send initial events.');
+    bloombox.telemetry.event(
+      bloombox.telemetry.InternalCollection.LIBRARY,
+      {'distribution': 'js-client'}).send();
   }
 };
 

@@ -14,9 +14,9 @@ goog.require('bloombox.telemetry.globalContext');
 
 goog.require('bloombox.util.Exportable');
 
+goog.require('proto.analytics.Context');
 goog.require('proto.analytics.Event');
 goog.require('proto.google.protobuf.Struct');
-goog.require('proto.services.telemetry.v1beta1.Event.Request');
 goog.require('proto.temporal.Instant');
 
 goog.provide('bloombox.telemetry.Event');
@@ -30,9 +30,9 @@ goog.provide('bloombox.telemetry.InternalCollection');
  * @param {bloombox.telemetry.Collection} collection Collection to assign this
  *        event to.
  * @param {Object=} opt_payload Payload to attach to this event, if any.
- * @param {Object=} opt_context Additional context to apply to the default set
- *        that is sent globally.
- * @param {number} opt_occurred Millisecond-resolution timestamp for when this
+ * @param {?bloombox.telemetry.Context=} opt_context Additional context to apply
+ *        to the default set that is sent globally.
+ * @param {number=} opt_occurred Millisecond-resolution timestamp for when this
  *        event occurred. If none is provided, a timestamp is taken upon event
  *        construction.
  * @constructor
@@ -60,6 +60,18 @@ bloombox.telemetry.Event = function Event(collection,
    * @public
    */
   this.occurred = opt_occurred || +(new Date());
+
+  // build context from collection
+  let builtContext = (opt_context ||
+    new proto.analytics.Context());
+  builtContext.setCollection(collection.export());
+
+  bloombox.telemetry.BaseEvent.apply(
+    this,
+    [builtContext,
+     bloombox.telemetry.Routine.EVENT,
+     opt_payload,
+     this.occurred]);
 };
 goog.inherits(bloombox.telemetry.Event, bloombox.telemetry.BaseEvent);
 
@@ -70,7 +82,7 @@ goog.inherits(bloombox.telemetry.Event, bloombox.telemetry.BaseEvent);
  * @return {bloombox.telemetry.Routine} RPC routine for this event.
  */
 bloombox.telemetry.Event.prototype.rpcMethod = function() {
-  return bloombox.telemetry.Routine['EVENT'];
+  return bloombox.telemetry.Routine.EVENT;
 };
 
 
@@ -99,10 +111,13 @@ bloombox.telemetry.Event.prototype.export = function() {
   let renderedContext = this.renderContext(globalContextPb);
   let occurred = this.renderOccurrence(+(new Date()));
   occurrence.setTimestamp(occurred);
-  let payloadStruct = proto.google.protobuf.Struct.fromJavaScript(payload);
+
+  // set payload
+  if (payload && typeof payload === 'object') {
+    event.setPayload(proto.google.protobuf.Struct.fromJavaScript(payload));
+  }
 
   // setup event parameters
-  if (payload !== null) event.setPayload(payloadStruct);
   event.setOccurred(occurrence);
   event.setContext(renderedContext);
   return event;
@@ -167,8 +182,8 @@ bloombox.telemetry.InternalCollection = {
 /**
  * Utility function to factory a generic event.
  *
- * @param {bloombox.telemetry.Collection} collection Collection to add this
- *        event to.
+ * @param {string|bloombox.telemetry.Collection} collection Collection to add
+ *        this event to.
  * @param {Object=} opt_payload Payload to attach to this event, if any.
  * @param {bloombox.telemetry.Context=} opt_context Optional context to merge
  *        into global context before sending this event.
@@ -182,11 +197,8 @@ bloombox.telemetry.event = function(collection,
                                     opt_payload,
                                     opt_context,
                                     opt_occurred) {
-  let event = new bloombox.telemetry.Event(
-    collection, opt_payload, opt_occurred);
-
-  let request = new proto.services.telemetry.v1beta1.Event.Request();
-  request.setEvent(event.export());
-
-  return event;
+  let resolvedCollection = typeof collection !== 'string' ? collection : (
+    bloombox.telemetry.Collection.named(/** @type {string} */ (collection)));
+  return new bloombox.telemetry.Event(
+    resolvedCollection, opt_payload, null, opt_occurred);
 };
