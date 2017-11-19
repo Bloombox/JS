@@ -416,7 +416,7 @@ bloombox.telemetry.resolveSessionID = function() {
       // in local storage and locally, and return.
       let newSessionID = bloombox.util.generateUUID();
       bloombox.telemetry.SESSION_ID = newSessionID;
-      window['localStorage'].setItem(
+      window['sessionStorage'].setItem(
         bloombox.telemetry.SESSION_ID_KEY, newSessionID);
       bloombox.logging.log('Established user session at ID: "' +
         newSessionID + "'.");
