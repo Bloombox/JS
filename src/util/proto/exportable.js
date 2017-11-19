@@ -17,16 +17,17 @@ goog.provide('bloombox.util.Exportable');
  * message structure that corresponds with its own type. Implementors specify
  * a method, `export`, that can output a prepared, corresponding PB.
  *
+ * @template T
  * @interface
  * @public
  */
-bloombox.util.Exportable = function() {};
+bloombox.util.Exportable = function Exportable() {};
 
 /**
  * Export the subject exportable object into a protobuf message structure,
  * prepared and initialized with values from the higher-order object.
  *
- * @return {jspb.Message}
+ * @return {T}
  * @public
  */
 bloombox.util.Exportable.prototype.export = function() {};

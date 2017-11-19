@@ -20,7 +20,7 @@ goog.provide('bloombox.util.Serializable');
  * @interface
  * @public
  */
-bloombox.util.Serializable = function() {};
+bloombox.util.Serializable = function Serializable() {};
 
 /**
  * Export the object into a native JavaScript structure that is serializable
