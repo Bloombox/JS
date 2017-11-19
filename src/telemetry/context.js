@@ -18,12 +18,10 @@ goog.require('bloombox.util.generateUUID');
 goog.require('proto.analytics.BrowserDeviceContext');
 goog.require('proto.analytics.Collection');
 goog.require('proto.analytics.Context');
-goog.require('proto.commerce.OrderKey');
-goog.require('proto.identity.UserKey');
-
-goog.require('proto.analytics.BrowserDeviceContext');
 goog.require('proto.analytics.DeviceApplication');
 goog.require('proto.analytics.DeviceOS');
+goog.require('proto.commerce.OrderKey');
+goog.require('proto.identity.UserKey');
 goog.require('proto.partner.PartnerDeviceKey');
 goog.require('proto.partner.PartnerKey');
 goog.require('proto.partner.PartnerLocationKey');
@@ -31,7 +29,12 @@ goog.require('proto.partner.PartnerLocationKey');
 goog.provide('bloombox.telemetry.Collection');
 goog.provide('bloombox.telemetry.Context');
 goog.provide('bloombox.telemetry.ContextException');
+
+goog.provide('bloombox.telemetry.buildBrowserContext');
 goog.provide('bloombox.telemetry.globalContext');
+goog.provide('bloombox.telemetry.resolveFingerprint');
+goog.provide('bloombox.telemetry.resolveSessionID');
+
 
 
 // - Event Collections - //
@@ -104,12 +107,16 @@ bloombox.telemetry.ContextException = function ContextException(message) {
  * @param {?string} location Location code to apply to this context.
  * @param {string} fingerprint Unique device UUID for the active device.
  * @param {string} session Unique session UUID for the active session.
- * @param {string=} opt_user Optional. User key to apply to this context.
- * @param {string=} opt_device Optional. Device key to apply to this context.
+ * @param {?string=} opt_user Optional. User key to apply to this context.
+ * @param {?string=} opt_device Optional. Device key to apply to this context.
  *        This is different from the device fingerprint, in that it uniquely
  *        identifies a known device, rather than being a generic opaque token
  *        that distinguishes one device context from another.
- * @param {string=} opt_order Optional. Order key to apply to this context.
+ * @param {?string=} opt_order Optional. Order key to apply to this context.
+ * @param {proto.analytics.BrowserDeviceContext=} opt_browser Optional. Explicit
+ *        browser device context info to override whatever globally-gathered
+ *        info would normally be sent. When generating global context, this
+ *        property is specified as the detected info.
  * @constructor
  * @implements {bloombox.util.Exportable}
  * @throws {bloombox.telemetry.ContextException}
@@ -122,7 +129,8 @@ bloombox.telemetry.Context = function(collection,
                                       session,
                                       opt_user,
                                       opt_device,
-                                      opt_order) {
+                                      opt_order,
+                                      opt_browser) {
   /**
    * Collection to apply this event to.
    *
@@ -239,6 +247,13 @@ bloombox.telemetry.Context = function(collection,
    * @type {?proto.partner.PartnerDeviceKey}
    */
   this.device = deviceKey;
+
+  // attach browser context, if any
+  /**
+   * Browser context, if any, or `null`.
+   * @type {?proto.analytics.BrowserDeviceContext}
+   */
+  this.browser = opt_browser || null;
 };
 
 
@@ -376,6 +391,7 @@ bloombox.telemetry.resolveFingerprint = function() {
  * the existing one if it does.
  *
  * @return {string} Session-scoped UUID.
+ * @package
  */
 bloombox.telemetry.resolveSessionID = function() {
   if (bloombox.telemetry.SESSION_ID === null) {
@@ -402,6 +418,27 @@ bloombox.telemetry.resolveSessionID = function() {
 
 
 /**
+ * Build local browser context from the available environment.
+ *
+ * @return {proto.analytics.BrowserDeviceContext}
+ * @package
+ */
+bloombox.telemetry.buildBrowserContext = function() {
+  let context = new proto.analytics.BrowserDeviceContext();
+
+  // detect browser type and version
+
+  // detect OS type and version
+
+  // detect application type and version
+
+  // detect library type and version
+
+  return context;
+};
+
+
+/**
  * Retrieve globally gathered/specified context. Caching is applied to reduce
  * overhead. To force a re-gather of expensively calculated information, pass
  * `opt_force_fresh` as truthy.
@@ -419,6 +456,7 @@ bloombox.telemetry.globalContext = function(opt_force_fresh) {
     let locationCode = config.location || null;
     let deviceFingerprint = bloombox.telemetry.resolveFingerprint();
     let sessionID = bloombox.telemetry.resolveSessionID();
+    let browserContext = bloombox.telemetry.buildBrowserContext();
 
     // calculate global context
     bloombox.telemetry.GLOBAL_CONTEXT = new bloombox.telemetry.Context(
@@ -426,7 +464,11 @@ bloombox.telemetry.globalContext = function(opt_force_fresh) {
       partnerCode,
       locationCode,
       deviceFingerprint,
-      sessionID);
+      sessionID,
+      null,  // @TODO: ability to use logged-in user
+      null,  // @TODO: ability to use active device
+      null,  // @TODO: ability to use active order
+      browserContext);
   }
   return bloombox.telemetry.GLOBAL_CONTEXT;
 };
