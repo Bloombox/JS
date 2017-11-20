@@ -315,7 +315,7 @@ bloombox.telemetry.BaseEvent.prototype.renderPayload = function(context) {};
  */
 bloombox.telemetry.BaseEvent.prototype.onSuccess = function(status) {
   // if there is a success callback attached, call it
-  if (this.successCallback !== null)
+  if (this.successCallback && typeof this.successCallback === 'function')
     this.successCallback(status);
   this.successCallback = null;
 };
@@ -332,7 +332,7 @@ bloombox.telemetry.BaseEvent.prototype.onSuccess = function(status) {
  */
 bloombox.telemetry.BaseEvent.prototype.onFailure = function(op, error, code) {
   // if there is a failure callback attached, call it
-  if (this.failureCallback !== null)
+  if (this.failureCallback && typeof this.failureCallback === 'function')
     this.failureCallback(op, error, code);
   this.failureCallback = null;
 };

@@ -62,9 +62,13 @@ bloombox.telemetry.Event = function Event(collection,
    */
   this.occurred = opt_occurred || +(new Date());
 
+  // generate a super context considering the local collection
+  let supercontext = new bloombox.telemetry.Context(
+    this.collection);
+
   bloombox.telemetry.BaseEvent.apply(
     this,
-    [new bloombox.telemetry.Context(),
+    [supercontext,
      bloombox.telemetry.Routine.EVENT,
      opt_payload,
      this.occurred]);
@@ -186,14 +190,12 @@ bloombox.telemetry.Event.prototype.renderPayload = function(ctx) {
 
   let basePayload = {
     'context': serializedContext,
-    'occurred': occurrence
-  };
+    'occurred': {'timestamp': occurrence}};
 
   if (this.payload)
     basePayload['payload'] = this.payload;
   return basePayload;
 };
-
 
 
 /**

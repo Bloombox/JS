@@ -56,21 +56,21 @@ goog.provide('bloombox.telemetry.resolveSessionID');
  * Named event collection.
  *
  * @param {string} name Name for this collection.
- * @param {boolean=} opt_b64encode Whether to base64 encode. Pass as truthy when
- *        the collection name is not already base64 encoded.
+ * @param {boolean=} opt_skipb64encode Whether to skip base64 encoding. Pass as
+ *        truthy when the collection name is already base64 encoded.
  * @constructor
  * @implements {bloombox.util.Exportable<proto.analytics.Collection>}
  * @implements {bloombox.util.Serializable}
  * @public
  */
-bloombox.telemetry.Collection = function Collection(name, opt_b64encode) {
+bloombox.telemetry.Collection = function Collection(name, opt_skipb64encode) {
   /**
    * Name for this collection.
    *
    * @type {string}
    * @export
    */
-  this.name = !opt_b64encode ? bloombox.util.b64.encode(name) : name;
+  this.name = opt_skipb64encode ? name : bloombox.util.b64.encode(name);
 };
 
 
@@ -82,7 +82,7 @@ bloombox.telemetry.Collection = function Collection(name, opt_b64encode) {
  * @export
  */
 bloombox.telemetry.Collection.named = function(name) {
-  return new bloombox.telemetry.Collection(name, true);
+  return new bloombox.telemetry.Collection(name);
 };
 
 
@@ -339,7 +339,7 @@ bloombox.telemetry.Context.prototype.setFromProto = function(protob) {
   // copy in collection
   let collectionName = protob.getCollection().getName();
   if (collectionName) {
-    this.collection = new bloombox.telemetry.Collection(collectionName, false);
+    this.collection = new bloombox.telemetry.Collection(collectionName, true);
   }
 
   // resolve user
@@ -437,7 +437,7 @@ bloombox.telemetry.Context.serializeProto = function(context) {
     case proto.analytics.Context.PartnerContextCase.LOCATION:
       baseContext['location'] = {
         'code': context.getLocation().getCode(),
-        'partner': context.getLocation().getPartner().getCode()};
+        'partner': {'code': context.getLocation().getPartner().getCode()}};
       break;
     case proto.analytics.Context.PartnerContextCase.DEVICE:
       baseContext['device'] = {
