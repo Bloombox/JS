@@ -29,7 +29,6 @@ goog.require('bloombox.shop.Item');
 goog.require('bloombox.shop.Routine');
 
 goog.require('bloombox.shop.order.DeliveryLocation');
-goog.require('bloombox.shop.order.customerFromResponse');
 
 goog.require('bloombox.shop.rpc.ShopRPC');
 
@@ -50,7 +49,6 @@ goog.require('proto.temporal.Instant');
 
 
 // -- Structures -- //
-
 /**
  * Callback function for order submission.
  *
@@ -97,7 +95,6 @@ bloombox.shop.order.OrderException = function OrderException(message) {
 
 
 // -- Order Scheduling -- //
-
 /**
  * Specifies scheduling options for an order.
  *
@@ -156,7 +153,6 @@ bloombox.shop.order.OrderScheduling.prototype.getDesiredTime = function() {
 
 
 // -- Order -- //
-
 /**
  * Specifies an order that can be submitted for pickup or delivery.
  *

@@ -11,6 +11,8 @@ goog.provide('bloombox.product.Key');
 goog.provide('bloombox.product.Kind');
 goog.provide('bloombox.product.Weight');
 
+goog.require('bloombox.util.Exportable');
+
 goog.require('proto.base.ProductKey');
 goog.require('proto.base.ProductKind');
 goog.require('proto.base.ProductType');
@@ -60,6 +62,7 @@ bloombox.product.Weight = {
  * @param {string} id ID of the product.
  * @param {bloombox.product.Kind} kind Kind of product this key is for.
  * @constructor
+ * @implements {bloombox.util.Exportable<proto.base.ProductKey>}
  * @export
  */
 bloombox.product.Key = function Key(id,

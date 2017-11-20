@@ -20,6 +20,7 @@ goog.require('bloombox.logging.log');
 goog.require('bloombox.shop.setup');
 
 // Module: Telemetry
+goog.require('bloombox.telemetry.optout');
 goog.require('bloombox.telemetry.setup');
 
 
@@ -30,7 +31,6 @@ goog.require('bloombox.telemetry.setup');
  * @export
  */
 bloombox.VARIANT = 'full';
-
 
 
 /**

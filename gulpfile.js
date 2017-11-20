@@ -66,6 +66,7 @@ function closureBuilder(entrypoint) {
       "shouldProvideRequireJsFunctions": true
     },
     "closure": {
+      "debug": true,
       "dependency_mode": "STRICT",
       "entry_point": "goog:bloombox.setup",
       "output_manifest": "target/manifest-" + entrypoint + ".MF",

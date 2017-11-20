@@ -10,12 +10,19 @@
 
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
+goog.require('bloombox.logging.warn');
 
 goog.require('bloombox.telemetry.DEBUG');
+goog.require('bloombox.telemetry.InternalCollection');
 goog.require('bloombox.telemetry.TELEMETRY_API_ENDPOINT');
 goog.require('bloombox.telemetry.VERSION');
 
+goog.provide('bloombox.telemetry.boot');
+goog.require('bloombox.telemetry.didOptOut');
+goog.provide('bloombox.telemetry.sendInitialEvents');
 goog.provide('bloombox.telemetry.setup');
+
+goog.require('bloombox.telemetry.ping');
 
 
 /**
@@ -46,4 +53,49 @@ bloombox.telemetry.setup = function(partner,
       'debug': bloombox.telemetry.DEBUG,
       'config': bloombox.config});
   callback();
+  bloombox.telemetry.boot();
+};
+
+
+/**
+ * Begin handling telemetry data, starting with initial events to be dispatched
+ * and an initial server ping.
+ *
+ * @package
+ */
+bloombox.telemetry.sendInitialEvents = function() {
+  if (bloombox.telemetry.didOptOut()) {
+    // user opted out of telemetry
+    bloombox.logging.warn(
+      'User opted-out of telemetry, skipping initial events.');
+  } else {
+    // user has not yet opted out
+    bloombox.telemetry.event(
+      bloombox.telemetry.InternalCollection.LIBRARY,
+      {'distribution': 'js-client'}).send();
+  }
+};
+
+
+/**
+ * Begin handling telemetry data, starting with initial events to be dispatched
+ * and an initial server ping.
+ *
+ * @public
+ */
+bloombox.telemetry.boot = function() {
+  if (bloombox.telemetry.didOptOut()) {
+    // user opted out of telemetry
+    bloombox.logging.warn(
+      'User opted-out of telemetry, skipping initial ping.');
+  } else {
+    // user has not yet opted out
+    bloombox.logging.log('Sending initial telemetry ping...');
+    bloombox.telemetry.ping(function(latency) {
+      // as soon as the ping comes through, send the initial events
+      bloombox.logging.log('Telemetry service is online. Ping latency: ' +
+                           '' + latency + 'ms.');
+      bloombox.telemetry.sendInitialEvents();
+    });
+  }
 };

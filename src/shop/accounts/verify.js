@@ -16,7 +16,6 @@ goog.require('bloombox.logging.warn');
 
 goog.require('bloombox.shop.Customer');
 goog.require('bloombox.shop.Routine');
-goog.require('bloombox.shop.order.customerFromResponse');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
 goog.require('proto.commerce.Customer');
@@ -47,7 +46,7 @@ bloombox.shop.order.VerifyException = function VerifyException(message) {
 
 
 /**
- * Verify a user via the Greenbits backend for Caliva.
+ * Verify a user via Bloombox.
  *
  * @param {string} email Email address to verify.
  * @param {bloombox.shop.VerifyCallback} callback Optional endpoint override.
@@ -98,7 +97,7 @@ bloombox.shop.verify = function(email,
 
       if (inflated) {
         let customer = (response['verified'] === true) ?
-          bloombox.shop.order.customerFromResponse(
+          bloombox.shop.Customer.fromResponse(
             /** @type {Object} */ (response)) : null;
         if (response['verified'] === true)
           bloombox.logging.log('Loaded \'Customer\' record from response.',

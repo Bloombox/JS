@@ -10,6 +10,8 @@
 goog.require('bloombox.identity.ContactInfo');
 goog.require('bloombox.identity.Person');
 
+goog.require('bloombox.util.Exportable');
+
 goog.require('proto.commerce.Customer');
 goog.require('proto.contact.ContactInfo');
 goog.require('proto.contact.EmailAddress');
@@ -57,6 +59,7 @@ bloombox.shop.CustomerName;
  * @param {string} foreignID Foreign system ID, for submitting the order (i.e.
  *                 Greenbits).
  * @throws {bloombox.shop.CustomerException} If params provided are invalid.
+ * @implements {bloombox.util.Exportable<proto.commerce.Customer>}
  * @constructor
  * @export
  */
@@ -115,7 +118,7 @@ bloombox.shop.Customer.prototype.setPhoneNumber = function(phone) {
  *         could not be resolved.
  * @export
  */
-bloombox.shop.order.customerFromResponse = function(proto) {
+bloombox.shop.Customer.fromResponse = function(proto) {
   if (typeof proto !== 'object' || !proto)
     throw new bloombox.shop.CustomerException(
       'Failed to resolve customer for response.');

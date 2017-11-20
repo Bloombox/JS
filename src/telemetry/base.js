@@ -7,10 +7,15 @@
 
 /*global goog */
 
+goog.provide('bloombox.telemetry.BATCH_SIZE');
 goog.provide('bloombox.telemetry.DEBUG');
+goog.provide('bloombox.telemetry.MAX_XHRs');
 goog.provide('bloombox.telemetry.TELEMETRY_API_ENDPOINT');
 goog.provide('bloombox.telemetry.TELEMETRY_API_VERSION');
 goog.provide('bloombox.telemetry.VERSION');
+goog.provide('bloombox.telemetry.XHR_DEBOUNCE');
+goog.provide('bloombox.telemetry.XHR_RETRIES');
+goog.provide('bloombox.telemetry.XHR_TIMEOUT');
 
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.VERSION');
@@ -33,6 +38,50 @@ bloombox.telemetry.DEBUG = bloombox.DEBUG;
  * @export
  */
 bloombox.telemetry.VERSION = 'v1beta1r1';
+
+
+/**
+ * Batch size for event queue operations.
+ *
+ * @const {number} Telemetry events to batch (when pulling off the queue).
+ * @export
+ */
+bloombox.telemetry.BATCH_SIZE = 5;
+
+
+/**
+ * Debounce interval for analytics data transmission.
+ *
+ * @const {number} Debounce delay, in milliseconds.
+ * @export
+ */
+bloombox.telemetry.XHR_DEBOUNCE = 1000 * 2.5  /** 2.5 seconds */;
+
+
+/**
+ * Maximum retry count for RPC methods.
+ *
+ * @const {number} Retry count maximum.
+ * @export
+ */
+bloombox.telemetry.XHR_RETRIES = 3;
+
+
+/**
+ * Timeout value for Telemetry RPCs.
+ *
+ * @const {number} Timeout value, in milliseconds.
+ * @export
+ */
+bloombox.telemetry.XHR_TIMEOUT = 1000 * 15  /** 15 seconds */;
+
+
+/**
+ * Maximum number of XHRs to enqueue at once.
+ *
+ * @type {number}
+ */
+bloombox.telemetry.MAX_XHRs = bloombox.telemetry.BATCH_SIZE;
 
 
 /**
