@@ -294,17 +294,13 @@ bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
     'browserType': protob.getBrowserType(),
     'deviceType': protob.getDeviceType(),
     'version': {
-      'namedVersion': {
-        'name': protob.getVersion().getName()
-      }
+      'name': protob.getVersion().getName()
     },
     'os': {
       'type': protob.getOs().getType(),
       'version': {
-        'namedVersion': {
-          'name': (
+        'name': (
             protob.getOs().getVersion().getName())
-        }
       }
     },
     'app': {
@@ -314,10 +310,8 @@ bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
     'library': {
       'variant': protob.getLibrary().getVariant(),
       'version': {
-        'namedVersion': {
-          'name': (
-            protob.getLibrary().getVersion().getName())
-        }
+        'name': (
+          protob.getLibrary().getVersion().getName())
       }
     }
   };
@@ -413,37 +407,20 @@ bloombox.telemetry.Context.prototype.serialize = function() {
       'id': this.order.getId()
     };
 
+  if (this.device)
+    // device UUID
+    baseContext['device'] = this.device.getUuid();
+
   // consider partner context, etc
   if (this.partner) {
     if (this.location) {
-      if (this.device) {
-        // full device context
-        baseContext['device'] = {
-          'uuid': this.device.getUuid(),
-          'location': {
-            'code': this.device.getLocation().getCode(),
-            'partner': {
-              'code': this.device.getLocation().getPartner().getCode()
-            }
-          }
-        };
-      } else {
-        // location-only context
-        baseContext['location'] = {
-          'code': this.location.getCode(),
-          'partner': {
-            'code': this.location.getPartner().getCode()
-          }
-        };
-      }
-    } else {
-      // partner-only context
-      baseContext['partner'] = {
-        'code': this.partner.getCode()
+      baseContext['location'] = {
+        'code': this.location.getCode(),
+        'partner': {
+          'code': this.location.getPartner().getCode()
+        }
       };
     }
-  } else {
-    // no partner/location/device context at all
   }
 
   // consider browser context
