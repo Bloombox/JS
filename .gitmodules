@@ -1,7 +1,7 @@
 [submodule "schema"]
 	path = schema
 	url = git@github.com:bloombox/schema.git
-	branch = master
+	branch = service-flags
 [submodule "protobuf"]
 	path = protobuf
 	url = git@github.com:google/protobuf.git
