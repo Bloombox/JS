@@ -3,7 +3,7 @@
 ## Bloombox: JS Client
 #
 
-VERSION ?= v1.0.0-alpha7
+VERSION ?= v1.0.0-alpha8
 TARGET ?= target
 VERBOSE ?= no
 RELEASE ?= no
@@ -104,7 +104,7 @@ protobuf/js/node_modules:
 
 build: dependencies
 	@echo "Building schema..."
-	@$(MAKE) -C schema
+	@$(MAKE) -C schema LANGUAGES=js
 	@rm -fr schema/languages/js/{browser,es6,closure,commonjs}
 	@echo "Building Bloombox JS..."
 	@gulp $(GULP_FLAGS)

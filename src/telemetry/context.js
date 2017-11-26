@@ -14,7 +14,6 @@ goog.require('bloombox.config');
 goog.require('bloombox.logging.log');
 
 goog.require('bloombox.util.Exportable');
-goog.require('bloombox.util.Inflatable');
 goog.require('bloombox.util.Serializable');
 goog.require('bloombox.util.b64');
 goog.require('bloombox.util.generateUUID');
@@ -37,7 +36,6 @@ goog.require('proto.identity.UserKey');
 goog.require('proto.partner.PartnerDeviceKey');
 goog.require('proto.partner.PartnerKey');
 goog.require('proto.partner.PartnerLocationKey');
-goog.require('proto.structs.NamedVersion');
 goog.require('proto.structs.VersionSpec');
 
 goog.provide('bloombox.telemetry.Collection');
@@ -48,7 +46,6 @@ goog.provide('bloombox.telemetry.buildBrowserContext');
 goog.provide('bloombox.telemetry.globalContext');
 goog.provide('bloombox.telemetry.resolveFingerprint');
 goog.provide('bloombox.telemetry.resolveSessionID');
-
 
 
 // - Event Collections - //
@@ -150,7 +147,6 @@ bloombox.telemetry.ContextException = function ContextException(message) {
  *        property is specified as the detected info.
  * @constructor
  * @implements {bloombox.util.Exportable<proto.analytics.Context>}
- * @implements {bloombox.util.Inflatable<proto.analytics.Context, bloombox.telemetry.Context>}
  * @implements {bloombox.util.Serializable}
  * @throws {bloombox.telemetry.ContextException}
  * @public
@@ -196,14 +192,6 @@ bloombox.telemetry.Context = function(opt_collection,
   } else {
     partnerKey = null;
   }
-
-  /**
-   * Partner code.
-   *
-   * @type {?proto.partner.PartnerKey}
-   * @public
-   */
-  this.partner = partnerKey;
 
   // make us a partner key
   let locationKey;
@@ -295,74 +283,6 @@ bloombox.telemetry.Context = function(opt_collection,
 
 
 /**
- * Inflate context from a Protobuf object.
- *
- * @param {proto.analytics.Context} protob Proto to copy from.
- * @return {bloombox.telemetry.Context} Context object from its proto.
- */
-bloombox.telemetry.Context.prototype.setFromProto = function(protob) {
-  // copy in partner, location, device keys
-  let partnerKey = (protob.getPartner().getCode() ||
-    protob.getLocation().getPartner().getCode() ||
-    protob.getDevice().getLocation().getPartner().getCode()) || null;
-
-  let locationKey = (protob.getLocation().getCode() ||
-    protob.getDevice().getLocation().getCode()) || null;
-
-  let deviceKey = protob.getDevice().getUuid() || null;
-
-  if (partnerKey) {
-    this.partner = (protob.getPartner() ||
-      protob.getLocation().getPartner() ||
-      protob.getDevice().getLocation().getPartner());
-  }
-
-  if (locationKey) {
-    this.location = (protob.getLocation() ||
-      protob.getDevice().getLocation());
-  }
-
-  if (deviceKey) {
-    this.device = protob.getDevice();
-  }
-
-  // copy in fingerprint and session
-  let sessionKey = protob.getGroup();
-  let fingerprintKey = protob.getFingerprint();
-  if (sessionKey) {
-    this.session = sessionKey;
-  }
-  if (fingerprintKey) {
-    this.fingerprint = fingerprintKey;
-  }
-
-  // copy in collection
-  let collectionName = protob.getCollection().getName();
-  if (collectionName) {
-    this.collection = new bloombox.telemetry.Collection(collectionName, true);
-  }
-
-  // resolve user
-  let userId = protob.getUser().getUid();
-  if (userId) {
-    this.user = protob.getUser();
-  }
-
-  // resolve order
-  let orderId = protob.getOrder().getId();
-  if (orderId) {
-    this.order = protob.getOrder();
-  }
-
-  // resolve browser context - if it's set at all it's browser context
-  if (protob.getDeviceContextCase() !== (
-      proto.analytics.Context.DeviceContextCase.DEVICE_CONTEXT_NOT_SET))
-    this.browser = protob.getBrowser();
-  return this;
-};
-
-
-/**
  * Serialize the protobuf form of local browser context, into an object usable
  * over-the-wire.
  *
@@ -374,17 +294,13 @@ bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
     'browserType': protob.getBrowserType(),
     'deviceType': protob.getDeviceType(),
     'version': {
-      'namedVersion': {
-        'name': protob.getVersion().getNamedVersion().getName()
-      }
+      'name': protob.getVersion().getName()
     },
     'os': {
       'type': protob.getOs().getType(),
       'version': {
-        'namedVersion': {
-          'name': (
-            protob.getOs().getVersion().getNamedVersion().getName())
-        }
+        'name': (
+            protob.getOs().getVersion().getName())
       }
     },
     'app': {
@@ -394,10 +310,8 @@ bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
     'library': {
       'variant': protob.getLibrary().getVariant(),
       'version': {
-        'namedVersion': {
-          'name': (
-            protob.getLibrary().getVersion().getNamedVersion().getName())
-        }
+        'name': (
+          protob.getLibrary().getVersion().getName())
       }
     }
   };
@@ -429,28 +343,19 @@ bloombox.telemetry.Context.serializeProto = function(context) {
   if (context.getUser() && context.getOrder().getId())
     baseContext['order'] = {'id': context.getOrder().getId()};
 
-  // setup partner context
-  switch (context.getPartnerContextCase()) {
-    case proto.analytics.Context.PartnerContextCase.PARTNER:
-      baseContext['partner'] = {'code': context.getPartner().getCode()};
-      break;
-    case proto.analytics.Context.PartnerContextCase.LOCATION:
+  // handle location/partner context
+  if (context.getLocation() && context.getLocation().getCode()) {
+    if (context.getLocation().getPartner() &&
+        context.getLocation().getPartner().getCode()) {
       baseContext['location'] = {
         'code': context.getLocation().getCode(),
         'partner': {'code': context.getLocation().getPartner().getCode()}};
-      break;
-    case proto.analytics.Context.PartnerContextCase.DEVICE:
-      baseContext['device'] = {
-        'uuid': context.getDevice().getUuid(),
-        'location': {
-          'code': context.getDevice().getLocation().getCode(),
-          'partner': {
-            'code': context.getDevice().getLocation().getPartner().getCode()}}};
-      break;
-    default:
-      // it is unset: just continue onwards
-      break;
+    }
   }
+
+  // handle device context
+  if (context.getDevice())
+    baseContext['device'] = context.getDevice();
 
   // setup browser context
   switch (context.getDeviceContextCase()) {
@@ -502,37 +407,20 @@ bloombox.telemetry.Context.prototype.serialize = function() {
       'id': this.order.getId()
     };
 
+  if (this.device)
+    // device UUID
+    baseContext['device'] = this.device.getUuid();
+
   // consider partner context, etc
   if (this.partner) {
     if (this.location) {
-      if (this.device) {
-        // full device context
-        baseContext['device'] = {
-          'uuid': this.device.getUuid(),
-          'location': {
-            'code': this.device.getLocation().getCode(),
-            'partner': {
-              'code': this.device.getLocation().getPartner().getCode()
-            }
-          }
-        };
-      } else {
-        // location-only context
-        baseContext['location'] = {
-          'code': this.location.getCode(),
-          'partner': {
-            'code': this.location.getPartner().getCode()
-          }
-        };
-      }
-    } else {
-      // partner-only context
-      baseContext['partner'] = {
-        'code': this.partner.getCode()
+      baseContext['location'] = {
+        'code': this.location.getCode(),
+        'partner': {
+          'code': this.location.getPartner().getCode()
+        }
       };
     }
-  } else {
-    // no partner/location/device context at all
   }
 
   // consider browser context
@@ -561,21 +449,15 @@ bloombox.telemetry.Context.prototype.export = function() {
   if (this.user) context.setUser(this.user);
   if (this.order) context.setOrder(this.order);
 
-  // calculate partner context
-  if (this.partner) {
-    if (this.location) {
-      if (this.device) {
-        // full device->location->partner context
-        context.setDevice(this.device);
-      } else {
-        // location->partner context
-        context.setLocation(this.location);
-      }
-    } else {
-      // partner-only context
-      context.setPartner(this.partner);
-    }
+  if (this.device) {
+    // full device->location->partner context
+    context.setDevice(this.device.getUuid());
   }
+
+  // calculate partner context
+  if (this.location)
+    // location->partner context
+    context.setLocation(this.location);
 
   // device context
   if (this.browser) context.setBrowser(this.browser);
@@ -731,9 +613,7 @@ bloombox.telemetry.buildBrowserContext = function() {
   context.setDeviceType(deviceType);
 
   let browserVersionObj = new proto.structs.VersionSpec();
-  let browserVersionName = new proto.structs.NamedVersion();
-  browserVersionName.setName(browserVersion);
-  browserVersionObj.setNamedVersion(browserVersionName);
+  browserVersionObj.setName(browserVersion);
   context.setVersion(browserVersionObj);
 
   // detect OS type and version
@@ -761,9 +641,7 @@ bloombox.telemetry.buildBrowserContext = function() {
 
   let osObj = new proto.analytics.DeviceOS();
   let osVersionObj = new proto.structs.VersionSpec();
-  let osVersionName = new proto.structs.NamedVersion();
-  osVersionName.setName(osVersion);
-  osVersionObj.setNamedVersion(osVersionName);
+  osVersionObj.setName(osVersion);
   osObj.setType(osType);
   osObj.setVersion(osVersionObj);
   context.setOs(osObj);
@@ -780,9 +658,7 @@ bloombox.telemetry.buildBrowserContext = function() {
 
   let libObj = new proto.analytics.DeviceLibrary();
   let libVersionObj = new proto.structs.VersionSpec();
-  let libVersionName = new proto.structs.NamedVersion();
-  libVersionName.setName(libraryVersion);
-  libVersionObj.setNamedVersion(libVersionName);
+  libVersionObj.setName(libraryVersion);
   libObj.setVersion(libVersionObj);
   libObj.setVariant(libraryVariant);
   context.setLibrary(libObj);
