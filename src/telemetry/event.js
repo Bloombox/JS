@@ -353,9 +353,8 @@ bloombox.telemetry.BaseEvent.prototype.generateRPC = function() {
   let rpcPayload = this.renderPayload();
   let uuid = this.renderUUID();
 
-  let body = rpcPayload === null ? {} : rpcPayload;
-  if (mergedContext)
-    body['context'] = mergedContext;
+  let resolvedPayload = rpcPayload === null ? {} : rpcPayload;
+  let body = Object.assign({}, resolvedPayload, {'context': mergedContext});
 
   return new bloombox.telemetry.rpc.TelemetryRPC(
     uuid,
