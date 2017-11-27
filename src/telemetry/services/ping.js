@@ -20,8 +20,8 @@ goog.require('bloombox.telemetry.rpc.TelemetryRPC');
 
 goog.require('bloombox.util.generateUUID');
 
-goog.require('proto.services.telemetry.v1beta1.Ping.Request');
-goog.require('proto.services.telemetry.v1beta1.Ping.Response');
+goog.require('proto.services.telemetry.v1beta2.Ping.Request');
+goog.require('proto.services.telemetry.v1beta2.Ping.Response');
 
 goog.provide('bloombox.telemetry.ping');
 

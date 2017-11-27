@@ -17,7 +17,7 @@ goog.require('bloombox.telemetry.globalContext');
 goog.require('bloombox.util.Exportable');
 
 goog.require('proto.analytics.Context');
-goog.require('proto.analytics.Event');
+goog.require('proto.analytics.generic.Event');
 goog.require('proto.google.protobuf.Struct');
 goog.require('proto.temporal.Instant');
 
@@ -38,7 +38,7 @@ goog.provide('bloombox.telemetry.InternalCollection');
  *        event occurred. If none is provided, a timestamp is taken upon event
  *        construction.
  * @constructor
- * @extends {bloombox.telemetry.BaseEvent<proto.analytics.Event>}
+ * @extends {bloombox.telemetry.BaseEvent<proto.analytics.generic.Event>}
  * @public
  */
 bloombox.telemetry.Event = function Event(collection,
@@ -117,48 +117,34 @@ bloombox.telemetry.Event.prototype.validateContext = function(context) {
   // valid partner and location code
   if (!this.isInternalEvent_) {
     // get location key
-    let locationKey = context.getLocation();
-    if (!locationKey || !locationKey.getCode()) {
+    let contextKey = context.getScope().getPartner();
+    if (contextKey.indexOf('partner/') === -1 ||
+        contextKey.indexOf('location/') === -1)
       // we are missing a location key or code
       throw new bloombox.telemetry.ContextException(
         'Must specify a location code before sending analytics events.');
-    } else {
-      // we have a location key and code
-      let partnerKey = locationKey.getPartner();
-      if (!partnerKey || !partnerKey.getCode()) {
-        // we are missing a partner key or code
-        throw new bloombox.telemetry.ContextException(
-          'Must specify a partner code before sending analytics events.');
-      }
-    }
   }
   // if we get here, everything is a-o-k.
 };
 
 
 /**
- * Export this generic event as a `proto.analytics.Event`, suitable for sending
- * to the telemetry service. This includes:
+ * Export this generic event as a `proto.analytics.generic.Event`, suitable for
+ * sending to the telemetry service. This includes:
  * - Rendering the context with `renderContext`
  * - Rendering the payload with `renderPayload`
  * - Rendering the occurrence with `renderOccurrence`
  * - Filling out the proto and related sub-protos
  *
- * @return {proto.analytics.Event} Prepared event.
+ * @return {proto.analytics.generic.Event} Prepared event.
  */
 bloombox.telemetry.Event.prototype.export = function() {
-  // capture global context
-  let globalContext = bloombox.telemetry.globalContext();
-  let globalContextPb = /** @type {proto.analytics.Context} */ (
-    globalContext.export());
-
   // create our protos
-  let event = new proto.analytics.Event();
+  let event = new proto.analytics.generic.Event();
   let occurrence = new proto.temporal.Instant();
 
   // render local values
-  let renderedContext = this.renderContext(globalContextPb);
-  let payload = this.renderPayload(renderedContext);
+  let payload = this.renderPayload();
   let occurred = this.renderOccurrence(+(new Date()));
   occurrence.setTimestamp(occurred);
 
@@ -169,7 +155,6 @@ bloombox.telemetry.Event.prototype.export = function() {
 
   // setup event parameters
   event.setOccurred(occurrence);
-  event.setContext(renderedContext);
   return event;
 };
 
@@ -178,23 +163,13 @@ bloombox.telemetry.Event.prototype.export = function() {
  * Provide the attached payload, if any, as the final payload to send for the
  * event, along with serialized event context.
  *
- * @param {proto.analytics.Context} ctx Merged global and local context.
  * @return {?Object} Either `null`, indicating no payload should be attached, or
  * the attached payload object, provided at construction time.
  * @override
  * @public
  */
-bloombox.telemetry.Event.prototype.renderPayload = function(ctx) {
-  let occurrence = this.renderOccurrence(+(new Date()));
-  let serializedContext = bloombox.telemetry.Context.serializeProto(ctx);
-
-  let basePayload = {
-    'context': serializedContext,
-    'occurred': {'timestamp': occurrence}};
-
-  if (this.payload)
-    basePayload['payload'] = this.payload;
-  return basePayload;
+bloombox.telemetry.Event.prototype.renderPayload = function() {
+  return this.payload;
 };
 
 

@@ -160,11 +160,10 @@ bloombox.telemetry.TelemetryEvent.prototype.renderContext = function(global) {};
  * specification for the payload is event specific, so this method resolves that
  * for the generic case of rendering and sending those payloads.
  *
- * @param {proto.analytics.Context} ctx Merged global and local context.
  * @return {?Object} Either `null`, indicating no payload should be attached, or
  * an object that is serializable via JSON.
  */
-bloombox.telemetry.TelemetryEvent.prototype.renderPayload = function(ctx) {};
+bloombox.telemetry.TelemetryEvent.prototype.renderPayload = function() {};
 
 
 /**
@@ -297,12 +296,11 @@ bloombox.telemetry.BaseEvent.prototype.export = function() {};
  * payload to send for the event.
  *
  * @abstract
- * @param {proto.analytics.Context} context Context to render.
  * @return {?Object} Either `null`, indicating no payload should be attached, or
  * the attached payload object, provided at construction time.
  * @public
  */
-bloombox.telemetry.BaseEvent.prototype.renderPayload = function(context) {};
+bloombox.telemetry.BaseEvent.prototype.renderPayload = function() {};
 
 
 // - Base Event: Default Implementations - //
@@ -352,15 +350,19 @@ bloombox.telemetry.BaseEvent.prototype.generateRPC = function() {
   let mergedContext = this.renderContext(globalContext);
 
   let rpcMethod = this.rpcMethod();
-  let rpcPayload = this.renderPayload(mergedContext);
+  let rpcPayload = this.renderPayload();
   let uuid = this.renderUUID();
+
+  let body = rpcPayload === null ? {} : rpcPayload;
+  if (mergedContext)
+    body['context'] = mergedContext;
 
   return new bloombox.telemetry.rpc.TelemetryRPC(
     uuid,
     rpcMethod,
     this.onSuccess,
     this.onFailure,
-    rpcPayload,
+    body,
     mergedContext);
 };
 
