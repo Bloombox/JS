@@ -22,9 +22,9 @@ goog.require('bloombox.telemetry.VERSION');
 
 goog.require('bloombox.util.HTTPMethod');
 
-goog.require('proto.services.telemetry.v1beta1.OperationStatus');
-goog.require('proto.services.telemetry.v1beta1.TelemetryError');
-goog.require('proto.services.telemetry.v1beta1.TelemetryResponse');
+goog.require('proto.services.telemetry.v1beta2.OperationStatus');
+goog.require('proto.services.telemetry.v1beta2.TelemetryError');
+goog.require('proto.services.telemetry.v1beta2.TelemetryResponse');
 
 goog.provide('bloombox.telemetry.OperationStatus');
 goog.provide('bloombox.telemetry.Routine');
@@ -58,39 +58,39 @@ bloombox.telemetry.Routine = {
 /**
  * Enumerates operation statuses that result from Telemetry API RPC calls.
  *
- * @enum {proto.services.telemetry.v1beta1.OperationStatus}
+ * @enum {proto.services.telemetry.v1beta2.OperationStatus}
  */
 bloombox.telemetry.OperationStatus = {
-  OK: proto.services.telemetry.v1beta1.OperationStatus.OK,
-  ERROR: proto.services.telemetry.v1beta1.OperationStatus.ERROR
+  OK: proto.services.telemetry.v1beta2.OperationStatus.OK,
+  ERROR: proto.services.telemetry.v1beta2.OperationStatus.ERROR
 };
 
 
 /**
  * Enumerates errors in the Telemetry API.
  *
- * @enum {proto.services.telemetry.v1beta1.TelemetryError}
+ * @enum {proto.services.telemetry.v1beta2.TelemetryError}
  */
 bloombox.telemetry.TelemetryError = {
-  'UNKNOWN': proto.services.telemetry.v1beta1.TelemetryError.UNKNOWN,
+  'UNKNOWN': proto.services.telemetry.v1beta2.TelemetryError.UNKNOWN,
   'INVALID_COLLECTION': (
-    proto.services.telemetry.v1beta1.TelemetryError.INVALID_COLLECTION),
+    proto.services.telemetry.v1beta2.TelemetryError.INVALID_COLLECTION),
   'INVALID_PARTNER': (
-    proto.services.telemetry.v1beta1.TelemetryError.INVALID_PARTNER),
+    proto.services.telemetry.v1beta2.TelemetryError.INVALID_PARTNER),
   'INVALID_LOCATION': (
-    proto.services.telemetry.v1beta1.TelemetryError.INVALID_LOCATION),
+    proto.services.telemetry.v1beta2.TelemetryError.INVALID_LOCATION),
   'INVALID_DEVICE': (
-    proto.services.telemetry.v1beta1.TelemetryError.INVALID_DEVICE),
+    proto.services.telemetry.v1beta2.TelemetryError.INVALID_DEVICE),
   'INVALID_USER': (
-    proto.services.telemetry.v1beta1.TelemetryError.INVALID_USER),
+    proto.services.telemetry.v1beta2.TelemetryError.INVALID_USER),
   'INVALID_CLIENT': (
-    proto.services.telemetry.v1beta1.TelemetryError.INVALID_CLIENT),
+    proto.services.telemetry.v1beta2.TelemetryError.INVALID_CLIENT),
   'PARTNER_NOT_FOUND': (
-    proto.services.telemetry.v1beta1.TelemetryError.PARTNER_NOT_FOUND),
+    proto.services.telemetry.v1beta2.TelemetryError.PARTNER_NOT_FOUND),
   'LOCATION_NOT_FOUND': (
-    proto.services.telemetry.v1beta1.TelemetryError.LOCATION_NOT_FOUND),
+    proto.services.telemetry.v1beta2.TelemetryError.LOCATION_NOT_FOUND),
   'INVALID_PAYLOAD': (
-    proto.services.telemetry.v1beta1.TelemetryError.INVALID_PAYLOAD)
+    proto.services.telemetry.v1beta2.TelemetryError.INVALID_PAYLOAD)
 };
 
 

@@ -23,14 +23,15 @@ goog.require('goog.userAgent');
 goog.require('goog.userAgent.platform');
 goog.require('goog.userAgent.product');
 
-goog.require('proto.analytics.BrowserDeviceContext');
-goog.require('proto.analytics.Collection');
 goog.require('proto.analytics.Context');
-goog.require('proto.analytics.DeviceApplication');
-goog.require('proto.analytics.DeviceLibrary');
-goog.require('proto.analytics.DeviceOS');
-goog.require('proto.analytics.DeviceType');
-goog.require('proto.analytics.OSType');
+goog.require('proto.analytics.Scope');
+goog.require('proto.analytics.context.BrowserDeviceContext');
+goog.require('proto.analytics.context.Collection');
+goog.require('proto.analytics.context.DeviceApplication');
+goog.require('proto.analytics.context.DeviceLibrary');
+goog.require('proto.analytics.context.DeviceOS');
+goog.require('proto.analytics.context.DeviceType');
+goog.require('proto.analytics.context.OSType');
 goog.require('proto.commerce.OrderKey');
 goog.require('proto.identity.UserKey');
 goog.require('proto.partner.PartnerDeviceKey');
@@ -56,7 +57,7 @@ goog.provide('bloombox.telemetry.resolveSessionID');
  * @param {boolean=} opt_skipb64encode Whether to skip base64 encoding. Pass as
  *        truthy when the collection name is already base64 encoded.
  * @constructor
- * @implements {bloombox.util.Exportable<proto.analytics.Collection>}
+ * @implements {bloombox.util.Exportable<proto.analytics.context.Collection>}
  * @implements {bloombox.util.Serializable}
  * @public
  */
@@ -86,10 +87,10 @@ bloombox.telemetry.Collection.named = function(name) {
 /**
  * Export this `Collection` as an `analytics.Collection` message.
  *
- * @return {proto.analytics.Collection} JS PB message.
+ * @return {proto.analytics.context.Collection} JS PB message.
  */
 bloombox.telemetry.Collection.prototype.export = function() {
-  let collection = new proto.analytics.Collection();
+  let collection = new proto.analytics.context.Collection();
   collection.setName(this.name);
   return collection;
 };
@@ -141,10 +142,10 @@ bloombox.telemetry.ContextException = function ContextException(message) {
  *        identifies a known device, rather than being a generic opaque token
  *        that distinguishes one device context from another.
  * @param {?string=} opt_order Optional. Order key to apply to this context.
- * @param {proto.analytics.BrowserDeviceContext=} opt_browser Optional. Explicit
- *        browser device context info to override whatever globally-gathered
- *        info would normally be sent. When generating global context, this
- *        property is specified as the detected info.
+ * @param {proto.analytics.context.BrowserDeviceContext=} opt_browser Optional.
+ *        Explicit browser device context info to override whatever
+ *        globally-gathered info would normally be sent. When generating global
+ *        context, this property is specified as the detected info.
  * @constructor
  * @implements {bloombox.util.Exportable<proto.analytics.Context>}
  * @implements {bloombox.util.Serializable}
@@ -275,7 +276,7 @@ bloombox.telemetry.Context = function(opt_collection,
   // attach browser context, if any
   /**
    * Browser context, if any, or `null`.
-   * @type {?proto.analytics.BrowserDeviceContext}
+   * @type {?proto.analytics.context.BrowserDeviceContext}
    * @public
    */
   this.browser = opt_browser || null;
@@ -283,25 +284,36 @@ bloombox.telemetry.Context = function(opt_collection,
 
 
 /**
+ * Serialize the protobuf form of a version specification.
+ *
+ * @param {proto.structs.VersionSpec} protob Version spec.
+ * @return {Object} Serialized version spec.
+ */
+bloombox.telemetry.Context.resolveVersion = function(protob) {
+  if (protob && protob.getName())
+    return {
+      'name': protob.getName()
+    };
+  return {};
+};
+
+
+/**
  * Serialize the protobuf form of local browser context, into an object usable
  * over-the-wire.
  *
- * @param {proto.analytics.BrowserDeviceContext} protob Browser context.
+ * @param {proto.analytics.context.BrowserDeviceContext} protob Browser context.
  * @return {Object} Serialized browser context.
  */
 bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
   return {
     'browserType': protob.getBrowserType(),
     'deviceType': protob.getDeviceType(),
-    'version': {
-      'name': protob.getVersion().getName()
-    },
+    'version': bloombox.telemetry.Context.resolveVersion(protob.getVersion()),
     'os': {
       'type': protob.getOs().getType(),
-      'version': {
-        'name': (
-            protob.getOs().getVersion().getName())
-      }
+      'version': (
+        bloombox.telemetry.Context.resolveVersion(protob.getOs().getVersion()))
     },
     'app': {
       'type': protob.getApp().getType(),
@@ -309,10 +321,9 @@ bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
     },
     'library': {
       'variant': protob.getLibrary().getVariant(),
-      'version': {
-        'name': (
-          protob.getLibrary().getVersion().getName())
-      }
+      'version': (
+        bloombox.telemetry.Context.resolveVersion(
+          protob.getLibrary().getVersion()))
     }
   };
 };
@@ -340,22 +351,19 @@ bloombox.telemetry.Context.serializeProto = function(context) {
   // key contexts
   if (context.getUser() && context.getUser().getUid())
     baseContext['user'] = {'uid': context.getUser().getUid()};
-  if (context.getUser() && context.getOrder().getId())
-    baseContext['order'] = {'id': context.getOrder().getId()};
 
-  // handle location/partner context
-  if (context.getLocation() && context.getLocation().getCode()) {
-    if (context.getLocation().getPartner() &&
-        context.getLocation().getPartner().getCode()) {
-      baseContext['location'] = {
-        'code': context.getLocation().getCode(),
-        'partner': {'code': context.getLocation().getPartner().getCode()}};
+  // handle partner/commercial scope
+  if (context.getScope()) {
+    let scopeObj = {};
+    if (context.getScope().getPartner()) {
+      scopeObj['partner'] = context.getScope().getPartner();
     }
-  }
 
-  // handle device context
-  if (context.getDevice())
-    baseContext['device'] = context.getDevice();
+    if (context.getScope().getCommercial()) {
+      scopeObj['commercial'] = context.getScope().getCommercial();
+    }
+    baseContext['scope'] = scopeObj;
+  }
 
   // setup browser context
   switch (context.getDeviceContextCase()) {
@@ -447,17 +455,24 @@ bloombox.telemetry.Context.prototype.export = function() {
   // attach misc context
   if (this.collection) context.setCollection(this.collection.export());
   if (this.user) context.setUser(this.user);
-  if (this.order) context.setOrder(this.order);
 
-  if (this.device) {
-    // full device->location->partner context
-    context.setDevice(this.device.getUuid());
-  }
+  let scope = new proto.analytics.Scope();
 
   // calculate partner context
-  if (this.location)
-    // location->partner context
-    context.setLocation(this.location);
+  if (this.location) {
+    if (this.device) {
+      // full device->location->partner context
+      scope.setPartner(
+        'partner/' + this.location.getPartner().getCode() +
+        'location/' + this.location.getCode() +
+        'device/' + this.device.getUuid());
+    } else {
+      // partner -> location context
+      scope.setPartner(
+        'partner/' + this.location.getPartner().getCode() +
+        'location/' + this.location.getCode());
+    }
+  }
 
   // device context
   if (this.browser) context.setBrowser(this.browser);
@@ -581,35 +596,41 @@ bloombox.telemetry.resolveSessionID = function() {
 /**
  * Build local browser context from the available environment.
  *
- * @return {proto.analytics.BrowserDeviceContext}
+ * @return {proto.analytics.context.BrowserDeviceContext}
  * @package
  */
 bloombox.telemetry.buildBrowserContext = function() {
-  let context = new proto.analytics.BrowserDeviceContext();
+  let context = new proto.analytics.context.BrowserDeviceContext();
 
   // detect browser type and version
   let browserVersion = goog.userAgent.VERSION;
-  let browserType = proto.analytics.BrowserDeviceContext.Type.BROWSER_UNKNOWN;
+  let browserType = (
+    proto.analytics.context.BrowserType.BROWSER_UNKNOWN);
   if (goog.userAgent.product.CHROME)
-    browserType = proto.analytics.BrowserDeviceContext.Type.CHROME;
+    browserType = (
+      proto.analytics.context.BrowserType.CHROME);
   else if (goog.userAgent.product.SAFARI)
-    browserType = proto.analytics.BrowserDeviceContext.Type.SAFARI;
+    browserType = (
+      proto.analytics.context.BrowserType.SAFARI);
   else if (goog.userAgent.product.FIREFOX)
-    browserType = proto.analytics.BrowserDeviceContext.Type.FIREFOX;
+    browserType = (
+      proto.analytics.context.BrowserType.FIREFOX);
   else if (goog.userAgent.product.OPERA)
-    browserType = proto.analytics.BrowserDeviceContext.Type.OPERA;
+    browserType = (
+      proto.analytics.context.BrowserType.OPERA);
   else if (goog.userAgent.EDGE_OR_IE)
-    browserType = proto.analytics.BrowserDeviceContext.Type.IE_OR_EDGE;
+    browserType = (
+      proto.analytics.context.BrowserType.IE_OR_EDGE);
   context.setBrowserType(browserType);
 
   // detect device type
-  let deviceType = proto.analytics.DeviceType.UNKNOWN_DEVICE_TYPE;
+  let deviceType = proto.analytics.context.DeviceType.UNKNOWN_DEVICE_TYPE;
   if (goog.labs.userAgent.device.isDesktop)
-    deviceType = proto.analytics.DeviceType.DESKTOP;
+    deviceType = proto.analytics.context.DeviceType.DESKTOP;
   else if (goog.labs.userAgent.device.isTablet)
-    deviceType = proto.analytics.DeviceType.TABLET;
+    deviceType = proto.analytics.context.DeviceType.TABLET;
   else if (goog.labs.userAgent.device.isMobile)
-    deviceType = proto.analytics.DeviceType.PHONE;
+    deviceType = proto.analytics.context.DeviceType.PHONE;
   context.setDeviceType(deviceType);
 
   let browserVersionObj = new proto.structs.VersionSpec();
@@ -617,29 +638,29 @@ bloombox.telemetry.buildBrowserContext = function() {
   context.setVersion(browserVersionObj);
 
   // detect OS type and version
-  let osType = proto.analytics.OSType.OS_UNKNOWN;
+  let osType = proto.analytics.context.OSType.OS_UNKNOWN;
   let osVersion = goog.userAgent.platform.VERSION;
 
   if (goog.userAgent.IPAD ||
       goog.userAgent.IPHONE ||
       goog.userAgent.IPOD ||
       goog.userAgent.IOS)
-    osType = proto.analytics.OSType.IOS;
+    osType = proto.analytics.context.OSType.IOS;
   else if ((goog.userAgent.WINDOWS ||
             goog.userAgent.EDGE_OR_IE) &&
             goog.userAgent.MOBILE)
-    osType = proto.analytics.OSType.WINDOWS_PHONE;
+    osType = proto.analytics.context.OSType.WINDOWS_PHONE;
   else if (goog.userAgent.WINDOWS ||
            goog.userAgent.EDGE_OR_IE)
-    osType = proto.analytics.OSType.WINDOWS;
+    osType = proto.analytics.context.OSType.WINDOWS;
   else if (goog.userAgent.product.ANDROID)
-    osType = proto.analytics.OSType.ANDROID;
+    osType = proto.analytics.context.OSType.ANDROID;
   else if (goog.userAgent.MAC)
-    osType = proto.analytics.OSType.MACOS;
+    osType = proto.analytics.context.OSType.MACOS;
   else if (goog.userAgent.LINUX)
-    osType = proto.analytics.OSType.LINUX;
+    osType = proto.analytics.context.OSType.LINUX;
 
-  let osObj = new proto.analytics.DeviceOS();
+  let osObj = new proto.analytics.context.DeviceOS();
   let osVersionObj = new proto.structs.VersionSpec();
   osVersionObj.setName(osVersion);
   osObj.setType(osType);
@@ -648,7 +669,7 @@ bloombox.telemetry.buildBrowserContext = function() {
 
   // detect application type and version
   let origin = window['document'].origin;
-  let app = new proto.analytics.DeviceApplication();
+  let app = new proto.analytics.context.DeviceApplication();
   app.setOrigin(origin);
   context.setApp(app);
 
@@ -656,7 +677,7 @@ bloombox.telemetry.buildBrowserContext = function() {
   let libraryVersion = bloombox.VERSION;
   let libraryVariant = bloombox.VARIANT;
 
-  let libObj = new proto.analytics.DeviceLibrary();
+  let libObj = new proto.analytics.context.DeviceLibrary();
   let libVersionObj = new proto.structs.VersionSpec();
   libVersionObj.setName(libraryVersion);
   libObj.setVersion(libVersionObj);

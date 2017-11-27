@@ -7,6 +7,8 @@
 
 /*global goog */
 
+goog.require('bloombox.logging.log');
+
 goog.require('bloombox.telemetry.Context');
 goog.require('bloombox.telemetry.ContextException');
 goog.require('bloombox.telemetry.OperationStatus');
@@ -160,11 +162,10 @@ bloombox.telemetry.TelemetryEvent.prototype.renderContext = function(global) {};
  * specification for the payload is event specific, so this method resolves that
  * for the generic case of rendering and sending those payloads.
  *
- * @param {proto.analytics.Context} ctx Merged global and local context.
  * @return {?Object} Either `null`, indicating no payload should be attached, or
  * an object that is serializable via JSON.
  */
-bloombox.telemetry.TelemetryEvent.prototype.renderPayload = function(ctx) {};
+bloombox.telemetry.TelemetryEvent.prototype.renderPayload = function() {};
 
 
 /**
@@ -297,12 +298,11 @@ bloombox.telemetry.BaseEvent.prototype.export = function() {};
  * payload to send for the event.
  *
  * @abstract
- * @param {proto.analytics.Context} context Context to render.
  * @return {?Object} Either `null`, indicating no payload should be attached, or
  * the attached payload object, provided at construction time.
  * @public
  */
-bloombox.telemetry.BaseEvent.prototype.renderPayload = function(context) {};
+bloombox.telemetry.BaseEvent.prototype.renderPayload = function() {};
 
 
 // - Base Event: Default Implementations - //
@@ -339,6 +339,24 @@ bloombox.telemetry.BaseEvent.prototype.onFailure = function(op, error, code) {
 
 
 /**
+ * Encode an array of unsigned 8-bit integers (a.k.a. 'bytes'), and return
+ * it base64 encoded.
+ *
+ * @param {Uint8Array} u8a Array of bytes.
+ * @return {string} Base64-encoded, UTF-8 encoded bytes.
+ * @private
+ */
+bloombox.telemetry.BaseEvent.prototype.encodeUint8Array_ = function (u8a) {
+  let CHUNK_SZ = 0x8000;
+  let c = [];
+  for (let i = 0; i < u8a.length; i += CHUNK_SZ) {
+    c.push(String.fromCharCode.apply(null, u8a.subarray(i, i + CHUNK_SZ)));
+  }
+  return btoa(c.join(''));
+};
+
+
+/**
  * Default implementation. Generate a `TelemetryRPC` suitable for fulfilling
  * the transmission of this `BaseEvent` to the telemetry service.
  *
@@ -352,15 +370,44 @@ bloombox.telemetry.BaseEvent.prototype.generateRPC = function() {
   let mergedContext = this.renderContext(globalContext);
 
   let rpcMethod = this.rpcMethod();
-  let rpcPayload = this.renderPayload(mergedContext);
+  let rpcPayload = this.renderPayload();
   let uuid = this.renderUUID();
+
+  let renderedContext = (
+    bloombox.telemetry.Context.serializeProto(mergedContext));
+
+  let resolvedPayload = rpcPayload === null ? {} : rpcPayload;
+  let body = Object.assign({}, resolvedPayload,
+    {'context': renderedContext});
+
+  // @TEST: test code for binary encoding
+  let binaryEncoded = mergedContext.serializeBinary();
+  let b64encoded = this.encodeUint8Array_(binaryEncoded);
+
+  let currentLength = JSON.stringify(body).length;
+  let reducedLength = (
+    JSON.stringify(Object.assign({}, {'payload': body['payload']})).length);
+
+  bloombox.logging.log('Preparing RPC.', {
+    'payloads': {
+      'current': body,
+      'context': b64encoded
+    },
+    'comparison': {
+      'current': currentLength,
+      'b64encoded': b64encoded.length,
+      'reduced': (currentLength > reducedLength) ?
+        (currentLength - reducedLength) : (reducedLength - currentLength),
+      'next': reducedLength
+    }
+  });
 
   return new bloombox.telemetry.rpc.TelemetryRPC(
     uuid,
     rpcMethod,
     this.onSuccess,
     this.onFailure,
-    rpcPayload,
+    body,
     mergedContext);
 };
 
