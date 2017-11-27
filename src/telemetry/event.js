@@ -396,8 +396,9 @@ bloombox.telemetry.BaseEvent.prototype.generateRPC = function() {
     'comparison': {
       'current': currentLength,
       'b64encoded': b64encoded.length,
-      'reduced': reducedLength,
-      'next': currentLength - reducedLength
+      'reduced': (currentLength > reducedLength) ?
+        (currentLength - reducedLength) : (reducedLength - currentLength),
+      'next': reducedLength
     }
   });
 
