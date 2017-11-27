@@ -175,11 +175,11 @@ function doOrderTest() {
           deliveryInstructions);
 
         let cookieCreek = new bloombox.shop.Item(
-          new bloombox.product.Key("-Ke0_QF5bpmyos_N6oK7", bloombox.product.Kind.FLOWERS), 1)
+          new bloombox.product.Key("Kl_L57yXUaHlK8DuAxS", bloombox.product.Kind.FLOWERS), 1)
           .addWeightVariant(bloombox.product.Weight.EIGHTH);
 
         let classicPurps = new bloombox.shop.Item(
-          new bloombox.product.Key("-Ke1AGB-CUApxLHqi-9X", bloombox.product.Kind.FLOWERS), 1)
+          new bloombox.product.Key("E8A5B50F-58C8-4074-A92B-A5999380E3EE", bloombox.product.Kind.FLOWERS), 1)
           .addWeightVariant(bloombox.product.Weight.EIGHTH);
 
         let order = new bloombox.shop.order.Order(
@@ -210,103 +210,102 @@ function doOrderTest() {
  * Run a test where a new user attempts to enroll.
  */
 function doEnrollTest(callback) {
-  bloombox.setup(partnerCode, locationCode, apiKey, function() {
-    // test data
-    let firstName = enrollFirstName;
-    let lastName = enrollLastName;
-    let emailAddress = enrollAccount;
-    let phoneNumber = enrollPhone;
+  // test data
+  let firstName = enrollFirstName;
+  let lastName = enrollLastName;
+  let emailAddress = enrollAccount;
+  let phoneNumber = enrollPhone;
 
-    // street address
-    let streetAddress = new bloombox.identity.StreetAddress(
-      addressOne,
-      addressTwo,
-      city,
-      state,
-      zip);
+  // street address
+  let streetAddress = new bloombox.identity.StreetAddress(
+    addressOne,
+    addressTwo,
+    city,
+    state,
+    zip);
 
-    // doctor's rec
-    let rec = new bloombox.identity.DoctorRec(
-      doctorRecID,
-      doctorID,
-      recExpiration,
-      recJurisdiction,
-      doctorFirstName,
-      doctorLastName,
-      doctorPhone,
-      doctorWebsite);
+  // doctor's rec
+  let rec = new bloombox.identity.DoctorRec(
+    doctorRecID,
+    doctorID,
+    recExpiration,
+    recJurisdiction,
+    doctorFirstName,
+    doctorLastName,
+    doctorPhone,
+    doctorWebsite);
 
-    // driver's license
-    let id = new bloombox.identity.ID(
-      bloombox.identity.IDType.USDL,
-      licenseID,
-      licenseExpiration,
-      birthDate,
-      licenseJurisdiction,
-      'USA');
+  // driver's license
+  let id = new bloombox.identity.ID(
+    bloombox.identity.IDType.USDL,
+    licenseID,
+    licenseExpiration,
+    birthDate,
+    licenseJurisdiction,
+    'USA');
 
-    // contact info
-    let contactInfo = new bloombox.identity.ContactInfo(
-      emailAddress,
-      phoneNumber,
-      streetAddress);
+  // contact info
+  let contactInfo = new bloombox.identity.ContactInfo(
+    emailAddress,
+    phoneNumber,
+    streetAddress);
 
-    // person
-    let enrollee = new bloombox.identity.Person(
-      firstName,
-      lastName,
-      contactInfo,
-      birthDate);
+  // person
+  let enrollee = new bloombox.identity.Person(
+    firstName,
+    lastName,
+    contactInfo,
+    birthDate);
 
-    let consumerProfile = new bloombox.identity.ConsumerProfile(
-      bloombox.identity.EnrollmentSource.ONLINE,
-      'test',
-      new bloombox.identity.MenuPreferences()
-        .addSection(bloombox.menu.Section.FLOWERS)
-        .addSpecies(bloombox.product.Species.SATIVA)
-        .addSpecies(bloombox.product.Species.HYBRID_SATIVA)
-        .addSpecies(bloombox.product.Species.HYBRID_INDICA)
-        .addGrow(bloombox.product.Grow.INDOOR)
-        .addFeeling(bloombox.testing.subjective.Feeling.FOCUS)
-        .addFeeling(bloombox.testing.subjective.Feeling.GROUNDING)
-        .addTaste(bloombox.testing.subjective.TasteNote.PINE)
-        .addTaste(bloombox.testing.subjective.TasteNote.SWEET)
-        .addTaste(bloombox.testing.subjective.TasteNote.CITRUS)
-        .setPotency(bloombox.testing.subjective.PotencyEstimate.HEAVY));
+  let consumerProfile = new bloombox.identity.ConsumerProfile(
+    bloombox.identity.EnrollmentSource.ONLINE,
+    'test',
+    new bloombox.identity.MenuPreferences()
+      .addSection(bloombox.menu.Section.FLOWERS)
+      .addSpecies(bloombox.product.Species.SATIVA)
+      .addSpecies(bloombox.product.Species.HYBRID_SATIVA)
+      .addSpecies(bloombox.product.Species.HYBRID_INDICA)
+      .addGrow(bloombox.product.Grow.INDOOR)
+      .addFeeling(bloombox.testing.subjective.Feeling.FOCUS)
+      .addFeeling(bloombox.testing.subjective.Feeling.GROUNDING)
+      .addTaste(bloombox.testing.subjective.TasteNote.PINE)
+      .addTaste(bloombox.testing.subjective.TasteNote.SWEET)
+      .addTaste(bloombox.testing.subjective.TasteNote.CITRUS)
+      .setPotency(bloombox.testing.subjective.PotencyEstimate.HEAVY));
 
-    // enrollment
-    let enrollment = new bloombox.shop.enroll.Enrollment(
-      bloombox.shop.enroll.EnrollmentSource.ONLINE,
-      'test',
-      enrollee,
-      rec,
-      id,
-      'password123',
-      consumerProfile);
+  // enrollment
+  let enrollment = new bloombox.shop.enroll.Enrollment(
+    bloombox.shop.enroll.EnrollmentSource.ONLINE,
+    'test',
+    enrollee,
+    rec,
+    id,
+    'password123',
+    consumerProfile);
 
-    console.log('%cPreparing enrollment...', 'color: blue', enrollment);
+  console.log('%cPreparing enrollment...', 'color: blue', enrollment);
 
-    enrollment.send(function(success, err, customer) {
-      if (success === true && err === null && customer) {
-        // enrollment succeeded
-        console.log(
-          '%cEnrollment succeeded. Proceeding with test order after brief pause...',
-          'color: green', customer);
+  enrollment.send(function(success, err, customer) {
+    if (success === true && err === null && customer) {
+      // enrollment succeeded
+      console.log(
+      '%cEnrollment succeeded. Proceeding with test order after brief pause...',
+      'color: green', customer);
 
-        setTimeout(function() {
-          console.log('%cSubmitting test order...', 'color: blue');
-          callback();
-        }, 5000);
-      } else {
-        // there was an error
-        console.error('%cEnrollment failed', 'color: red', err);
-      }
-    });
+      setTimeout(function() {
+        console.log('%cSubmitting test order...', 'color: blue');
+        callback();
+      }, 5000);
+    } else {
+      // there was an error
+      console.error('%cEnrollment failed', 'color: red', err);
+    }
   });
 }
 
 function full() {
-  doInfoTest(doEnrollTest, doOrderTest);
+  doInfoTest(function(next) { next(); }, function() { });
+  doEnrollTest(doOrderTest);
 }
 
 function simple() {
