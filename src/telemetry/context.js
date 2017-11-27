@@ -595,22 +595,22 @@ bloombox.telemetry.buildBrowserContext = function() {
   // detect browser type and version
   let browserVersion = goog.userAgent.VERSION;
   let browserType = (
-    proto.analytics.context.BrowserDeviceContext.BrowserType.BROWSER_UNKNOWN);
+    proto.analytics.context.BrowserType.BROWSER_UNKNOWN);
   if (goog.userAgent.product.CHROME)
     browserType = (
-      proto.analytics.context.BrowserDeviceContext.BrowserType.CHROME);
+      proto.analytics.context.BrowserType.CHROME);
   else if (goog.userAgent.product.SAFARI)
     browserType = (
-      proto.analytics.context.BrowserDeviceContext.BrowserType.SAFARI);
+      proto.analytics.context.BrowserType.SAFARI);
   else if (goog.userAgent.product.FIREFOX)
     browserType = (
-      proto.analytics.context.BrowserDeviceContext.BrowserType.FIREFOX);
+      proto.analytics.context.BrowserType.FIREFOX);
   else if (goog.userAgent.product.OPERA)
     browserType = (
-      proto.analytics.context.BrowserDeviceContext.BrowserType.OPERA);
+      proto.analytics.context.BrowserType.OPERA);
   else if (goog.userAgent.EDGE_OR_IE)
     browserType = (
-      proto.analytics.context.BrowserDeviceContext.BrowserType.IE_OR_EDGE);
+      proto.analytics.context.BrowserType.IE_OR_EDGE);
   context.setBrowserType(browserType);
 
   // detect device type
