@@ -284,6 +284,21 @@ bloombox.telemetry.Context = function(opt_collection,
 
 
 /**
+ * Serialize the protobuf form of a version specification.
+ *
+ * @param {proto.structs.VersionSpec} protob Version spec.
+ * @return {Object} Serialized version spec.
+ */
+bloombox.telemetry.Context.resolveVersion = function(protob) {
+  if (protob && protob.getName())
+    return {
+      'name': protob.getName()
+    };
+  return {};
+};
+
+
+/**
  * Serialize the protobuf form of local browser context, into an object usable
  * over-the-wire.
  *
@@ -294,15 +309,11 @@ bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
   return {
     'browserType': protob.getBrowserType(),
     'deviceType': protob.getDeviceType(),
-    'version': {
-      'name': protob.getVersion().getName()
-    },
+    'version': bloombox.telemetry.Context.resolveVersion(protob.getVersion()),
     'os': {
       'type': protob.getOs().getType(),
-      'version': {
-        'name': (
-            protob.getOs().getVersion().getName())
-      }
+      'version': (
+        bloombox.telemetry.Context.resolveVersion(protob.getOs().getVersion()))
     },
     'app': {
       'type': protob.getApp().getType(),
@@ -310,10 +321,9 @@ bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
     },
     'library': {
       'variant': protob.getLibrary().getVariant(),
-      'version': {
-        'name': (
-          protob.getLibrary().getVersion().getName())
-      }
+      'version': (
+        bloombox.telemetry.Context.resolveVersion(
+          protob.getLibrary().getVersion()))
     }
   };
 };
