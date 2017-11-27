@@ -32,5 +32,8 @@
     "swagger-tools": "^0.10.1",
     "swagger-ui": "^2.2.6",
     "yargs": "^10.0.3"
+  },
+  "devDependencies": {
+    "minami": "^1.2.3"
   }
 }

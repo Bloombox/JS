@@ -56,10 +56,16 @@
         "excludePattern": "(^|\\/|\\\\)_"
     },
     "plugins": [
-        "plugins/markdown"
+        "plugins/markdown",
+        "plugins/summarize"
     ],
+    "opts": {
+      "template": "node_modules/minami",
+      "encoding": "utf8",
+      "public": true
+    },
     "templates": {
-        "cleverLinks": false,
+        "cleverLinks": true,
         "monospaceLinks": false
     }
 }
