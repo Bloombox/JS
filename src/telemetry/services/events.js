@@ -169,7 +169,7 @@ bloombox.telemetry.Event.prototype.export = function() {
  * @public
  */
 bloombox.telemetry.Event.prototype.renderPayload = function() {
-  return this.payload;
+  return {'payload': this.payload};
 };
 
 
@@ -192,12 +192,12 @@ bloombox.telemetry.InternalCollectionSeparator_ = ':';
 
 
 /**
- * Separator to use for internal collection names.
+ * Version to use for internal collection names.
  *
  * @const {string}
  * @private
  */
-bloombox.telemetry.InternalCollectionVersion_ = 'v1beta1';
+bloombox.telemetry.InternalCollectionVersion_ = 'v1beta2';
 
 
 /**
