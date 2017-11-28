@@ -34,6 +34,9 @@ let licenseID = 'D7566786';
 let licenseExpiration = '2020-12-23';
 let licenseJurisdiction = 'CALIFORNIA';
 
+let telemetryEventPing = 'pingEvent';
+let telemetryEventClick = 'clickEvent';
+
 
 // test logic
 /**
@@ -302,6 +305,30 @@ function doEnrollTest(callback) {
     }
   });
 }
+//TODO: IS THIS CORRECT?
+
+/*
+* Run a test where a customer plugs into our telemetry events then runs their own
+ */
+function doTelemetry() {
+  bloombox.setup(partnerCode, locationCode, apiKey, function() {
+    bloombox.telemetry(telemetryEventPing, function (pingSuccess) {
+      if (pingSuccess === true) {
+        console.log('%cTelemetry connection is warm', 'color; green');
+        bloombox.telemetry(telemetryEventClick, function (eventSuccess) {
+          if (eventSuccess === true) {
+            console.log('%cTelemetry is working properly', 'color:green')
+          } else {
+            console.log('%cYour event did not send successfully', 'color: red')
+          }
+        })
+      } else {
+        console.log('%cTelemetry connection failed to become established', 'color: red')
+      }
+    })
+  })
+}
+
 
 function full() {
   doInfoTest(function(next) { next(); }, function() { });
@@ -310,6 +337,10 @@ function full() {
 
 function simple() {
   doInfoTest(function(next) { next(); }, function() { });
+}
+//TODO: IS THIS CORRECT?
+function telemetry () {
+  doTelemetry();
 }
 
 console.log("Call the following to run a full test: full()");
