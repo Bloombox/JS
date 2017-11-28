@@ -12,7 +12,7 @@ goog.provide('bloombox.shop.enroll.Enrollment');
 goog.provide('bloombox.shop.enroll.EnrollmentException');
 goog.provide('bloombox.shop.enroll.EnrollmentSource');
 
-goog.require('bloombox.config');
+goog.require('bloombox.config.active');
 
 goog.require('bloombox.identity.ConsumerProfile');
 goog.require('bloombox.identity.ContactInfo');
@@ -185,8 +185,9 @@ bloombox.shop.enroll.Enrollment.prototype.enableDryRun = function() {
  * @export
  */
 bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
-  let partner = bloombox.config.partner;
-  let location = bloombox.config.location;
+  let config = bloombox.config.active();
+  let partner = config.partner;
+  let location = config.location;
 
   if (!partner || !location) {
     bloombox.logging.error('Partner or location code is not defined.');

@@ -9,7 +9,7 @@
 /*global goog */
 
 goog.require('bloombox.VERSION');
-goog.require('bloombox.config');
+goog.require('bloombox.config.active');
 
 goog.require('bloombox.logging.log');
 
@@ -701,7 +701,7 @@ bloombox.telemetry.globalContext = function(opt_force_fresh) {
   let forceFresh = opt_force_fresh || false;
   if (bloombox.telemetry.GLOBAL_CONTEXT === null || forceFresh) {
     // grab global config
-    let config = bloombox.config;
+    let config = bloombox.config.active();
     let partnerCode = config.partner || null;
     let locationCode = config.location || null;
     let deviceFingerprint = bloombox.telemetry.resolveFingerprint();

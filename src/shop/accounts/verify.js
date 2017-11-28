@@ -61,8 +61,9 @@ bloombox.shop.verify = function(email,
     throw new bloombox.shop.order.VerifyException(
       'Email was found to be empty or invalid, cannot verify.');
 
-  let partner = bloombox.config.partner;
-  let location = bloombox.config.location;
+  let config = bloombox.config.active();
+  let partner = config.partner;
+  let location = config.location;
 
   if (!partner || !location) {
     bloombox.logging.error('Partner or location code is not defined.');

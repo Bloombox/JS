@@ -138,3 +138,9 @@ Publishing the library (GCS CDN permissions required):
 ```
   make publish
 ```
+
+##### Licensing
+
+This library was made and is managed with <3 by Bloombox, a subsidiary of Momentum Ideas, Co., from Sacramento,
+California. Bloombox JS is distributed under the Apache License v2, which is enclosed herein as `LICENSE.txt`. Third
+party license notices, including ones from MochiKit and Google, via the Closure Authors.

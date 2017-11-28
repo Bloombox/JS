@@ -14,7 +14,7 @@ goog.provide('bloombox.shop.order.OrderException');
 goog.provide('bloombox.shop.order.OrderScheduling');
 goog.provide('bloombox.shop.order.Type');
 
-goog.require('bloombox.config');
+goog.require('bloombox.config.active');
 
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
@@ -414,8 +414,9 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
 
   let done = false;
 
-  let partner = bloombox.config.partner;
-  let location = bloombox.config.location;
+  let config = bloombox.config.active();
+  let partner = config.partner;
+  let location = config.location;
 
   if (!partner || !location) {
     bloombox.logging.error('Partner or location code is not defined.');

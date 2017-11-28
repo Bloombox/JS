@@ -1,18 +1,16 @@
 
 /**
- * Bloombox JS
+ * Bloombox JS: Init
  *
- * @fileoverview Provides initial boot code for Bloombox JS.
+ * @fileoverview Initial boot code for Bloombox JS.
  */
 
 /*global goog */
 
 goog.provide('bloombox.DEBUG');
 goog.provide('bloombox.VERSION');
-goog.provide('bloombox.config');
 
 // force-load closure and closure UI libraries
-goog.require('goog.proto');
 goog.require('goog.ui.INLINE_BLOCK_CLASSNAME');
 
 
@@ -33,27 +31,3 @@ bloombox.DEBUG = true;
  * @export
  */
 bloombox.VERSION = 'v1.0.0';
-
-
-/**
- * Holds global configuration for the library.
- *
- * @nocollapse
- * @type {{key: ?string,
- *         partner: ?string,
- *         location: ?string,
- *         channel: ?string,
- *         endpoints: {
- *           shop: ?string,
- *           telemetry: ?string}}}
- */
-bloombox.config = {
-  key: null,
-  partner: null,
-  location: null,
-  channel: null,
-  endpoints: {
-    shop: null,
-    telemetry: null
-  }
-};

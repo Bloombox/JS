@@ -1,6 +1,6 @@
 
 /**
- * Bloombox: RPC Tooling
+ * Bloombox JS: RPC Internals
  *
  * @fileoverview Provides low-level tools for RPCs.
  */
@@ -12,7 +12,7 @@ goog.provide('bloombox.rpc.RPCException');
 
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.VERSION');
-goog.require('bloombox.config');
+goog.require('bloombox.config.active');
 
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
@@ -90,9 +90,10 @@ bloombox.rpc.RPCException.prototype.toString = function() {
  * @public
  */
 bloombox.rpc.RPC = function RPC(httpMethod, endpoint, opt_payload, opt_keep) {
-  let apiKey = bloombox.config.key;
-  let partner = bloombox.config.partner;
-  let location = bloombox.config.location;
+  let config = bloombox.config.active();
+  let apiKey = config.key;
+  let partner = config.partner;
+  let location = config.location;
   if (!apiKey || !(typeof apiKey === 'string'))
     throw new bloombox.rpc.RPCException('API key could not be resolved.' +
         ' Please call `setup` before any RPC methods.');

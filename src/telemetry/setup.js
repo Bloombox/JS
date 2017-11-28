@@ -8,6 +8,8 @@
 
 /*global goog */
 
+goog.require('bloombox.config.active');
+
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 goog.require('bloombox.logging.warn');
@@ -46,12 +48,17 @@ bloombox.telemetry.setup = function(partner,
     return;
   }
 
-  bloombox.config.endpoints.telemetry = (
-    endpoint || bloombox.telemetry.TELEMETRY_API_ENDPOINT);
+  let config = bloombox.config.active();
+  let merged = Object.assign({}, config, {'endpoints':
+      Object.assign({}, config.endpoints || {}, {
+        'shop': endpoint || bloombox.telemetry.TELEMETRY_API_ENDPOINT})});
+
+  bloombox.config.configure(merged);
+
   bloombox.logging.log('Telemetry is ready for use.',
     {'version': bloombox.telemetry.VERSION,
       'debug': bloombox.telemetry.DEBUG,
-      'config': bloombox.config});
+      'config': bloombox.config.active()});
   callback();
   bloombox.telemetry.boot();
 };

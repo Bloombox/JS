@@ -8,6 +8,8 @@
 
 /*global goog */
 
+goog.require('bloombox.config.active');
+
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
@@ -42,10 +44,16 @@ bloombox.shop.setup = function(partner, location, apikey, callback, endpoint) {
     return;
   }
 
-  bloombox.config.endpoints.shop = endpoint || bloombox.shop.SHOP_API_ENDPOINT;
+  let config = bloombox.config.active();
+  let merged = Object.assign({}, config, {'endpoints':
+      Object.assign({}, config.endpoints || {}, {
+        'shop': endpoint || bloombox.shop.SHOP_API_ENDPOINT})});
+
+  bloombox.config.configure(merged);
+
   bloombox.logging.log('Shop is ready for use.',
     {'version': bloombox.shop.VERSION,
       'debug': bloombox.shop.DEBUG,
-      'config': bloombox.config});
+      'config': bloombox.config.active()});
   callback();
 };

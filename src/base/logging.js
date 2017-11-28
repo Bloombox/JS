@@ -1,6 +1,6 @@
 
 /**
- * Bloombox: Logging
+ * Bloombox JS: Logging
  *
  * @fileoverview Provides logging tools.
  */

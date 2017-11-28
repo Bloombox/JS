@@ -7,7 +7,7 @@
 
 /*global goog */
 
-goog.require('bloombox.config');
+goog.require('bloombox.config.active');
 
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
@@ -164,7 +164,8 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(uuid,
                                                             opt_payload,
                                                             opt_context,
                                                             opt_endpoint) {
-  let apiKey = bloombox.config.key;
+  let config = bloombox.config.active();
+  let apiKey = config.key;
 
   if (opt_endpoint && typeof opt_endpoint !== 'string')
     throw new bloombox.rpc.RPCException(
