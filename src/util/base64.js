@@ -16,7 +16,7 @@ goog.require('goog.crypt.base64');
  * Base64 encoding function that takes string data, and base64 encodes it. By
  * default, this function will not append `=` values (value 64, meaning
  * `nothing`), because the matching implementation below (`decode`) used to
- * convert information back uses the same beahvior.
+ * convert information back uses the same behavior.
  *
  * Bloombox services (server-side) will also properly handle these strings. For
  * perfect interop with other systems, pass `true` for the second parameter,
