@@ -7,6 +7,7 @@ VERSION ?= v1.0.0-beta
 TARGET ?= target
 VERBOSE ?= no
 RELEASE ?= no
+PUBLIC ?= no
 DOCS ?= docs/
 
 PROTOC ?= $(shell which protoc)
@@ -40,14 +41,22 @@ GSUTIL_FLAGS ?= -h "Content-Type: text/javascript" -h "Cache-Control: $(CACHE_CO
 all: $(GOAL) $(DOCS)
 	@echo "Bloombox JS is ready."
 
+serve-docs:
+	@cd docs && python -m SimpleHTTPServer
+
+ifeq ($(PUBLIC),no)
 docs: $(DOCS)
-$(DOCS): clean-docs
-	@echo "Building docs..."
+$(DOCS):
 	@mkdir -p $(DOCS)
-	@-./node_modules/.bin/jsdoc \
-		--destination $(DOCS) \
-		--readme README.md \
-		--configure jsdoc.json;
+	@java -jar ./node_modules/js-dossier/dossier.jar -c dossier-dev.json
+	@cp ./content/docs.css docs/dossier.css
+	@cat ./content/docs-private.css >> docs/dossier.css
+else
+docs: clean-docs $(DOCS)
+$(DOCS):
+	@mkdir -p $(DOCS)
+	@java -jar ./node_modules/js-dossier/dossier.jar -c dossier-public.json
+	@cp ./content/docs.css docs/dossier.css
 
 publish-docs: docs
 	@echo "Publishing docs..."
@@ -58,8 +67,9 @@ publish-docs: docs
 	    git commit -m "Update docs" && \
 	    git push origin gh-pages --force
 	@rm -fr $(DOCS)/.git
+endif
 
-clean:
+clean: clean-docs
 	@echo "Cleaning targets..."
 	@-rm $(RM_FLAGS) $(TARGET)
 

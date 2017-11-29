@@ -44,9 +44,9 @@ bloombox.config.JSConfig;
  * @public
  * @nocollapse
  * @typedef {{google: {
- *             analytics: bloombox.config.integrations.GoogleAnalyticsConfig},
- *             segment: bloombox.config.integrations.SegmentConfig,
- *             keen: bloombox.config.integrations.KeenIOConfig}}
+ *             analytics: bloombox.config.integration.GoogleAnalyticsConfig},
+ *             segment: bloombox.config.integration.SegmentConfig,
+ *             keen: bloombox.config.integration.KeenIOConfig}}
  */
 bloombox.config.JSIntegrationConfig;
 
@@ -61,21 +61,21 @@ bloombox.config._ACTIVE_CONFIG_ = bloombox.config.buildDefault();
 
 
 /**
- * @typedef {bloombox.config.integrations.GoogleAnalyticsConfig}
+ * @typedef {bloombox.config.integration.GoogleAnalyticsConfig}
  * @package
  */
 let GoogleAnalyticsConfig;
 
 
 /**
- * @typedef {bloombox.config.integrations.SegmentConfig}
+ * @typedef {bloombox.config.integration.SegmentConfig}
  * @package
  */
 let SegmentConfig;
 
 
 /**
- * @typedef {bloombox.config.integrations.KeenIOConfig}
+ * @typedef {bloombox.config.integration.KeenIOConfig}
  * @package
  */
 let KeenIOConfig;

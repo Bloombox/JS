@@ -6,3 +6,6 @@
 	path = protobuf
 	url = git@github.com:google/protobuf.git
 	branch = master
+[submodule "closure"]
+	path = third_party/closure/compiler
+	url = https://github.com/google/closure-compiler

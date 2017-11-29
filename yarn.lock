@@ -2456,6 +2456,10 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
+js-dossier@^0.12.1:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/js-dossier/-/js-dossier-0.12.1.tgz#fcd662fcc00f80918cd2678354a3c209d86778a9"
+
 js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"

@@ -11,7 +11,7 @@
 goog.provide('bloombox.shop.ZipcheckException');
 goog.provide('bloombox.shop.zipcheck');
 
-goog.require('bloombox.config');
+goog.require('bloombox.config.active');
 
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.info');
@@ -66,8 +66,9 @@ bloombox.shop.zipcheck = function(zipcode, callback) {
       '\' for delivery eligibility...');
 
   // load partner and location codes
-  let partnerCode = bloombox.config.partner;
-  let locationCode = bloombox.config.location;
+  let config = bloombox.config.active();
+  let partnerCode = config.partner;
+  let locationCode = config.location;
 
   if (!partnerCode ||
       !(typeof partnerCode === 'string' && partnerCode.length > 1) ||
