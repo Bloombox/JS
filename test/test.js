@@ -311,7 +311,7 @@ function doEnrollTest(callback) {
 function doTelemetry() {
   bloombox.setup(partnerCode, locationCode, apiKey, function() {
     bloombox.telemetry.event('click', {'test': 'data', 'goes': 'here'}).send();
-    console.log('%cTelemetry is working properly', 'color:green')
+    console.log('%cTelemetry is working properly.', 'color:green')
 }
 
 function full() {
