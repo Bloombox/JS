@@ -1,0 +1,25 @@
+{
+  "hosting": {
+    "public": "public",
+    "headers": [{
+        "source": "client/**/*.js",
+        "headers": [{
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, no-transform, immutable"}]
+    }, {
+      "source": "*.min.js",
+      "headers": [{
+        "key": "Cache-Control",
+        "value": "public, max-age=500, no-transform"}]
+    }],
+    "redirects": [{
+      "source" : "/latest.min.js",
+      "destination" : "/client/v1.0.0-beta.min.js",
+      "type" : 302
+    },{
+      "source" : "/latest-debug.min.js",
+      "destination" : "/client/v1.0.0-beta-debug.min.js",
+      "type" : 302
+    }]
+  }
+}

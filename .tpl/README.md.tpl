@@ -1,6 +1,8 @@
 
 # Bloombox for JavaScript
 
+Latest version: `__VERSION__`
+
 This package provides support for Bloombox APIs in browser-oriented JavaScript. It's built using the Closure stack from
 Google, including Closure Compiler, Library, builder, and so on.
 
@@ -13,7 +15,7 @@ or you can use the CDN, which is the simplest and usually the most performant wa
 <html>
   <head>
 
-  <script type="text/javascript" src="https://app.bloomware.media/client/__VERSION__.min.js"></script>
+  <script type="text/javascript" src="https://js.bloombox.cloud/latest.min.js"></script>
   <script type="text/javascript">
     bloombox.setup("<partner>", "<location>", "<apikey>", function() {
       // use the library
@@ -23,15 +25,31 @@ or you can use the CDN, which is the simplest and usually the most performant wa
   [...]
 ```
 
+
 #### Debug mode
 
 If you are having trouble getting things working correctly, you can use the debug copy, by prepending `-debug` before
 the `.min` in the script URL:
 ```html
-  <script type="text/javascript" src="https://app.bloomware.media/embed/client/shop/__VERSION__-debug.min.js"></script>
+  <script type="text/javascript" src="https://js.bloombox.cloud/latest-debug.min.js"></script>
 ```
 
 Then, you'll see debug logs in your console that describe what's going on.
+
+
+#### Version-pinned URL
+
+If you would like to pin your application to a specific version of the library, you can do that:
+
+```html
+  <script type="text/javascript" src="https://js.bloombox.cloud/client/__VERSION__.min.js"></script>
+```
+
+and...
+
+```html
+  <script type="text/javascript" src="https://js.bloombox.cloud/client/__VERSION__-debug.min.js"></script>
+```
 
 
 ### Building the code
