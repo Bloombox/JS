@@ -416,7 +416,7 @@ bloombox.telemetry.Context.prototype.serialize = function() {
     };
 
   // consider partner context, etc
-  let partnerScope /** @type {string} */;
+  let partnerScope = /** @type {?string} */ (null);
 
   if (this.location) {
     if (this.device) {
