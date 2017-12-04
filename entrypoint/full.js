@@ -49,14 +49,20 @@ bloombox.setup = function(partner, location, apikey, callback) {
     return;
   }
 
-  bloombox.config.key = apikey;
-  bloombox.config.partner = partner;
-  bloombox.config.location = location;
+  let config = bloombox.config.active();
+  let merged = /** @type {bloombox.config.JSConfig} */ (
+    Object.assign({}, config, {
+      'key': apikey,
+      'partner': partner,
+      'location': location
+    }));
+
+  bloombox.config.configure(merged);
 
   bloombox.logging.log('BBJS is initializing.',
     {'version': bloombox.VERSION,
      'debug': bloombox.DEBUG,
-     'config': bloombox.config,
+     'config': merged,
      'variant': bloombox.VARIANT});
 
   // setup telemetry first

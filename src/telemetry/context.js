@@ -415,18 +415,36 @@ bloombox.telemetry.Context.prototype.serialize = function() {
       'id': this.order.getId()
     };
 
-  if (this.device)
-    // device UUID
-    baseContext['device'] = this.device.getUuid();
-
   // consider partner context, etc
-  if (this.partner) {
-    if (this.location) {
-      baseContext['location'] = {
-        'code': this.location.getCode(),
-        'partner': {
-          'code': this.location.getPartner().getCode()
-        }
+  let partnerScope /** @type {string} */;
+
+  if (this.location) {
+    if (this.device) {
+      partnerScope = [
+        this.location.getPartner().getCode(),
+        this.location.getCode(),
+        this.device.getUuid()].join('/');
+    } else {
+      partnerScope = [
+        this.location.getPartner().getCode(),
+        this.device.getUuid()].join('/');
+    }
+  } else {
+    if (this.partner) {
+      partnerScope = this.location.getPartner().getCode();
+    }
+  }
+  if (partnerScope)
+    baseContext['scope'] = {
+      'partner': partnerScope
+    };
+
+  // consider commercial context
+  // @TODO: section and product key for commercial scope
+  if (this.order) {
+    if (!baseContext['scope']) {
+      baseContext['scope'] = {
+        'order': this.order.getId()
       };
     }
   }

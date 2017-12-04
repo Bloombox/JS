@@ -14,7 +14,7 @@ const version = argv.libversion;
 if (typeof version !== "string")
   throw "Cannot resolve version.";
 
-const permutations = ['full', 'telemetry'];
+const permutations = ['full'];
 
 
 /**
