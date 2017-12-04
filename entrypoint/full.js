@@ -52,9 +52,9 @@ bloombox.setup = function(partner, location, apikey, callback) {
   let config = bloombox.config.active();
   let merged = /** @type {bloombox.config.JSConfig} */ (
     Object.assign({}, config, {
-      'key': apikey,
-      'partner': partner,
-      'location': location
+      key: apikey,
+      partner: partner,
+      location: location
     }));
 
   bloombox.config.configure(merged);

@@ -52,7 +52,7 @@ bloombox.telemetry.setup = function(partner,
   let merged = /** @type {bloombox.config.JSConfig} */ (
     Object.assign({}, config, {'endpoints':
       Object.assign({}, config.endpoints || {}, {
-        'shop': endpoint || bloombox.telemetry.TELEMETRY_API_ENDPOINT})}));
+        shop: endpoint || bloombox.telemetry.TELEMETRY_API_ENDPOINT})}));
 
   bloombox.config.configure(merged);
 
