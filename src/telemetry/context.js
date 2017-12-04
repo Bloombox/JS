@@ -542,7 +542,7 @@ bloombox.telemetry.resolveFingerprint = function() {
   if (bloombox.telemetry.DEVICE_FINGERPRINT === null) {
     // try to fetch it from local storage
     let existingFingerprint = (
-     window['localStorage'].getItem(bloombox.telemetry.DEVICE_FINGERPRINT_KEY));
+     window.localStorage.getItem(bloombox.telemetry.DEVICE_FINGERPRINT_KEY));
 
     if (existingFingerprint && typeof existingFingerprint === 'string') {
       // we found it, load the existing one from local storage
@@ -552,7 +552,7 @@ bloombox.telemetry.resolveFingerprint = function() {
       // in local storage and locally, and return.
       let newDeviceFingerprint = bloombox.util.generateUUID();
       bloombox.telemetry.DEVICE_FINGERPRINT = newDeviceFingerprint;
-      window['localStorage'].setItem(
+      window.localStorage.setItem(
         bloombox.telemetry.DEVICE_FINGERPRINT_KEY, newDeviceFingerprint);
       bloombox.logging.log('Established device fingerprint: "' +
         newDeviceFingerprint + "'.");
@@ -573,7 +573,7 @@ bloombox.telemetry.resolveSessionID = function() {
   if (bloombox.telemetry.SESSION_ID === null) {
     // try to fetch it from local storage
     let existingID = (
-      window['sessionStorage'].getItem(bloombox.telemetry.SESSION_ID_KEY));
+      window.sessionStorage.getItem(bloombox.telemetry.SESSION_ID_KEY));
 
     if (existingID && typeof existingID === 'string') {
       // we found it, load the existing one from local storage
@@ -583,7 +583,7 @@ bloombox.telemetry.resolveSessionID = function() {
       // in local storage and locally, and return.
       let newSessionID = bloombox.util.generateUUID();
       bloombox.telemetry.SESSION_ID = newSessionID;
-      window['sessionStorage'].setItem(
+      window.sessionStorage.setItem(
         bloombox.telemetry.SESSION_ID_KEY, newSessionID);
       bloombox.logging.log('Established user session at ID: "' +
         newSessionID + "'.");
@@ -668,7 +668,7 @@ bloombox.telemetry.buildBrowserContext = function() {
   context.setOs(osObj);
 
   // detect application type and version
-  let origin = window['document'].origin;
+  let origin = window.document['origin'];
   let app = new proto.analytics.context.DeviceApplication();
   app.setOrigin(origin);
   context.setApp(app);

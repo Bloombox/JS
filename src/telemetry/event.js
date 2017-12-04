@@ -346,7 +346,7 @@ bloombox.telemetry.BaseEvent.prototype.onFailure = function(op, error, code) {
  * @return {string} Base64-encoded, UTF-8 encoded bytes.
  * @private
  */
-bloombox.telemetry.BaseEvent.prototype.encodeUint8Array_ = function (u8a) {
+bloombox.telemetry.BaseEvent.prototype.encodeUint8Array_ = function(u8a) {
   let CHUNK_SZ = 0x8000;
   let c = [];
   for (let i = 0; i < u8a.length; i += CHUNK_SZ) {

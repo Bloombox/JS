@@ -35,7 +35,7 @@ bloombox.telemetry.SESSION_STORAGE_OPTOUT_KEY = 'bb:1:t:opt_out';
  */
 bloombox.telemetry.didOptOut = function() {
   let value = (
-    window['sessionStorage']
+    window.sessionStorage
       .getItem(bloombox.telemetry.SESSION_STORAGE_OPTOUT_KEY));
   return value === 'true' && !bloombox.telemetry.internals.enabled();
 };
@@ -49,6 +49,6 @@ bloombox.telemetry.didOptOut = function() {
 bloombox.telemetry.optout = function() {
   bloombox.logging.warn('Opted-out of telemetry transmission.');
   bloombox.telemetry.internals.disable();
-  window['sessionStorage']
+  window.sessionStorage
       .setItem(bloombox.telemetry.SESSION_STORAGE_OPTOUT_KEY, 'false');
 };
