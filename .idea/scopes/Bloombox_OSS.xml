@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Bloombox OSS" pattern="src:identity..*||src:product..*||src:util.proto..*||src:util..*||src:testing..*||src:base..*||src:menu..*" />
+</component>

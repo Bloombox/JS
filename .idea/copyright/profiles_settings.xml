@@ -1,0 +1,8 @@
+<component name="CopyrightManager">
+  <settings default="Bloombox Proprietary">
+    <module2copyright>
+      <element module="Bloombox OSS" copyright="Bloombox OSS" />
+      <element module="Bloombox Proprietary" copyright="Bloombox Proprietary" />
+    </module2copyright>
+  </settings>
+</component>
