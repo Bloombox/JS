@@ -48,7 +48,28 @@ goog.provide('bloombox.telemetry.Routine');
 goog.provide('bloombox.telemetry.TelemetryError');
 goog.provide('bloombox.telemetry.endpoint');
 goog.provide('bloombox.telemetry.renderEndpoint');
+goog.provide('bloombox.telemetry.rpc.CONTEXT_HEADER');
+goog.provide('bloombox.telemetry.rpc.ENABLE_CONTEXT_HEADER');
 goog.provide('bloombox.telemetry.rpc.TelemetryRPC');
+
+
+/**
+ * Context header setting.
+ *
+ * @define {boolean} ENABLE_CONTEXT_HEADER Context header flag.
+ * @package
+ */
+bloombox.telemetry.rpc.ENABLE_CONTEXT_HEADER = false;
+
+
+/**
+ * Context header.
+ *
+ * @type {string}
+ * @const
+ * @package
+ */
+bloombox.telemetry.rpc.CONTEXT_HEADER = 'X-Bloom-Context';
 
 
 
@@ -168,6 +189,7 @@ bloombox.telemetry.endpoint = function(type, apiKey, opt_context, opt_target) {
  * @param {Object=} opt_payload Payload to use if we're POST-ing or PUT-ing.
  * @param {proto.analytics.Context=} opt_context Contextual information to
  *        provide to the URL renderer.
+ * @param {Object=} opt_headers Additional headers to add to the request.
  * @param {string=} opt_endpoint URL endpoint to send the RPC to.
  * @throws {bloombox.rpc.RPCException} If the provided values are invalid
  *         in some way.
@@ -180,6 +202,7 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(uuid,
                                                             failure,
                                                             opt_payload,
                                                             opt_context,
+                                                            opt_headers,
                                                             opt_endpoint) {
   let config = bloombox.config.active();
   let apiKey = config.key;
@@ -221,6 +244,21 @@ bloombox.telemetry.rpc.TelemetryRPC = function TelemetryRPC(uuid,
    * @public
    */
   this.endpoint = targetEndpoint;
+
+  // freeze headers if we're given headers and freezing is supported
+  if (opt_headers && Object.isFrozen && !Object.isFrozen(opt_headers))
+    Object.freeze(opt_headers);
+
+  /**
+   * Additional headers to add to the request.
+   *
+   * @type {Object}
+   */
+  this.headers = opt_headers || {};
+
+  // freeze payload if we're given a payload and freezing is supported
+  if (opt_payload && Object.isFrozen && !Object.isFrozen(opt_payload))
+    Object.freeze(opt_payload);
 
   /**
    * Payload to send with the request, if any.

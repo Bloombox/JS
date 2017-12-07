@@ -287,7 +287,7 @@ bloombox.telemetry.internals._sendEvent = function(queuedEvent) {
     rpc.endpoint,
     rpc.httpMethod,
     serializedPayload,
-    undefined,  // @TODO: support for additional headers
+    rpc.headers,
     queuedEvent.priority,
     boundCallback,
     bloombox.telemetry.internals.rpcpool.XHR_RETRIES,

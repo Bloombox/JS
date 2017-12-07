@@ -24,7 +24,13 @@
 
 /*global goog */
 
+goog.require('bloombox.DEBUG');
+goog.require('bloombox.DEBUG_PROPERTY');
 goog.require('bloombox.logging.log');
+
+goog.require('bloombox.rpc.API_KEY_HEADER');
+goog.require('bloombox.rpc.DEBUG_HEADER');
+goog.require('bloombox.rpc.TRACE_HEADER');
 
 goog.require('bloombox.telemetry.Context');
 goog.require('bloombox.telemetry.ContextException');
@@ -35,6 +41,9 @@ goog.require('bloombox.telemetry.Routine');
 goog.require('bloombox.telemetry.abort');
 goog.require('bloombox.telemetry.enqueue');
 goog.require('bloombox.telemetry.globalContext');
+
+goog.require('bloombox.telemetry.rpc.CONTEXT_HEADER');
+goog.require('bloombox.telemetry.rpc.ENABLE_CONTEXT_HEADER');
 
 goog.require('bloombox.telemetry.rpc.TelemetryRPC');
 
@@ -418,6 +427,19 @@ bloombox.telemetry.BaseEvent.prototype.generateRPC = function() {
       'next': reducedLength
     }
   });
+
+  // if debug mode is active, append the debug header and the event UUID as the
+  // trace header for the request
+  let rpcHeaders = {};
+  if (bloombox.DEBUG || (window[bloombox.DEBUG_PROPERTY] === true)) {
+    rpcHeaders[bloombox.rpc.DEBUG_HEADER] = 'debug';
+    rpcHeaders[bloombox.rpc.TRACE_HEADER] = uuid;
+  }
+  if (bloombox.telemetry.rpc.ENABLE_CONTEXT_HEADER) {
+    bloombox.logging.log('EXPERIMENTAL: Attaching context via header.', {
+      'encoded': b64encoded});
+    rpcHeaders[bloombox.telemetry.rpc.CONTEXT_HEADER] = b64encoded;
+  }
 
   return new bloombox.telemetry.rpc.TelemetryRPC(
     uuid,

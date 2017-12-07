@@ -23,8 +23,14 @@
 
 /*global goog */
 
+goog.provide('bloombox.rpc.ACCEPT_HEADER_VALUE');
+goog.provide('bloombox.rpc.API_KEY_HEADER');
+goog.provide('bloombox.rpc.DEBUG_HEADER');
+
 goog.provide('bloombox.rpc.RPC');
 goog.provide('bloombox.rpc.RPCException');
+
+goog.provide('bloombox.rpc.TRACE_HEADER');
 
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.DEBUG_PROPERTY');
@@ -58,9 +64,9 @@ bloombox.rpc.RPCException = function RPCException(message) {
  *
  * @type {string}
  * @const
- * @package
+ * @public
  */
-bloombox.rpc.ACCEPT_HEADER = 'application/json,*/*';
+bloombox.rpc.ACCEPT_HEADER_VALUE = 'application/json,*/*';
 
 
 /**
@@ -68,7 +74,7 @@ bloombox.rpc.ACCEPT_HEADER = 'application/json,*/*';
  *
  * @type {string}
  * @const
- * @package
+ * @public
  */
 bloombox.rpc.API_KEY_HEADER = 'X-Bloom-Key';
 
@@ -78,7 +84,7 @@ bloombox.rpc.API_KEY_HEADER = 'X-Bloom-Key';
  *
  * @type {string}
  * @const
- * @package
+ * @public
  */
 bloombox.rpc.DEBUG_HEADER = 'X-Bloom-Debug';
 
@@ -88,7 +94,7 @@ bloombox.rpc.DEBUG_HEADER = 'X-Bloom-Debug';
  *
  * @type {string}
  * @const
- * @package
+ * @public
  */
 bloombox.rpc.TRACE_HEADER = 'X-Bloom-Trace';
 
@@ -228,7 +234,7 @@ bloombox.rpc.RPC = function RPC(httpMethod,
    * @package
    */
   this.headers = {
-    'Accept': bloombox.rpc.ACCEPT_HEADER
+    'Accept': bloombox.rpc.ACCEPT_HEADER_VALUE
   };
 
   // attach debug header, if so-instructed

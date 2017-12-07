@@ -24,6 +24,8 @@
 
 /*global goog */
 
+goog.require('bloombox.rpc.ACCEPT_HEADER_VALUE');
+
 goog.require('bloombox.util.HTTPMethod');
 
 goog.require('goog.structs.Map');
@@ -42,7 +44,7 @@ goog.provide('bloombox.telemetry.internals.HTTP_HEADERS');
  * @package
  */
 bloombox.telemetry.internals.HTTP_HEADERS = new goog.structs.Map({
-  'Accept': 'application/json;*/*'
+  'Accept': bloombox.rpc.ACCEPT_HEADER_VALUE
 });
 
 
