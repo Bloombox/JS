@@ -438,7 +438,6 @@ bloombox.telemetry.Context.serializeProto = function(context) {
     baseContext['userKey'] = {'uid': context.getUserKey().getUid()};
 
   // handle partner/commercial scope
-  debugger;
   if (context.hasScope()) {
     let scopeObj = {};
     if (context.getScope().getPartner()) {
