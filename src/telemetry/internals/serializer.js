@@ -1,4 +1,20 @@
 
+/*
+ * Copyright 2017, Bloombox, LLC. All rights reserved.
+ *
+ * Source and object computer code contained herein is the private intellectual property
+ * of Bloombox, a California Limited Liability Corporation. Use of this code in source form
+ * requires permission in writing before use or the publishing of derivative works, for
+ * commercial purposes or any other purpose, from a duly authorized officer of Momentum
+ * Ideas Co.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * Bloombox Telemetry: Event Serializer
  *
@@ -9,12 +25,10 @@
 
 goog.require('bloombox.logging.error');
 
-goog.require('proto.analytics.Event');
-goog.require('proto.analytics.Exception');
+goog.require('proto.analytics.generic.Event');
+goog.require('proto.analytics.generic.Exception');
 
 goog.require('proto.analytics.order.Action');
-
-goog.require('proto.analytics.pipeline.TelemetryEvent');
 
 goog.require('proto.analytics.product.Action');
 goog.require('proto.analytics.product.Impression');
@@ -23,6 +37,8 @@ goog.require('proto.analytics.product.View');
 goog.require('proto.analytics.section.Action');
 goog.require('proto.analytics.section.Impression');
 goog.require('proto.analytics.section.View');
+
+goog.require('proto.services.telemetry.v1beta2.TelemetryEvent');
 
 goog.provide('bloombox.telemetry.internals.EventTypeProperty');
 goog.provide('bloombox.telemetry.internals.SerializationException');
@@ -93,49 +109,24 @@ bloombox.telemetry.internals.SerializationException = function SerializationExce
  *        be resolved or otherwise serialized. Defaults to `true`.
  * @throws {bloombox.telemetry.internals.SerializationException} When an error
  *        occurs while serializing the event, if `opt_throw` is truthy.
- * @return {?proto.analytics.pipeline.TelemetryEvent} The resulting telemetry
- *        event, or `null` if a failure occurred, and `opt_throw` was falsy.
+ * @return {?proto.services.telemetry.v1beta2.TelemetryEvent} The resulting
+ *        telemetry event, or `null` if a failure occurred, and `opt_throw`
+ *        was falsy.
  */
 bloombox.telemetry.internals.serializeGeneric = function(type,
                                                          value,
                                                          opt_context,
                                                          opt_err) {
   let doThrow = (opt_err === undefined ? true : opt_err);
-  let event = new proto.analytics.pipeline.TelemetryEvent();
+  let event = new proto.services.telemetry.v1beta2.TelemetryEvent();
   switch (type) {
     case bloombox.telemetry.internals.EventTypeProperty.EVENT:
-      event.setGenericEvent(/** @type {!proto.analytics.Event} */ (value));
+      event.setGeneric(/** @type {!proto.analytics.generic.Event} */ (
+        value));
       break;
     case bloombox.telemetry.internals.EventTypeProperty.EXCEPTION:
-      event.setGenericError(/** @type {!proto.analytics.Exception} */ (value));
-      break;
-    case bloombox.telemetry.internals.EventTypeProperty.SECTION_IMPRESSION:
-      event.setSectionImpression((
-        /** @type {!proto.analytics.section.Impression} */ (value)));
-      break;
-    case bloombox.telemetry.internals.EventTypeProperty.SECTION_VIEW:
-      event.setSectionView((
-        /** @type {!proto.analytics.section.View} */ (value)));
-      break;
-    case bloombox.telemetry.internals.EventTypeProperty.SECTION_ACTION:
-      event.setSectionAction((
-        /** @type {!proto.analytics.section.Action} */ (value)));
-      break;
-    case bloombox.telemetry.internals.EventTypeProperty.PRODUCT_IMPRESSION:
-      event.setProductImpression((
-        /** @type {!proto.analytics.product.Impression} */ (value)));
-      break;
-    case bloombox.telemetry.internals.EventTypeProperty.PRODUCT_VIEW:
-      event.setProductView((
-        /** @type {!proto.analytics.product.View} */ (value)));
-      break;
-    case bloombox.telemetry.internals.EventTypeProperty.PRODUCT_ACTION:
-      event.setProductAction((
-        /** @type {!proto.analytics.product.Action} */ (value)));
-      break;
-    case bloombox.telemetry.internals.EventTypeProperty.ORDER_ACTION:
-      event.setOrderAction((
-        /** @type {!proto.analytics.product.Action} */ (value)));
+      event.setError(/** @type {!proto.analytics.generic.Exception} */ (
+        value));
       break;
     default:
       bloombox.logging.error(

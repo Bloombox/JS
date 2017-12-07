@@ -95,6 +95,18 @@ function closureBuilder(entrypoint) {
     }
   };
 
+  const externsPath = 'third_party/closure/compiler/contrib/externs/';
+  const browserExternsPath = 'third_party/closure/compiler/externs/browser/';
+  const mainlineExternsPath = 'third_party/closure/compiler/externs/';
+
+  function extern(path, isBrowser, isMainline) {
+    if (isBrowser)
+      return browserExternsPath + path;
+    if (isMainline)
+      return mainlineExternsPath + path;
+    return externsPath + path;
+  }
+
   return new Promise((resolve, reject) => {
     closureBuild.build({
     'name': 'bloombox',
@@ -103,6 +115,13 @@ function closureBuilder(entrypoint) {
       'src/**/*.js',
       'entrypoint/' + entrypoint + '.js'
     ]),
+    'externs': [
+      extern('facebook_javascript_sdk.js'),
+      extern('google_loader_api.js'),
+      extern('google_tag_manager_api.js'),
+      extern('google_universal_analytics_api.js'),
+      extern('polymer-1.0.js')
+    ],
     'exclude_test': true,
     "deps": glob([
       "schema/languages/js/*.pb.js",

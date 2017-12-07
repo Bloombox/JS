@@ -1,4 +1,20 @@
 
+/*
+ * Copyright 2017, Bloombox, LLC. All rights reserved.
+ *
+ * Source and object computer code contained herein is the private intellectual property
+ * of Bloombox, a California Limited Liability Corporation. Use of this code in source form
+ * requires permission in writing before use or the publishing of derivative works, for
+ * commercial purposes or any other purpose, from a duly authorized officer of Momentum
+ * Ideas Co.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * Bloombox Telemetry: Context
  *
@@ -9,7 +25,7 @@
 /*global goog */
 
 goog.require('bloombox.VERSION');
-goog.require('bloombox.config');
+goog.require('bloombox.config.active');
 
 goog.require('bloombox.logging.log');
 
@@ -415,18 +431,36 @@ bloombox.telemetry.Context.prototype.serialize = function() {
       'id': this.order.getId()
     };
 
-  if (this.device)
-    // device UUID
-    baseContext['device'] = this.device.getUuid();
-
   // consider partner context, etc
-  if (this.partner) {
-    if (this.location) {
-      baseContext['location'] = {
-        'code': this.location.getCode(),
-        'partner': {
-          'code': this.location.getPartner().getCode()
-        }
+  let partnerScope = /** @type {?string} */ (null);
+
+  if (this.location) {
+    if (this.device) {
+      partnerScope = [
+        this.location.getPartner().getCode(),
+        this.location.getCode(),
+        this.device.getUuid()].join('/');
+    } else {
+      partnerScope = [
+        this.location.getPartner().getCode(),
+        this.device.getUuid()].join('/');
+    }
+  } else {
+    if (this.partner) {
+      partnerScope = this.location.getPartner().getCode();
+    }
+  }
+  if (partnerScope)
+    baseContext['scope'] = {
+      'partner': partnerScope
+    };
+
+  // consider commercial context
+  // @TODO: section and product key for commercial scope
+  if (this.order) {
+    if (!baseContext['scope']) {
+      baseContext['scope'] = {
+        'order': this.order.getId()
       };
     }
   }
@@ -542,7 +576,7 @@ bloombox.telemetry.resolveFingerprint = function() {
   if (bloombox.telemetry.DEVICE_FINGERPRINT === null) {
     // try to fetch it from local storage
     let existingFingerprint = (
-     window['localStorage'].getItem(bloombox.telemetry.DEVICE_FINGERPRINT_KEY));
+     window.localStorage.getItem(bloombox.telemetry.DEVICE_FINGERPRINT_KEY));
 
     if (existingFingerprint && typeof existingFingerprint === 'string') {
       // we found it, load the existing one from local storage
@@ -552,7 +586,7 @@ bloombox.telemetry.resolveFingerprint = function() {
       // in local storage and locally, and return.
       let newDeviceFingerprint = bloombox.util.generateUUID();
       bloombox.telemetry.DEVICE_FINGERPRINT = newDeviceFingerprint;
-      window['localStorage'].setItem(
+      window.localStorage.setItem(
         bloombox.telemetry.DEVICE_FINGERPRINT_KEY, newDeviceFingerprint);
       bloombox.logging.log('Established device fingerprint: "' +
         newDeviceFingerprint + "'.");
@@ -573,7 +607,7 @@ bloombox.telemetry.resolveSessionID = function() {
   if (bloombox.telemetry.SESSION_ID === null) {
     // try to fetch it from local storage
     let existingID = (
-      window['sessionStorage'].getItem(bloombox.telemetry.SESSION_ID_KEY));
+      window.sessionStorage.getItem(bloombox.telemetry.SESSION_ID_KEY));
 
     if (existingID && typeof existingID === 'string') {
       // we found it, load the existing one from local storage
@@ -583,7 +617,7 @@ bloombox.telemetry.resolveSessionID = function() {
       // in local storage and locally, and return.
       let newSessionID = bloombox.util.generateUUID();
       bloombox.telemetry.SESSION_ID = newSessionID;
-      window['sessionStorage'].setItem(
+      window.sessionStorage.setItem(
         bloombox.telemetry.SESSION_ID_KEY, newSessionID);
       bloombox.logging.log('Established user session at ID: "' +
         newSessionID + "'.");
@@ -668,7 +702,7 @@ bloombox.telemetry.buildBrowserContext = function() {
   context.setOs(osObj);
 
   // detect application type and version
-  let origin = window['document'].origin;
+  let origin = window.document['origin'];
   let app = new proto.analytics.context.DeviceApplication();
   app.setOrigin(origin);
   context.setApp(app);
@@ -701,7 +735,7 @@ bloombox.telemetry.globalContext = function(opt_force_fresh) {
   let forceFresh = opt_force_fresh || false;
   if (bloombox.telemetry.GLOBAL_CONTEXT === null || forceFresh) {
     // grab global config
-    let config = bloombox.config;
+    let config = bloombox.config.active();
     let partnerCode = config.partner || null;
     let locationCode = config.location || null;
     let deviceFingerprint = bloombox.telemetry.resolveFingerprint();

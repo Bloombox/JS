@@ -3,10 +3,11 @@
 ## Bloombox: JS Client
 #
 
-VERSION ?= v1.0.0-beta
+VERSION ?= v1.0.0-beta3
 TARGET ?= target
 VERBOSE ?= no
 RELEASE ?= no
+PUBLIC ?= no
 DOCS ?= docs/
 
 PROTOC ?= $(shell which protoc)
@@ -40,14 +41,26 @@ GSUTIL_FLAGS ?= -h "Content-Type: text/javascript" -h "Cache-Control: $(CACHE_CO
 all: $(GOAL) $(DOCS)
 	@echo "Bloombox JS is ready."
 
+serve-docs:
+	@cd docs && python -m SimpleHTTPServer
+
+ifeq ($(PUBLIC),no)
 docs: $(DOCS)
-$(DOCS): clean-docs
-	@echo "Building docs..."
+$(DOCS):
 	@mkdir -p $(DOCS)
-	@-./node_modules/.bin/jsdoc \
-		--destination $(DOCS) \
-		--readme README.md \
-		--configure jsdoc.json;
+	@java -jar ./node_modules/js-dossier/dossier.jar -c dossier-dev.json
+	@cp ./content/docs.css docs/dossier.css
+	@cat ./content/docs-private.css >> docs/dossier.css
+else
+docs: clean-docs $(DOCS)
+$(DOCS):
+	@mkdir -p $(DOCS)
+	@java -jar ./node_modules/js-dossier/dossier.jar -c dossier-public.json
+	@cp ./content/docs.css docs/dossier.css
+
+publish-lib:
+	@echo "Publishing library..."
+	@firebase deploy
 
 publish-docs: docs
 	@echo "Publishing docs..."
@@ -58,8 +71,9 @@ publish-docs: docs
 	    git commit -m "Update docs" && \
 	    git push origin gh-pages --force
 	@rm -fr $(DOCS)/.git
+endif
 
-clean:
+clean: clean-docs
 	@echo "Cleaning targets..."
 	@-rm $(RM_FLAGS) $(TARGET)
 
@@ -116,7 +130,9 @@ build: dependencies
 	@sed 's/__VERSION__/$(VERSION)/g' test/index.html > $(TARGET)/index.html
 	@echo "Build complete."
 
-release: dependencies
+release: build dependencies
+	@echo "Copying debug build..."
+	@cp -fv target/$(VERSION).min.js target/$(VERSION)-debug.min.js
 	@echo "Building Bloombox JS (RELEASE)..."
 	@gulp --release $(GULP_FLAGS)
 	@echo "Copying test files..."
@@ -124,15 +140,23 @@ release: dependencies
 	@sed 's/__VERSION__/$(VERSION)/g' test/index.html > $(TARGET)/index.html
 	@sed 's/__VERSION__/$(VERSION)/g' test/prod.html > $(TARGET)/prod.html
 	@echo "Build complete."
+	@mkdir -p public/client/
+	@cp -fv target/$(VERSION).min.js public/client/
+	@cp -fv target/$(VERSION)-debug.min.js public/client/
+	@cp -fv target/$(VERSION).min.js public/client.min.js
+	@cp -fv target/$(VERSION)-debug.min.js public/client-debug.min.js
 
 serve:
 	@echo "Starting test server..."
 	@cd $(TARGET) && python -m SimpleHTTPServer
 
-publish: build release
-	@echo "Publishing Bloombox JS $(VERSION)..."
+publish: build release publish-docs
+	@echo "Publishing private Bloombox JS..."
 	@cd target && gsutil $(GSUTIL_FLAGS) \
 	    ./*.min.js gs://k9-cdn-bloombox-embed/embed/client/
+	@echo "Publishing public Bloombox JS..."
+	@firebase deploy
+	@echo "Library $(VERSION) published."
 
 
 .PHONY: docs publish build release

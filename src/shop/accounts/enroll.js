@@ -1,4 +1,20 @@
 
+/*
+ * Copyright 2017, Bloombox, LLC. All rights reserved.
+ *
+ * Source and object computer code contained herein is the private intellectual property
+ * of Bloombox, a California Limited Liability Corporation. Use of this code in source form
+ * requires permission in writing before use or the publishing of derivative works, for
+ * commercial purposes or any other purpose, from a duly authorized officer of Momentum
+ * Ideas Co.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * Bloombox: Enroll
  *
@@ -12,7 +28,7 @@ goog.provide('bloombox.shop.enroll.Enrollment');
 goog.provide('bloombox.shop.enroll.EnrollmentException');
 goog.provide('bloombox.shop.enroll.EnrollmentSource');
 
-goog.require('bloombox.config');
+goog.require('bloombox.config.active');
 
 goog.require('bloombox.identity.ConsumerProfile');
 goog.require('bloombox.identity.ContactInfo');
@@ -185,8 +201,9 @@ bloombox.shop.enroll.Enrollment.prototype.enableDryRun = function() {
  * @export
  */
 bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
-  let partner = bloombox.config.partner;
-  let location = bloombox.config.location;
+  let config = bloombox.config.active();
+  let partner = config.partner;
+  let location = config.location;
 
   if (!partner || !location) {
     bloombox.logging.error('Partner or location code is not defined.');

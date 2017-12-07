@@ -1,6 +1,22 @@
 
+/*
+ * Copyright 2017, Bloombox, LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
- * Bloombox: RPC Tooling
+ * Bloombox JS: RPC Internals
  *
  * @fileoverview Provides low-level tools for RPCs.
  */
@@ -12,7 +28,7 @@ goog.provide('bloombox.rpc.RPCException');
 
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.VERSION');
-goog.require('bloombox.config');
+goog.require('bloombox.config.active');
 
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
@@ -90,9 +106,10 @@ bloombox.rpc.RPCException.prototype.toString = function() {
  * @public
  */
 bloombox.rpc.RPC = function RPC(httpMethod, endpoint, opt_payload, opt_keep) {
-  let apiKey = bloombox.config.key;
-  let partner = bloombox.config.partner;
-  let location = bloombox.config.location;
+  let config = bloombox.config.active();
+  let apiKey = config.key;
+  let partner = config.partner;
+  let location = config.location;
   if (!apiKey || !(typeof apiKey === 'string'))
     throw new bloombox.rpc.RPCException('API key could not be resolved.' +
         ' Please call `setup` before any RPC methods.');

@@ -1,18 +1,32 @@
 
-/**
- * Bloombox JS
+/*
+ * Copyright 2017, Bloombox, LLC.
  *
- * @fileoverview Provides initial boot code for Bloombox JS.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Bloombox JS: Init
+ *
+ * @fileoverview Initial boot code for Bloombox JS.
  */
 
 /*global goog */
 
 goog.provide('bloombox.DEBUG');
 goog.provide('bloombox.VERSION');
-goog.provide('bloombox.config');
 
 // force-load closure and closure UI libraries
-goog.require('goog.proto');
 goog.require('goog.ui.INLINE_BLOCK_CLASSNAME');
 
 
@@ -33,27 +47,3 @@ bloombox.DEBUG = true;
  * @export
  */
 bloombox.VERSION = 'v1.0.0';
-
-
-/**
- * Holds global configuration for the library.
- *
- * @nocollapse
- * @type {{key: ?string,
- *         partner: ?string,
- *         location: ?string,
- *         channel: ?string,
- *         endpoints: {
- *           shop: ?string,
- *           telemetry: ?string}}}
- */
-bloombox.config = {
-  key: null,
-  partner: null,
-  location: null,
-  channel: null,
-  endpoints: {
-    shop: null,
-    telemetry: null
-  }
-};

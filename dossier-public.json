@@ -1,0 +1,34 @@
+{
+  "readme": "README.md",
+  "output": "docs",
+  "sources": [
+    "src/**.js",
+    "protobuf/js/debug.js",
+    "protobuf/js/map.js",
+    "protobuf/js/message.js",
+    "protobuf/js/binary/arith.js",
+    "protobuf/js/binary/constants.js",
+    "protobuf/js/binary/decoder.js",
+    "protobuf/js/binary/encoder.js",
+    "protobuf/js/binary/reader.js",
+    "protobuf/js/binary/utils.js",
+    "protobuf/js/binary/writer.js",
+    "protobuf/js/google/protobuf/any.js",
+    "protobuf/js/google/protobuf/api.js",
+    "protobuf/js/google/protobuf/descriptor.js",
+    "protobuf/js/google/protobuf/empty.js",
+    "protobuf/js/google/protobuf/field_mask.js",
+    "protobuf/js/google/protobuf/source_context.js",
+    "protobuf/js/google/protobuf/struct.js",
+    "protobuf/js/google/protobuf/timestamp.js",
+    "protobuf/js/google/protobuf/type.js",
+    "protobuf/js/google/protobuf/wrappers.js",
+    "schema/languages/js/*.pb.js"
+  ],
+  "customPages": [
+    {name: "Shop", path: "content/shop.md"},
+    {name: "Analytics", path: "content/analytics.md"}
+  ],
+  "closureLibraryDir": "node_modules/closure-builder/third_party/closure-library/closure/goog",
+  "typeFilters": ["goog", "svgpan", "jspb", "proto", "config", "logging", "rpc", "util"]
+}

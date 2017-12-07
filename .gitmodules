@@ -1,8 +1,11 @@
 [submodule "schema"]
 	path = schema
 	url = git@github.com:bloombox/schema.git
-	branch = telemetry/beta2
+	branch = feature/menu-data
 [submodule "protobuf"]
 	path = protobuf
 	url = git@github.com:google/protobuf.git
 	branch = master
+[submodule "closure"]
+	path = third_party/closure/compiler
+	url = https://github.com/google/closure-compiler

@@ -1,4 +1,20 @@
 
+/*
+ * Copyright 2017, Bloombox, LLC. All rights reserved.
+ *
+ * Source and object computer code contained herein is the private intellectual property
+ * of Bloombox, a California Limited Liability Corporation. Use of this code in source form
+ * requires permission in writing before use or the publishing of derivative works, for
+ * commercial purposes or any other purpose, from a duly authorized officer of Momentum
+ * Ideas Co.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * Bloombox Telemetry: Base Event
  *
@@ -346,7 +362,7 @@ bloombox.telemetry.BaseEvent.prototype.onFailure = function(op, error, code) {
  * @return {string} Base64-encoded, UTF-8 encoded bytes.
  * @private
  */
-bloombox.telemetry.BaseEvent.prototype.encodeUint8Array_ = function (u8a) {
+bloombox.telemetry.BaseEvent.prototype.encodeUint8Array_ = function(u8a) {
   let CHUNK_SZ = 0x8000;
   let c = [];
   for (let i = 0; i < u8a.length; i += CHUNK_SZ) {

@@ -12,9 +12,8 @@
  *
  * Bloombox JS __VERSION__
  *
- * Copyright (c) 2017, Momentum Ideas, Co. All rights reserved.
+ * Copyright (c) 2017, Momentum Ideas, Co. All rights reserved. Distributed under the Apache License, Version 2.0,
+ * last revised January 2004 and enclosed in this codebase in 'LICENSE.txt'. Also, see third-party license notices
+ * in 'NOTICE.txt'.
  *
- * Portions of this code are from MochiKit, received by Momentum Ideas under the MIT license via The Closure Authors.
- * All remaining Closure library code is Copyright 2005-2009 The Closure Authors.
  */
-

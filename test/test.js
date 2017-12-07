@@ -34,6 +34,8 @@ let licenseID = 'D7566786';
 let licenseExpiration = '2020-12-23';
 let licenseJurisdiction = 'CALIFORNIA';
 
+let telemetryEventClick = 'clickEvent';
+
 
 // test logic
 /**
@@ -303,6 +305,15 @@ function doEnrollTest(callback) {
   });
 }
 
+/*
+* Run a test where a customer plugs into our telemetry events then runs their own
+ */
+function doTelemetry() {
+  bloombox.setup(partnerCode, locationCode, apiKey, function() {
+    bloombox.telemetry.event('click', {'test': 'data', 'goes': 'here'}).send();
+    console.log('%cTelemetry is working properly.', 'color:green')
+}
+
 function full() {
   doInfoTest(function(next) { next(); }, function() { });
   doEnrollTest(doOrderTest);
@@ -312,5 +323,10 @@ function simple() {
   doInfoTest(function(next) { next(); }, function() { });
 }
 
+function telemetry() {
+  doTelemetry();
+}
+
 console.log("Call the following to run a full test: full()");
 console.log("Call the following to run a limited test: simple()");
+console.log("Call the following to run a telemetry test: telemetry()");
