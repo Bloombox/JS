@@ -38,7 +38,7 @@ GULP_FLAGS ?= --libversion "$(VERSION)" --buildtype "$(GOAL)"
 GSUTIL_FLAGS ?= -h "Content-Type: text/javascript" -h "Cache-Control: $(CACHE_CONTROL)" cp -z js -a public-read
 
 
-all: $(GOAL) $(DOCS)
+all: $(GOAL)
 	@echo "Bloombox JS is ready."
 
 serve-docs:
