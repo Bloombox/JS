@@ -435,10 +435,11 @@ bloombox.telemetry.Context.serializeProto = function(context) {
 
   // key contexts
   if (context.getUserKey() && context.getUserKey().getUid())
-    baseContext['user_key'] = {'uid': context.getUserKey().getUid()};
+    baseContext['userKey'] = {'uid': context.getUserKey().getUid()};
 
   // handle partner/commercial scope
-  if (context.getScope()) {
+  debugger;
+  if (context.hasScope()) {
     let scopeObj = {};
     if (context.getScope().getPartner()) {
       scopeObj['partner'] = context.getScope().getPartner();
@@ -587,15 +588,16 @@ bloombox.telemetry.Context.prototype.export = function() {
     if (this.device) {
       // full device->location->partner context
       scope.setPartner(
-        'partner/' + this.location.getPartner().getCode() +
-        'location/' + this.location.getCode() +
+        'partner/' + this.location.getPartner().getCode() + '/' +
+        'location/' + this.location.getCode() + '/' +
         'device/' + this.device.getUuid());
     } else {
       // partner -> location context
       scope.setPartner(
-        'partner/' + this.location.getPartner().getCode() +
+        'partner/' + this.location.getPartner().getCode() + '/' +
         'location/' + this.location.getCode());
     }
+    context.setScope(scope);
   }
 
   // detect application type and version
