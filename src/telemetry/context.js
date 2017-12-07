@@ -2,10 +2,11 @@
 /*
  * Copyright 2017, Bloombox, LLC. All rights reserved.
  *
- * Source and object computer code contained herein is the private intellectual property
- * of Bloombox, a California Limited Liability Corporation. Use of this code in source form
- * requires permission in writing before use or the publishing of derivative works, for
- * commercial purposes or any other purpose, from a duly authorized officer of Momentum
+ * Source and object computer code contained herein is the private intellectual
+ * property of Bloombox, a California Limited Liability Corporation. Use of this
+ * code in source form requires permission in writing before use or the
+ * assembly, distribution, or publishing of derivative works, for commercial
+ * purposes or any other purpose, from a duly authorized officer of Momentum
  * Ideas Co.
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -46,9 +47,9 @@ goog.require('proto.analytics.context.Collection');
 goog.require('proto.analytics.context.DeviceApplication');
 goog.require('proto.analytics.context.DeviceLibrary');
 goog.require('proto.analytics.context.DeviceOS');
-goog.require('proto.analytics.context.DeviceType');
 goog.require('proto.analytics.context.OSType');
 goog.require('proto.commerce.OrderKey');
+goog.require('proto.device.DeviceType');
 goog.require('proto.identity.UserKey');
 goog.require('proto.partner.PartnerDeviceKey');
 goog.require('proto.partner.PartnerKey');
