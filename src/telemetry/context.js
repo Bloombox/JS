@@ -44,6 +44,7 @@ goog.require('goog.userAgent.product');
 
 goog.require('proto.analytics.Context');
 goog.require('proto.analytics.Scope');
+goog.require('proto.analytics.context.APIClient');
 goog.require('proto.analytics.context.BrowserDeviceContext');
 goog.require('proto.analytics.context.Collection');
 goog.require('proto.analytics.context.DeviceApplication');
@@ -54,6 +55,7 @@ goog.require('proto.analytics.context.DeviceScreen');
 goog.require('proto.analytics.context.NativeDeviceContext');
 goog.require('proto.analytics.context.OSType');
 goog.require('proto.analytics.context.PixelSize');
+goog.require('proto.analytics.context.ScreenOrientation');
 goog.require('proto.commerce.OrderKey');
 goog.require('proto.device.DeviceType');
 goog.require('proto.identity.UserKey');
@@ -609,6 +611,7 @@ bloombox.telemetry.Context.prototype.export = function() {
   libVersionObj.setName(libraryVersion);
   libObj.setVersion(libVersionObj);
   libObj.setVariant(libraryVariant);
+  libObj.setClient(proto.analytics.context.APIClient.JAVA_SCRIPT);
   context.setLibrary(libObj);
 
   // device context
@@ -760,7 +763,7 @@ bloombox.telemetry.buildNativeContext = function() {
     let screenWidth = window.screen.width;
     let pixelDensity = window.devicePixelRatio;
 
-    let pixelSizeViewport = new proto.analytics.context.PixelSize();
+      let pixelSizeViewport = new proto.analytics.context.PixelSize();
     pixelSizeViewport.setHeight(viewportHeight);
     pixelSizeViewport.setWidth(viewportWidth);
 
@@ -772,6 +775,9 @@ bloombox.telemetry.buildNativeContext = function() {
     deviceScreen.setViewport(pixelSizeViewport);
     deviceScreen.setScreen(pixelSizeScreen);
     deviceScreen.setDensity(pixelDensity);
+    deviceScreen.setOrientation((window.innerHeight > window.innerWidth) ?
+      proto.analytics.context.ScreenOrientation.LANDSCAPE :
+      proto.analytics.context.ScreenOrientation.PORTRAIT);
     native.setScreen(deviceScreen);
   }
 
@@ -817,7 +823,9 @@ bloombox.telemetry.buildNativeContext = function() {
 bloombox.telemetry.buildBrowserContext = function() {
   let context = new proto.analytics.context.BrowserDeviceContext();
   let language = navigator.language;
+  let ua = navigator.userAgent;
   context.setLanguage(language);
+  context.setUserAgent(ua);
 
   if (typeof navigator.maxTouchPoints === 'number')
     context.setTouchpoints(navigator.maxTouchPoints);
