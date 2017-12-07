@@ -27,7 +27,7 @@ bloombox.testing.CannabinoidRatio = {
   'EQUAL': (
     proto.structs.labtesting.CannabinoidRatio.EQUAL),
   'CBD_OVER_THC': (
-    proto.structs.labtesting.CannabinoidRatio.THC_ONLY),
+    proto.structs.labtesting.CannabinoidRatio.CBD_OVER_THC),
   'CBD_ONLY': (
     proto.structs.labtesting.CannabinoidRatio.CBD_ONLY)
 };
