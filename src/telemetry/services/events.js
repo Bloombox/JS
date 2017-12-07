@@ -214,7 +214,7 @@ bloombox.telemetry.InternalCollectionSeparator_ = ':';
  * @const {string}
  * @private
  */
-bloombox.telemetry.InternalCollectionVersion_ = 'v1beta2';
+bloombox.telemetry.InternalCollectionVersion_ = 'v1beta3';
 
 
 /**

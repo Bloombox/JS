@@ -39,7 +39,7 @@ goog.require('proto.analytics.section.Action');
 goog.require('proto.analytics.section.Impression');
 goog.require('proto.analytics.section.View');
 
-goog.require('proto.services.telemetry.v1beta2.TelemetryEvent');
+goog.require('proto.services.telemetry.v1beta3.TelemetryEvent');
 
 goog.provide('bloombox.telemetry.internals.EventTypeProperty');
 goog.provide('bloombox.telemetry.internals.SerializationException');
@@ -110,7 +110,7 @@ bloombox.telemetry.internals.SerializationException = function SerializationExce
  *        be resolved or otherwise serialized. Defaults to `true`.
  * @throws {bloombox.telemetry.internals.SerializationException} When an error
  *        occurs while serializing the event, if `opt_throw` is truthy.
- * @return {?proto.services.telemetry.v1beta2.TelemetryEvent} The resulting
+ * @return {?proto.services.telemetry.v1beta3.TelemetryEvent} The resulting
  *        telemetry event, or `null` if a failure occurred, and `opt_throw`
  *        was falsy.
  */
@@ -119,7 +119,7 @@ bloombox.telemetry.internals.serializeGeneric = function(type,
                                                          opt_context,
                                                          opt_err) {
   let doThrow = (opt_err === undefined ? true : opt_err);
-  let event = new proto.services.telemetry.v1beta2.TelemetryEvent();
+  let event = new proto.services.telemetry.v1beta3.TelemetryEvent();
   switch (type) {
     case bloombox.telemetry.internals.EventTypeProperty.EVENT:
       event.setGeneric(/** @type {!proto.analytics.generic.Event} */ (
