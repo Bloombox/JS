@@ -309,9 +309,11 @@ function doEnrollTest(callback) {
 * Run a test where a customer plugs into our telemetry events then runs their own
  */
 function doTelemetry() {
-  bloombox.setup(partnerCode, locationCode, apiKey, function() {
-    bloombox.telemetry.event('click', {'test': 'data', 'goes': 'here'}).send();
-    console.log('%cTelemetry is working properly.', 'color:green')
+  bloombox.setup(partnerCode, locationCode, apiKey, function () {
+    bloombox.telemetry.event('testsuite', {'test': 'data', 'goes': 'here'})
+      .send();
+    console.log('%cTelemetry is working properly.', 'color:green');
+  });
 }
 
 function full() {
