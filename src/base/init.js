@@ -24,6 +24,8 @@
 /*global goog */
 
 goog.provide('bloombox.DEBUG');
+goog.provide('bloombox.DEBUG_PROPERTY');
+goog.provide('bloombox.INTERNAL');
 goog.provide('bloombox.VERSION');
 
 // force-load closure and closure UI libraries
@@ -33,7 +35,7 @@ goog.require('goog.ui.INLINE_BLOCK_CLASSNAME');
 /**
  * Global debug flag.
  *
- * @define {boolean} DEBUG Global switch for logging and other debug
+ * @define {boolean} DEBUG Debug flag for global debugging.
  *         features.
  * @public
  */
@@ -41,9 +43,29 @@ bloombox.DEBUG = true;
 
 
 /**
+ * Property to look for global debug status on the window.
+ *
+ * @define {string} DEBUG_PROPERTY Property to examine on the window for global
+ *         debug status opt-in.
+ * @public
+ */
+bloombox.DEBUG_PROPERTY = '__debug__';
+
+
+/**
  * Global library version.
  *
- * @define {string} VERSION Global version string.
+ * @define {string} VERSION Version for library.
  * @export
  */
 bloombox.VERSION = 'v1.0.0';
+
+
+/**
+ * Internal build status. Set to true when building within the Bloombox Platform
+ * codebase tree.
+ *
+ * @define {boolean} INTERNAL Internal flag.
+ * @export
+ */
+bloombox.INTERNAL = false;

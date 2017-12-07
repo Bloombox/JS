@@ -27,6 +27,7 @@ goog.provide('bloombox.rpc.RPC');
 goog.provide('bloombox.rpc.RPCException');
 
 goog.require('bloombox.DEBUG');
+goog.require('bloombox.DEBUG_PROPERTY');
 goog.require('bloombox.VERSION');
 goog.require('bloombox.config.active');
 
@@ -53,7 +54,7 @@ bloombox.rpc.RPCException = function RPCException(message) {
 
 
 /**
- * API key header.
+ * Accepted content type for response payloads.
  *
  * @type {string}
  * @const
@@ -69,17 +70,28 @@ bloombox.rpc.ACCEPT_HEADER = 'application/json,*/*';
  * @const
  * @package
  */
-bloombox.rpc.API_KEY_HEADER = 'X-Bloombox-API-Key';
+bloombox.rpc.API_KEY_HEADER = 'X-Bloom-Key';
 
 
 /**
- * API client header.
+ * Debug header.
  *
  * @type {string}
  * @const
  * @package
  */
-bloombox.rpc.API_CLIENT_HEADER = 'X-Bloombox-API-Client';
+bloombox.rpc.DEBUG_HEADER = 'X-Bloom-Debug';
+
+
+/**
+ * Trace header.
+ *
+ * @type {string}
+ * @const
+ * @package
+ */
+bloombox.rpc.TRACE_HEADER = 'X-Bloom-Trace';
+
 
 
 // noinspection JSUnusedGlobalSymbols
@@ -100,12 +112,17 @@ bloombox.rpc.RPCException.prototype.toString = function() {
  * @param {string} httpMethod HTTP method to use.
  * @param {string} endpoint URL endpoint to send the RPC to.
  * @param {?Object=} opt_payload Payload to use if we're POST-ing or PUT-ing.
+ * @param {string=} opt_trace Trace ID to specify for the RPC.
  * @param {boolean=} opt_keep Whether to keep this RPC around.
  * @constructor
  * @struct
  * @public
  */
-bloombox.rpc.RPC = function RPC(httpMethod, endpoint, opt_payload, opt_keep) {
+bloombox.rpc.RPC = function RPC(httpMethod,
+                                endpoint,
+                                opt_payload,
+                                opt_trace,
+                                opt_keep) {
   let config = bloombox.config.active();
   let apiKey = config.key;
   let partner = config.partner;
@@ -132,6 +149,13 @@ bloombox.rpc.RPC = function RPC(httpMethod, endpoint, opt_payload, opt_keep) {
    * @package
    */
   this.httpMethod = httpMethod;
+
+  /**
+   * Trace ID to set on this RPC.
+   *
+   * @type {?string}
+   */
+  this.trace = opt_trace || null;
 
   /**
    * Endpoint URL.
@@ -206,6 +230,10 @@ bloombox.rpc.RPC = function RPC(httpMethod, endpoint, opt_payload, opt_keep) {
   this.headers = {
     'Accept': bloombox.rpc.ACCEPT_HEADER
   };
+
+  // attach debug header, if so-instructed
+  if (bloombox.DEBUG || (window[bloombox.DEBUG_PROPERTY] === true))
+    this.headers['X-Bloom-Debug'] = 'debug';
 
   bloombox.logging.log('Constructed RPC for endpoint \'' +
       this.endpoint + '\'.', {'rpc': this});
@@ -329,10 +357,22 @@ bloombox.rpc.RPC.prototype.send = function(callback, error) {
   // JSON-encode data if we have it to send
   let payloadData = this.payload !== null ? JSON.stringify(this.payload) : null;
 
+  let overrideHeaders = {};
+
+  // set the trace header if so-instructed
+  if (this.trace)
+    overrideHeaders[bloombox.rpc.TRACE_HEADER] = this.trace;
+
+  // same with the debug headers
+  if (bloombox.DEBUG || (window[bloombox.DEBUG_PROPERTY] === true))
+    this.headers['X-Bloom-Debug'] = 'debug';
+
+  let finalizedHeaders = Object.assign({}, this.headers, overrideHeaders);
+
   // send the underlying XHR
   this.xhr.send(
     targetEndpoint,
     this.httpMethod,
     payloadData,
-    this.headers);
+    finalizedHeaders);
 };

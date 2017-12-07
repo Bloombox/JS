@@ -25,6 +25,7 @@
 
 /*global goog */
 
+goog.require('bloombox.INTERNAL');
 goog.require('bloombox.VERSION');
 goog.require('bloombox.config.active');
 
@@ -45,6 +46,7 @@ goog.require('goog.userAgent.product');
 goog.require('proto.analytics.Context');
 goog.require('proto.analytics.Scope');
 goog.require('proto.analytics.context.APIClient');
+goog.require('proto.analytics.context.ApplicationType');
 goog.require('proto.analytics.context.BrowserDeviceContext');
 goog.require('proto.analytics.context.Collection');
 goog.require('proto.analytics.context.DeviceApplication');
@@ -884,6 +886,20 @@ bloombox.telemetry.globalContext = function(opt_force_fresh) {
     let sessionID = bloombox.telemetry.resolveSessionID();
     let nativeContext = bloombox.telemetry.buildNativeContext();
     let browserContext = bloombox.telemetry.buildBrowserContext();
+
+    // build app context
+    let appContext = new proto.analytics.context.DeviceApplication();
+    let appOrigin = window.origin || document.origin;
+    if (appOrigin)
+      appContext.setOrigin(appOrigin);
+
+    if (bloombox.INTERNAL) {
+      // it's a bloombox app
+      appContext.setType(proto.analytics.context.ApplicationType.INTERNAL);
+    } else {
+      // it's a partner-side app
+      appContext.setType(proto.analytics.context.ApplicationType.PARTNER);
+    }
 
     // calculate global context
     bloombox.telemetry.GLOBAL_CONTEXT = new bloombox.telemetry.Context(
