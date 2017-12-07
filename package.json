@@ -1,14 +1,14 @@
 {
-  "name": "bloombox-shop-client",
+  "name": "@bloombox/js-client",
   "version": "1.0.0-beta3",
-  "license": "LICENSE.md",
-  "private": true,
-  "description": "API client package for the Bloombox",
+  "license": "LICENSE.txt",
+  "private": false,
+  "description": "JavaScript API client for Bloombox",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Bloombox/shop-client-js.git"
+    "url": "https://github.com/Bloombox/JS.git"
   },
-  "bugs": "https://github.com/Bloombox/shop-client-js/issues",
+  "bugs": "https://github.com/Bloombox/JS/issues",
   "dependencies": {
     "chai": "^3.5.0",
     "closure-builder": "^2.2.27",
