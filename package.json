@@ -1,7 +1,7 @@
 {
   "name": "@bloombox/js-client",
-  "version": "1.0.0-beta3",
-  "license": "LICENSE.txt",
+  "version": "1.0.0-beta4",
+  "license": "Apache-2.0",
   "private": false,
   "description": "JavaScript API client for Bloombox",
   "repository": {
