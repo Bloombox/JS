@@ -1,6 +1,6 @@
 {
   "name": "bloombox-shop-client",
-  "version": "1.0.0",
+  "version": "1.0.0-beta3",
   "license": "LICENSE.md",
   "private": true,
   "description": "API client package for the Bloombox",
