@@ -58,6 +58,7 @@ goog.require('proto.analytics.context.NativeDeviceContext');
 goog.require('proto.analytics.context.OSType');
 goog.require('proto.analytics.context.PixelSize');
 goog.require('proto.analytics.context.ScreenOrientation');
+goog.require('proto.analytics.context.WebApplication');
 goog.require('proto.commerce.OrderKey');
 goog.require('proto.device.DeviceType');
 goog.require('proto.identity.UserKey');
@@ -456,9 +457,25 @@ bloombox.telemetry.Context.serializeProto = function(context) {
   // app context
   if (context.getApp().getType()) {
     baseContext['app'] = {
-      'type': context.getApp().getType(),
-      'origin': context.getApp().getOrigin()
+      'type': context.getApp().getType()
     };
+
+    if (context.getApp().hasWeb()) {
+      let webContext = {
+        'origin': context.getApp().getWeb().getOrigin(),
+      };
+      if (context.getApp().getWeb().getLocation())
+        webContext['location'] = context.getApp().getWeb().getLocation();
+      if (context.getApp().getWeb().getAnchor())
+        webContext['anchor'] = context.getApp().getWeb().getAnchor();
+      if (context.getApp().getWeb().getTitle())
+        webContext['title'] = context.getApp().getWeb().getTitle();
+      if (context.getApp().getWeb().getReferrer())
+        webContext['referrer'] = context.getApp().getWeb().getReferrer();
+      if (context.getApp().getWeb().getProtocol())
+        webContext['protocol'] = context.getApp().getWeb().getProtocol();
+      baseContext['app']['web'] = webContext;
+    }
   }
 
   // library context
@@ -600,9 +617,9 @@ bloombox.telemetry.Context.prototype.export = function() {
   }
 
   // detect application type and version
-  let origin = window.document['origin'];
   let app = new proto.analytics.context.DeviceApplication();
-  app.setOrigin(origin);
+  let webContext = bloombox.telemetry.buildWebappContext();
+  app.setWeb(webContext);
   context.setApp(app);
 
 // detect library type and version
@@ -734,6 +751,32 @@ bloombox.telemetry.resolveSessionID = function() {
     }
   }
   return bloombox.telemetry.SESSION_ID;
+};
+
+
+/**
+ * Generate and return context for the current web application.
+ *
+ * @return {proto.analytics.context.WebApplication}
+ */
+bloombox.telemetry.buildWebappContext = function() {
+  // collect data
+  let origin = window.location.origin;
+  let location = window.location.href;
+  let anchor = window.location.hash;
+  let protocol = window.location.protocol;
+  let title = document.title;
+  let referrer = document.referrer;
+
+  // fill out object
+  let webapp = new proto.analytics.context.WebApplication();
+  webapp.setOrigin(origin);
+  webapp.setLocation(location);
+  webapp.setTitle(title);
+  webapp.setProtocol(protocol);
+  webapp.setReferrer(referrer);
+  if (anchor) webapp.setAnchor(anchor);
+  return webapp;
 };
 
 
@@ -889,10 +932,9 @@ bloombox.telemetry.globalContext = function(opt_force_fresh) {
     let browserContext = bloombox.telemetry.buildBrowserContext();
 
     // build app context
+    let webContext = bloombox.telemetry.buildWebappContext();
     let appContext = new proto.analytics.context.DeviceApplication();
-    let appOrigin = window.origin || document.origin;
-    if (appOrigin)
-      appContext.setOrigin(appOrigin);
+    appContext.setWeb(webContext);
 
     if (bloombox.INTERNAL) {
       // it's a bloombox app
