@@ -1,5 +1,5 @@
 {
-  "name": "@bloombox/js-client",
+  "name": "bloombox",
   "version": "1.0.0-beta5",
   "license": "Apache-2.0",
   "private": false,

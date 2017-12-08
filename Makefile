@@ -157,6 +157,12 @@ publish: build release publish-docs
 	@echo "Publishing public Bloombox JS..."
 	@firebase deploy
 	@echo "Library $(VERSION) published."
+	@echo "Publishing to NPM..."
+	@npm publish --tag $(ALIAS) --access public
+	@mv package.json package-global.json
+	@mv package-scoped.json package.json
+	@npm publish --tag $(ALIAS) --access public
+	@echo "Library '$(VERSION)' published on NPM, with alias '$(ALIAS)'."
 
 
 .PHONY: docs publish build release
