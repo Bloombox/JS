@@ -176,6 +176,8 @@ bloombox.telemetry.ContextException = function ContextException(message) {
  * @param {?bloombox.product.Key=} opt_item Item key to specify for the hit.
  *        Generates an item-scoped commercial event under the hood. Optional.
  * @param {?string=} opt_order Optional. Order key to apply to this context.
+ * @param {?proto.analytics.context.DeviceApplication} opt_app Application
+ *        context, generated or provided by the partner.
  * @param {proto.analytics.context.BrowserDeviceContext=} opt_browser Optional.
  *        Explicit browser device context info to override whatever
  *        globally-gathered info would normally be sent. When generating global
@@ -200,6 +202,7 @@ bloombox.telemetry.Context = function(opt_collection,
                                       opt_section,
                                       opt_item,
                                       opt_order,
+                                      opt_app,
                                       opt_browser,
                                       opt_native) {
   /**
@@ -217,6 +220,13 @@ bloombox.telemetry.Context = function(opt_collection,
    * @public
    */
   this.fingerprint = opt_fingerprint || null;
+
+  /**
+   * Web application context.
+   *
+   * @type {?proto.analytics.context.DeviceApplication}
+   */
+  this.app = opt_app || null;
 
   /**
    * Session ID for this user/browser session context.
@@ -455,7 +465,7 @@ bloombox.telemetry.Context.serializeProto = function(context) {
   }
 
   // app context
-  if (context.getApp().getType()) {
+  if (context.hasApp()) {
     baseContext['app'] = {
       'type': context.getApp().getType()
     };
@@ -617,10 +627,14 @@ bloombox.telemetry.Context.prototype.export = function() {
   }
 
   // detect application type and version
-  let app = new proto.analytics.context.DeviceApplication();
-  let webContext = bloombox.telemetry.buildWebappContext();
-  app.setWeb(webContext);
-  context.setApp(app);
+  if (this.app) {
+    context.setApp(this.app);
+  } else {
+    let appContext = new proto.analytics.context.DeviceApplication();
+    let webContext = bloombox.telemetry.buildWebappContext();
+    appContext.setWeb(webContext);
+    context.setApp(appContext);
+  }
 
 // detect library type and version
   let libraryVersion = bloombox.VERSION;
@@ -956,6 +970,7 @@ bloombox.telemetry.globalContext = function(opt_force_fresh) {
       null,  // section key is set by callers
       null,  // item key is set by callers
       null,  // @TODO: ability to use active order
+      appContext,
       browserContext,
       nativeContext);
   }
