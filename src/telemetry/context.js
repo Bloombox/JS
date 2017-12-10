@@ -176,7 +176,7 @@ bloombox.telemetry.ContextException = function ContextException(message) {
  * @param {?bloombox.product.Key=} opt_item Item key to specify for the hit.
  *        Generates an item-scoped commercial event under the hood. Optional.
  * @param {?string=} opt_order Optional. Order key to apply to this context.
- * @param {?proto.analytics.context.DeviceApplication} opt_app Application
+ * @param {?proto.analytics.context.DeviceApplication=} opt_app Application
  *        context, generated or provided by the partner.
  * @param {proto.analytics.context.BrowserDeviceContext=} opt_browser Optional.
  *        Explicit browser device context info to override whatever
