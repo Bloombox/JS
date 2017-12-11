@@ -40,6 +40,7 @@ goog.provide('bloombox.telemetry.boot');
 goog.require('bloombox.telemetry.didOptOut');
 goog.provide('bloombox.telemetry.sendInitialEvents');
 goog.provide('bloombox.telemetry.setup');
+goog.provide('bloombox.telemetry.setupPageTracking');
 
 goog.require('bloombox.telemetry.ping');
 
@@ -184,6 +185,7 @@ bloombox.telemetry.boot = function() {
       bloombox.logging.log('Telemetry service is online. Ping latency: ' +
                            '' + latency + 'ms.');
       bloombox.telemetry.sendInitialEvents();
+      bloombox.telemetry.setupPageTracking();
     });
   }
 };
