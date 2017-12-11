@@ -103,6 +103,69 @@ bloombox.telemetry.sendInitialEvents = function() {
 
 
 /**
+ * Last observed window location.
+ *
+ * @type {string}
+ * @private
+ */
+bloombox.telemetry.lastURL_ = window.location.href;
+
+
+/**
+ * Milliseconds to wait between URL checks.
+ *
+ * @const {number}
+ * @private
+ */
+bloombox.telemetry.URL_CHECK_TICK_MS_ = 1500;
+
+
+/**
+ * Send a telemetry event due to a URL/location change.
+ *
+ * @private
+ */
+bloombox.telemetry.urlDidChange_ = function() {
+  // one last check...
+  if (window.location.href !== bloombox.telemetry.lastURL_) {
+    bloombox.telemetry.lastURL_ = window.location.href;
+    bloombox.logging.log('URL changed, sending pageview.',
+      {'location': bloombox.telemetry.lastURL_});
+
+    bloombox.telemetry.event(
+      bloombox.telemetry.InternalCollection.PAGEVIEW).send();
+  }
+};
+
+
+/**
+ * Check the current window location against the last observed one.
+ *
+ * @private
+ */
+bloombox.telemetry.checkURL_ = function() {
+  if (window.location.href !== bloombox.telemetry.lastURL_) {
+    // update it
+    bloombox.telemetry.urlDidChange_();
+  }
+
+  // repeat the check in URL_CHECK_TICK_MS milliseconds
+  setTimeout(bloombox.telemetry.checkURL_,
+    bloombox.telemetry.URL_CHECK_TICK_MS_);
+};
+
+
+/**
+ * Setup a page tracking listener, and also dispatch it once every N seconds to
+ * catch URL changes.
+ */
+bloombox.telemetry.setupPageTracking = function() {
+  window.addEventListener('hashchange', bloombox.telemetry.urlDidChange_);
+  bloombox.telemetry.checkURL_();  // begin the tick-based checker
+};
+
+
+/**
  * Begin handling telemetry data, starting with initial events to be dispatched
  * and an initial server ping.
  *

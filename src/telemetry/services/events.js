@@ -241,6 +241,7 @@ bloombox.telemetry.internalCollectionName = function(name) {
  */
 bloombox.telemetry.InternalCollection = {
   LIBRARY: bloombox.telemetry.internalCollectionName('library'),
+  PAGEVIEW: bloombox.telemetry.internalCollectionName('pageview'),
   SERVICE: bloombox.telemetry.internalCollectionName('service')
 };
 
