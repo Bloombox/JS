@@ -117,10 +117,12 @@ protobuf/js/node_modules:
 	@cd protobuf/js && PROTOC=$(PROTOC) gulp dist && PROTOC=$(PROTOC) gulp genproto_well_known_types_closure
 	@cd protobuf && rm -fv js/package.json js/package-lock.json && git checkout js/package.json
 
-build: dependencies
+$(SCHEMA)/languages/js:
 	@echo "Building schema..."
 	@$(MAKE) -C schema LANGUAGES=js TABLES=no
 	@rm -fr schema/languages/js/{browser,es6,closure,commonjs}
+
+build: dependencies
 	@echo "Building Bloombox JS..."
 	@gulp $(GULP_FLAGS)
 	@echo "Copying source files..."
