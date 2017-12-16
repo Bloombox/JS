@@ -124,7 +124,7 @@ function closureBuilder(entrypoint) {
     ],
     'exclude_test': true,
     "deps": glob([
-      "schema/languages/js/*.pb.js",
+      "third_party/schema/*.js",
       "protobuf/js/debug.js",
       "protobuf/js/map.js",
       "protobuf/js/message.js",
