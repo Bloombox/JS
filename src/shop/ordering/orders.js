@@ -530,7 +530,7 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
     ].join('/'), payloadObject)
     .send((function(response) {
       if (done) return;
-      if (response != null) {
+      if (response !== null) {
         done = true;
 
         bloombox.logging.log(

@@ -106,7 +106,7 @@ bloombox.shop.zipcheck = function(zipcode, callback) {
   rpc.send(function(response) {
     if (done) return;
 
-    if (response != null) {
+    if (response !== null) {
       done = true;
 
       bloombox.logging.log('Received response for zipcheck RPC.', response);
