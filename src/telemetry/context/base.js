@@ -532,17 +532,16 @@ bloombox.telemetry.Context.prototype.export = function() {
 
   // calculate partner context
   if (this.location) {
+    let basePartnerScope = (
+      'partner/' + this.location.getPartner().getCode() + '/' +
+      'location/' + this.location.getCode());
     if (this.device) {
       // full device->location->partner context
-      scope.setPartner(
-        'partner/' + this.location.getPartner().getCode() + '/' +
-        'location/' + this.location.getCode() + '/' +
+      scope.setPartner(basePartnerScope + '/' +
         'device/' + this.device.getUuid());
     } else {
       // partner -> location context
-      scope.setPartner(
-        'partner/' + this.location.getPartner().getCode() + '/' +
-        'location/' + this.location.getCode());
+      scope.setPartner(basePartnerScope);
     }
     context.setScope(scope);
   }
