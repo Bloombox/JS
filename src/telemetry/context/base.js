@@ -356,8 +356,6 @@ bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
  */
 bloombox.telemetry.Context.serializeProto = function(context) {
   let baseContext = {};
-
-  // string data
   if (context.getCollection() && context.getCollection().getName())
     baseContext['collection'] = {'name': context.getCollection().getName()};
   if (context.getFingerprint())
@@ -491,13 +489,24 @@ bloombox.telemetry.Context.prototype.serialize = function() {
     };
 
   // consider commercial context
-  // @TODO: section and product key for commercial scope
   if (this.order) {
     if (!baseContext['scope']) {
       baseContext['scope'] = {
         'order': this.order.getId()
       };
     }
+  }
+
+  if (this.section !== null) {
+    if (!baseContext['scope'])
+      baseContext['scope'] = {};
+    let commercialScope = (
+      'section/' + this.section.toString());
+    if (this.item !== null) {
+      // full section + item scope
+      commercialScope += '/item/' + this.item.getId();
+    }
+    baseContext['scope']['commercial'] = commercialScope;
   }
 
   // consider browser context
