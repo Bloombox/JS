@@ -300,7 +300,7 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
 
   rpc.send(function(response) {
     if (done) return;
-    if (response != null) {
+    if (response !== null) {
       done = true;
 
       bloombox.logging.log('Response received for enrollment RPC.', response);

@@ -111,7 +111,7 @@ bloombox.shop.info = function(callback) {
   let done = false;
   rpc.send(function(response) {
     if (done) return;
-    if (response != null) {
+    if (response !== null) {
       done = true;
 
       bloombox.logging.log('Received response for shop info RPC.', response);

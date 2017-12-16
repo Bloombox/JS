@@ -393,7 +393,7 @@ bloombox.telemetry.Context.serializeProto = function(context) {
 
     if (context.getApp().hasWeb()) {
       let webContext = {
-        'origin': context.getApp().getWeb().getOrigin(),
+        'origin': context.getApp().getWeb().getOrigin()
       };
       if (context.getApp().getWeb().getLocation())
         webContext['location'] = context.getApp().getWeb().getLocation();

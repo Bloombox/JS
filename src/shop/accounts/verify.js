@@ -101,7 +101,7 @@ bloombox.shop.verify = function(email,
 
   rpc.send(function(response) {
     if (done) return;
-    if (response != null) {
+    if (response !== null) {
       done = true;
 
       bloombox.logging.log('Response received for verify RPC.', response);
