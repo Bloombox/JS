@@ -1,5 +1,6 @@
+# Bloombox for JavaScript  [![Build Status](https://travis-ci.org/Bloombox/JS.svg?branch=master)](https://travis-ci.org/Bloombox/JS)
 
-# Bloombox for JavaScript
+[![Maintainability](https://api.codeclimate.com/v1/badges/b02d3e57e60d030bc818/maintainability)](https://codeclimate.com/github/Bloombox/JS/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/b02d3e57e60d030bc818/test_coverage)](https://codeclimate.com/github/Bloombox/JS/test_coverage)
 
 Latest Version: `v1.0.0-beta9`
 
