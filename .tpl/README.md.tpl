@@ -1,7 +1,7 @@
 
 # Bloombox for JavaScript
 
-Latest version: `__VERSION__`
+Latest Version: `__VERSION__`
 
 This package provides support for Bloombox APIs in browser-oriented JavaScript. It's built using the Closure stack from
 Google, including Closure Compiler, Library, builder, and so on.
