@@ -108,8 +108,7 @@ sources:
 sync-schema: submodules
 
 submodules:
-	@git submodule update --init --remote protobuf
-	@git submodule update --init --remote closure
+	@git submodule update --init --remote
 
 protobuf/js/node_modules:
 	@echo "Initializing ProtobufJS dependencies..."
