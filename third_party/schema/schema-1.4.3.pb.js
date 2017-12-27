@@ -201,6 +201,31 @@ goog.provide('proto.security.access.LocationAccess');
 goog.provide('proto.security.access.PartnerAccess');
 goog.provide('proto.security.access.PartnerPermission');
 goog.provide('proto.services.ServiceStatus');
+goog.provide('proto.services.checkin.v1beta1.CardCheckin');
+goog.provide('proto.services.checkin.v1beta1.CardCheckin.Operation');
+goog.provide('proto.services.checkin.v1beta1.CardCheckin.Request');
+goog.provide('proto.services.checkin.v1beta1.CheckinError');
+goog.provide('proto.services.checkin.v1beta1.CheckinResponse');
+goog.provide('proto.services.checkin.v1beta1.CheckinUser');
+goog.provide('proto.services.checkin.v1beta1.IDCheckin');
+goog.provide('proto.services.checkin.v1beta1.IDCheckin.Operation');
+goog.provide('proto.services.checkin.v1beta1.IDCheckin.Request');
+goog.provide('proto.services.checkin.v1beta1.Ping');
+goog.provide('proto.services.checkin.v1beta1.Ping.Operation');
+goog.provide('proto.services.checkin.v1beta1.Ping.Request');
+goog.provide('proto.services.checkin.v1beta1.Ping.Response');
+goog.provide('proto.services.devices.v1beta1.Activation');
+goog.provide('proto.services.devices.v1beta1.Activation.Operation');
+goog.provide('proto.services.devices.v1beta1.Activation.Request');
+goog.provide('proto.services.devices.v1beta1.Activation.Response');
+goog.provide('proto.services.devices.v1beta1.DeviceActivation');
+goog.provide('proto.services.devices.v1beta1.DeviceAssignment');
+goog.provide('proto.services.devices.v1beta1.DeviceError');
+goog.provide('proto.services.devices.v1beta1.DeviceRole');
+goog.provide('proto.services.devices.v1beta1.Ping');
+goog.provide('proto.services.devices.v1beta1.Ping.Operation');
+goog.provide('proto.services.devices.v1beta1.Ping.Request');
+goog.provide('proto.services.devices.v1beta1.Ping.Response');
 goog.provide('proto.services.pos.v1beta1.POSError');
 goog.provide('proto.services.pos.v1beta1.Ping');
 goog.provide('proto.services.pos.v1beta1.Ping.Operation');
@@ -814,7 +839,7 @@ proto.identity.ids.USDLFieldValue.prototype.getField = function() {
 
 /** @param {!proto.identity.ids.USDLField} value */
 proto.identity.ids.USDLFieldValue.prototype.setField = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -1096,7 +1121,7 @@ proto.identity.ids.USDL.prototype.getBarcode_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.identity.ids.USDL.prototype.setBarcode = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -1111,7 +1136,7 @@ proto.identity.ids.USDL.prototype.getJurisdiction = function() {
 
 /** @param {!proto.geo.usa.USState} value */
 proto.identity.ids.USDL.prototype.setJurisdiction = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3EnumField(this, 5, value);
 };
 
 
@@ -1403,7 +1428,7 @@ proto.identity.ids.Passport.prototype.getBarcode_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.identity.ids.Passport.prototype.setBarcode = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -1418,7 +1443,7 @@ proto.identity.ids.Passport.prototype.getId = function() {
 
 /** @param {string} value */
 proto.identity.ids.Passport.prototype.setId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -1433,7 +1458,7 @@ proto.identity.ids.Passport.prototype.getNation = function() {
 
 /** @param {string} value */
 proto.identity.ids.Passport.prototype.setNation = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -1729,7 +1754,7 @@ proto.identity.ID.prototype.getType = function() {
 
 /** @param {!proto.identity.IDType} value */
 proto.identity.ID.prototype.setType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -1744,7 +1769,7 @@ proto.identity.ID.prototype.getId = function() {
 
 /** @param {string} value */
 proto.identity.ID.prototype.setId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -2076,7 +2101,7 @@ proto.identity.IDMediaAttachment.prototype.getType = function() {
 
 /** @param {!proto.identity.IDMedia} value */
 proto.identity.IDMediaAttachment.prototype.setType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -2091,7 +2116,7 @@ proto.identity.IDMediaAttachment.prototype.getOrientation = function() {
 
 /** @param {!proto.media.MediaOrientation} value */
 proto.identity.IDMediaAttachment.prototype.setOrientation = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -2130,7 +2155,7 @@ proto.identity.IDMediaAttachment.prototype.getData_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.identity.IDMediaAttachment.prototype.setData = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -2145,7 +2170,7 @@ proto.identity.IDMediaAttachment.prototype.getImageType = function() {
 
 /** @param {number} value */
 proto.identity.IDMediaAttachment.prototype.setImageType = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -2160,7 +2185,7 @@ proto.identity.IDMediaAttachment.prototype.getQuality = function() {
 
 /** @param {number} value */
 proto.identity.IDMediaAttachment.prototype.setQuality = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3FloatField(this, 5, value);
 };
 
 
@@ -2311,7 +2336,7 @@ proto.media.MediaKey.prototype.getId = function() {
 
 /** @param {string} value */
 proto.media.MediaKey.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -2532,7 +2557,7 @@ proto.media.MediaType.prototype.getKind = function() {
 
 /** @param {!proto.media.MediaType.Kind} value */
 proto.media.MediaType.prototype.setKind = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -2775,7 +2800,7 @@ proto.media.ImageType.prototype.getKind = function() {
 
 /** @param {!proto.media.ImageType.ImageKind} value */
 proto.media.ImageType.prototype.setKind = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -2939,7 +2964,7 @@ proto.media.DocumentType.prototype.getKind = function() {
 
 /** @param {!proto.media.DocumentType.DocumentKind} value */
 proto.media.DocumentType.prototype.setKind = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -2956,7 +2981,7 @@ proto.media.DocumentType.prototype.getCompressed = function() {
 
 /** @param {boolean} value */
 proto.media.DocumentType.prototype.setCompressed = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -3107,7 +3132,7 @@ proto.media.VideoType.prototype.getKind = function() {
 
 /** @param {!proto.media.VideoType.VideoKind} value */
 proto.media.VideoType.prototype.setKind = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -3349,7 +3374,7 @@ proto.media.MediaItem.prototype.getName = function() {
 
 /** @param {string} value */
 proto.media.MediaItem.prototype.setName = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -3364,7 +3389,7 @@ proto.media.MediaItem.prototype.getUri = function() {
 
 /** @param {string} value */
 proto.media.MediaItem.prototype.setUri = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -3810,7 +3835,7 @@ proto.geo.Point.prototype.getLatitude = function() {
 
 /** @param {number} value */
 proto.geo.Point.prototype.setLatitude = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 
@@ -3825,7 +3850,7 @@ proto.geo.Point.prototype.getLongitude = function() {
 
 /** @param {number} value */
 proto.geo.Point.prototype.setLongitude = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
@@ -3840,7 +3865,7 @@ proto.geo.Point.prototype.getElevation = function() {
 
 /** @param {number} value */
 proto.geo.Point.prototype.setElevation = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3FloatField(this, 3, value);
 };
 
 
@@ -3855,7 +3880,7 @@ proto.geo.Point.prototype.getAccuracy = function() {
 
 /** @param {number} value */
 proto.geo.Point.prototype.setAccuracy = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3FloatField(this, 4, value);
 };
 
 
@@ -4057,7 +4082,7 @@ proto.geo.Address.prototype.getFirstLine = function() {
 
 /** @param {string} value */
 proto.geo.Address.prototype.setFirstLine = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -4072,7 +4097,7 @@ proto.geo.Address.prototype.getSecondLine = function() {
 
 /** @param {string} value */
 proto.geo.Address.prototype.setSecondLine = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -4087,7 +4112,7 @@ proto.geo.Address.prototype.getCity = function() {
 
 /** @param {string} value */
 proto.geo.Address.prototype.setCity = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -4102,7 +4127,7 @@ proto.geo.Address.prototype.getState = function() {
 
 /** @param {string} value */
 proto.geo.Address.prototype.setState = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -4117,7 +4142,7 @@ proto.geo.Address.prototype.getZipcode = function() {
 
 /** @param {string} value */
 proto.geo.Address.prototype.setZipcode = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -4132,7 +4157,7 @@ proto.geo.Address.prototype.getCountry = function() {
 
 /** @param {string} value */
 proto.geo.Address.prototype.setCountry = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -4286,7 +4311,7 @@ proto.content.Name.prototype.getPrimary = function() {
 
 /** @param {string} value */
 proto.content.Name.prototype.setPrimary = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -4301,7 +4326,7 @@ proto.content.Name.prototype.getDisplay = function() {
 
 /** @param {string} value */
 proto.content.Name.prototype.setDisplay = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -4455,7 +4480,7 @@ proto.geo.DistanceValue.prototype.getUnit = function() {
 
 /** @param {!proto.geo.DistanceUnit} value */
 proto.geo.DistanceValue.prototype.setUnit = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -4470,7 +4495,7 @@ proto.geo.DistanceValue.prototype.getValue = function() {
 
 /** @param {number} value */
 proto.geo.DistanceValue.prototype.setValue = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3FloatField(this, 3, value);
 };
 
 
@@ -4628,7 +4653,7 @@ proto.geo.LocationAccuracy.prototype.getEstimate = function() {
 
 /** @param {boolean} value */
 proto.geo.LocationAccuracy.prototype.setEstimate = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -5147,7 +5172,7 @@ proto.geo.Distance.prototype.getEstimate = function() {
 
 /** @param {boolean} value */
 proto.geo.Distance.prototype.setEstimate = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -5192,7 +5217,7 @@ proto.geo.Distance.prototype.getUnit = function() {
 
 /** @param {!proto.geo.DistanceUnit} value */
 proto.geo.Distance.prototype.setUnit = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -5419,7 +5444,7 @@ proto.contact.PhoneNumber.prototype.getE164 = function() {
 
 /** @param {string} value */
 proto.contact.PhoneNumber.prototype.setE164 = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -5436,7 +5461,7 @@ proto.contact.PhoneNumber.prototype.getValidated = function() {
 
 /** @param {boolean} value */
 proto.contact.PhoneNumber.prototype.setValidated = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -5590,7 +5615,7 @@ proto.contact.EmailAddress.prototype.getAddress = function() {
 
 /** @param {string} value */
 proto.contact.EmailAddress.prototype.setAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -5607,7 +5632,7 @@ proto.contact.EmailAddress.prototype.getValidated = function() {
 
 /** @param {boolean} value */
 proto.contact.EmailAddress.prototype.setValidated = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -5773,7 +5798,7 @@ proto.contact.Website.prototype.getUri = function() {
 
 /** @param {string} value */
 proto.contact.Website.prototype.setUri = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -5788,7 +5813,7 @@ proto.contact.Website.prototype.getTitle = function() {
 
 /** @param {string} value */
 proto.contact.Website.prototype.setTitle = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -5827,7 +5852,7 @@ proto.contact.Website.prototype.getIcon_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.contact.Website.prototype.setIcon = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -6320,7 +6345,7 @@ proto.person.Name.prototype.getFullName = function() {
 
 /** @param {string} value */
 proto.person.Name.prototype.setFullName = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -6335,7 +6360,7 @@ proto.person.Name.prototype.getFirstName = function() {
 
 /** @param {string} value */
 proto.person.Name.prototype.setFirstName = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -6350,7 +6375,7 @@ proto.person.Name.prototype.getLastName = function() {
 
 /** @param {string} value */
 proto.person.Name.prototype.setLastName = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -6365,7 +6390,7 @@ proto.person.Name.prototype.getMiddleName = function() {
 
 /** @param {string} value */
 proto.person.Name.prototype.setMiddleName = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -6380,7 +6405,7 @@ proto.person.Name.prototype.getPrefix = function() {
 
 /** @param {string} value */
 proto.person.Name.prototype.setPrefix = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -6395,7 +6420,7 @@ proto.person.Name.prototype.getPostfix = function() {
 
 /** @param {string} value */
 proto.person.Name.prototype.setPostfix = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -6948,7 +6973,7 @@ proto.identity.ids.UserDoctorRec.prototype.getId = function() {
 
 /** @param {string} value */
 proto.identity.ids.UserDoctorRec.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -6993,7 +7018,7 @@ proto.identity.ids.UserDoctorRec.prototype.getBarcode = function() {
 
 /** @param {string} value */
 proto.identity.ids.UserDoctorRec.prototype.setBarcode = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -7008,7 +7033,7 @@ proto.identity.ids.UserDoctorRec.prototype.getState = function() {
 
 /** @param {!proto.geo.usa.USState} value */
 proto.identity.ids.UserDoctorRec.prototype.setState = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3EnumField(this, 4, value);
 };
 
 
@@ -7023,7 +7048,7 @@ proto.identity.ids.UserDoctorRec.prototype.getCountry = function() {
 
 /** @param {string} value */
 proto.identity.ids.UserDoctorRec.prototype.setCountry = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -7038,7 +7063,7 @@ proto.identity.ids.UserDoctorRec.prototype.getDoctorId = function() {
 
 /** @param {string} value */
 proto.identity.ids.UserDoctorRec.prototype.setDoctorId = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -7222,7 +7247,7 @@ proto.products.menu.section.CustomSection.prototype.getId = function() {
 
 /** @param {string} value */
 proto.products.menu.section.CustomSection.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -7237,7 +7262,7 @@ proto.products.menu.section.CustomSection.prototype.getFilter = function() {
 
 /** @param {!proto.products.menu.section.FilteredSection} value */
 proto.products.menu.section.CustomSection.prototype.setFilter = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -8185,7 +8210,7 @@ proto.base.Compression.prototype.getEnabled = function() {
 
 /** @param {boolean} value */
 proto.base.Compression.prototype.setEnabled = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -8200,7 +8225,7 @@ proto.base.Compression.prototype.getType = function() {
 
 /** @param {!proto.base.Compression.Type} value */
 proto.base.Compression.prototype.setType = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -8408,7 +8433,7 @@ proto.content.Content.prototype.getType = function() {
 
 /** @param {!proto.content.Content.Type} value */
 proto.content.Content.prototype.setType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -8423,7 +8448,7 @@ proto.content.Content.prototype.getEncoding = function() {
 
 /** @param {!proto.content.Content.Encoding} value */
 proto.content.Content.prototype.setEncoding = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -8462,7 +8487,7 @@ proto.content.Content.prototype.getContent_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.content.Content.prototype.setContent = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
@@ -8477,7 +8502,7 @@ proto.content.Content.prototype.getLanguage = function() {
 
 /** @param {!proto.base.Language} value */
 proto.content.Content.prototype.setLanguage = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3EnumField(this, 4, value);
 };
 
 
@@ -8699,7 +8724,7 @@ proto.structs.labtesting.TestValue.prototype.getType = function() {
 
 /** @param {!proto.structs.labtesting.TestValueType} value */
 proto.structs.labtesting.TestValue.prototype.setType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -8915,7 +8940,7 @@ proto.structs.labtesting.TestMedia.prototype.getType = function() {
 
 /** @param {!proto.structs.labtesting.TestMediaType} value */
 proto.structs.labtesting.TestMedia.prototype.setType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -9225,7 +9250,7 @@ proto.structs.labtesting.TestResults.prototype.getAvailable = function() {
 
 /** @param {boolean} value */
 proto.structs.labtesting.TestResults.prototype.setAvailable = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -9798,7 +9823,7 @@ proto.structs.labtesting.Cannabinoids.Result.prototype.getCannabinoid = function
 
 /** @param {!proto.structs.labtesting.Cannabinoid} value */
 proto.structs.labtesting.Cannabinoids.Result.prototype.setCannabinoid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -9813,7 +9838,7 @@ proto.structs.labtesting.Cannabinoids.Result.prototype.getRatio = function() {
 
 /** @param {!proto.structs.labtesting.CannabinoidRatio} value */
 proto.structs.labtesting.Cannabinoids.Result.prototype.setRatio = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -10195,7 +10220,7 @@ proto.structs.labtesting.Subjective.prototype.getPotency = function() {
 
 /** @param {!proto.structs.labtesting.PotencyEstimate} value */
 proto.structs.labtesting.Subjective.prototype.setPotency = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -10558,7 +10583,7 @@ proto.structs.labtesting.Terpenes.Result.prototype.getTerpene = function() {
 
 /** @param {!proto.structs.labtesting.Terpene} value */
 proto.structs.labtesting.Terpenes.Result.prototype.setTerpene = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -10605,7 +10630,7 @@ proto.structs.labtesting.Terpenes.prototype.getAvailable = function() {
 
 /** @param {boolean} value */
 proto.structs.labtesting.Terpenes.prototype.setAvailable = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -10791,7 +10816,7 @@ proto.structs.labtesting.Pesticides.prototype.getPesticideFree = function() {
 
 /** @param {boolean} value */
 proto.structs.labtesting.Pesticides.prototype.setPesticideFree = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -11294,7 +11319,7 @@ proto.security.access.PartnerAccess.prototype.getActive = function() {
 
 /** @param {boolean} value */
 proto.security.access.PartnerAccess.prototype.setActive = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -11309,7 +11334,7 @@ proto.security.access.PartnerAccess.prototype.getGrantedBy = function() {
 
 /** @param {string} value */
 proto.security.access.PartnerAccess.prototype.setGrantedBy = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -11416,7 +11441,7 @@ proto.security.access.PartnerAccess.prototype.getAllLocations = function() {
 
 /** @param {boolean} value */
 proto.security.access.PartnerAccess.prototype.setAllLocations = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
@@ -11433,7 +11458,7 @@ proto.security.access.PartnerAccess.prototype.getAdmin = function() {
 
 /** @param {boolean} value */
 proto.security.access.PartnerAccess.prototype.setAdmin = function(value) {
-  jspb.Message.setField(this, 100, value);
+  jspb.Message.setProto3BooleanField(this, 100, value);
 };
 
 
@@ -11615,7 +11640,7 @@ proto.security.access.LocationAccess.prototype.getActive = function() {
 
 /** @param {boolean} value */
 proto.security.access.LocationAccess.prototype.setActive = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -11630,7 +11655,7 @@ proto.security.access.LocationAccess.prototype.getGrantedBy = function() {
 
 /** @param {string} value */
 proto.security.access.LocationAccess.prototype.setGrantedBy = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -11677,7 +11702,7 @@ proto.security.access.LocationAccess.prototype.getAdmin = function() {
 
 /** @param {boolean} value */
 proto.security.access.LocationAccess.prototype.setAdmin = function(value) {
-  jspb.Message.setField(this, 100, value);
+  jspb.Message.setProto3BooleanField(this, 100, value);
 };
 
 
@@ -11739,7 +11764,8 @@ proto.identity.UserKey.prototype.toObject = function(opt_includeInstance) {
  */
 proto.identity.UserKey.toObject = function(includeInstance, msg) {
   var f, obj = {
-    uid: jspb.Message.getFieldWithDefault(msg, 1, "")
+    uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    identity: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -11780,6 +11806,10 @@ proto.identity.UserKey.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setUid(value);
       break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setIdentity(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -11816,6 +11846,13 @@ proto.identity.UserKey.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getIdentity();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
 };
 
 
@@ -11830,7 +11867,22 @@ proto.identity.UserKey.prototype.getUid = function() {
 
 /** @param {string} value */
 proto.identity.UserKey.prototype.setUid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string identity = 2;
+ * @return {string}
+ */
+proto.identity.UserKey.prototype.getIdentity = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.identity.UserKey.prototype.setIdentity = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -12115,7 +12167,7 @@ proto.identity.User.prototype.getUid = function() {
 
 /** @param {string} value */
 proto.identity.User.prototype.setUid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -12585,7 +12637,7 @@ proto.identity.UserFlags.prototype.getValidated = function() {
 
 /** @param {boolean} value */
 proto.identity.UserFlags.prototype.setValidated = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -12602,7 +12654,7 @@ proto.identity.UserFlags.prototype.getSuspended = function() {
 
 /** @param {boolean} value */
 proto.identity.UserFlags.prototype.setSuspended = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -12619,7 +12671,7 @@ proto.identity.UserFlags.prototype.getAdmin = function() {
 
 /** @param {boolean} value */
 proto.identity.UserFlags.prototype.setAdmin = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -12636,7 +12688,7 @@ proto.identity.UserFlags.prototype.getBeta = function() {
 
 /** @param {boolean} value */
 proto.identity.UserFlags.prototype.setBeta = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -12653,7 +12705,7 @@ proto.identity.UserFlags.prototype.getSandbox = function() {
 
 /** @param {boolean} value */
 proto.identity.UserFlags.prototype.setSandbox = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
@@ -12821,7 +12873,7 @@ proto.identity.UserIdentity.prototype.getProvider = function() {
 
 /** @param {!proto.identity.IdentityProvider} value */
 proto.identity.UserIdentity.prototype.setProvider = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -12836,7 +12888,7 @@ proto.identity.UserIdentity.prototype.getId = function() {
 
 /** @param {string} value */
 proto.identity.UserIdentity.prototype.setId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -13067,7 +13119,7 @@ proto.identity.ConsumerProfile.prototype.getActive = function() {
 
 /** @param {boolean} value */
 proto.identity.ConsumerProfile.prototype.setActive = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -13111,7 +13163,7 @@ proto.identity.ConsumerProfile.prototype.getEnrollmentSource = function() {
 
 /** @param {!proto.identity.EnrollmentSource} value */
 proto.identity.ConsumerProfile.prototype.setEnrollmentSource = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -13126,7 +13178,7 @@ proto.identity.ConsumerProfile.prototype.getEnrollmentChannel = function() {
 
 /** @param {string} value */
 proto.identity.ConsumerProfile.prototype.setEnrollmentChannel = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -13464,7 +13516,7 @@ proto.identity.MenuPreferences.prototype.getDesiredPotency = function() {
 
 /** @param {!proto.structs.labtesting.PotencyEstimate} value */
 proto.identity.MenuPreferences.prototype.setDesiredPotency = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3EnumField(this, 4, value);
 };
 
 
@@ -13479,7 +13531,7 @@ proto.identity.MenuPreferences.prototype.getCannabinoidRatio = function() {
 
 /** @param {!proto.structs.labtesting.CannabinoidRatio} value */
 proto.identity.MenuPreferences.prototype.setCannabinoidRatio = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3EnumField(this, 5, value);
 };
 
 
@@ -13890,7 +13942,7 @@ proto.identity.ConsumerMembership.prototype.getReferralSource = function() {
 
 /** @param {!proto.identity.EnrollmentSource} value */
 proto.identity.ConsumerMembership.prototype.setReferralSource = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -13905,7 +13957,7 @@ proto.identity.ConsumerMembership.prototype.getReferralChannel = function() {
 
 /** @param {string} value */
 proto.identity.ConsumerMembership.prototype.setReferralChannel = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -13980,7 +14032,7 @@ proto.identity.ConsumerMembership.prototype.getForeignId = function() {
 
 /** @param {string} value */
 proto.identity.ConsumerMembership.prototype.setForeignId = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -14135,7 +14187,7 @@ proto.identity.IndustryProfile.prototype.getActive = function() {
 
 /** @param {boolean} value */
 proto.identity.IndustryProfile.prototype.setActive = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -14350,7 +14402,7 @@ proto.identity.pass.PassKey.prototype.getEncoded = function() {
 
 /** @param {string} value */
 proto.identity.pass.PassKey.prototype.setEncoded = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -14365,7 +14417,7 @@ proto.identity.pass.PassKey.prototype.getSerial = function() {
 
 /** @param {string} value */
 proto.identity.pass.PassKey.prototype.setSerial = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -14380,7 +14432,7 @@ proto.identity.pass.PassKey.prototype.getUid = function() {
 
 /** @param {string} value */
 proto.identity.pass.PassKey.prototype.setUid = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -14618,7 +14670,7 @@ proto.identity.pass.Pass.prototype.getToken = function() {
 
 /** @param {string} value */
 proto.identity.pass.Pass.prototype.setToken = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -14633,7 +14685,7 @@ proto.identity.pass.Pass.prototype.getUri = function() {
 
 /** @param {string} value */
 proto.identity.pass.Pass.prototype.setUri = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -14650,7 +14702,7 @@ proto.identity.pass.Pass.prototype.getActive = function() {
 
 /** @param {boolean} value */
 proto.identity.pass.Pass.prototype.setActive = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -14852,7 +14904,7 @@ proto.partner.PartnerKey.prototype.getCode = function() {
 
 /** @param {string} value */
 proto.partner.PartnerKey.prototype.setCode = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -15100,7 +15152,7 @@ proto.partner.Partner.prototype.getCode = function() {
 
 /** @param {string} value */
 proto.partner.Partner.prototype.setCode = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -15115,7 +15167,7 @@ proto.partner.Partner.prototype.getName = function() {
 
 /** @param {string} value */
 proto.partner.Partner.prototype.setName = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -15160,7 +15212,7 @@ proto.partner.Partner.prototype.getLegalName = function() {
 
 /** @param {string} value */
 proto.partner.Partner.prototype.setLegalName = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -15235,7 +15287,7 @@ proto.partner.Partner.prototype.getChannel = function() {
 
 /** @param {!proto.partner.PartnerChannel} value */
 proto.partner.Partner.prototype.setChannel = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3EnumField(this, 7, value);
 };
 
 
@@ -15487,7 +15539,7 @@ proto.partner.PartnerFlags.prototype.getSuspended = function() {
 
 /** @param {boolean} value */
 proto.partner.PartnerFlags.prototype.setSuspended = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -15504,7 +15556,7 @@ proto.partner.PartnerFlags.prototype.getPastdue = function() {
 
 /** @param {boolean} value */
 proto.partner.PartnerFlags.prototype.setPastdue = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -15521,7 +15573,7 @@ proto.partner.PartnerFlags.prototype.getBeta = function() {
 
 /** @param {boolean} value */
 proto.partner.PartnerFlags.prototype.setBeta = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -15538,7 +15590,7 @@ proto.partner.PartnerFlags.prototype.getSandbox = function() {
 
 /** @param {boolean} value */
 proto.partner.PartnerFlags.prototype.setSandbox = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -15555,7 +15607,7 @@ proto.partner.PartnerFlags.prototype.getInternal = function() {
 
 /** @param {boolean} value */
 proto.partner.PartnerFlags.prototype.setInternal = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
@@ -15744,7 +15796,7 @@ proto.device.Device.prototype.getUuid = function() {
 
 /** @param {string} value */
 proto.device.Device.prototype.setUuid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -15759,7 +15811,7 @@ proto.device.Device.prototype.getType = function() {
 
 /** @param {!proto.device.DeviceType} value */
 proto.device.Device.prototype.setType = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -15975,7 +16027,7 @@ proto.device.DeviceFlags.prototype.getEphemeral = function() {
 
 /** @param {boolean} value */
 proto.device.DeviceFlags.prototype.setEphemeral = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -15992,7 +16044,7 @@ proto.device.DeviceFlags.prototype.getManaged = function() {
 
 /** @param {boolean} value */
 proto.device.DeviceFlags.prototype.setManaged = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -16213,7 +16265,7 @@ proto.device.DeviceCredentials.prototype.getPublicKey_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.device.DeviceCredentials.prototype.setPublicKey = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BytesField(this, 1, value);
 };
 
 
@@ -16252,7 +16304,7 @@ proto.device.DeviceCredentials.prototype.getPrivateKey_asU8 = function() {
 
 /** @param {!(string|Uint8Array)} value */
 proto.device.DeviceCredentials.prototype.setPrivateKey = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BytesField(this, 2, value);
 };
 
 
@@ -16267,7 +16319,7 @@ proto.device.DeviceCredentials.prototype.getSha256 = function() {
 
 /** @param {string} value */
 proto.device.DeviceCredentials.prototype.setSha256 = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -16282,7 +16334,7 @@ proto.device.DeviceCredentials.prototype.getIdentity = function() {
 
 /** @param {string} value */
 proto.device.DeviceCredentials.prototype.setIdentity = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -16532,7 +16584,7 @@ proto.partner.PartnerLocationKey.prototype.getCode = function() {
 
 /** @param {string} value */
 proto.partner.PartnerLocationKey.prototype.setCode = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -16782,7 +16834,7 @@ proto.partner.PartnerLocation.prototype.getCode = function() {
 
 /** @param {string} value */
 proto.partner.PartnerLocation.prototype.setCode = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -16827,7 +16879,7 @@ proto.partner.PartnerLocation.prototype.getName = function() {
 
 /** @param {string} value */
 proto.partner.PartnerLocation.prototype.setName = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -16842,7 +16894,7 @@ proto.partner.PartnerLocation.prototype.getLabel = function() {
 
 /** @param {string} value */
 proto.partner.PartnerLocation.prototype.setLabel = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -17178,7 +17230,7 @@ proto.partner.PartnerDeviceKey.prototype.getUuid = function() {
 
 /** @param {string} value */
 proto.partner.PartnerDeviceKey.prototype.setUuid = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -17416,7 +17468,7 @@ proto.partner.PartnerDevice.prototype.getUuid = function() {
 
 /** @param {string} value */
 proto.partner.PartnerDevice.prototype.setUuid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -17491,7 +17543,7 @@ proto.partner.PartnerDevice.prototype.getType = function() {
 
 /** @param {!proto.partner.PartnerDeviceType} value */
 proto.partner.PartnerDevice.prototype.setType = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3EnumField(this, 4, value);
 };
 
 
@@ -17791,7 +17843,7 @@ proto.partner.PartnerDeviceFlags.prototype.getActive = function() {
 
 /** @param {boolean} value */
 proto.partner.PartnerDeviceFlags.prototype.setActive = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -17808,7 +17860,7 @@ proto.partner.PartnerDeviceFlags.prototype.getSuspended = function() {
 
 /** @param {boolean} value */
 proto.partner.PartnerDeviceFlags.prototype.setSuspended = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -17825,7 +17877,7 @@ proto.partner.PartnerDeviceFlags.prototype.getBeta = function() {
 
 /** @param {boolean} value */
 proto.partner.PartnerDeviceFlags.prototype.setBeta = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -17842,7 +17894,7 @@ proto.partner.PartnerDeviceFlags.prototype.getSandbox = function() {
 
 /** @param {boolean} value */
 proto.partner.PartnerDeviceFlags.prototype.setSandbox = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -18011,7 +18063,7 @@ proto.security.AuthToken.prototype.getEncoded = function() {
 
 /** @param {string} value */
 proto.security.AuthToken.prototype.setEncoded = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -18468,7 +18520,7 @@ proto.security.IdentityToken.prototype.getUid = function() {
 
 /** @param {string} value */
 proto.security.IdentityToken.prototype.setUid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -18483,7 +18535,7 @@ proto.security.IdentityToken.prototype.getEncoded = function() {
 
 /** @param {string} value */
 proto.security.IdentityToken.prototype.setEncoded = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -18498,7 +18550,7 @@ proto.security.IdentityToken.prototype.getIssuer = function() {
 
 /** @param {!proto.security.IdentityTokenIssuer} value */
 proto.security.IdentityToken.prototype.setIssuer = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -18519,6 +18571,3916 @@ proto.services.ServiceStatus = {
   UP: 1,
   DOWN: 2,
   MAINTENANCE: 3
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.checkin.v1beta1.Ping = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.checkin.v1beta1.Ping, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.checkin.v1beta1.Ping.displayName = 'proto.services.checkin.v1beta1.Ping';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.checkin.v1beta1.Ping.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.checkin.v1beta1.Ping.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.checkin.v1beta1.Ping} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.Ping.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.checkin.v1beta1.Ping}
+ */
+proto.services.checkin.v1beta1.Ping.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.checkin.v1beta1.Ping;
+  return proto.services.checkin.v1beta1.Ping.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.checkin.v1beta1.Ping} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.checkin.v1beta1.Ping}
+ */
+proto.services.checkin.v1beta1.Ping.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.checkin.v1beta1.Ping.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.checkin.v1beta1.Ping.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.checkin.v1beta1.Ping} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.Ping.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.checkin.v1beta1.Ping.Request = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.checkin.v1beta1.Ping.Request, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.checkin.v1beta1.Ping.Request.displayName = 'proto.services.checkin.v1beta1.Ping.Request';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.checkin.v1beta1.Ping.Request.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.checkin.v1beta1.Ping.Request.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.checkin.v1beta1.Ping.Request} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.Ping.Request.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.checkin.v1beta1.Ping.Request}
+ */
+proto.services.checkin.v1beta1.Ping.Request.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.checkin.v1beta1.Ping.Request;
+  return proto.services.checkin.v1beta1.Ping.Request.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.checkin.v1beta1.Ping.Request} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.checkin.v1beta1.Ping.Request}
+ */
+proto.services.checkin.v1beta1.Ping.Request.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.checkin.v1beta1.Ping.Request.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.checkin.v1beta1.Ping.Request.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.checkin.v1beta1.Ping.Request} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.Ping.Request.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.checkin.v1beta1.Ping.Response = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.checkin.v1beta1.Ping.Response, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.checkin.v1beta1.Ping.Response.displayName = 'proto.services.checkin.v1beta1.Ping.Response';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.checkin.v1beta1.Ping.Response.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.checkin.v1beta1.Ping.Response.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.checkin.v1beta1.Ping.Response} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.Ping.Response.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    status: jspb.Message.getFieldWithDefault(msg, 1, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.checkin.v1beta1.Ping.Response}
+ */
+proto.services.checkin.v1beta1.Ping.Response.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.checkin.v1beta1.Ping.Response;
+  return proto.services.checkin.v1beta1.Ping.Response.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.checkin.v1beta1.Ping.Response} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.checkin.v1beta1.Ping.Response}
+ */
+proto.services.checkin.v1beta1.Ping.Response.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.services.ServiceStatus} */ (reader.readEnum());
+      msg.setStatus(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.checkin.v1beta1.Ping.Response.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.checkin.v1beta1.Ping.Response.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.checkin.v1beta1.Ping.Response} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.Ping.Response.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional services.ServiceStatus status = 1;
+ * @return {!proto.services.ServiceStatus}
+ */
+proto.services.checkin.v1beta1.Ping.Response.prototype.getStatus = function() {
+  return /** @type {!proto.services.ServiceStatus} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.services.ServiceStatus} value */
+proto.services.checkin.v1beta1.Ping.Response.prototype.setStatus = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.checkin.v1beta1.Ping.Operation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.checkin.v1beta1.Ping.Operation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.checkin.v1beta1.Ping.Operation.displayName = 'proto.services.checkin.v1beta1.Ping.Operation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.checkin.v1beta1.Ping.Operation.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.checkin.v1beta1.Ping.Operation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.checkin.v1beta1.Ping.Operation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.Ping.Operation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    request: (f = msg.getRequest()) && proto.services.checkin.v1beta1.Ping.Request.toObject(includeInstance, f),
+    response: (f = msg.getResponse()) && proto.services.checkin.v1beta1.Ping.Response.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.checkin.v1beta1.Ping.Operation}
+ */
+proto.services.checkin.v1beta1.Ping.Operation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.checkin.v1beta1.Ping.Operation;
+  return proto.services.checkin.v1beta1.Ping.Operation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.checkin.v1beta1.Ping.Operation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.checkin.v1beta1.Ping.Operation}
+ */
+proto.services.checkin.v1beta1.Ping.Operation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.services.checkin.v1beta1.Ping.Request;
+      reader.readMessage(value,proto.services.checkin.v1beta1.Ping.Request.deserializeBinaryFromReader);
+      msg.setRequest(value);
+      break;
+    case 2:
+      var value = new proto.services.checkin.v1beta1.Ping.Response;
+      reader.readMessage(value,proto.services.checkin.v1beta1.Ping.Response.deserializeBinaryFromReader);
+      msg.setResponse(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.checkin.v1beta1.Ping.Operation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.checkin.v1beta1.Ping.Operation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.checkin.v1beta1.Ping.Operation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.Ping.Operation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRequest();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.services.checkin.v1beta1.Ping.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getResponse();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.services.checkin.v1beta1.Ping.Response.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional Request request = 1;
+ * @return {?proto.services.checkin.v1beta1.Ping.Request}
+ */
+proto.services.checkin.v1beta1.Ping.Operation.prototype.getRequest = function() {
+  return /** @type{?proto.services.checkin.v1beta1.Ping.Request} */ (
+    jspb.Message.getWrapperField(this, proto.services.checkin.v1beta1.Ping.Request, 1));
+};
+
+
+/** @param {?proto.services.checkin.v1beta1.Ping.Request|undefined} value */
+proto.services.checkin.v1beta1.Ping.Operation.prototype.setRequest = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.services.checkin.v1beta1.Ping.Operation.prototype.clearRequest = function() {
+  this.setRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.checkin.v1beta1.Ping.Operation.prototype.hasRequest = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional Response response = 2;
+ * @return {?proto.services.checkin.v1beta1.Ping.Response}
+ */
+proto.services.checkin.v1beta1.Ping.Operation.prototype.getResponse = function() {
+  return /** @type{?proto.services.checkin.v1beta1.Ping.Response} */ (
+    jspb.Message.getWrapperField(this, proto.services.checkin.v1beta1.Ping.Response, 2));
+};
+
+
+/** @param {?proto.services.checkin.v1beta1.Ping.Response|undefined} value */
+proto.services.checkin.v1beta1.Ping.Operation.prototype.setResponse = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.services.checkin.v1beta1.Ping.Operation.prototype.clearResponse = function() {
+  this.setResponse(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.checkin.v1beta1.Ping.Operation.prototype.hasResponse = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.checkin.v1beta1.CheckinUser = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.checkin.v1beta1.CheckinUser, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.checkin.v1beta1.CheckinUser.displayName = 'proto.services.checkin.v1beta1.CheckinUser';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.checkin.v1beta1.CheckinUser.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.checkin.v1beta1.CheckinUser.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.checkin.v1beta1.CheckinUser} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.CheckinUser.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    key: (f = msg.getKey()) && proto.identity.UserKey.toObject(includeInstance, f),
+    flags: (f = msg.getFlags()) && proto.identity.UserFlags.toObject(includeInstance, f),
+    name: (f = msg.getName()) && proto.person.Name.toObject(includeInstance, f),
+    contact: (f = msg.getContact()) && proto.contact.ContactInfo.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.checkin.v1beta1.CheckinUser}
+ */
+proto.services.checkin.v1beta1.CheckinUser.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.checkin.v1beta1.CheckinUser;
+  return proto.services.checkin.v1beta1.CheckinUser.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.checkin.v1beta1.CheckinUser} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.checkin.v1beta1.CheckinUser}
+ */
+proto.services.checkin.v1beta1.CheckinUser.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.identity.UserKey;
+      reader.readMessage(value,proto.identity.UserKey.deserializeBinaryFromReader);
+      msg.setKey(value);
+      break;
+    case 2:
+      var value = new proto.identity.UserFlags;
+      reader.readMessage(value,proto.identity.UserFlags.deserializeBinaryFromReader);
+      msg.setFlags(value);
+      break;
+    case 3:
+      var value = new proto.person.Name;
+      reader.readMessage(value,proto.person.Name.deserializeBinaryFromReader);
+      msg.setName(value);
+      break;
+    case 4:
+      var value = new proto.contact.ContactInfo;
+      reader.readMessage(value,proto.contact.ContactInfo.deserializeBinaryFromReader);
+      msg.setContact(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.checkin.v1beta1.CheckinUser.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.checkin.v1beta1.CheckinUser.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.checkin.v1beta1.CheckinUser} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.CheckinUser.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getKey();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.identity.UserKey.serializeBinaryToWriter
+    );
+  }
+  f = message.getFlags();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.identity.UserFlags.serializeBinaryToWriter
+    );
+  }
+  f = message.getName();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto.person.Name.serializeBinaryToWriter
+    );
+  }
+  f = message.getContact();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      proto.contact.ContactInfo.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional identity.UserKey key = 1;
+ * @return {?proto.identity.UserKey}
+ */
+proto.services.checkin.v1beta1.CheckinUser.prototype.getKey = function() {
+  return /** @type{?proto.identity.UserKey} */ (
+    jspb.Message.getWrapperField(this, proto.identity.UserKey, 1));
+};
+
+
+/** @param {?proto.identity.UserKey|undefined} value */
+proto.services.checkin.v1beta1.CheckinUser.prototype.setKey = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.services.checkin.v1beta1.CheckinUser.prototype.clearKey = function() {
+  this.setKey(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.checkin.v1beta1.CheckinUser.prototype.hasKey = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional identity.UserFlags flags = 2;
+ * @return {?proto.identity.UserFlags}
+ */
+proto.services.checkin.v1beta1.CheckinUser.prototype.getFlags = function() {
+  return /** @type{?proto.identity.UserFlags} */ (
+    jspb.Message.getWrapperField(this, proto.identity.UserFlags, 2));
+};
+
+
+/** @param {?proto.identity.UserFlags|undefined} value */
+proto.services.checkin.v1beta1.CheckinUser.prototype.setFlags = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.services.checkin.v1beta1.CheckinUser.prototype.clearFlags = function() {
+  this.setFlags(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.checkin.v1beta1.CheckinUser.prototype.hasFlags = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional person.Name name = 3;
+ * @return {?proto.person.Name}
+ */
+proto.services.checkin.v1beta1.CheckinUser.prototype.getName = function() {
+  return /** @type{?proto.person.Name} */ (
+    jspb.Message.getWrapperField(this, proto.person.Name, 3));
+};
+
+
+/** @param {?proto.person.Name|undefined} value */
+proto.services.checkin.v1beta1.CheckinUser.prototype.setName = function(value) {
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.services.checkin.v1beta1.CheckinUser.prototype.clearName = function() {
+  this.setName(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.checkin.v1beta1.CheckinUser.prototype.hasName = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional contact.ContactInfo contact = 4;
+ * @return {?proto.contact.ContactInfo}
+ */
+proto.services.checkin.v1beta1.CheckinUser.prototype.getContact = function() {
+  return /** @type{?proto.contact.ContactInfo} */ (
+    jspb.Message.getWrapperField(this, proto.contact.ContactInfo, 4));
+};
+
+
+/** @param {?proto.contact.ContactInfo|undefined} value */
+proto.services.checkin.v1beta1.CheckinUser.prototype.setContact = function(value) {
+  jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+proto.services.checkin.v1beta1.CheckinUser.prototype.clearContact = function() {
+  this.setContact(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.checkin.v1beta1.CheckinUser.prototype.hasContact = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.checkin.v1beta1.CheckinResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.checkin.v1beta1.CheckinResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.checkin.v1beta1.CheckinResponse.displayName = 'proto.services.checkin.v1beta1.CheckinResponse';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.checkin.v1beta1.CheckinResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.checkin.v1beta1.CheckinResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.checkin.v1beta1.CheckinResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.CheckinResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    success: jspb.Message.getFieldWithDefault(msg, 1, false),
+    error: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    user: (f = msg.getUser()) && proto.services.checkin.v1beta1.CheckinUser.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.checkin.v1beta1.CheckinResponse}
+ */
+proto.services.checkin.v1beta1.CheckinResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.checkin.v1beta1.CheckinResponse;
+  return proto.services.checkin.v1beta1.CheckinResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.checkin.v1beta1.CheckinResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.checkin.v1beta1.CheckinResponse}
+ */
+proto.services.checkin.v1beta1.CheckinResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSuccess(value);
+      break;
+    case 2:
+      var value = /** @type {!proto.services.checkin.v1beta1.CheckinError} */ (reader.readEnum());
+      msg.setError(value);
+      break;
+    case 3:
+      var value = new proto.services.checkin.v1beta1.CheckinUser;
+      reader.readMessage(value,proto.services.checkin.v1beta1.CheckinUser.deserializeBinaryFromReader);
+      msg.setUser(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.checkin.v1beta1.CheckinResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.checkin.v1beta1.CheckinResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.checkin.v1beta1.CheckinResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.CheckinResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getSuccess();
+  if (f) {
+    writer.writeBool(
+      1,
+      f
+    );
+  }
+  f = message.getError();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      2,
+      f
+    );
+  }
+  f = message.getUser();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto.services.checkin.v1beta1.CheckinUser.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional bool success = 1;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.services.checkin.v1beta1.CheckinResponse.prototype.getSuccess = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+};
+
+
+/** @param {boolean} value */
+proto.services.checkin.v1beta1.CheckinResponse.prototype.setSuccess = function(value) {
+  jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+/**
+ * optional CheckinError error = 2;
+ * @return {!proto.services.checkin.v1beta1.CheckinError}
+ */
+proto.services.checkin.v1beta1.CheckinResponse.prototype.getError = function() {
+  return /** @type {!proto.services.checkin.v1beta1.CheckinError} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {!proto.services.checkin.v1beta1.CheckinError} value */
+proto.services.checkin.v1beta1.CheckinResponse.prototype.setError = function(value) {
+  jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+/**
+ * optional CheckinUser user = 3;
+ * @return {?proto.services.checkin.v1beta1.CheckinUser}
+ */
+proto.services.checkin.v1beta1.CheckinResponse.prototype.getUser = function() {
+  return /** @type{?proto.services.checkin.v1beta1.CheckinUser} */ (
+    jspb.Message.getWrapperField(this, proto.services.checkin.v1beta1.CheckinUser, 3));
+};
+
+
+/** @param {?proto.services.checkin.v1beta1.CheckinUser|undefined} value */
+proto.services.checkin.v1beta1.CheckinResponse.prototype.setUser = function(value) {
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.services.checkin.v1beta1.CheckinResponse.prototype.clearUser = function() {
+  this.setUser(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.checkin.v1beta1.CheckinResponse.prototype.hasUser = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.checkin.v1beta1.IDCheckin = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.checkin.v1beta1.IDCheckin, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.checkin.v1beta1.IDCheckin.displayName = 'proto.services.checkin.v1beta1.IDCheckin';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.checkin.v1beta1.IDCheckin.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.checkin.v1beta1.IDCheckin.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.checkin.v1beta1.IDCheckin} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.IDCheckin.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.checkin.v1beta1.IDCheckin}
+ */
+proto.services.checkin.v1beta1.IDCheckin.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.checkin.v1beta1.IDCheckin;
+  return proto.services.checkin.v1beta1.IDCheckin.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.checkin.v1beta1.IDCheckin} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.checkin.v1beta1.IDCheckin}
+ */
+proto.services.checkin.v1beta1.IDCheckin.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.checkin.v1beta1.IDCheckin.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.checkin.v1beta1.IDCheckin.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.checkin.v1beta1.IDCheckin} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.IDCheckin.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.checkin.v1beta1.IDCheckin.Request = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.checkin.v1beta1.IDCheckin.Request, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.checkin.v1beta1.IDCheckin.Request.displayName = 'proto.services.checkin.v1beta1.IDCheckin.Request';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Request.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.checkin.v1beta1.IDCheckin.Request.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.checkin.v1beta1.IDCheckin.Request} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.IDCheckin.Request.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    document: (f = msg.getDocument()) && proto.identity.ID.toObject(includeInstance, f),
+    jurisdiction: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    scope: jspb.Message.getFieldWithDefault(msg, 3, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.checkin.v1beta1.IDCheckin.Request}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Request.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.checkin.v1beta1.IDCheckin.Request;
+  return proto.services.checkin.v1beta1.IDCheckin.Request.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.checkin.v1beta1.IDCheckin.Request} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.checkin.v1beta1.IDCheckin.Request}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Request.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.identity.ID;
+      reader.readMessage(value,proto.identity.ID.deserializeBinaryFromReader);
+      msg.setDocument(value);
+      break;
+    case 2:
+      var value = /** @type {!proto.geo.usa.USState} */ (reader.readEnum());
+      msg.setJurisdiction(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setScope(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Request.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.checkin.v1beta1.IDCheckin.Request.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.checkin.v1beta1.IDCheckin.Request} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.IDCheckin.Request.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getDocument();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.identity.ID.serializeBinaryToWriter
+    );
+  }
+  f = message.getJurisdiction();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      2,
+      f
+    );
+  }
+  f = message.getScope();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional identity.ID document = 1;
+ * @return {?proto.identity.ID}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Request.prototype.getDocument = function() {
+  return /** @type{?proto.identity.ID} */ (
+    jspb.Message.getWrapperField(this, proto.identity.ID, 1));
+};
+
+
+/** @param {?proto.identity.ID|undefined} value */
+proto.services.checkin.v1beta1.IDCheckin.Request.prototype.setDocument = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.services.checkin.v1beta1.IDCheckin.Request.prototype.clearDocument = function() {
+  this.setDocument(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Request.prototype.hasDocument = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional geo.usa.USState jurisdiction = 2;
+ * @return {!proto.geo.usa.USState}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Request.prototype.getJurisdiction = function() {
+  return /** @type {!proto.geo.usa.USState} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {!proto.geo.usa.USState} value */
+proto.services.checkin.v1beta1.IDCheckin.Request.prototype.setJurisdiction = function(value) {
+  jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+/**
+ * optional string scope = 3;
+ * @return {string}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Request.prototype.getScope = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.services.checkin.v1beta1.IDCheckin.Request.prototype.setScope = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.checkin.v1beta1.IDCheckin.Operation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.checkin.v1beta1.IDCheckin.Operation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.checkin.v1beta1.IDCheckin.Operation.displayName = 'proto.services.checkin.v1beta1.IDCheckin.Operation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Operation.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.checkin.v1beta1.IDCheckin.Operation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.checkin.v1beta1.IDCheckin.Operation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.IDCheckin.Operation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    request: (f = msg.getRequest()) && proto.services.checkin.v1beta1.IDCheckin.Request.toObject(includeInstance, f),
+    response: (f = msg.getResponse()) && proto.services.checkin.v1beta1.CheckinResponse.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.checkin.v1beta1.IDCheckin.Operation}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Operation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.checkin.v1beta1.IDCheckin.Operation;
+  return proto.services.checkin.v1beta1.IDCheckin.Operation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.checkin.v1beta1.IDCheckin.Operation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.checkin.v1beta1.IDCheckin.Operation}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Operation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.services.checkin.v1beta1.IDCheckin.Request;
+      reader.readMessage(value,proto.services.checkin.v1beta1.IDCheckin.Request.deserializeBinaryFromReader);
+      msg.setRequest(value);
+      break;
+    case 2:
+      var value = new proto.services.checkin.v1beta1.CheckinResponse;
+      reader.readMessage(value,proto.services.checkin.v1beta1.CheckinResponse.deserializeBinaryFromReader);
+      msg.setResponse(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Operation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.checkin.v1beta1.IDCheckin.Operation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.checkin.v1beta1.IDCheckin.Operation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.IDCheckin.Operation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRequest();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.services.checkin.v1beta1.IDCheckin.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getResponse();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.services.checkin.v1beta1.CheckinResponse.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional Request request = 1;
+ * @return {?proto.services.checkin.v1beta1.IDCheckin.Request}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Operation.prototype.getRequest = function() {
+  return /** @type{?proto.services.checkin.v1beta1.IDCheckin.Request} */ (
+    jspb.Message.getWrapperField(this, proto.services.checkin.v1beta1.IDCheckin.Request, 1));
+};
+
+
+/** @param {?proto.services.checkin.v1beta1.IDCheckin.Request|undefined} value */
+proto.services.checkin.v1beta1.IDCheckin.Operation.prototype.setRequest = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.services.checkin.v1beta1.IDCheckin.Operation.prototype.clearRequest = function() {
+  this.setRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Operation.prototype.hasRequest = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional CheckinResponse response = 2;
+ * @return {?proto.services.checkin.v1beta1.CheckinResponse}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Operation.prototype.getResponse = function() {
+  return /** @type{?proto.services.checkin.v1beta1.CheckinResponse} */ (
+    jspb.Message.getWrapperField(this, proto.services.checkin.v1beta1.CheckinResponse, 2));
+};
+
+
+/** @param {?proto.services.checkin.v1beta1.CheckinResponse|undefined} value */
+proto.services.checkin.v1beta1.IDCheckin.Operation.prototype.setResponse = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.services.checkin.v1beta1.IDCheckin.Operation.prototype.clearResponse = function() {
+  this.setResponse(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.checkin.v1beta1.IDCheckin.Operation.prototype.hasResponse = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.checkin.v1beta1.CardCheckin = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.checkin.v1beta1.CardCheckin, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.checkin.v1beta1.CardCheckin.displayName = 'proto.services.checkin.v1beta1.CardCheckin';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.checkin.v1beta1.CardCheckin.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.checkin.v1beta1.CardCheckin.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.checkin.v1beta1.CardCheckin} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.CardCheckin.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.checkin.v1beta1.CardCheckin}
+ */
+proto.services.checkin.v1beta1.CardCheckin.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.checkin.v1beta1.CardCheckin;
+  return proto.services.checkin.v1beta1.CardCheckin.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.checkin.v1beta1.CardCheckin} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.checkin.v1beta1.CardCheckin}
+ */
+proto.services.checkin.v1beta1.CardCheckin.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.checkin.v1beta1.CardCheckin.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.checkin.v1beta1.CardCheckin.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.checkin.v1beta1.CardCheckin} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.CardCheckin.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.checkin.v1beta1.CardCheckin.Request = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.checkin.v1beta1.CardCheckin.Request, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.checkin.v1beta1.CardCheckin.Request.displayName = 'proto.services.checkin.v1beta1.CardCheckin.Request';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Request.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.checkin.v1beta1.CardCheckin.Request.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.checkin.v1beta1.CardCheckin.Request} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.CardCheckin.Request.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    cardtype: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    payload: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    signature: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    agent: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    scope: jspb.Message.getFieldWithDefault(msg, 5, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.checkin.v1beta1.CardCheckin.Request}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Request.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.checkin.v1beta1.CardCheckin.Request;
+  return proto.services.checkin.v1beta1.CardCheckin.Request.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.checkin.v1beta1.CardCheckin.Request} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.checkin.v1beta1.CardCheckin.Request}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Request.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCardtype(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPayload(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSignature(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAgent(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setScope(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Request.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.checkin.v1beta1.CardCheckin.Request.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.checkin.v1beta1.CardCheckin.Request} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.CardCheckin.Request.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getCardtype();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getPayload();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getSignature();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getAgent();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getScope();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string cardType = 1;
+ * @return {string}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Request.prototype.getCardtype = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.services.checkin.v1beta1.CardCheckin.Request.prototype.setCardtype = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string payload = 2;
+ * @return {string}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Request.prototype.getPayload = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.services.checkin.v1beta1.CardCheckin.Request.prototype.setPayload = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string signature = 3;
+ * @return {string}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Request.prototype.getSignature = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.services.checkin.v1beta1.CardCheckin.Request.prototype.setSignature = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string agent = 4;
+ * @return {string}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Request.prototype.getAgent = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.services.checkin.v1beta1.CardCheckin.Request.prototype.setAgent = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string scope = 5;
+ * @return {string}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Request.prototype.getScope = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.services.checkin.v1beta1.CardCheckin.Request.prototype.setScope = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.checkin.v1beta1.CardCheckin.Operation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.checkin.v1beta1.CardCheckin.Operation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.checkin.v1beta1.CardCheckin.Operation.displayName = 'proto.services.checkin.v1beta1.CardCheckin.Operation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Operation.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.checkin.v1beta1.CardCheckin.Operation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.checkin.v1beta1.CardCheckin.Operation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.CardCheckin.Operation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    request: (f = msg.getRequest()) && proto.services.checkin.v1beta1.CardCheckin.Request.toObject(includeInstance, f),
+    response: (f = msg.getResponse()) && proto.services.checkin.v1beta1.CheckinResponse.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.checkin.v1beta1.CardCheckin.Operation}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Operation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.checkin.v1beta1.CardCheckin.Operation;
+  return proto.services.checkin.v1beta1.CardCheckin.Operation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.checkin.v1beta1.CardCheckin.Operation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.checkin.v1beta1.CardCheckin.Operation}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Operation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.services.checkin.v1beta1.CardCheckin.Request;
+      reader.readMessage(value,proto.services.checkin.v1beta1.CardCheckin.Request.deserializeBinaryFromReader);
+      msg.setRequest(value);
+      break;
+    case 2:
+      var value = new proto.services.checkin.v1beta1.CheckinResponse;
+      reader.readMessage(value,proto.services.checkin.v1beta1.CheckinResponse.deserializeBinaryFromReader);
+      msg.setResponse(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Operation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.checkin.v1beta1.CardCheckin.Operation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.checkin.v1beta1.CardCheckin.Operation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.checkin.v1beta1.CardCheckin.Operation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRequest();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.services.checkin.v1beta1.CardCheckin.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getResponse();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.services.checkin.v1beta1.CheckinResponse.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional Request request = 1;
+ * @return {?proto.services.checkin.v1beta1.CardCheckin.Request}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Operation.prototype.getRequest = function() {
+  return /** @type{?proto.services.checkin.v1beta1.CardCheckin.Request} */ (
+    jspb.Message.getWrapperField(this, proto.services.checkin.v1beta1.CardCheckin.Request, 1));
+};
+
+
+/** @param {?proto.services.checkin.v1beta1.CardCheckin.Request|undefined} value */
+proto.services.checkin.v1beta1.CardCheckin.Operation.prototype.setRequest = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.services.checkin.v1beta1.CardCheckin.Operation.prototype.clearRequest = function() {
+  this.setRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Operation.prototype.hasRequest = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional CheckinResponse response = 2;
+ * @return {?proto.services.checkin.v1beta1.CheckinResponse}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Operation.prototype.getResponse = function() {
+  return /** @type{?proto.services.checkin.v1beta1.CheckinResponse} */ (
+    jspb.Message.getWrapperField(this, proto.services.checkin.v1beta1.CheckinResponse, 2));
+};
+
+
+/** @param {?proto.services.checkin.v1beta1.CheckinResponse|undefined} value */
+proto.services.checkin.v1beta1.CardCheckin.Operation.prototype.setResponse = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.services.checkin.v1beta1.CardCheckin.Operation.prototype.clearResponse = function() {
+  this.setResponse(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.checkin.v1beta1.CardCheckin.Operation.prototype.hasResponse = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.services.checkin.v1beta1.CheckinError = {
+  NO_ERROR: 0,
+  ID_NOT_FOUND: 1,
+  ID_EXPIRED: 2,
+  ID_INVALID: 3,
+  ID_TYPE_UNSUPPORTED: 4,
+  CARD_TYPE_INVALID: 5,
+  CARD_EXPIRED: 6,
+  CARD_SUSPENDED: 7,
+  USER_SUSPENDED: 8,
+  PARTNER_SUSPENDED: 9,
+  PARTNER_INVALID: 10,
+  LOCATION_INVALID: 11,
+  JURISDICTION_INVALID: 12,
+  JURISDICTION_UNSUPPORTED: 13
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.devices.v1beta1.DeviceAssignment = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.devices.v1beta1.DeviceAssignment, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.devices.v1beta1.DeviceAssignment.displayName = 'proto.services.devices.v1beta1.DeviceAssignment';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.devices.v1beta1.DeviceAssignment.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.devices.v1beta1.DeviceAssignment.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.devices.v1beta1.DeviceAssignment} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.DeviceAssignment.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    partner: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    location: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    role: jspb.Message.getFieldWithDefault(msg, 3, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.devices.v1beta1.DeviceAssignment}
+ */
+proto.services.devices.v1beta1.DeviceAssignment.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.devices.v1beta1.DeviceAssignment;
+  return proto.services.devices.v1beta1.DeviceAssignment.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.devices.v1beta1.DeviceAssignment} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.devices.v1beta1.DeviceAssignment}
+ */
+proto.services.devices.v1beta1.DeviceAssignment.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPartner(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLocation(value);
+      break;
+    case 3:
+      var value = /** @type {!proto.services.devices.v1beta1.DeviceRole} */ (reader.readEnum());
+      msg.setRole(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.devices.v1beta1.DeviceAssignment.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.devices.v1beta1.DeviceAssignment.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.devices.v1beta1.DeviceAssignment} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.DeviceAssignment.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getPartner();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getLocation();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getRole();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string partner = 1;
+ * @return {string}
+ */
+proto.services.devices.v1beta1.DeviceAssignment.prototype.getPartner = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.services.devices.v1beta1.DeviceAssignment.prototype.setPartner = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string location = 2;
+ * @return {string}
+ */
+proto.services.devices.v1beta1.DeviceAssignment.prototype.getLocation = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.services.devices.v1beta1.DeviceAssignment.prototype.setLocation = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional DeviceRole role = 3;
+ * @return {!proto.services.devices.v1beta1.DeviceRole}
+ */
+proto.services.devices.v1beta1.DeviceAssignment.prototype.getRole = function() {
+  return /** @type {!proto.services.devices.v1beta1.DeviceRole} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {!proto.services.devices.v1beta1.DeviceRole} value */
+proto.services.devices.v1beta1.DeviceAssignment.prototype.setRole = function(value) {
+  jspb.Message.setProto3EnumField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.devices.v1beta1.DeviceActivation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.devices.v1beta1.DeviceActivation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.devices.v1beta1.DeviceActivation.displayName = 'proto.services.devices.v1beta1.DeviceActivation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.devices.v1beta1.DeviceActivation.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.devices.v1beta1.DeviceActivation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.devices.v1beta1.DeviceActivation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.DeviceActivation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    uuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    hostname: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    assignment: (f = msg.getAssignment()) && proto.services.devices.v1beta1.DeviceAssignment.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.devices.v1beta1.DeviceActivation}
+ */
+proto.services.devices.v1beta1.DeviceActivation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.devices.v1beta1.DeviceActivation;
+  return proto.services.devices.v1beta1.DeviceActivation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.devices.v1beta1.DeviceActivation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.devices.v1beta1.DeviceActivation}
+ */
+proto.services.devices.v1beta1.DeviceActivation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUuid(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setHostname(value);
+      break;
+    case 3:
+      var value = new proto.services.devices.v1beta1.DeviceAssignment;
+      reader.readMessage(value,proto.services.devices.v1beta1.DeviceAssignment.deserializeBinaryFromReader);
+      msg.setAssignment(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.devices.v1beta1.DeviceActivation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.devices.v1beta1.DeviceActivation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.devices.v1beta1.DeviceActivation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.DeviceActivation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getUuid();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getHostname();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getAssignment();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto.services.devices.v1beta1.DeviceAssignment.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string uuid = 1;
+ * @return {string}
+ */
+proto.services.devices.v1beta1.DeviceActivation.prototype.getUuid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.services.devices.v1beta1.DeviceActivation.prototype.setUuid = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string hostname = 2;
+ * @return {string}
+ */
+proto.services.devices.v1beta1.DeviceActivation.prototype.getHostname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.services.devices.v1beta1.DeviceActivation.prototype.setHostname = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional DeviceAssignment assignment = 3;
+ * @return {?proto.services.devices.v1beta1.DeviceAssignment}
+ */
+proto.services.devices.v1beta1.DeviceActivation.prototype.getAssignment = function() {
+  return /** @type{?proto.services.devices.v1beta1.DeviceAssignment} */ (
+    jspb.Message.getWrapperField(this, proto.services.devices.v1beta1.DeviceAssignment, 3));
+};
+
+
+/** @param {?proto.services.devices.v1beta1.DeviceAssignment|undefined} value */
+proto.services.devices.v1beta1.DeviceActivation.prototype.setAssignment = function(value) {
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.services.devices.v1beta1.DeviceActivation.prototype.clearAssignment = function() {
+  this.setAssignment(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.devices.v1beta1.DeviceActivation.prototype.hasAssignment = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.devices.v1beta1.Ping = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.devices.v1beta1.Ping, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.devices.v1beta1.Ping.displayName = 'proto.services.devices.v1beta1.Ping';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.devices.v1beta1.Ping.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.devices.v1beta1.Ping.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.devices.v1beta1.Ping} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Ping.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.devices.v1beta1.Ping}
+ */
+proto.services.devices.v1beta1.Ping.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.devices.v1beta1.Ping;
+  return proto.services.devices.v1beta1.Ping.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.devices.v1beta1.Ping} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.devices.v1beta1.Ping}
+ */
+proto.services.devices.v1beta1.Ping.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.devices.v1beta1.Ping.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.devices.v1beta1.Ping.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.devices.v1beta1.Ping} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Ping.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.devices.v1beta1.Ping.Request = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.devices.v1beta1.Ping.Request, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.devices.v1beta1.Ping.Request.displayName = 'proto.services.devices.v1beta1.Ping.Request';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.devices.v1beta1.Ping.Request.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.devices.v1beta1.Ping.Request.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.devices.v1beta1.Ping.Request} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Ping.Request.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.devices.v1beta1.Ping.Request}
+ */
+proto.services.devices.v1beta1.Ping.Request.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.devices.v1beta1.Ping.Request;
+  return proto.services.devices.v1beta1.Ping.Request.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.devices.v1beta1.Ping.Request} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.devices.v1beta1.Ping.Request}
+ */
+proto.services.devices.v1beta1.Ping.Request.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.devices.v1beta1.Ping.Request.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.devices.v1beta1.Ping.Request.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.devices.v1beta1.Ping.Request} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Ping.Request.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.devices.v1beta1.Ping.Response = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.devices.v1beta1.Ping.Response, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.devices.v1beta1.Ping.Response.displayName = 'proto.services.devices.v1beta1.Ping.Response';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.devices.v1beta1.Ping.Response.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.devices.v1beta1.Ping.Response.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.devices.v1beta1.Ping.Response} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Ping.Response.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    status: jspb.Message.getFieldWithDefault(msg, 1, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.devices.v1beta1.Ping.Response}
+ */
+proto.services.devices.v1beta1.Ping.Response.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.devices.v1beta1.Ping.Response;
+  return proto.services.devices.v1beta1.Ping.Response.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.devices.v1beta1.Ping.Response} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.devices.v1beta1.Ping.Response}
+ */
+proto.services.devices.v1beta1.Ping.Response.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.services.ServiceStatus} */ (reader.readEnum());
+      msg.setStatus(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.devices.v1beta1.Ping.Response.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.devices.v1beta1.Ping.Response.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.devices.v1beta1.Ping.Response} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Ping.Response.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional services.ServiceStatus status = 1;
+ * @return {!proto.services.ServiceStatus}
+ */
+proto.services.devices.v1beta1.Ping.Response.prototype.getStatus = function() {
+  return /** @type {!proto.services.ServiceStatus} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.services.ServiceStatus} value */
+proto.services.devices.v1beta1.Ping.Response.prototype.setStatus = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.devices.v1beta1.Ping.Operation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.devices.v1beta1.Ping.Operation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.devices.v1beta1.Ping.Operation.displayName = 'proto.services.devices.v1beta1.Ping.Operation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.devices.v1beta1.Ping.Operation.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.devices.v1beta1.Ping.Operation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.devices.v1beta1.Ping.Operation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Ping.Operation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    request: (f = msg.getRequest()) && proto.services.devices.v1beta1.Ping.Request.toObject(includeInstance, f),
+    response: (f = msg.getResponse()) && proto.services.devices.v1beta1.Ping.Response.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.devices.v1beta1.Ping.Operation}
+ */
+proto.services.devices.v1beta1.Ping.Operation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.devices.v1beta1.Ping.Operation;
+  return proto.services.devices.v1beta1.Ping.Operation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.devices.v1beta1.Ping.Operation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.devices.v1beta1.Ping.Operation}
+ */
+proto.services.devices.v1beta1.Ping.Operation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.services.devices.v1beta1.Ping.Request;
+      reader.readMessage(value,proto.services.devices.v1beta1.Ping.Request.deserializeBinaryFromReader);
+      msg.setRequest(value);
+      break;
+    case 2:
+      var value = new proto.services.devices.v1beta1.Ping.Response;
+      reader.readMessage(value,proto.services.devices.v1beta1.Ping.Response.deserializeBinaryFromReader);
+      msg.setResponse(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.devices.v1beta1.Ping.Operation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.devices.v1beta1.Ping.Operation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.devices.v1beta1.Ping.Operation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Ping.Operation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRequest();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.services.devices.v1beta1.Ping.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getResponse();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.services.devices.v1beta1.Ping.Response.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional Request request = 1;
+ * @return {?proto.services.devices.v1beta1.Ping.Request}
+ */
+proto.services.devices.v1beta1.Ping.Operation.prototype.getRequest = function() {
+  return /** @type{?proto.services.devices.v1beta1.Ping.Request} */ (
+    jspb.Message.getWrapperField(this, proto.services.devices.v1beta1.Ping.Request, 1));
+};
+
+
+/** @param {?proto.services.devices.v1beta1.Ping.Request|undefined} value */
+proto.services.devices.v1beta1.Ping.Operation.prototype.setRequest = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.services.devices.v1beta1.Ping.Operation.prototype.clearRequest = function() {
+  this.setRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.devices.v1beta1.Ping.Operation.prototype.hasRequest = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional Response response = 2;
+ * @return {?proto.services.devices.v1beta1.Ping.Response}
+ */
+proto.services.devices.v1beta1.Ping.Operation.prototype.getResponse = function() {
+  return /** @type{?proto.services.devices.v1beta1.Ping.Response} */ (
+    jspb.Message.getWrapperField(this, proto.services.devices.v1beta1.Ping.Response, 2));
+};
+
+
+/** @param {?proto.services.devices.v1beta1.Ping.Response|undefined} value */
+proto.services.devices.v1beta1.Ping.Operation.prototype.setResponse = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.services.devices.v1beta1.Ping.Operation.prototype.clearResponse = function() {
+  this.setResponse(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.devices.v1beta1.Ping.Operation.prototype.hasResponse = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.devices.v1beta1.Activation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.devices.v1beta1.Activation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.devices.v1beta1.Activation.displayName = 'proto.services.devices.v1beta1.Activation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.devices.v1beta1.Activation.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.devices.v1beta1.Activation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.devices.v1beta1.Activation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Activation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.devices.v1beta1.Activation}
+ */
+proto.services.devices.v1beta1.Activation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.devices.v1beta1.Activation;
+  return proto.services.devices.v1beta1.Activation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.devices.v1beta1.Activation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.devices.v1beta1.Activation}
+ */
+proto.services.devices.v1beta1.Activation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.devices.v1beta1.Activation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.devices.v1beta1.Activation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.devices.v1beta1.Activation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Activation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.devices.v1beta1.Activation.Request = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.devices.v1beta1.Activation.Request, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.devices.v1beta1.Activation.Request.displayName = 'proto.services.devices.v1beta1.Activation.Request';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.devices.v1beta1.Activation.Request.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.devices.v1beta1.Activation.Request.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.devices.v1beta1.Activation.Request} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Activation.Request.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    serial: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    fingerprint: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.devices.v1beta1.Activation.Request}
+ */
+proto.services.devices.v1beta1.Activation.Request.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.devices.v1beta1.Activation.Request;
+  return proto.services.devices.v1beta1.Activation.Request.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.devices.v1beta1.Activation.Request} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.devices.v1beta1.Activation.Request}
+ */
+proto.services.devices.v1beta1.Activation.Request.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSerial(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setFingerprint(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.devices.v1beta1.Activation.Request.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.devices.v1beta1.Activation.Request.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.devices.v1beta1.Activation.Request} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Activation.Request.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getSerial();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getFingerprint();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string serial = 1;
+ * @return {string}
+ */
+proto.services.devices.v1beta1.Activation.Request.prototype.getSerial = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.services.devices.v1beta1.Activation.Request.prototype.setSerial = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string fingerprint = 2;
+ * @return {string}
+ */
+proto.services.devices.v1beta1.Activation.Request.prototype.getFingerprint = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.services.devices.v1beta1.Activation.Request.prototype.setFingerprint = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.devices.v1beta1.Activation.Response = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.devices.v1beta1.Activation.Response, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.devices.v1beta1.Activation.Response.displayName = 'proto.services.devices.v1beta1.Activation.Response';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.devices.v1beta1.Activation.Response.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.devices.v1beta1.Activation.Response.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.devices.v1beta1.Activation.Response} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Activation.Response.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    active: jspb.Message.getFieldWithDefault(msg, 1, false),
+    error: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    manifest: (f = msg.getManifest()) && proto.services.devices.v1beta1.DeviceActivation.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.devices.v1beta1.Activation.Response}
+ */
+proto.services.devices.v1beta1.Activation.Response.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.devices.v1beta1.Activation.Response;
+  return proto.services.devices.v1beta1.Activation.Response.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.devices.v1beta1.Activation.Response} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.devices.v1beta1.Activation.Response}
+ */
+proto.services.devices.v1beta1.Activation.Response.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setActive(value);
+      break;
+    case 2:
+      var value = /** @type {!proto.services.devices.v1beta1.DeviceError} */ (reader.readEnum());
+      msg.setError(value);
+      break;
+    case 3:
+      var value = new proto.services.devices.v1beta1.DeviceActivation;
+      reader.readMessage(value,proto.services.devices.v1beta1.DeviceActivation.deserializeBinaryFromReader);
+      msg.setManifest(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.devices.v1beta1.Activation.Response.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.devices.v1beta1.Activation.Response.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.devices.v1beta1.Activation.Response} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Activation.Response.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getActive();
+  if (f) {
+    writer.writeBool(
+      1,
+      f
+    );
+  }
+  f = message.getError();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      2,
+      f
+    );
+  }
+  f = message.getManifest();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto.services.devices.v1beta1.DeviceActivation.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional bool active = 1;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.services.devices.v1beta1.Activation.Response.prototype.getActive = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+};
+
+
+/** @param {boolean} value */
+proto.services.devices.v1beta1.Activation.Response.prototype.setActive = function(value) {
+  jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+/**
+ * optional DeviceError error = 2;
+ * @return {!proto.services.devices.v1beta1.DeviceError}
+ */
+proto.services.devices.v1beta1.Activation.Response.prototype.getError = function() {
+  return /** @type {!proto.services.devices.v1beta1.DeviceError} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {!proto.services.devices.v1beta1.DeviceError} value */
+proto.services.devices.v1beta1.Activation.Response.prototype.setError = function(value) {
+  jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+/**
+ * optional DeviceActivation manifest = 3;
+ * @return {?proto.services.devices.v1beta1.DeviceActivation}
+ */
+proto.services.devices.v1beta1.Activation.Response.prototype.getManifest = function() {
+  return /** @type{?proto.services.devices.v1beta1.DeviceActivation} */ (
+    jspb.Message.getWrapperField(this, proto.services.devices.v1beta1.DeviceActivation, 3));
+};
+
+
+/** @param {?proto.services.devices.v1beta1.DeviceActivation|undefined} value */
+proto.services.devices.v1beta1.Activation.Response.prototype.setManifest = function(value) {
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.services.devices.v1beta1.Activation.Response.prototype.clearManifest = function() {
+  this.setManifest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.devices.v1beta1.Activation.Response.prototype.hasManifest = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.services.devices.v1beta1.Activation.Operation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.services.devices.v1beta1.Activation.Operation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.services.devices.v1beta1.Activation.Operation.displayName = 'proto.services.devices.v1beta1.Activation.Operation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.services.devices.v1beta1.Activation.Operation.prototype.toObject = function(opt_includeInstance) {
+  return proto.services.devices.v1beta1.Activation.Operation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.services.devices.v1beta1.Activation.Operation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Activation.Operation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    request: (f = msg.getRequest()) && proto.services.devices.v1beta1.Activation.Request.toObject(includeInstance, f),
+    response: (f = msg.getResponse()) && proto.services.devices.v1beta1.Activation.Response.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.services.devices.v1beta1.Activation.Operation}
+ */
+proto.services.devices.v1beta1.Activation.Operation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.services.devices.v1beta1.Activation.Operation;
+  return proto.services.devices.v1beta1.Activation.Operation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.services.devices.v1beta1.Activation.Operation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.services.devices.v1beta1.Activation.Operation}
+ */
+proto.services.devices.v1beta1.Activation.Operation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.services.devices.v1beta1.Activation.Request;
+      reader.readMessage(value,proto.services.devices.v1beta1.Activation.Request.deserializeBinaryFromReader);
+      msg.setRequest(value);
+      break;
+    case 2:
+      var value = new proto.services.devices.v1beta1.Activation.Response;
+      reader.readMessage(value,proto.services.devices.v1beta1.Activation.Response.deserializeBinaryFromReader);
+      msg.setResponse(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.services.devices.v1beta1.Activation.Operation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.services.devices.v1beta1.Activation.Operation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.services.devices.v1beta1.Activation.Operation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.services.devices.v1beta1.Activation.Operation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRequest();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.services.devices.v1beta1.Activation.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getResponse();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.services.devices.v1beta1.Activation.Response.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional Request request = 1;
+ * @return {?proto.services.devices.v1beta1.Activation.Request}
+ */
+proto.services.devices.v1beta1.Activation.Operation.prototype.getRequest = function() {
+  return /** @type{?proto.services.devices.v1beta1.Activation.Request} */ (
+    jspb.Message.getWrapperField(this, proto.services.devices.v1beta1.Activation.Request, 1));
+};
+
+
+/** @param {?proto.services.devices.v1beta1.Activation.Request|undefined} value */
+proto.services.devices.v1beta1.Activation.Operation.prototype.setRequest = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.services.devices.v1beta1.Activation.Operation.prototype.clearRequest = function() {
+  this.setRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.devices.v1beta1.Activation.Operation.prototype.hasRequest = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional Response response = 2;
+ * @return {?proto.services.devices.v1beta1.Activation.Response}
+ */
+proto.services.devices.v1beta1.Activation.Operation.prototype.getResponse = function() {
+  return /** @type{?proto.services.devices.v1beta1.Activation.Response} */ (
+    jspb.Message.getWrapperField(this, proto.services.devices.v1beta1.Activation.Response, 2));
+};
+
+
+/** @param {?proto.services.devices.v1beta1.Activation.Response|undefined} value */
+proto.services.devices.v1beta1.Activation.Operation.prototype.setResponse = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.services.devices.v1beta1.Activation.Operation.prototype.clearResponse = function() {
+  this.setResponse(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.services.devices.v1beta1.Activation.Operation.prototype.hasResponse = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.services.devices.v1beta1.DeviceError = {
+  NO_ERROR: 0
+};
+
+/**
+ * @enum {number}
+ */
+proto.services.devices.v1beta1.DeviceRole = {
+  UNASSIGNED: 0,
+  TV: 1,
+  CHECKIN: 2,
+  BEACON: 3
 };
 
 
@@ -18891,7 +22853,7 @@ proto.services.pos.v1beta1.Ping.Response.prototype.getStatus = function() {
 
 /** @param {!proto.services.ServiceStatus} value */
 proto.services.pos.v1beta1.Ping.Response.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -19264,7 +23226,7 @@ proto.base.ProductType.prototype.getKind = function() {
 
 /** @param {!proto.base.ProductKind} value */
 proto.base.ProductType.prototype.setKind = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -19623,7 +23585,7 @@ proto.base.ProductKey.prototype.getId = function() {
 
 /** @param {string} value */
 proto.base.ProductKey.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -19858,7 +23820,7 @@ proto.commerce.VariantSpec.prototype.getVariant = function() {
 
 /** @param {!proto.commerce.ProductVariant} value */
 proto.commerce.VariantSpec.prototype.setVariant = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -20006,7 +23968,9 @@ proto.commerce.Item.toObject = function(includeInstance, msg) {
     key: (f = msg.getKey()) && proto.base.ProductKey.toObject(includeInstance, f),
     variantList: jspb.Message.toObjectList(msg.getVariantList(),
     proto.commerce.VariantSpec.toObject, includeInstance),
-    count: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    count: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    price: +jspb.Message.getFieldWithDefault(msg, 4, 0.0),
+    cost: +jspb.Message.getFieldWithDefault(msg, 5, 0.0)
   };
 
   if (includeInstance) {
@@ -20057,6 +24021,14 @@ proto.commerce.Item.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {number} */ (reader.readUint32());
       msg.setCount(value);
       break;
+    case 4:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setPrice(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setCost(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -20106,6 +24078,20 @@ proto.commerce.Item.serializeBinaryToWriter = function(message, writer) {
   if (f !== 0) {
     writer.writeUint32(
       3,
+      f
+    );
+  }
+  f = message.getPrice();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      4,
+      f
+    );
+  }
+  f = message.getCost();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      5,
       f
     );
   }
@@ -20184,7 +24170,37 @@ proto.commerce.Item.prototype.getCount = function() {
 
 /** @param {number} value */
 proto.commerce.Item.prototype.setCount = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional double price = 4;
+ * @return {number}
+ */
+proto.commerce.Item.prototype.getPrice = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 4, 0.0));
+};
+
+
+/** @param {number} value */
+proto.commerce.Item.prototype.setPrice = function(value) {
+  jspb.Message.setProto3FloatField(this, 4, value);
+};
+
+
+/**
+ * optional double cost = 5;
+ * @return {number}
+ */
+proto.commerce.Item.prototype.getCost = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 5, 0.0));
+};
+
+
+/** @param {number} value */
+proto.commerce.Item.prototype.setCost = function(value) {
+  jspb.Message.setProto3FloatField(this, 5, value);
 };
 
 
@@ -20392,7 +24408,7 @@ proto.commerce.DeliveryDestination.prototype.getInstructions = function() {
 
 /** @param {string} value */
 proto.commerce.DeliveryDestination.prototype.setInstructions = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -20592,7 +24608,7 @@ proto.commerce.Customer.prototype.getForeignId = function() {
 
 /** @param {string} value */
 proto.commerce.Customer.prototype.setForeignId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -20778,7 +24794,7 @@ proto.commerce.OrderScheduling.prototype.getScheduling = function() {
 
 /** @param {!proto.commerce.SchedulingType} value */
 proto.commerce.OrderScheduling.prototype.setScheduling = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -20976,7 +24992,7 @@ proto.commerce.StatusCheckin.prototype.getStatus = function() {
 
 /** @param {!proto.commerce.OrderStatus} value */
 proto.commerce.StatusCheckin.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -21021,7 +25037,7 @@ proto.commerce.StatusCheckin.prototype.getMessage = function() {
 
 /** @param {string} value */
 proto.commerce.StatusCheckin.prototype.setMessage = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -21163,7 +25179,7 @@ proto.commerce.OrderKey.prototype.getId = function() {
 
 /** @param {string} value */
 proto.commerce.OrderKey.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -21232,7 +25248,8 @@ proto.commerce.Order.toObject = function(includeInstance, msg) {
     proto.commerce.Item.toObject, includeInstance),
     actionLogList: jspb.Message.toObjectList(msg.getActionLogList(),
     proto.commerce.StatusCheckin.toObject, includeInstance),
-    createdAt: (f = msg.getCreatedAt()) && proto.temporal.Instant.toObject(includeInstance, f)
+    createdAt: (f = msg.getCreatedAt()) && proto.temporal.Instant.toObject(includeInstance, f),
+    subtotal: +jspb.Message.getFieldWithDefault(msg, 11, 0.0)
   };
 
   if (includeInstance) {
@@ -21314,6 +25331,10 @@ proto.commerce.Order.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto.temporal.Instant;
       reader.readMessage(value,proto.temporal.Instant.deserializeBinaryFromReader);
       msg.setCreatedAt(value);
+      break;
+    case 11:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setSubtotal(value);
       break;
     default:
       reader.skipField();
@@ -21420,6 +25441,13 @@ proto.commerce.Order.serializeBinaryToWriter = function(message, writer) {
       proto.temporal.Instant.serializeBinaryToWriter
     );
   }
+  f = message.getSubtotal();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      11,
+      f
+    );
+  }
 };
 
 
@@ -21434,7 +25462,7 @@ proto.commerce.Order.prototype.getId = function() {
 
 /** @param {string} value */
 proto.commerce.Order.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -21449,7 +25477,7 @@ proto.commerce.Order.prototype.getType = function() {
 
 /** @param {!proto.commerce.OrderType} value */
 proto.commerce.Order.prototype.setType = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -21464,7 +25492,7 @@ proto.commerce.Order.prototype.getStatus = function() {
 
 /** @param {!proto.commerce.OrderStatus} value */
 proto.commerce.Order.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -21569,7 +25597,7 @@ proto.commerce.Order.prototype.getNotes = function() {
 
 /** @param {string} value */
 proto.commerce.Order.prototype.setNotes = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
@@ -21662,6 +25690,21 @@ proto.commerce.Order.prototype.clearCreatedAt = function() {
  */
 proto.commerce.Order.prototype.hasCreatedAt = function() {
   return jspb.Message.getField(this, 10) != null;
+};
+
+
+/**
+ * optional double subtotal = 11;
+ * @return {number}
+ */
+proto.commerce.Order.prototype.getSubtotal = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 11, 0.0));
+};
+
+
+/** @param {number} value */
+proto.commerce.Order.prototype.setSubtotal = function(value) {
+  jspb.Message.setProto3FloatField(this, 11, value);
 };
 
 
@@ -22063,7 +26106,7 @@ proto.services.shop.v1.Ping.Response.prototype.getStatus = function() {
 
 /** @param {!proto.services.ServiceStatus} value */
 proto.services.shop.v1.Ping.Response.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -22683,7 +26726,7 @@ proto.services.shop.v1.ShopInfo.Response.prototype.getShopStatus = function() {
 
 /** @param {!proto.services.shop.v1.ShopStatus} value */
 proto.services.shop.v1.ShopInfo.Response.prototype.setShopStatus = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -23280,7 +27323,7 @@ proto.services.shop.v1.EnrollMember.Request.prototype.getSource = function() {
 
 /** @param {!proto.identity.EnrollmentSource} value */
 proto.services.shop.v1.EnrollMember.Request.prototype.setSource = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -23295,7 +27338,7 @@ proto.services.shop.v1.EnrollMember.Request.prototype.getChannel = function() {
 
 /** @param {string} value */
 proto.services.shop.v1.EnrollMember.Request.prototype.setChannel = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -23400,7 +27443,7 @@ proto.services.shop.v1.EnrollMember.Request.prototype.getPassword = function() {
 
 /** @param {string} value */
 proto.services.shop.v1.EnrollMember.Request.prototype.setPassword = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
@@ -23417,7 +27460,7 @@ proto.services.shop.v1.EnrollMember.Request.prototype.getDryRun = function() {
 
 /** @param {boolean} value */
 proto.services.shop.v1.EnrollMember.Request.prototype.setDryRun = function(value) {
-  jspb.Message.setField(this, 8, value);
+  jspb.Message.setProto3BooleanField(this, 8, value);
 };
 
 
@@ -23639,7 +27682,7 @@ proto.services.shop.v1.EnrollMember.Response.prototype.getId = function() {
 
 /** @param {string} value */
 proto.services.shop.v1.EnrollMember.Response.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -24172,7 +28215,7 @@ proto.services.shop.v1.VerifyMember.Request.prototype.getEmailAddress = function
 
 /** @param {string} value */
 proto.services.shop.v1.VerifyMember.Request.prototype.setEmailAddress = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -24398,7 +28441,7 @@ proto.services.shop.v1.VerifyMember.Response.prototype.getVerified = function() 
 
 /** @param {boolean} value */
 proto.services.shop.v1.VerifyMember.Response.prototype.setVerified = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -24932,7 +28975,7 @@ proto.services.shop.v1.CheckZipcode.Request.prototype.getZipcode = function() {
 
 /** @param {string} value */
 proto.services.shop.v1.CheckZipcode.Request.prototype.setZipcode = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -25118,7 +29161,7 @@ proto.services.shop.v1.CheckZipcode.Response.prototype.getSupported = function()
 
 /** @param {boolean} value */
 proto.services.shop.v1.CheckZipcode.Response.prototype.setSupported = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -25133,7 +29176,7 @@ proto.services.shop.v1.CheckZipcode.Response.prototype.getDeliveryMinimum = func
 
 /** @param {number} value */
 proto.services.shop.v1.CheckZipcode.Response.prototype.setDeliveryMinimum = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
@@ -25809,7 +29852,7 @@ proto.services.shop.v1.SubmitOrder.Response.prototype.getError = function() {
 
 /** @param {!proto.services.shop.v1.OrderError} value */
 proto.services.shop.v1.SubmitOrder.Response.prototype.setError = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -25824,7 +29867,7 @@ proto.services.shop.v1.SubmitOrder.Response.prototype.getOrderId = function() {
 
 /** @param {string} value */
 proto.services.shop.v1.SubmitOrder.Response.prototype.setOrderId = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -26299,7 +30342,7 @@ proto.services.shop.v1.GetOrder.Request.prototype.getOrderId = function() {
 
 /** @param {string} value */
 proto.services.shop.v1.GetOrder.Request.prototype.setOrderId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -26487,7 +30530,7 @@ proto.services.shop.v1.GetOrder.Response.prototype.getSuccess = function() {
 
 /** @param {boolean} value */
 proto.services.shop.v1.GetOrder.Response.prototype.setSuccess = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -26751,7 +30794,8 @@ proto.services.shop.v1.OrderError = {
   MISSING_DESTINATION: 9,
   SHOP_NOT_OPEN: 10,
   GLOBAL_MINIMUM_NOT_MET: 11,
-  MEMBERSHIP_NOT_FOUND: 12
+  MEMBERSHIP_NOT_FOUND: 12,
+  DUPLICATE_ORDER: 13
 };
 
 /**
@@ -27129,7 +31173,7 @@ proto.analytics.Scope.prototype.getPartner = function() {
 
 /** @param {string} value */
 proto.analytics.Scope.prototype.setPartner = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -27144,7 +31188,7 @@ proto.analytics.Scope.prototype.getCommercial = function() {
 
 /** @param {string} value */
 proto.analytics.Scope.prototype.setCommercial = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -27159,7 +31203,7 @@ proto.analytics.Scope.prototype.getOrder = function() {
 
 /** @param {string} value */
 proto.analytics.Scope.prototype.setOrder = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -27315,7 +31359,7 @@ proto.analytics.context.DeviceOS.prototype.getType = function() {
 
 /** @param {!proto.analytics.context.OSType} value */
 proto.analytics.context.DeviceOS.prototype.setType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -27529,7 +31573,7 @@ proto.analytics.context.DeviceLibrary.prototype.getVariant = function() {
 
 /** @param {string} value */
 proto.analytics.context.DeviceLibrary.prototype.setVariant = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -27574,7 +31618,7 @@ proto.analytics.context.DeviceLibrary.prototype.getClient = function() {
 
 /** @param {!proto.analytics.context.APIClient} value */
 proto.analytics.context.DeviceLibrary.prototype.setClient = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -27786,7 +31830,7 @@ proto.analytics.context.WebApplication.prototype.getOrigin = function() {
 
 /** @param {string} value */
 proto.analytics.context.WebApplication.prototype.setOrigin = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -27801,7 +31845,7 @@ proto.analytics.context.WebApplication.prototype.getLocation = function() {
 
 /** @param {string} value */
 proto.analytics.context.WebApplication.prototype.setLocation = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -27816,7 +31860,7 @@ proto.analytics.context.WebApplication.prototype.getAnchor = function() {
 
 /** @param {string} value */
 proto.analytics.context.WebApplication.prototype.setAnchor = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -27831,7 +31875,7 @@ proto.analytics.context.WebApplication.prototype.getTitle = function() {
 
 /** @param {string} value */
 proto.analytics.context.WebApplication.prototype.setTitle = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -27846,7 +31890,7 @@ proto.analytics.context.WebApplication.prototype.getReferrer = function() {
 
 /** @param {string} value */
 proto.analytics.context.WebApplication.prototype.setReferrer = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -27861,7 +31905,7 @@ proto.analytics.context.WebApplication.prototype.getProtocol = function() {
 
 /** @param {string} value */
 proto.analytics.context.WebApplication.prototype.setProtocol = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -28082,7 +32126,7 @@ proto.analytics.context.DeviceApplication.prototype.getType = function() {
 
 /** @param {!proto.analytics.context.ApplicationType} value */
 proto.analytics.context.DeviceApplication.prototype.setType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -28416,7 +32460,7 @@ proto.proximity.BluetoothBeacon.prototype.getUuid = function() {
 
 /** @param {string} value */
 proto.proximity.BluetoothBeacon.prototype.setUuid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -28431,7 +32475,7 @@ proto.proximity.BluetoothBeacon.prototype.getMajor = function() {
 
 /** @param {number} value */
 proto.proximity.BluetoothBeacon.prototype.setMajor = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -28446,7 +32490,7 @@ proto.proximity.BluetoothBeacon.prototype.getMinor = function() {
 
 /** @param {number} value */
 proto.proximity.BluetoothBeacon.prototype.setMinor = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -28690,7 +32734,7 @@ proto.analytics.context.PixelSize.prototype.getWidth = function() {
 
 /** @param {number} value */
 proto.analytics.context.PixelSize.prototype.setWidth = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -28705,7 +32749,7 @@ proto.analytics.context.PixelSize.prototype.getHeight = function() {
 
 /** @param {number} value */
 proto.analytics.context.PixelSize.prototype.setHeight = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -28947,7 +32991,7 @@ proto.analytics.context.DeviceScreen.prototype.getDensity = function() {
 
 /** @param {number} value */
 proto.analytics.context.DeviceScreen.prototype.setDensity = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -28962,7 +33006,7 @@ proto.analytics.context.DeviceScreen.prototype.getOrientation = function() {
 
 /** @param {!proto.analytics.context.ScreenOrientation} value */
 proto.analytics.context.DeviceScreen.prototype.setOrientation = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3EnumField(this, 4, value);
 };
 
 
@@ -29180,7 +33224,7 @@ proto.analytics.context.NativeDeviceContext.prototype.getType = function() {
 
 /** @param {!proto.device.DeviceType} value */
 proto.analytics.context.NativeDeviceContext.prototype.setType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -29195,7 +33239,7 @@ proto.analytics.context.NativeDeviceContext.prototype.getRole = function() {
 
 /** @param {!proto.analytics.context.DeviceRole} value */
 proto.analytics.context.NativeDeviceContext.prototype.setRole = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -29549,7 +33593,7 @@ proto.analytics.context.BrowserDeviceContext.prototype.getBrowserType = function
 
 /** @param {!proto.analytics.context.BrowserType} value */
 proto.analytics.context.BrowserDeviceContext.prototype.setBrowserType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -29594,7 +33638,7 @@ proto.analytics.context.BrowserDeviceContext.prototype.getLanguage = function() 
 
 /** @param {string} value */
 proto.analytics.context.BrowserDeviceContext.prototype.setLanguage = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -29609,7 +33653,7 @@ proto.analytics.context.BrowserDeviceContext.prototype.getUserAgent = function()
 
 /** @param {string} value */
 proto.analytics.context.BrowserDeviceContext.prototype.setUserAgent = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -29624,7 +33668,7 @@ proto.analytics.context.BrowserDeviceContext.prototype.getTouchpoints = function
 
 /** @param {number} value */
 proto.analytics.context.BrowserDeviceContext.prototype.setTouchpoints = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -29639,7 +33683,7 @@ proto.analytics.context.BrowserDeviceContext.prototype.getHardwareConcurrency = 
 
 /** @param {number} value */
 proto.analytics.context.BrowserDeviceContext.prototype.setHardwareConcurrency = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3IntField(this, 6, value);
 };
 
 
@@ -29654,7 +33698,7 @@ proto.analytics.context.BrowserDeviceContext.prototype.getColorDepth = function(
 
 /** @param {number} value */
 proto.analytics.context.BrowserDeviceContext.prototype.setColorDepth = function(value) {
-  jspb.Message.setField(this, 7, value);
+  jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -29832,7 +33876,7 @@ proto.analytics.context.Collection.prototype.getName = function() {
 
 /** @param {string} value */
 proto.analytics.context.Collection.prototype.setName = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -29849,7 +33893,7 @@ proto.analytics.context.Collection.prototype.getInternal = function() {
 
 /** @param {boolean} value */
 proto.analytics.context.Collection.prototype.setInternal = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -29864,7 +33908,7 @@ proto.analytics.context.Collection.prototype.getType = function() {
 
 /** @param {!proto.analytics.context.EventType} value */
 proto.analytics.context.Collection.prototype.setType = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -30117,7 +34161,7 @@ proto.analytics.EventPosition.prototype.getProcessed = function() {
 
 /** @param {number} value */
 proto.analytics.EventPosition.prototype.setProcessed = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -30132,7 +34176,7 @@ proto.analytics.EventPosition.prototype.getEnriched = function() {
 
 /** @param {number} value */
 proto.analytics.EventPosition.prototype.setEnriched = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
@@ -30729,7 +34773,7 @@ proto.analytics.Context.prototype.getFingerprint = function() {
 
 /** @param {string} value */
 proto.analytics.Context.prototype.setFingerprint = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -30744,7 +34788,7 @@ proto.analytics.Context.prototype.getGroup = function() {
 
 /** @param {string} value */
 proto.analytics.Context.prototype.setGroup = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -30759,7 +34803,7 @@ proto.analytics.Context.prototype.getHostname = function() {
 
 /** @param {string} value */
 proto.analytics.Context.prototype.setHostname = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -30774,7 +34818,7 @@ proto.analytics.Context.prototype.getIpAddress = function() {
 
 /** @param {string} value */
 proto.analytics.Context.prototype.setIpAddress = function(value) {
-  jspb.Message.setField(this, 6, value);
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
@@ -31311,7 +35355,7 @@ proto.analytics.generic.SourceLineReference.prototype.getLine = function() {
 
 /** @param {number} value */
 proto.analytics.generic.SourceLineReference.prototype.setLine = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -31326,7 +35370,7 @@ proto.analytics.generic.SourceLineReference.prototype.getColumn = function() {
 
 /** @param {number} value */
 proto.analytics.generic.SourceLineReference.prototype.setColumn = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -31532,7 +35576,7 @@ proto.analytics.generic.SourceLocation.prototype.getModule = function() {
 
 /** @param {string} value */
 proto.analytics.generic.SourceLocation.prototype.setModule = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -31547,7 +35591,7 @@ proto.analytics.generic.SourceLocation.prototype.getFilepath = function() {
 
 /** @param {string} value */
 proto.analytics.generic.SourceLocation.prototype.setFilepath = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -31788,7 +35832,7 @@ proto.analytics.generic.Exception.prototype.getDomain = function() {
 
 /** @param {string} value */
 proto.analytics.generic.Exception.prototype.setDomain = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -31803,7 +35847,7 @@ proto.analytics.generic.Exception.prototype.getCode = function() {
 
 /** @param {number} value */
 proto.analytics.generic.Exception.prototype.setCode = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -32933,7 +36977,7 @@ proto.analytics.identity.Action.prototype.getIdentity = function() {
 
 /** @param {string} value */
 proto.analytics.identity.Action.prototype.setIdentity = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -32948,7 +36992,7 @@ proto.analytics.identity.Action.prototype.getVerb = function() {
 
 /** @param {!proto.analytics.identity.UserAction} value */
 proto.analytics.identity.Action.prototype.setVerb = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -33356,7 +37400,7 @@ proto.analytics.shop.Impression.prototype.getPhysical = function() {
 
 /** @param {boolean} value */
 proto.analytics.shop.Impression.prototype.setPhysical = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -33556,7 +37600,7 @@ proto.analytics.shop.View.prototype.getPhysical = function() {
 
 /** @param {boolean} value */
 proto.analytics.shop.View.prototype.setPhysical = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -33573,7 +37617,7 @@ proto.analytics.shop.View.prototype.getInteractive = function() {
 
 /** @param {boolean} value */
 proto.analytics.shop.View.prototype.setInteractive = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -33773,7 +37817,7 @@ proto.analytics.shop.Action.prototype.getPhysical = function() {
 
 /** @param {boolean} value */
 proto.analytics.shop.Action.prototype.setPhysical = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -33788,7 +37832,7 @@ proto.analytics.shop.Action.prototype.getVerb = function() {
 
 /** @param {!proto.analytics.shop.ShopAction} value */
 proto.analytics.shop.Action.prototype.setVerb = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -34658,7 +38702,7 @@ proto.analytics.order.Action.prototype.getVerb = function() {
 
 /** @param {!proto.analytics.order.OrderAction} value */
 proto.analytics.order.Action.prototype.setVerb = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -35344,7 +39388,7 @@ proto.analytics.section.View.prototype.getInteractive = function() {
 
 /** @param {boolean} value */
 proto.analytics.section.View.prototype.setInteractive = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -35574,7 +39618,7 @@ proto.analytics.section.Action.prototype.getVerb = function() {
 
 /** @param {!proto.analytics.section.SectionAction} value */
 proto.analytics.section.Action.prototype.setVerb = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -36436,7 +40480,7 @@ proto.analytics.product.Impression.prototype.getFiltered = function() {
 
 /** @param {boolean} value */
 proto.analytics.product.Impression.prototype.setFiltered = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -36453,7 +40497,7 @@ proto.analytics.product.Impression.prototype.getSorted = function() {
 
 /** @param {boolean} value */
 proto.analytics.product.Impression.prototype.setSorted = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -36685,7 +40729,7 @@ proto.analytics.product.View.prototype.getInteractive = function() {
 
 /** @param {boolean} value */
 proto.analytics.product.View.prototype.setInteractive = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -36915,7 +40959,7 @@ proto.analytics.product.Action.prototype.getVerb = function() {
 
 /** @param {!proto.analytics.product.ProductAction} value */
 proto.analytics.product.Action.prototype.setVerb = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -37736,7 +41780,7 @@ proto.services.telemetry.v1beta2.TelemetryResponse.prototype.getStatus = functio
 
 /** @param {!proto.services.telemetry.v1beta2.OperationStatus} value */
 proto.services.telemetry.v1beta2.TelemetryResponse.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -37751,7 +41795,7 @@ proto.services.telemetry.v1beta2.TelemetryResponse.prototype.getCount = function
 
 /** @param {number} value */
 proto.services.telemetry.v1beta2.TelemetryResponse.prototype.setCount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -37766,7 +41810,7 @@ proto.services.telemetry.v1beta2.TelemetryResponse.prototype.getService = functi
 
 /** @param {!proto.services.ServiceStatus} value */
 proto.services.telemetry.v1beta2.TelemetryResponse.prototype.setService = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -38183,7 +42227,7 @@ proto.services.telemetry.v1beta2.TelemetryPing.Response.prototype.getStatus = fu
 
 /** @param {!proto.services.ServiceStatus} value */
 proto.services.telemetry.v1beta2.TelemetryPing.Response.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -39378,7 +43422,7 @@ proto.services.telemetry.v1beta2.CommercialEvent.Action.prototype.getName = func
 
 /** @param {string} value */
 proto.services.telemetry.v1beta2.CommercialEvent.Action.prototype.setName = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -39839,7 +43883,7 @@ proto.services.telemetry.v1beta2.IdentityEvent.Action.prototype.getName = functi
 
 /** @param {string} value */
 proto.services.telemetry.v1beta2.IdentityEvent.Action.prototype.setName = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -40221,7 +44265,7 @@ proto.services.telemetry.v1beta2.TelemetryEvent.prototype.getUuid = function() {
 
 /** @param {string} value */
 proto.services.telemetry.v1beta2.TelemetryEvent.prototype.setUuid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -40659,7 +44703,8 @@ proto.services.telemetry.v1beta3.Event.Request.prototype.toObject = function(opt
 proto.services.telemetry.v1beta3.Event.Request.toObject = function(includeInstance, msg) {
   var f, obj = {
     context: (f = msg.getContext()) && proto.analytics.Context.toObject(includeInstance, f),
-    event: (f = msg.getEvent()) && proto.analytics.generic.Event.toObject(includeInstance, f)
+    event: (f = msg.getEvent()) && proto.analytics.generic.Event.toObject(includeInstance, f),
+    uuid: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -40706,6 +44751,10 @@ proto.services.telemetry.v1beta3.Event.Request.deserializeBinaryFromReader = fun
       reader.readMessage(value,proto.analytics.generic.Event.deserializeBinaryFromReader);
       msg.setEvent(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUuid(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -40749,6 +44798,13 @@ proto.services.telemetry.v1beta3.Event.Request.serializeBinaryToWriter = functio
       2,
       f,
       proto.analytics.generic.Event.serializeBinaryToWriter
+    );
+  }
+  f = message.getUuid();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
     );
   }
 };
@@ -40811,6 +44867,21 @@ proto.services.telemetry.v1beta3.Event.Request.prototype.clearEvent = function()
  */
 proto.services.telemetry.v1beta3.Event.Request.prototype.hasEvent = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional string uuid = 3;
+ * @return {string}
+ */
+proto.services.telemetry.v1beta3.Event.Request.prototype.getUuid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.services.telemetry.v1beta3.Event.Request.prototype.setUuid = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -41242,7 +45313,8 @@ proto.services.telemetry.v1beta3.Exception.prototype.toObject = function(opt_inc
 proto.services.telemetry.v1beta3.Exception.toObject = function(includeInstance, msg) {
   var f, obj = {
     context: (f = msg.getContext()) && proto.analytics.Context.toObject(includeInstance, f),
-    error: (f = msg.getError()) && proto.analytics.generic.Exception.toObject(includeInstance, f)
+    error: (f = msg.getError()) && proto.analytics.generic.Exception.toObject(includeInstance, f),
+    uuid: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -41289,6 +45361,10 @@ proto.services.telemetry.v1beta3.Exception.deserializeBinaryFromReader = functio
       reader.readMessage(value,proto.analytics.generic.Exception.deserializeBinaryFromReader);
       msg.setError(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUuid(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -41332,6 +45408,13 @@ proto.services.telemetry.v1beta3.Exception.serializeBinaryToWriter = function(me
       2,
       f,
       proto.analytics.generic.Exception.serializeBinaryToWriter
+    );
+  }
+  f = message.getUuid();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
     );
   }
 };
@@ -41394,6 +45477,21 @@ proto.services.telemetry.v1beta3.Exception.prototype.clearError = function() {
  */
 proto.services.telemetry.v1beta3.Exception.prototype.hasError = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional string uuid = 3;
+ * @return {string}
+ */
+proto.services.telemetry.v1beta3.Exception.prototype.getUuid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.services.telemetry.v1beta3.Exception.prototype.setUuid = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -41559,7 +45657,7 @@ proto.services.telemetry.v1beta3.TelemetryResponse.prototype.getStatus = functio
 
 /** @param {!proto.services.telemetry.v1beta3.OperationStatus} value */
 proto.services.telemetry.v1beta3.TelemetryResponse.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -41574,7 +45672,7 @@ proto.services.telemetry.v1beta3.TelemetryResponse.prototype.getCount = function
 
 /** @param {number} value */
 proto.services.telemetry.v1beta3.TelemetryResponse.prototype.setCount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -41589,7 +45687,7 @@ proto.services.telemetry.v1beta3.TelemetryResponse.prototype.getService = functi
 
 /** @param {!proto.services.ServiceStatus} value */
 proto.services.telemetry.v1beta3.TelemetryResponse.prototype.setService = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -41756,7 +45854,7 @@ proto.services.telemetry.v1beta3.TelemetryPing.Request.prototype.toObject = func
  */
 proto.services.telemetry.v1beta3.TelemetryPing.Request.toObject = function(includeInstance, msg) {
   var f, obj = {
-    context: (f = msg.getContext()) && proto.analytics.Context.toObject(includeInstance, f)
+
   };
 
   if (includeInstance) {
@@ -41793,11 +45891,6 @@ proto.services.telemetry.v1beta3.TelemetryPing.Request.deserializeBinaryFromRead
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = new proto.analytics.Context;
-      reader.readMessage(value,proto.analytics.Context.deserializeBinaryFromReader);
-      msg.setContext(value);
-      break;
     default:
       reader.skipField();
       break;
@@ -41827,44 +45920,6 @@ proto.services.telemetry.v1beta3.TelemetryPing.Request.prototype.serializeBinary
  */
 proto.services.telemetry.v1beta3.TelemetryPing.Request.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getContext();
-  if (f != null) {
-    writer.writeMessage(
-      1,
-      f,
-      proto.analytics.Context.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional analytics.Context context = 1;
- * @return {?proto.analytics.Context}
- */
-proto.services.telemetry.v1beta3.TelemetryPing.Request.prototype.getContext = function() {
-  return /** @type{?proto.analytics.Context} */ (
-    jspb.Message.getWrapperField(this, proto.analytics.Context, 1));
-};
-
-
-/** @param {?proto.analytics.Context|undefined} value */
-proto.services.telemetry.v1beta3.TelemetryPing.Request.prototype.setContext = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
-};
-
-
-proto.services.telemetry.v1beta3.TelemetryPing.Request.prototype.clearContext = function() {
-  this.setContext(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.services.telemetry.v1beta3.TelemetryPing.Request.prototype.hasContext = function() {
-  return jspb.Message.getField(this, 1) != null;
 };
 
 
@@ -42006,7 +46061,7 @@ proto.services.telemetry.v1beta3.TelemetryPing.Response.prototype.getStatus = fu
 
 /** @param {!proto.services.ServiceStatus} value */
 proto.services.telemetry.v1beta3.TelemetryPing.Response.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -43201,7 +47256,7 @@ proto.services.telemetry.v1beta3.CommercialEvent.Action.prototype.getName = func
 
 /** @param {string} value */
 proto.services.telemetry.v1beta3.CommercialEvent.Action.prototype.setName = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -43662,7 +47717,7 @@ proto.services.telemetry.v1beta3.IdentityEvent.Action.prototype.getName = functi
 
 /** @param {string} value */
 proto.services.telemetry.v1beta3.IdentityEvent.Action.prototype.setName = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -44068,7 +48123,7 @@ proto.services.telemetry.v1beta3.TelemetryEvent.prototype.getUuid = function() {
 
 /** @param {string} value */
 proto.services.telemetry.v1beta3.TelemetryEvent.prototype.setUuid = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -44083,7 +48138,7 @@ proto.services.telemetry.v1beta3.TelemetryEvent.prototype.getParent = function()
 
 /** @param {string} value */
 proto.services.telemetry.v1beta3.TelemetryEvent.prototype.setParent = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -44100,7 +48155,7 @@ proto.services.telemetry.v1beta3.TelemetryEvent.prototype.getInternal = function
 
 /** @param {boolean} value */
 proto.services.telemetry.v1beta3.TelemetryEvent.prototype.setInternal = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
@@ -44574,7 +48629,7 @@ proto.accounting.discounts.DiscountSpec.prototype.getType = function() {
 
 /** @param {!proto.accounting.discounts.DiscountType} value */
 proto.accounting.discounts.DiscountSpec.prototype.setType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -44589,7 +48644,7 @@ proto.accounting.discounts.DiscountSpec.prototype.getBasis = function() {
 
 /** @param {!proto.accounting.discounts.DiscountBasis} value */
 proto.accounting.discounts.DiscountSpec.prototype.setBasis = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -44867,7 +48922,7 @@ proto.accounting.discounts.Discount.prototype.getId = function() {
 
 /** @param {string} value */
 proto.accounting.discounts.Discount.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -44912,7 +48967,7 @@ proto.accounting.discounts.Discount.prototype.getName = function() {
 
 /** @param {string} value */
 proto.accounting.discounts.Discount.prototype.setName = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -44927,7 +48982,7 @@ proto.accounting.discounts.Discount.prototype.getLabel = function() {
 
 /** @param {string} value */
 proto.accounting.discounts.Discount.prototype.setLabel = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -44942,7 +48997,7 @@ proto.accounting.discounts.Discount.prototype.getDescription = function() {
 
 /** @param {string} value */
 proto.accounting.discounts.Discount.prototype.setDescription = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -45236,7 +49291,7 @@ proto.accounting.taxes.TaxSpec.prototype.getBasis = function() {
 
 /** @param {!proto.accounting.taxes.TaxBasis} value */
 proto.accounting.taxes.TaxSpec.prototype.setBasis = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -45251,7 +49306,7 @@ proto.accounting.taxes.TaxSpec.prototype.getJurisdiction = function() {
 
 /** @param {!proto.accounting.taxes.TaxJurisdiction} value */
 proto.accounting.taxes.TaxSpec.prototype.setJurisdiction = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -45266,7 +49321,7 @@ proto.accounting.taxes.TaxSpec.prototype.getTransactionLabel = function() {
 
 /** @param {string} value */
 proto.accounting.taxes.TaxSpec.prototype.setTransactionLabel = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -45516,7 +49571,7 @@ proto.accounting.taxes.Tax.prototype.getId = function() {
 
 /** @param {string} value */
 proto.accounting.taxes.Tax.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -45561,7 +49616,7 @@ proto.accounting.taxes.Tax.prototype.getName = function() {
 
 /** @param {string} value */
 proto.accounting.taxes.Tax.prototype.setName = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -45576,7 +49631,7 @@ proto.accounting.taxes.Tax.prototype.getLabel = function() {
 
 /** @param {string} value */
 proto.accounting.taxes.Tax.prototype.setLabel = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -45591,7 +49646,7 @@ proto.accounting.taxes.Tax.prototype.getDescription = function() {
 
 /** @param {string} value */
 proto.accounting.taxes.Tax.prototype.setDescription = function(value) {
-  jspb.Message.setField(this, 5, value);
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
@@ -45777,7 +49832,7 @@ proto.commerce.pos.PurchaseEvent.prototype.getStatus = function() {
 
 /** @param {!proto.commerce.pos.PurchaseStatus} value */
 proto.commerce.pos.PurchaseEvent.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -45822,7 +49877,7 @@ proto.commerce.pos.PurchaseEvent.prototype.getMessage = function() {
 
 /** @param {string} value */
 proto.commerce.pos.PurchaseEvent.prototype.setMessage = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -46013,7 +50068,7 @@ proto.commerce.pos.Receipt.prototype.getSubtotal = function() {
 
 /** @param {number} value */
 proto.commerce.pos.Receipt.prototype.setSubtotal = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 
@@ -46090,7 +50145,7 @@ proto.commerce.pos.Receipt.prototype.getTotal = function() {
 
 /** @param {number} value */
 proto.commerce.pos.Receipt.prototype.setTotal = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3FloatField(this, 4, value);
 };
 
 
@@ -46361,7 +50416,7 @@ proto.commerce.pos.Purchase.prototype.getId = function() {
 
 /** @param {string} value */
 proto.commerce.pos.Purchase.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -46376,7 +50431,7 @@ proto.commerce.pos.Purchase.prototype.getPartnerCode = function() {
 
 /** @param {string} value */
 proto.commerce.pos.Purchase.prototype.setPartnerCode = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -46391,7 +50446,7 @@ proto.commerce.pos.Purchase.prototype.getLocationCode = function() {
 
 /** @param {string} value */
 proto.commerce.pos.Purchase.prototype.setLocationCode = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -46406,7 +50461,7 @@ proto.commerce.pos.Purchase.prototype.getStatus = function() {
 
 /** @param {!proto.commerce.pos.PurchaseStatus} value */
 proto.commerce.pos.Purchase.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3EnumField(this, 4, value);
 };
 
 
@@ -47290,7 +51345,7 @@ proto.products.distribution.DistributionPolicy.prototype.getEnabled = function()
 
 /** @param {boolean} value */
 proto.products.distribution.DistributionPolicy.prototype.setEnabled = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -47305,7 +51360,7 @@ proto.products.distribution.DistributionPolicy.prototype.getChannel = function()
 
 /** @param {!proto.products.distribution.Channel} value */
 proto.products.distribution.DistributionPolicy.prototype.setChannel = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -47320,7 +51375,7 @@ proto.products.distribution.DistributionPolicy.prototype.getType = function() {
 
 /** @param {!proto.products.distribution.ChannelType} value */
 proto.products.distribution.DistributionPolicy.prototype.setType = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -47337,7 +51392,7 @@ proto.products.distribution.DistributionPolicy.prototype.getSuppress = function(
 
 /** @param {boolean} value */
 proto.products.distribution.DistributionPolicy.prototype.setSuppress = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -47558,7 +51613,7 @@ proto.content.MaterialsData.prototype.getSpecies = function() {
 
 /** @param {!proto.structs.Species} value */
 proto.content.MaterialsData.prototype.setSpecies = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -47603,7 +51658,7 @@ proto.content.MaterialsData.prototype.getGrow = function() {
 
 /** @param {!proto.structs.Grow} value */
 proto.content.MaterialsData.prototype.setGrow = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -47618,7 +51673,7 @@ proto.content.MaterialsData.prototype.getShelf = function() {
 
 /** @param {!proto.structs.Shelf} value */
 proto.content.MaterialsData.prototype.setShelf = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3EnumField(this, 4, value);
 };
 
 
@@ -47806,7 +51861,7 @@ proto.structs.pricing.PercentageDiscount.prototype.getDiscount = function() {
 
 /** @param {number} value */
 proto.structs.pricing.PercentageDiscount.prototype.setDiscount = function(value) {
-  jspb.Message.setField(this, 20, value);
+  jspb.Message.setProto3IntField(this, 20, value);
 };
 
 
@@ -47960,7 +52015,7 @@ proto.structs.pricing.BOGODiscount.prototype.getTrigger = function() {
 
 /** @param {number} value */
 proto.structs.pricing.BOGODiscount.prototype.setTrigger = function(value) {
-  jspb.Message.setField(this, 21, value);
+  jspb.Message.setProto3IntField(this, 21, value);
 };
 
 
@@ -47975,7 +52030,7 @@ proto.structs.pricing.BOGODiscount.prototype.getReward = function() {
 
 /** @param {number} value */
 proto.structs.pricing.BOGODiscount.prototype.setReward = function(value) {
-  jspb.Message.setField(this, 22, value);
+  jspb.Message.setProto3IntField(this, 22, value);
 };
 
 
@@ -48129,7 +52184,7 @@ proto.structs.pricing.LoyaltyDiscount.prototype.getTrigger = function() {
 
 /** @param {number} value */
 proto.structs.pricing.LoyaltyDiscount.prototype.setTrigger = function(value) {
-  jspb.Message.setField(this, 23, value);
+  jspb.Message.setProto3IntField(this, 23, value);
 };
 
 
@@ -48144,7 +52199,7 @@ proto.structs.pricing.LoyaltyDiscount.prototype.getReward = function() {
 
 /** @param {number} value */
 proto.structs.pricing.LoyaltyDiscount.prototype.setReward = function(value) {
-  jspb.Message.setField(this, 24, value);
+  jspb.Message.setProto3IntField(this, 24, value);
 };
 
 
@@ -48383,7 +52438,7 @@ proto.structs.pricing.SaleDescriptor.prototype.getType = function() {
 
 /** @param {!proto.structs.pricing.SaleType} value */
 proto.structs.pricing.SaleDescriptor.prototype.setType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -48698,7 +52753,7 @@ proto.structs.pricing.PricingTierAvailability.prototype.getOffered = function() 
 
 /** @param {boolean} value */
 proto.structs.pricing.PricingTierAvailability.prototype.setOffered = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -48715,7 +52770,7 @@ proto.structs.pricing.PricingTierAvailability.prototype.getAvailable = function(
 
 /** @param {boolean} value */
 proto.structs.pricing.PricingTierAvailability.prototype.setAvailable = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3BooleanField(this, 2, value);
 };
 
 
@@ -48893,7 +52948,7 @@ proto.structs.pricing.UnitPricingDescriptor.prototype.getPriceValue = function()
 
 /** @param {number} value */
 proto.structs.pricing.UnitPricingDescriptor.prototype.setPriceValue = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3FloatField(this, 1, value);
 };
 
 
@@ -49122,7 +53177,7 @@ proto.structs.pricing.WeightedPricingDescriptor.prototype.getWeight = function()
 
 /** @param {!proto.structs.pricing.PricingWeightTier} value */
 proto.structs.pricing.WeightedPricingDescriptor.prototype.setWeight = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -49167,7 +53222,7 @@ proto.structs.pricing.WeightedPricingDescriptor.prototype.getWeightInGrams = fun
 
 /** @param {number} value */
 proto.structs.pricing.WeightedPricingDescriptor.prototype.setWeightInGrams = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3FloatField(this, 3, value);
 };
 
 
@@ -49494,7 +53549,7 @@ proto.structs.pricing.PricingDescriptor.prototype.getType = function() {
 
 /** @param {!proto.structs.pricing.PricingType} value */
 proto.structs.pricing.PricingDescriptor.prototype.setType = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -50785,7 +54840,7 @@ proto.oauth.AuthorizationScope.prototype.getLabel = function() {
 
 /** @param {string} value */
 proto.oauth.AuthorizationScope.prototype.setLabel = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -50800,7 +54855,7 @@ proto.oauth.AuthorizationScope.prototype.getUri = function() {
 
 /** @param {string} value */
 proto.oauth.AuthorizationScope.prototype.setUri = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -50954,7 +55009,7 @@ proto.oauth.Client.prototype.getClientId = function() {
 
 /** @param {string} value */
 proto.oauth.Client.prototype.setClientId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -50969,7 +55024,7 @@ proto.oauth.Client.prototype.getClientSecret = function() {
 
 /** @param {string} value */
 proto.oauth.Client.prototype.setClientSecret = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -51111,7 +55166,7 @@ proto.oauth.ClientID.prototype.getId = function() {
 
 /** @param {string} value */
 proto.oauth.ClientID.prototype.setId = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -51253,7 +55308,7 @@ proto.oauth.ClientSecret.prototype.getSecret = function() {
 
 /** @param {string} value */
 proto.oauth.ClientSecret.prototype.setSecret = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -51467,7 +55522,7 @@ proto.products.Apothecary.prototype.getType = function() {
 
 /** @param {!proto.products.ApothecaryType} value */
 proto.products.Apothecary.prototype.setType = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -51753,7 +55808,7 @@ proto.products.Cartridge.prototype.getType = function() {
 
 /** @param {!proto.products.CartridgeType} value */
 proto.products.Cartridge.prototype.setType = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -51977,7 +56032,7 @@ proto.products.EdibleIngredient.prototype.getLabel = function() {
 
 /** @param {string} value */
 proto.products.EdibleIngredient.prototype.setLabel = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -51992,7 +56047,7 @@ proto.products.EdibleIngredient.prototype.getAmount = function() {
 
 /** @param {string} value */
 proto.products.EdibleIngredient.prototype.setAmount = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -52240,7 +56295,7 @@ proto.products.Edible.prototype.getType = function() {
 
 /** @param {!proto.products.EdibleType} value */
 proto.products.Edible.prototype.setType = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -52629,7 +56684,7 @@ proto.products.Extract.prototype.getType = function() {
 
 /** @param {!proto.products.ExtractType} value */
 proto.products.Extract.prototype.setType = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -53236,7 +57291,7 @@ proto.products.Merchandise.prototype.getType = function() {
 
 /** @param {!proto.products.MerchandiseType} value */
 proto.products.Merchandise.prototype.setType = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -53551,7 +57606,7 @@ proto.products.Plant.prototype.getType = function() {
 
 /** @param {!proto.products.PlantType} value */
 proto.products.Plant.prototype.setType = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -53940,7 +57995,7 @@ proto.products.Preroll.prototype.getLength = function() {
 
 /** @param {number} value */
 proto.products.Preroll.prototype.setLength = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3FloatField(this, 3, value);
 };
 
 
@@ -53955,7 +58010,7 @@ proto.products.Preroll.prototype.getThickness = function() {
 
 /** @param {number} value */
 proto.products.Preroll.prototype.setThickness = function(value) {
-  jspb.Message.setField(this, 4, value);
+  jspb.Message.setProto3FloatField(this, 4, value);
 };
 
 
@@ -54287,7 +58342,7 @@ proto.products.menu.Metadata.prototype.getVersion = function() {
 
 /** @param {number} value */
 proto.products.menu.Metadata.prototype.setVersion = function(value) {
-  jspb.Message.setField(this, 2, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -54302,7 +58357,7 @@ proto.products.menu.Metadata.prototype.getStatus = function() {
 
 /** @param {!proto.products.menu.Status} value */
 proto.products.menu.Metadata.prototype.setStatus = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -54698,7 +58753,7 @@ proto.products.menu.SectionData.prototype.getCount = function() {
 
 /** @param {number} value */
 proto.products.menu.SectionData.prototype.setCount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -54923,7 +58978,7 @@ proto.products.menu.SectionedMenu.prototype.getCount = function() {
 
 /** @param {number} value */
 proto.products.menu.SectionedMenu.prototype.setCount = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3IntField(this, 1, value);
 };
 
 
@@ -55799,7 +59854,7 @@ proto.structs.labtesting.BasicTestResults.prototype.getAvailable = function() {
 
 /** @param {boolean} value */
 proto.structs.labtesting.BasicTestResults.prototype.setAvailable = function(value) {
-  jspb.Message.setField(this, 1, value);
+  jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
