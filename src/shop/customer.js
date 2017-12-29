@@ -176,11 +176,23 @@ bloombox.shop.Customer.fromResponse = function(proto) {
     phone === null ? phone : null,
     null);
 
+  let dobData = /** @type {?} */ (proto['customer']['person']['dateOfBirth']);
+
+  let dobValue = /** @type {?string} */ (null);
+  if (typeof dobData === 'string') {
+    // it's a raw ISO8601 date string
+    dobValue = dobData;
+  } else if (typeof dobData === 'object') {
+    // it's an ISO8601-style string probably
+    if (dobData['iso8601'])
+      dobValue = dobData['iso8601'];
+  }
+
   let person = new bloombox.identity.Person(
     proto['customer']['person']['name']['firstName'],
     proto['customer']['person']['name']['lastName'],
     contactInfo,
-    proto['customer']['person']['dateOfBirth'] || null);
+    dobValue);
 
   return new bloombox.shop.Customer(
     person,
