@@ -22488,7 +22488,11 @@ proto.services.devices.v1beta1.Activation.Operation.prototype.hasResponse = func
  * @enum {number}
  */
 proto.services.devices.v1beta1.DeviceError = {
-  NO_ERROR: 0
+  NO_ERROR: 0,
+  INVALID_SERIAL: 1,
+  DEVICE_NOT_FOUND: 2,
+  INTERNAL_ERROR: 3,
+  DEVICE_UNASSIGNED: 4
 };
 
 /**
