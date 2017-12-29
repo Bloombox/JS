@@ -122,6 +122,25 @@ bloombox.identity.StreetAddress = function StreetAddress(firstLine,
 };
 
 
+/**
+ * Inflate a street address object from a raw object response.
+ *
+ * @param {?Object} obj Response object to inflate from.
+ * @return {?bloombox.identity.StreetAddress} Inflated street address object.
+ */
+bloombox.identity.StreetAddress.fromResponse = function(obj) {
+  if (obj['firstLine'] && obj['city'] && obj['state'] && obj['zipcode'])
+    return new bloombox.identity.StreetAddress(
+      obj['firstLine'],
+      obj['secondLine'] || null,
+      obj['city'],
+      obj['state'],
+      obj['zipcode'],
+      obj['country'] || 'USA');
+  return null;  // fail gracefully
+};
+
+
 // -- Contact Info -- //
 
 /**

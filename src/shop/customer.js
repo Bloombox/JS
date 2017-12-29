@@ -27,6 +27,8 @@
 goog.require('bloombox.identity.ContactInfo');
 goog.require('bloombox.identity.Person');
 
+goog.require('bloombox.logging.log');
+
 goog.require('bloombox.util.Exportable');
 
 goog.require('proto.commerce.Customer');
@@ -161,17 +163,36 @@ bloombox.shop.Customer.fromResponse = function(proto) {
     throw new bloombox.shop.CustomerException(
       'Failed to resolve email address.');
 
+  // decode phone number
   let phone = /** @type {?string} */ (
     (typeof proto['customer']['person']['contact']['phone'] === 'object' &&
       typeof (
         proto['customer']['person']['contact']['phone']['e164']) === 'string') ?
-    /** @type {string} */ (
-      proto['customer']['person']['contact']['phone']['e164']) : null);
+      proto['customer']['person']['contact']['phone']['e164'] : null);
 
+  bloombox.logging.log('Resolved customer phone number from response.', {
+    'phone': phone,
+    'response': proto['customer']['person']['contact']['phone']
+  });
+
+  // decode street address
+  let streetAddress = (
+    typeof proto['customer']['person']['contact']['location'] === 'object' &&
+      typeof (
+      proto['customer']['person']['contact']['location']['address'] === 'object'
+      ) ? bloombox.identity.StreetAddress.fromResponse((
+        proto['customer']['person']['contact']['location']['address'])) : null);
+
+  bloombox.logging.log('Resolved customer address from response.', {
+    'address': streetAddress,
+    'response': proto['customer']['person']['contact']['location']
+  });
+
+  // inflate contact info
   let contactInfo = new bloombox.identity.ContactInfo(
     proto['customer']['person']['contact']['email']['address'],
     phone,
-    null);
+    streetAddress);
 
   let dobData = /** @type {?} */ (proto['customer']['person']['dateOfBirth']);
 
