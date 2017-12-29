@@ -161,19 +161,16 @@ bloombox.shop.Customer.fromResponse = function(proto) {
     throw new bloombox.shop.CustomerException(
       'Failed to resolve email address.');
 
-  let phone;
-  if (typeof proto['customer']['person']['contact']['phone'] === 'object' &&
+  let phone = /** @type {?string} */ (
+    (typeof proto['customer']['person']['contact']['phone'] === 'object' &&
       typeof (
-        proto['customer']['person']['contact']['phone']['e164']) === 'string') {
-    phone = /** @type {string} */ (
-      proto['customer']['person']['contact']['phone']['e164']);
-  } else {
-    phone = null;
-  }
+        proto['customer']['person']['contact']['phone']['e164']) === 'string') ?
+    /** @type {string} */ (
+      proto['customer']['person']['contact']['phone']['e164']) : null);
 
   let contactInfo = new bloombox.identity.ContactInfo(
     proto['customer']['person']['contact']['email']['address'],
-    phone === null ? phone : null,
+    phone,
     null);
 
   let dobData = /** @type {?} */ (proto['customer']['person']['dateOfBirth']);
