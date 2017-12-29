@@ -1,7 +1,7 @@
 [submodule "protobuf"]
 	path = protobuf
 	url = https://github.com/google/protobuf.git
-	branch = master
+	tag = v3.5.1
 [submodule "closure"]
 	path = third_party/closure/compiler
 	url = https://github.com/google/closure-compiler
