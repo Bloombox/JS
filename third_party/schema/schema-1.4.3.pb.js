@@ -377,7 +377,6 @@ goog.require('jspb.BinaryWriter');
 goog.require('jspb.Map');
 goog.require('jspb.Message');
 goog.require('proto.google.protobuf.Struct');
-goog.require('proto.google.protobuf.Timestamp');
 
 
 /**
@@ -997,8 +996,10 @@ proto.identity.ids.USDL.prototype.toObject = function(opt_includeInstance) {
  */
 proto.identity.ids.USDL.toObject = function(includeInstance, msg) {
   var f, obj = {
-    barcode: msg.getBarcode_asB64(),
-    jurisdiction: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    barcode: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    magstripe: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    jurisdiction: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    identificationCard: jspb.Message.getFieldWithDefault(msg, 4, false),
     fieldsList: jspb.Message.toObjectList(msg.getFieldsList(),
     proto.identity.ids.USDLFieldValue.toObject, includeInstance)
   };
@@ -1038,12 +1039,20 @@ proto.identity.ids.USDL.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      var value = /** @type {string} */ (reader.readString());
       msg.setBarcode(value);
       break;
-    case 5:
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMagstripe(value);
+      break;
+    case 3:
       var value = /** @type {!proto.geo.usa.USState} */ (reader.readEnum());
       msg.setJurisdiction(value);
+      break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIdentificationCard(value);
       break;
     case 100:
       var value = new proto.identity.ids.USDLFieldValue;
@@ -1079,17 +1088,31 @@ proto.identity.ids.USDL.prototype.serializeBinary = function() {
  */
 proto.identity.ids.USDL.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getBarcode_asU8();
+  f = message.getBarcode();
   if (f.length > 0) {
-    writer.writeBytes(
+    writer.writeString(
       1,
+      f
+    );
+  }
+  f = message.getMagstripe();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
       f
     );
   }
   f = message.getJurisdiction();
   if (f !== 0.0) {
     writer.writeEnum(
-      5,
+      3,
+      f
+    );
+  }
+  f = message.getIdentificationCard();
+  if (f) {
+    writer.writeBool(
+      4,
       f
     );
   }
@@ -1105,7 +1128,7 @@ proto.identity.ids.USDL.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional bytes barcode = 1;
+ * optional string barcode = 1;
  * @return {string}
  */
 proto.identity.ids.USDL.prototype.getBarcode = function() {
@@ -1113,48 +1136,56 @@ proto.identity.ids.USDL.prototype.getBarcode = function() {
 };
 
 
+/** @param {string} value */
+proto.identity.ids.USDL.prototype.setBarcode = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
 /**
- * optional bytes barcode = 1;
- * This is a type-conversion wrapper around `getBarcode()`
+ * optional string magstripe = 2;
  * @return {string}
  */
-proto.identity.ids.USDL.prototype.getBarcode_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getBarcode()));
+proto.identity.ids.USDL.prototype.getMagstripe = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.identity.ids.USDL.prototype.setMagstripe = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional bytes barcode = 1;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getBarcode()`
- * @return {!Uint8Array}
- */
-proto.identity.ids.USDL.prototype.getBarcode_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getBarcode()));
-};
-
-
-/** @param {!(string|Uint8Array)} value */
-proto.identity.ids.USDL.prototype.setBarcode = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
-};
-
-
-/**
- * optional geo.usa.USState jurisdiction = 5;
+ * optional geo.usa.USState jurisdiction = 3;
  * @return {!proto.geo.usa.USState}
  */
 proto.identity.ids.USDL.prototype.getJurisdiction = function() {
-  return /** @type {!proto.geo.usa.USState} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+  return /** @type {!proto.geo.usa.USState} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
 
 /** @param {!proto.geo.usa.USState} value */
 proto.identity.ids.USDL.prototype.setJurisdiction = function(value) {
-  jspb.Message.setProto3EnumField(this, 5, value);
+  jspb.Message.setProto3EnumField(this, 3, value);
+};
+
+
+/**
+ * optional bool identification_card = 4;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.identity.ids.USDL.prototype.getIdentificationCard = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 4, false));
+};
+
+
+/** @param {boolean} value */
+proto.identity.ids.USDL.prototype.setIdentificationCard = function(value) {
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 
@@ -1280,10 +1311,7 @@ proto.identity.ids.Passport.prototype.toObject = function(opt_includeInstance) {
 proto.identity.ids.Passport.toObject = function(includeInstance, msg) {
   var f, obj = {
     barcode: msg.getBarcode_asB64(),
-    id: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    nation: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    expireDate: (f = msg.getExpireDate()) && proto.temporal.Date.toObject(includeInstance, f),
-    birthDate: (f = msg.getBirthDate()) && proto.temporal.Date.toObject(includeInstance, f)
+    nation: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -1326,21 +1354,7 @@ proto.identity.ids.Passport.deserializeBinaryFromReader = function(msg, reader) 
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setId(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
       msg.setNation(value);
-      break;
-    case 4:
-      var value = new proto.temporal.Date;
-      reader.readMessage(value,proto.temporal.Date.deserializeBinaryFromReader);
-      msg.setExpireDate(value);
-      break;
-    case 5:
-      var value = new proto.temporal.Date;
-      reader.readMessage(value,proto.temporal.Date.deserializeBinaryFromReader);
-      msg.setBirthDate(value);
       break;
     default:
       reader.skipField();
@@ -1378,34 +1392,11 @@ proto.identity.ids.Passport.serializeBinaryToWriter = function(message, writer) 
       f
     );
   }
-  f = message.getId();
+  f = message.getNation();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
-    );
-  }
-  f = message.getNation();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-  f = message.getExpireDate();
-  if (f != null) {
-    writer.writeMessage(
-      4,
-      f,
-      proto.temporal.Date.serializeBinaryToWriter
-    );
-  }
-  f = message.getBirthDate();
-  if (f != null) {
-    writer.writeMessage(
-      5,
-      f,
-      proto.temporal.Date.serializeBinaryToWriter
     );
   }
 };
@@ -1451,92 +1442,17 @@ proto.identity.ids.Passport.prototype.setBarcode = function(value) {
 
 
 /**
- * optional string id = 2;
+ * optional string nation = 2;
  * @return {string}
  */
-proto.identity.ids.Passport.prototype.getId = function() {
+proto.identity.ids.Passport.prototype.getNation = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /** @param {string} value */
-proto.identity.ids.Passport.prototype.setId = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional string nation = 3;
- * @return {string}
- */
-proto.identity.ids.Passport.prototype.getNation = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/** @param {string} value */
 proto.identity.ids.Passport.prototype.setNation = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-/**
- * optional temporal.Date expire_date = 4;
- * @return {?proto.temporal.Date}
- */
-proto.identity.ids.Passport.prototype.getExpireDate = function() {
-  return /** @type{?proto.temporal.Date} */ (
-    jspb.Message.getWrapperField(this, proto.temporal.Date, 4));
-};
-
-
-/** @param {?proto.temporal.Date|undefined} value */
-proto.identity.ids.Passport.prototype.setExpireDate = function(value) {
-  jspb.Message.setWrapperField(this, 4, value);
-};
-
-
-proto.identity.ids.Passport.prototype.clearExpireDate = function() {
-  this.setExpireDate(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.identity.ids.Passport.prototype.hasExpireDate = function() {
-  return jspb.Message.getField(this, 4) != null;
-};
-
-
-/**
- * optional temporal.Date birth_date = 5;
- * @return {?proto.temporal.Date}
- */
-proto.identity.ids.Passport.prototype.getBirthDate = function() {
-  return /** @type{?proto.temporal.Date} */ (
-    jspb.Message.getWrapperField(this, proto.temporal.Date, 5));
-};
-
-
-/** @param {?proto.temporal.Date|undefined} value */
-proto.identity.ids.Passport.prototype.setBirthDate = function(value) {
-  jspb.Message.setWrapperField(this, 5, value);
-};
-
-
-proto.identity.ids.Passport.prototype.clearBirthDate = function() {
-  this.setBirthDate(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.identity.ids.Passport.prototype.hasBirthDate = function() {
-  return jspb.Message.getField(this, 5) != null;
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -3437,7 +3353,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.temporal.Instant.oneofGroups_ = [[1,2,3]];
+proto.temporal.Instant.oneofGroups_ = [[1,2]];
 
 /**
  * @enum {number}
@@ -3445,8 +3361,7 @@ proto.temporal.Instant.oneofGroups_ = [[1,2,3]];
 proto.temporal.Instant.SpecCase = {
   SPEC_NOT_SET: 0,
   ISO8601: 1,
-  TIMESTAMP: 2,
-  INSTANT: 3
+  TIMESTAMP: 2
 };
 
 /**
@@ -3486,8 +3401,7 @@ proto.temporal.Instant.prototype.toObject = function(opt_includeInstance) {
 proto.temporal.Instant.toObject = function(includeInstance, msg) {
   var f, obj = {
     iso8601: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    timestamp: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    instant: (f = msg.getInstant()) && proto.google.protobuf.Timestamp.toObject(includeInstance, f)
+    timestamp: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -3532,11 +3446,6 @@ proto.temporal.Instant.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {number} */ (reader.readUint64());
       msg.setTimestamp(value);
       break;
-    case 3:
-      var value = new proto.google.protobuf.Timestamp;
-      reader.readMessage(value,proto.google.protobuf.Timestamp.deserializeBinaryFromReader);
-      msg.setInstant(value);
-      break;
     default:
       reader.skipField();
       break;
@@ -3578,14 +3487,6 @@ proto.temporal.Instant.serializeBinaryToWriter = function(message, writer) {
     writer.writeUint64(
       2,
       f
-    );
-  }
-  f = message.getInstant();
-  if (f != null) {
-    writer.writeMessage(
-      3,
-      f,
-      proto.google.protobuf.Timestamp.serializeBinaryToWriter
     );
   }
 };
@@ -3646,36 +3547,6 @@ proto.temporal.Instant.prototype.clearTimestamp = function() {
  */
 proto.temporal.Instant.prototype.hasTimestamp = function() {
   return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * optional google.protobuf.Timestamp instant = 3;
- * @return {?proto.google.protobuf.Timestamp}
- */
-proto.temporal.Instant.prototype.getInstant = function() {
-  return /** @type{?proto.google.protobuf.Timestamp} */ (
-    jspb.Message.getWrapperField(this, proto.google.protobuf.Timestamp, 3));
-};
-
-
-/** @param {?proto.google.protobuf.Timestamp|undefined} value */
-proto.temporal.Instant.prototype.setInstant = function(value) {
-  jspb.Message.setOneofWrapperField(this, 3, proto.temporal.Instant.oneofGroups_[0], value);
-};
-
-
-proto.temporal.Instant.prototype.clearInstant = function() {
-  this.setInstant(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.temporal.Instant.prototype.hasInstant = function() {
-  return jspb.Message.getField(this, 3) != null;
 };
 
 
