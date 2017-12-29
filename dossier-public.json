@@ -23,7 +23,7 @@
     "protobuf/js/google/protobuf/timestamp.js",
     "protobuf/js/google/protobuf/type.js",
     "protobuf/js/google/protobuf/wrappers.js",
-    "schema/languages/js/*.pb.js"
+    "third_party/schema/*.pb.js"
   ],
   "customPages": [
     {name: "Shop", path: "content/shop.md"},
