@@ -186,7 +186,7 @@ bloombox.telemetry.Event.prototype.export = function() {
  * @public
  */
 bloombox.telemetry.Event.prototype.renderPayload = function() {
-  return {'payload': this.payload};
+  return {'event': {'payload': this.payload}};
 };
 
 
