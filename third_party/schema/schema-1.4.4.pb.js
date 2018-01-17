@@ -21,11 +21,6 @@
  * @enhanceable
  * @suppress {messageConventions} JS Compiler reports an error if a variable or
  *     field starts with 'MSG_' and isn't a translatable message.
- * @license Portions of this code are licensed under the Apache License version
- *     2, and are an originally authored and distributed work by Bloombox, LLC.
- *     Other portions of this code are privately licensed by Bloombox, LLC and,
- *     although licensed privately, are included here for use under the terms of
- *     the MIT License, solely when used with the remaining library code.
  * @public
  */
 
