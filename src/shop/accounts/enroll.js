@@ -27,13 +27,13 @@
 goog.provide('bloombox.shop.enroll.EnrollCallback');
 goog.provide('bloombox.shop.enroll.Enrollment');
 goog.provide('bloombox.shop.enroll.EnrollmentException');
-goog.provide('bloombox.shop.enroll.EnrollmentSource');
 
 goog.require('bloombox.config.active');
 
 goog.require('bloombox.identity.ConsumerProfile');
 goog.require('bloombox.identity.ContactInfo');
 goog.require('bloombox.identity.DoctorRec');
+goog.require('bloombox.identity.EnrollmentSource');
 goog.require('bloombox.identity.ID');
 goog.require('bloombox.identity.Person');
 goog.require('bloombox.identity.PersonException');
@@ -74,32 +74,17 @@ bloombox.shop.enroll.EnrollmentException = function VerifyException(message) {
 };
 
 
-/**
- * Source attribution for the enrollment.
- *
- * @enum {proto.identity.EnrollmentSource}
- * @export
- */
-bloombox.shop.enroll.EnrollmentSource = {
-  'UNSPECIFIED': proto.identity.EnrollmentSource.UNSPECIFIED,
-  'ONLINE': proto.identity.EnrollmentSource.ONLINE,
-  'INTERNAL_APP': proto.identity.EnrollmentSource.INTERNAL_APP,
-  'PARTNER_APP': proto.identity.EnrollmentSource.PARTNER_APP,
-  'IN_STORE': proto.identity.EnrollmentSource.IN_STORE
-};
-
-
 // -- Enrollment -- //
 
 /**
  * Request to enroll a new user, including their driver's license, doctor's
  * recommendation for cannabis, contact info, and account password.
  *
- * @param {bloombox.shop.enroll.EnrollmentSource} source Source type for this
+ * @param {bloombox.identity.EnrollmentSource} source Source type for this
  *        enrollment.
  * @param {string} channel Channel source identifier for this enrollment.
  * @param {bloombox.identity.Person} person Person enrolling for the account.
- * @param {bloombox.identity.DoctorRec} rec Person's doctor rec.
+ * @param {?bloombox.identity.DoctorRec} rec Person's doctor rec.
  * @param {bloombox.identity.ID} license Person's driver's license or other ID.
  * @param {?string=} opt_password User's password. Optional.
  * @param {?bloombox.identity.ConsumerProfile=} opt_profile Consumer profile.
@@ -117,7 +102,7 @@ bloombox.shop.enroll.Enrollment = function Enrollment(source,
    * Enrollment source.
    *
    * @export
-   * @type {bloombox.shop.enroll.EnrollmentSource}
+   * @type {bloombox.identity.EnrollmentSource}
    */
   this.source = source;
 
@@ -141,7 +126,7 @@ bloombox.shop.enroll.Enrollment = function Enrollment(source,
    * Doctor's recommendation.
    *
    * @export
-   * @type {bloombox.identity.DoctorRec}
+   * @type {?bloombox.identity.DoctorRec}
    */
   this.doctorRec = rec;
 
@@ -237,23 +222,6 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
     },
     'source': this.source,
     'channel': this.channel,
-    'doctorRec': {
-      'id': this.doctorRec.id,
-      'expirationDate': {
-        'iso8601': this.doctorRec.expirationDate.getIso8601()
-      },
-      'state': this.doctorRec.state,
-      'country': this.doctorRec.country,
-      'doctor': {
-        'name': {
-          'firstName': this.doctorRec.doctorName.getFirstName(),
-          'lastName': this.doctorRec.doctorName.getLastName()
-        },
-        'contact': {
-          'phone': {'e164': this.doctorRec.doctorPhone}
-        }
-      }
-    },
     'governmentId': {
       'id': this.license.id,
       'expireDate': {
@@ -268,6 +236,33 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
     }
   };
 
+  if (this.doctorRec !== null) {
+    rawObject['doctorRec'] = {
+      'id': this.doctorRec.id,
+        'expirationDate': {
+        'iso8601': this.doctorRec.expirationDate.getIso8601()
+      },
+      'state': this.doctorRec.state,
+      'country': this.doctorRec.country || 'USA',
+      'doctor': {
+        'contact': {},
+        'name': {
+          'firstName': this.doctorRec.doctorName.getFirstName(),
+            'lastName': this.doctorRec.doctorName.getLastName()
+        }
+      }
+    };
+
+    if (this.doctorRec.doctorWebsite !== null)
+      rawObject['doctorRec']['doctor']['contact']['website'] = {
+        'uri': this.doctorRec.doctorWebsite
+      };
+    if (this.doctorRec.doctorPhone)
+      rawObject['doctorRec']['doctor']['contact']['phone'] = {
+        'phone': {'e164': this.doctorRec.doctorPhone}
+      };
+  }
+
   // copy in user profile
   if (this.profile !== null) {
     rawObject['consumerProfile'] = this.profile.serialize();
@@ -277,11 +272,6 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
   if (this.password !== null) rawObject['password'] = this.password;
 
   // copy in doctor website, if it's there
-  if (this.doctorRec.doctorWebsite !== null)
-    rawObject['doctorRec']['person']['contact']['website'] = {
-      'uri': this.doctorRec.doctorWebsite
-    };
-
   if (this.dryRun === true)
     rawObject['dryRun'] = true;
 

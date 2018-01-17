@@ -40,6 +40,7 @@ goog.require('proto.identity.EnrollmentSource');
 goog.require('proto.identity.MenuPreferences');
 
 goog.provide('bloombox.identity.ConsumerProfile');
+goog.provide('bloombox.identity.ConsumerType');
 goog.provide('bloombox.identity.EnrollmentSource');
 goog.provide('bloombox.identity.MenuPreferences');
 goog.provide('bloombox.identity.ProfileException');
@@ -58,6 +59,19 @@ bloombox.identity.EnrollmentSource = {
   'INTERNAL_APP': proto.identity.EnrollmentSource.INTERNAL_APP,
   'PARTNER_APP': proto.identity.EnrollmentSource.PARTNER_APP,
   'IN_STORE': proto.identity.EnrollmentSource.IN_STORE
+};
+
+
+/**
+ * Types of customer profiles.
+ *
+ * @export
+ * @enum {proto.identity.ConsumerType}
+ */
+bloombox.identity.ConsumerType = {
+  'UNVALIDATED': proto.identity.ConsumerType.UNVALIDATED,
+  'RECREATIONAL': proto.identity.ConsumerType.RECREATIONAL,
+  'MEDICAL': proto.identity.ConsumerType.MEDICAL
 };
 
 
@@ -81,6 +95,9 @@ bloombox.identity.ProfileException = function ProfileException(message) {
  * @param {bloombox.identity.EnrollmentSource} source Enrollment source.
  * @param {string} channel Enrollment channel.
  * @param {bloombox.identity.MenuPreferences} menu_prefs User's menu prefs.
+ * @param {bloombox.identity.ConsumerType=} opt_type Optional explicit consumer
+ *        profile type. Defaults to 'UNVALIDATED', and is auto-detected by the
+ *        server with aggressive preference towards 'RECREATIONAL'.
  * @throws {bloombox.identity.ProfileException} If params provided are invalid.
  * @constructor
  * @implements {bloombox.util.Serializable}
@@ -88,7 +105,8 @@ bloombox.identity.ProfileException = function ProfileException(message) {
  */
 bloombox.identity.ConsumerProfile = function ConsumerProfile(source,
                                                              channel,
-                                                             menu_prefs) {
+                                                             menu_prefs,
+                                                             opt_type) {
   /**
    * Source for this enrollment.
    *
@@ -113,6 +131,14 @@ bloombox.identity.ConsumerProfile = function ConsumerProfile(source,
    * @type {bloombox.identity.MenuPreferences}
    */
   this.menuPreferences = menu_prefs;
+
+  /**
+   * Type of consumer profile.
+   *
+   * @export
+   * @type {bloombox.identity.ConsumerType}
+   */
+  this.type = opt_type || bloombox.identity.ConsumerType.UNVALIDATED;
 };
 
 
@@ -124,6 +150,7 @@ bloombox.identity.ConsumerProfile = function ConsumerProfile(source,
  */
 bloombox.identity.ConsumerProfile.prototype.serialize = function() {
   return {
+    'type': this.type,
     'enrollmentSource': this.source,
     'enrollmentChannel': this.channel,
     'preferences': {
