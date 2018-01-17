@@ -1,10 +1,34 @@
+
+/*
+ * Copyright 2017, Bloombox, LLC. All rights reserved.
+ *
+ * Source and object computer code contained herein is the private intellectual
+ * property of Bloombox, a California Limited Liability Corporation. Use of this
+ * code in source form requires permission in writing before use or the
+ * assembly, distribution, or publishing of derivative works, for commercial
+ * purposes or any other purpose, from a duly authorized officer of Momentum
+ * Ideas Co.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * @fileoverview
  * @enhanceable
  * @suppress {messageConventions} JS Compiler reports an error if a variable or
  *     field starts with 'MSG_' and isn't a translatable message.
+ * @license Portions of this code are licensed under the Apache License version
+ *     2, and are an originally authored and distributed work by Bloombox, LLC.
+ *     Other portions of this code are privately licensed by Bloombox, LLC and,
+ *     although licensed privately, are included here for use under the terms of
+ *     the MIT License, solely when used with the remaining library code.
  * @public
  */
+
 // GENERATED CODE -- DO NOT EDIT!
 
 
@@ -110,6 +134,7 @@ goog.provide('proto.geo.usa.USState');
 goog.provide('proto.identity.ConsumerMembership');
 goog.provide('proto.identity.ConsumerPreferences');
 goog.provide('proto.identity.ConsumerProfile');
+goog.provide('proto.identity.ConsumerType');
 goog.provide('proto.identity.EnrollmentSource');
 goog.provide('proto.identity.ID');
 goog.provide('proto.identity.IDMedia');
@@ -12841,7 +12866,8 @@ proto.identity.ConsumerProfile.toObject = function(includeInstance, msg) {
     favoriteDispensariesList: jspb.Message.getRepeatedField(msg, 2),
     enrollmentSource: jspb.Message.getFieldWithDefault(msg, 3, 0),
     enrollmentChannel: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    preferences: (f = msg.getPreferences()) && proto.identity.ConsumerPreferences.toObject(includeInstance, f)
+    preferences: (f = msg.getPreferences()) && proto.identity.ConsumerPreferences.toObject(includeInstance, f),
+    type: jspb.Message.getFieldWithDefault(msg, 6, 0)
   };
 
   if (includeInstance) {
@@ -12898,6 +12924,10 @@ proto.identity.ConsumerProfile.deserializeBinaryFromReader = function(msg, reade
       var value = new proto.identity.ConsumerPreferences;
       reader.readMessage(value,proto.identity.ConsumerPreferences.deserializeBinaryFromReader);
       msg.setPreferences(value);
+      break;
+    case 6:
+      var value = /** @type {!proto.identity.ConsumerType} */ (reader.readEnum());
+      msg.setType(value);
       break;
     default:
       reader.skipField();
@@ -12962,6 +12992,13 @@ proto.identity.ConsumerProfile.serializeBinaryToWriter = function(message, write
       5,
       f,
       proto.identity.ConsumerPreferences.serializeBinaryToWriter
+    );
+  }
+  f = message.getType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      6,
+      f
     );
   }
 };
@@ -13070,6 +13107,21 @@ proto.identity.ConsumerProfile.prototype.clearPreferences = function() {
  */
 proto.identity.ConsumerProfile.prototype.hasPreferences = function() {
   return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional ConsumerType type = 6;
+ * @return {!proto.identity.ConsumerType}
+ */
+proto.identity.ConsumerProfile.prototype.getType = function() {
+  return /** @type {!proto.identity.ConsumerType} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+};
+
+
+/** @param {!proto.identity.ConsumerType} value */
+proto.identity.ConsumerProfile.prototype.setType = function(value) {
+  jspb.Message.setProto3EnumField(this, 6, value);
 };
 
 
@@ -14099,6 +14151,15 @@ proto.identity.EnrollmentSource = {
   PARTNER_APP: 3,
   IN_STORE: 4,
   IMPORT: 5
+};
+
+/**
+ * @enum {number}
+ */
+proto.identity.ConsumerType = {
+  UNVALIDATED: 0,
+  RECREATIONAL: 1,
+  MEDICAL: 2
 };
 
 
@@ -33008,7 +33069,7 @@ proto.services.menu.v1beta1.GetMenu.Response.prototype.toObject = function(opt_i
 proto.services.menu.v1beta1.GetMenu.Response.toObject = function(includeInstance, msg) {
   var f, obj = {
     fingerprint: (f = msg.getFingerprint()) && proto.crypto.primitives.integrity.Hash.toObject(includeInstance, f),
-    menu: (f = msg.getMenu()) && proto.products.menu.Menu.toObject(includeInstance, f)
+    catalog: (f = msg.getCatalog()) && proto.products.menu.Menu.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -33053,7 +33114,7 @@ proto.services.menu.v1beta1.GetMenu.Response.deserializeBinaryFromReader = funct
     case 2:
       var value = new proto.products.menu.Menu;
       reader.readMessage(value,proto.products.menu.Menu.deserializeBinaryFromReader);
-      msg.setMenu(value);
+      msg.setCatalog(value);
       break;
     default:
       reader.skipField();
@@ -33092,7 +33153,7 @@ proto.services.menu.v1beta1.GetMenu.Response.serializeBinaryToWriter = function(
       proto.crypto.primitives.integrity.Hash.serializeBinaryToWriter
     );
   }
-  f = message.getMenu();
+  f = message.getCatalog();
   if (f != null) {
     writer.writeMessage(
       2,
@@ -33134,23 +33195,23 @@ proto.services.menu.v1beta1.GetMenu.Response.prototype.hasFingerprint = function
 
 
 /**
- * optional products.menu.Menu menu = 2;
+ * optional products.menu.Menu catalog = 2;
  * @return {?proto.products.menu.Menu}
  */
-proto.services.menu.v1beta1.GetMenu.Response.prototype.getMenu = function() {
+proto.services.menu.v1beta1.GetMenu.Response.prototype.getCatalog = function() {
   return /** @type{?proto.products.menu.Menu} */ (
     jspb.Message.getWrapperField(this, proto.products.menu.Menu, 2));
 };
 
 
 /** @param {?proto.products.menu.Menu|undefined} value */
-proto.services.menu.v1beta1.GetMenu.Response.prototype.setMenu = function(value) {
+proto.services.menu.v1beta1.GetMenu.Response.prototype.setCatalog = function(value) {
   jspb.Message.setWrapperField(this, 2, value);
 };
 
 
-proto.services.menu.v1beta1.GetMenu.Response.prototype.clearMenu = function() {
-  this.setMenu(undefined);
+proto.services.menu.v1beta1.GetMenu.Response.prototype.clearCatalog = function() {
+  this.setCatalog(undefined);
 };
 
 
@@ -33158,7 +33219,7 @@ proto.services.menu.v1beta1.GetMenu.Response.prototype.clearMenu = function() {
  * Returns whether this field is set.
  * @return {!boolean}
  */
-proto.services.menu.v1beta1.GetMenu.Response.prototype.hasMenu = function() {
+proto.services.menu.v1beta1.GetMenu.Response.prototype.hasCatalog = function() {
   return jspb.Message.getField(this, 2) != null;
 };
 
