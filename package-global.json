@@ -1,6 +1,6 @@
 {
   "name": "bloombox",
-  "version": "1.0.0-beta15",
+  "version": "1.0.0-beta16",
   "license": "Apache-2.0",
   "private": false,
   "description": "JavaScript API client for Bloombox",
