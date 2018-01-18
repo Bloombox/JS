@@ -2,7 +2,7 @@
 // demo config
 let partnerCode = 'caliva';
 let locationCode = 'sjc';
-let apiKey = 'AIzaSyB_-R9mmvOy7HdyKEbhJOKIoDYFDOt0740';
+let apiKey = 'AIzaSyAEOsmEqQP5vX8aPvrlZH0f3AN7eGubL60';
 let zipToCheck = '95126';
 let enrollAccount = 'info+barack@bloombox.io';
 let enrollPhone = '+19163419482';
@@ -59,6 +59,30 @@ function doFailureTest() {
           failureAccount +
           '\' could not be verified.', 'color: red', err);
       }
+    });
+  });
+}
+
+
+/**
+ * Run a test that fetches menu data.
+ */
+function doMenuTest(callback) {
+  bloombox.setup(partnerCode, locationCode, apiKey, function() {
+    bloombox.menu.retrieve(function(menu, err) {
+      if (err) {
+        console.log(
+          '%cThere was an error retrieving menu data: ',
+          'color: red',
+          err);
+        callback();
+        return;
+      }
+      console.log(
+        '%cMenu data ready.',
+        'color: green',
+        menu);
+      callback();
     });
   });
 }
@@ -325,6 +349,10 @@ function simple() {
   doInfoTest(function(next) { next(); }, function() { });
 }
 
+function menu() {
+  doMenuTest(function() { });
+}
+
 function telemetry() {
   doTelemetry();
 }
@@ -332,3 +360,4 @@ function telemetry() {
 console.log("Call the following to run a full test: full()");
 console.log("Call the following to run a limited test: simple()");
 console.log("Call the following to run a telemetry test: telemetry()");
+console.log("Call the following to run a menu test: menu()");

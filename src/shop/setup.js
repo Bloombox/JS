@@ -39,9 +39,10 @@ goog.require('bloombox.shop.VERSION');
 goog.require('bloombox.shop.enroll.Enrollment');
 goog.require('bloombox.shop.info');
 goog.require('bloombox.shop.order.Order');
-goog.provide('bloombox.shop.setup');
 goog.require('bloombox.shop.verify');
 goog.require('bloombox.shop.zipcheck');
+
+goog.provide('bloombox.shop.setup');
 
 
 /**

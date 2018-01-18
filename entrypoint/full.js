@@ -32,6 +32,9 @@ goog.require('bloombox.VERSION');
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
+// Module: Menu
+goog.require('bloombox.menu.setup');
+
 // Module: Shop
 goog.require('bloombox.shop.setup');
 
@@ -83,10 +86,13 @@ bloombox.setup = function(partner, location, apikey, callback) {
 
   // setup telemetry first
   bloombox.telemetry.setup(partner, location, apikey, function() {
-    // setup the shop
-    bloombox.shop.setup(partner, location, apikey, function() {
-      // dispatch user callback
-      callback();
+    // setup the menu
+    bloombox.menu.setup(partner, location, apikey, function() {
+      // setup the shop
+      bloombox.shop.setup(partner, location, apikey, function() {
+        // dispatch user callback
+        callback();
+      });
     });
   });
 };
