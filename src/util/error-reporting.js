@@ -191,9 +191,9 @@ stackdriver.ErrorReporter.prototype.report = function(errObj) {
       err.errorName = errorName;
       let originalMessage = err.toString().replace('Error: ', '');
       let newMessage = errorName + ': ' + originalMessage;
-      err.toString = (function() {
+      err.toString = function() {
         return newMessage;
-      }).bind(err);
+      };
       firstFrameIndex = 2;
     }
   }
@@ -234,7 +234,7 @@ stackdriver.ErrorReporter.prototype.report = function(errObj) {
     payload['message'] = [
       'Error extracting stack trace: ', reason, '\n',
       err.toString(), '\n',
-      '    (', err['file'], ':', err['line'], ':', err['column'], ')',
+      '    (', err['file'], ':', err['line'], ':', err['column'], ')'
     ].join('');
     bloombox.logging.error(payload['message']);
     that.sendErrorPayload(payload);
