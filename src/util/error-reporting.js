@@ -275,7 +275,7 @@ stackdriver.ErrorReporter.prototype.sendErrorPayload = function(payload) {
  *                 custom token) or `undefined` if not logged in.
  */
 stackdriver.ErrorReporter.prototype.setUser = function(user) {
-  this.context.user = user;
+  this.context['user'] = user;
 };
 
 
