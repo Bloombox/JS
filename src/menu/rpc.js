@@ -58,8 +58,13 @@ bloombox.menu.Routine = {
  * @package
  */
 bloombox.menu.endpoint = function(endpoint) {
+  // force service endpoint in debug mode
+  let prefix = bloombox.DEBUG === true ?
+    'https://menu.api.bloombox.cloud' :
+    bloombox.menu.MENU_API_ENDPOINT;
+
   return [
-    bloombox.menu.MENU_API_ENDPOINT,
+    prefix,
     'menu',
     bloombox.menu.MENU_API_VERSION,
     endpoint.startsWith('/') ? endpoint.slice(1) : endpoint
