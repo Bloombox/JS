@@ -169,8 +169,11 @@ stackdriver.ErrorReporter.prototype.report = function(errObj) {
     let errorName = null;
     if (errorMessage) {
       if (errorType) {
-        errorMessageInfo = errorType + ': ' + errorMessage;
-        errorName = errorType.replace('$$', '').replace('$', '.');
+        errorMessageInfo = errorMessage;
+        errorName = errorType.replace(/\$\$/g, '').replace(/\$/g, '.');
+        if (errorName[0] === '.') {
+          errorName = errorName.slice(1);
+        }
       } else {
         errorMessageInfo = errorMessage;
         errorName = 'InternalError';
@@ -179,6 +182,12 @@ stackdriver.ErrorReporter.prototype.report = function(errObj) {
 
     if (errorMessageInfo !== null) {
       err = new Error(errorMessageInfo);
+      err.errorName = errorName;
+      let originalMessage = err.toString().replace('Error: ', '');
+      let newMessage = errorName + ': ' + originalMessage;
+      err.toString = (function() {
+        return newMessage;
+      }).bind(err);
     }
   }
 

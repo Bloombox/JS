@@ -103,6 +103,20 @@ function doErrorTest() {
 
 
 /**
+ * Run a test that errors in a protected method.
+ */
+function doFatalTest() {
+  bloombox.setup(partnerCode, locationCode, apiKey, function() {
+    function errorTest() {
+      10 / 0;
+    }
+    let op = stackdriver.protect(errorTest);
+    op();
+  });
+}
+
+
+/**
  * Run a test that queries shop info, then runs a callback.
  */
 function doInfoTest(callback, nextCallback) {
@@ -361,7 +375,17 @@ function full() {
 }
 
 function err() {
-  doErrorTest();
+  try {
+    doErrorTest();
+  } catch (e) {
+
+  }
+
+  try {
+    doFatalTest();
+  } catch (e) {
+
+  }
 }
 
 function simple() {
