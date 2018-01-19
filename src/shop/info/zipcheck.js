@@ -37,6 +37,8 @@ goog.require('bloombox.logging.log');
 goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
+goog.require('stackdriver.protect');
+
 
 // -- Structures -- //
 
@@ -150,3 +152,5 @@ bloombox.shop.zipcheck = function(zipcode, callback) {
     callback(null, null);
   });
 };
+
+bloombox.shop.zipcheck = stackdriver.protect(bloombox.shop.zipcheck);

@@ -299,10 +299,11 @@ stackdriver.setup = function(reporter) {
  * Report an error to the library-global error reporter.
  *
  * @param {Error|String} err Error to report.
- * @param {function(?)} op Operation the error happened in.
+ * @param {function(?)=} opt_op Operation the error happened in.
  * @public
  */
-stackdriver.reportError = function(err, op) {
+stackdriver.reportError = function(err, opt_op) {
+  let op = opt_op ? opt_op.name : null;
   if (_REPORTER === null) {
     // uh oh
     bloombox.logging.error('ErrorReporter', 'Unable to report error: not ' +
@@ -310,7 +311,8 @@ stackdriver.reportError = function(err, op) {
   } else {
     // report the error
     bloombox.logging.error('Reporting error encountered in' +
-       ' protected function \'' + op.name + '\'.', err);
+      (op ? ' protected function \'' + op + '\'.' :
+            ' anonymous function.'), err);
     _REPORTER.report(err);
   }
 };

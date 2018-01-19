@@ -40,6 +40,8 @@ goog.require('bloombox.shop.rpc.ShopRPC');
 
 goog.require('proto.services.shop.v1.ShopStatus');
 
+goog.require('stackdriver.protect');
+
 
 // -- Structures -- //
 
@@ -162,3 +164,5 @@ bloombox.shop.info = function(callback) {
     callback(null, null, status || null);
   });
 };
+
+bloombox.shop.info = stackdriver.protect(bloombox.shop.info);
