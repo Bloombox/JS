@@ -34,6 +34,7 @@ goog.provide('bloombox.telemetry.XHR_DEBOUNCE');
 goog.provide('bloombox.telemetry.XHR_RETRIES');
 goog.provide('bloombox.telemetry.XHR_TIMEOUT');
 
+goog.require('bloombox.API_ENDPOINT');
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.VERSION');
 
@@ -107,8 +108,7 @@ bloombox.telemetry.MAX_XHRs = bloombox.telemetry.BATCH_SIZE;
  * @define {string} Prefix for API interactions.
  * @public
  */
-bloombox.telemetry.TELEMETRY_API_ENDPOINT = (
-  'https://telemetry.api.bloombox.cloud');
+bloombox.telemetry.TELEMETRY_API_ENDPOINT = bloombox.API_ENDPOINT;
 
 
 /**

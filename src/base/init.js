@@ -23,6 +23,7 @@
 
 /*global goog */
 
+goog.provide('bloombox.API_ENDPOINT');
 goog.provide('bloombox.DEBUG');
 goog.provide('bloombox.DEBUG_PROPERTY');
 goog.provide('bloombox.INTERNAL');
@@ -69,3 +70,12 @@ bloombox.VERSION = 'v1.0.0';
  * @export
  */
 bloombox.INTERNAL = false;
+
+
+/**
+ * Global API endpoint.
+ *
+ * @define {string} API_ENDPOINT Global API endpoint.
+ * @export
+ */
+bloombox.API_ENDPOINT = 'https://api.bloombox.cloud';

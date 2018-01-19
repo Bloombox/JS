@@ -29,6 +29,7 @@ goog.provide('bloombox.menu.MENU_API_ENDPOINT');
 goog.provide('bloombox.menu.MENU_API_VERSION');
 goog.provide('bloombox.menu.VERSION');
 
+goog.require('bloombox.API_ENDPOINT');
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.VERSION');
 
@@ -59,7 +60,7 @@ bloombox.menu.VERSION = 'v1beta1r1';
  * @define {string} bloombox.menu.MENU_API_ENDPOINT Prefix for API interactions.
  * @public
  */
-bloombox.menu.MENU_API_ENDPOINT = 'https://menu.api.bloombox.cloud';
+bloombox.menu.MENU_API_ENDPOINT = bloombox.API_ENDPOINT;
 
 
 /**

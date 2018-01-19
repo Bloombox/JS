@@ -29,6 +29,7 @@ goog.provide('bloombox.shop.SHOP_API_ENDPOINT');
 goog.provide('bloombox.shop.SHOP_API_VERSION');
 goog.provide('bloombox.shop.VERSION');
 
+goog.require('bloombox.API_ENDPOINT');
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.VERSION');
 
@@ -59,7 +60,7 @@ bloombox.shop.VERSION = 'v1r1';
  * @define {string} bloombox.shop.SHOP_API_ENDPOINT Prefix for API interactions.
  * @public
  */
-bloombox.shop.SHOP_API_ENDPOINT = 'https://shop.api.bloombox.cloud';
+bloombox.shop.SHOP_API_ENDPOINT = bloombox.API_ENDPOINT;
 
 
 /**
