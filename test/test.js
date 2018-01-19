@@ -87,6 +87,21 @@ function doMenuTest(callback) {
   });
 }
 
+
+/**
+ * Run a test that errors in a protected method.
+ */
+function doErrorTest() {
+  bloombox.setup(partnerCode, locationCode, apiKey, function() {
+    function errorTest(blab) {
+      throw new bloombox.rpc.RPCException('woopsie');
+    }
+    let op = stackdriver.protect(errorTest);
+    op('hello, failure!');
+  });
+}
+
+
 /**
  * Run a test that queries shop info, then runs a callback.
  */
@@ -343,6 +358,10 @@ function doTelemetry() {
 function full() {
   doInfoTest(function(next) { next(); }, function() { });
   doEnrollTest(doOrderTest);
+}
+
+function err() {
+  doErrorTest();
 }
 
 function simple() {

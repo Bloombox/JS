@@ -103,6 +103,7 @@ dependencies: node_modules/ submodules sources
 sources:
 	@echo "Rendering source templates..."
 	@sed 's/__VERSION__/$(VERSION)/g' .tpl/license.txt.tpl > src/license.txt
+	@cat third_party/stackdriver/error-reporting.js >> src/license.txt
 	@sed 's/__VERSION__/$(VERSION)/g' .tpl/README.md.tpl > README.md
 
 sync-schema: submodules

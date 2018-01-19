@@ -42,6 +42,14 @@ goog.require('bloombox.shop.setup');
 goog.require('bloombox.telemetry.optout');
 goog.require('bloombox.telemetry.setup');
 
+// Util: Error Reporting
+goog.require('stackdriver.ErrorReporter');
+goog.require('stackdriver.StackdriverConfig');
+goog.require('stackdriver.protect');
+goog.require('stackdriver.reportError');
+goog.require('stackdriver.setup');
+
+
 
 /**
  * Global library variant.
@@ -50,6 +58,33 @@ goog.require('bloombox.telemetry.setup');
  * @export
  */
 bloombox.VARIANT = 'full';
+
+
+/**
+ * API key used to report errors in the library.
+ *
+ * @define {string} INTERNAL_API_KEY Internal API key.
+ * @export
+ */
+bloombox.INTERNAL_API_KEY = 'AIzaSyAEOsmEqQP5vX8aPvrlZH0f3AN7eGubL60';
+
+
+/**
+ * Project to report errors to.
+ *
+ * @define {string} JS_PROJECT_ID Project ID.
+ * @export
+ */
+bloombox.JS_PROJECT_ID = 'bloom-js';
+
+
+/**
+ * Error reporting engine.
+ *
+ * @type {?stackdriver.ErrorReporter}
+ * @export
+ */
+bloombox.ERROR_REPORTER = null;
 
 
 /**
@@ -77,6 +112,19 @@ bloombox.setup = function(partner, location, apikey, callback) {
     }));
 
   bloombox.config.configure(merged);
+
+  // prepare error reporting config and start it up
+  let errorReporting = /** @type {stackdriver.StackdriverConfig} */ ({
+    key: bloombox.INTERNAL_API_KEY,
+    projectId: bloombox.JS_PROJECT_ID,
+    service: 'js-sdk:' + bloombox.VARIANT,
+    version: bloombox.VERSION,
+    reportUncaughtExceptions: true,
+    disabled: false
+  });
+
+  bloombox.ERROR_REPORTER = new stackdriver.ErrorReporter(errorReporting);
+  stackdriver.setup(bloombox.ERROR_REPORTER);
 
   bloombox.logging.log('BBJS is initializing.',
     {'version': bloombox.VERSION,

@@ -45,16 +45,20 @@ goog.require('goog.events');
 goog.require('goog.net.XhrIo');
 
 
-
 /**
  * Exception object for the construction phase of an RPC. Usually thrown when
  * no API key is present, or `setup` is not called before RPC methods.
  *
  * @param {string} message Message for the error.
  * @constructor
- * @public
+ * @export
  */
 bloombox.rpc.RPCException = function RPCException(message) {
+  /**
+   * Exception message.
+   *
+   * @type {string}
+   */
   this.message = message;
 };
 
@@ -99,7 +103,6 @@ bloombox.rpc.DEBUG_HEADER = 'X-Bloom-Debug';
 bloombox.rpc.TRACE_HEADER = 'X-Bloom-Trace';
 
 
-
 // noinspection JSUnusedGlobalSymbols
 /**
  * Show this exception's message.
@@ -109,7 +112,6 @@ bloombox.rpc.TRACE_HEADER = 'X-Bloom-Trace';
 bloombox.rpc.RPCException.prototype.toString = function() {
   return 'RPCException: ' + this.message;
 };
-
 
 
 /**
