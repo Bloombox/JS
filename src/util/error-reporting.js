@@ -189,6 +189,7 @@ stackdriver.ErrorReporter.prototype.report = function(errObj) {
       err.toString = (function() {
         return newMessage;
       }).bind(err);
+      firstFrameIndex = 2;
     }
   }
 
@@ -202,7 +203,7 @@ stackdriver.ErrorReporter.prototype.report = function(errObj) {
       err = e;
     }
     // the first frame when using report() is always this library
-    firstFrameIndex = 1;
+    firstFrameIndex = 2;
   }
   let that = this;
   // This will use source maps and normalize the stack frames
