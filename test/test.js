@@ -328,7 +328,7 @@ function doEnrollTest(callback) {
 
   // enrollment
   let enrollment = new bloombox.shop.enroll.Enrollment(
-    bloombox.shop.enroll.EnrollmentSource.ONLINE,
+    bloombox.identity.EnrollmentSource.ONLINE,
     'test',
     enrollee,
     rec,

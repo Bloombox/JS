@@ -40,6 +40,7 @@ goog.require('proto.temporal.Instant');
 
 goog.provide('bloombox.telemetry.Event');
 goog.provide('bloombox.telemetry.InternalCollection');
+goog.provide('bloombox.telemetry.event');
 
 
 // - Generic Events - //

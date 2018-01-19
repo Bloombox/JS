@@ -23,6 +23,11 @@
 
 /*global goog */
 
+goog.require('bloombox.DEBUG');
+goog.require('bloombox.logging.error');
+goog.require('bloombox.logging.info');
+goog.require('bloombox.logging.log');
+
 goog.provide('stackdriver.ErrorReporter');
 goog.provide('stackdriver.StackdriverConfig');
 
@@ -222,6 +227,7 @@ stackdriver.ErrorReporter.prototype.report = function(errObj) {
         ' (', stack[s].getFileName(), ':', stack[s].getLineNumber(),
         ':', stack[s].getColumnNumber() , ')'].join('');
     }
+    bloombox.logging.error(payload['message']);
     that.sendErrorPayload(payload);
   }, function(reason) {
     // Failure to extract stacktrace
@@ -230,6 +236,7 @@ stackdriver.ErrorReporter.prototype.report = function(errObj) {
       err.toString(), '\n',
       '    (', err['file'], ':', err['line'], ':', err['column'], ')',
     ].join('');
+    bloombox.logging.error(payload['message']);
     that.sendErrorPayload(payload);
   });
 };
@@ -306,7 +313,7 @@ stackdriver.reportError = function(err, opt_op) {
   let op = opt_op ? opt_op.name : null;
   if (_REPORTER === null) {
     // uh oh
-    bloombox.logging.error('ErrorReporter', 'Unable to report error: not ' +
+    bloombox.logging.error('Unable to report error: not ' +
       'initialized.', err);
   } else {
     // report the error
@@ -378,13 +385,15 @@ stackdriver.protect = function(operation) {
   let wrapped = (function() {
     try {
       // execute with given args
-      op.bind(this).apply(arguments);
+      return op.bind(arguments[0]).apply(Array.from(arguments).slice(1));
     } catch (err) {
+      if (bloombox.DEBUG) {
+        debugger;
+      }
       // handle with error reporting, then rethrow
       stackdriver.reportError(err, op);
-      throw (typeof err === 'string' ? err : new Error(err.stack));
+      bloombox.logging.error(err);
     }
   });
-  wrapped['_protectedOperation'] = op;
   return wrapped;
 };
