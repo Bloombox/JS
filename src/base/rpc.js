@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2017, Bloombox, LLC.
+ * Copyright 2018, Bloombox, LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@ goog.require('bloombox.logging.warn');
 goog.require('goog.events');
 goog.require('goog.net.XhrIo');
 
+goog.require('stackdriver.reportError');
 
 
 /**
@@ -52,9 +53,14 @@ goog.require('goog.net.XhrIo');
  *
  * @param {string} message Message for the error.
  * @constructor
- * @public
+ * @export
  */
 bloombox.rpc.RPCException = function RPCException(message) {
+  /**
+   * Exception message.
+   *
+   * @type {string}
+   */
   this.message = message;
 };
 
@@ -99,7 +105,6 @@ bloombox.rpc.DEBUG_HEADER = 'X-Bloom-Debug';
 bloombox.rpc.TRACE_HEADER = 'X-Bloom-Trace';
 
 
-
 // noinspection JSUnusedGlobalSymbols
 /**
  * Show this exception's message.
@@ -109,7 +114,6 @@ bloombox.rpc.TRACE_HEADER = 'X-Bloom-Trace';
 bloombox.rpc.RPCException.prototype.toString = function() {
   return 'RPCException: ' + this.message;
 };
-
 
 
 /**
@@ -266,46 +270,74 @@ bloombox.rpc.RPC.prototype.onload = function(success, error) {
       this.done = true;
       let contentType = this.xhr.getResponseHeader('Content-Type');
       let contentLength = this.xhr.getResponseHeader('Content-Length');
-      let response = this.xhr.getResponseJson();
+      try {
+        let response = this.xhr.getResponseJson();
 
-      // parse status
-      let status = this.xhr.getStatus();
+        // parse status
+        let status = this.xhr.getStatus();
 
-      if (status === 200 ||
+        if (status === 200 ||
           status === 201 ||
           status === 202 ||
           status === 204) {
-        bloombox.logging.log('RPC received successful status ' +
-          status, {'xhr': this.xhr});
+          bloombox.logging.log('RPC received successful status ' +
+            status, {'xhr': this.xhr});
 
-        if (!response &&
-           (!contentLength || parseInt(contentLength, 10) === 0)) {
-          // no response body means a successful transaction, technically
-          bloombox.logging.warn(
-            'Response returned for RPC was empty or invalid.', this);
-          success(null);
-        } else {
-          // parse response text
-          if (contentType === 'application/json' ||
-            contentType.startsWith('application/json')) {
-            bloombox.logging.log(
-              'Loaded payload for successful RPC transaction.',
-              {'rpc': this, 'response': response});
-            success(/** @type {Object} */ (response));
+          if (!response &&
+            (!contentLength || parseInt(contentLength, 10) === 0)) {
+            // no response body means a successful transaction, technically
+            bloombox.logging.warn(
+              'Response returned for RPC was empty or invalid.', this);
+            success(null);
           } else {
-            bloombox.logging.error(
-              'Server indicated unrecognized content type:',
-              contentType);
-            error(null);
+            if (contentType === 'application/json' ||
+              contentType.startsWith('application/json')) {
+              bloombox.logging.log(
+                'Loaded payload for successful RPC transaction.',
+                {'rpc': this, 'response': response});
+              success(/** @type {Object} */ (response));
+            } else {
+              bloombox.logging.error(
+                'Server indicated unrecognized content type:',
+                contentType);
+              error(null);
+            }
+          }
+        } else {
+          // some error event i.e. unrecognized status code
+          bloombox.logging.error('Failed to resolve RPC: unrecognized status ' +
+            status, {'xhr': this.xhr, 'status': status});
+          let err = new Error(
+            'RPC Error: "' + this.httpMethod + ' ' + this.endpoint + '"\n' +
+            'Status: ' + status.toString() + '\n' +
+            'Failure code: ' + this.xhr.getLastErrorCode() + '\n' +
+            'Failure reason: ' + this.xhr.getLastError() + '\n' +
+            'Key: ' + this.apiKey);
+          err.code = status || this.xhr.getLastErrorCode() || -1;
+          stackdriver.reportError(err);
+          error(status);
+        }
+        if (!this.keep) this.xhr = null;
+      } catch (err) {
+        // catch invalid JSON
+        if (err instanceof Error) {
+          if (err.message.toLowerCase().indexOf('invalid json') !== -1) {
+            // json parse error
+            err.code = this.xhr.getLastErrorCode() || -1;
+            err.message = 'RPC failed with error \'' + (err.name || 'UNKNOWN') +
+              '\'.\nEndpoint: ' + this.endpoint +
+              '\nFailure code: ' + this.xhr.getLastErrorCode() +
+              '\nFailure reason: ' + this.xhr.getLastError() +
+              '\nResponse: "' + this.xhr.getResponseText() + '".';
+
+            bloombox.logging.error('Failed to resolve RPC.', {
+              'xhr': this.xhr,
+              'error': err
+            });
+            stackdriver.reportError(err);
           }
         }
-      } else {
-        // some error event i.e. unrecognized status code
-        bloombox.logging.error('Failed to resolve RPC: unrecognized status ' +
-          status, {'xhr': this.xhr});
-        error(status);
       }
-      if (!this.keep) this.xhr = null;
     }
   }
 };

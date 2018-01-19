@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2017, Bloombox, LLC. All rights reserved.
+ * Copyright 2018, Bloombox, LLC. All rights reserved.
  *
  * Source and object computer code contained herein is the private intellectual
  * property of Bloombox, a California Limited Liability Corporation. Use of this
@@ -40,6 +40,7 @@ goog.require('proto.temporal.Instant');
 
 goog.provide('bloombox.telemetry.Event');
 goog.provide('bloombox.telemetry.InternalCollection');
+goog.provide('bloombox.telemetry.event');
 
 
 // - Generic Events - //

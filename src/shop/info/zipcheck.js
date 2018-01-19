@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2017, Bloombox, LLC. All rights reserved.
+ * Copyright 2018, Bloombox, LLC. All rights reserved.
  *
  * Source and object computer code contained herein is the private intellectual
  * property of Bloombox, a California Limited Liability Corporation. Use of this
@@ -36,6 +36,8 @@ goog.require('bloombox.logging.log');
 
 goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.rpc.ShopRPC');
+
+goog.require('stackdriver.protect');
 
 
 // -- Structures -- //
@@ -150,3 +152,5 @@ bloombox.shop.zipcheck = function(zipcode, callback) {
     callback(null, null);
   });
 };
+
+bloombox.shop.zipcheck = stackdriver.protect(bloombox.shop.zipcheck);

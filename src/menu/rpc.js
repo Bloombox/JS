@@ -17,9 +17,9 @@
  */
 
 /**
- * Bloombox Shop: RPC
+ * Bloombox Menu: RPC
  *
- * @fileoverview Provides tools for low-level RPCs to the Shop API.
+ * @fileoverview Provides tools for low-level RPCs to the Menu API.
  */
 
 /*global goog */
@@ -27,59 +27,54 @@
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
+goog.require('bloombox.menu.MENU_API_ENDPOINT');
+goog.require('bloombox.menu.MENU_API_VERSION');
+goog.require('bloombox.menu.VERSION');
+
 goog.require('bloombox.rpc.RPC');
 
-goog.require('bloombox.shop.SHOP_API_ENDPOINT');
-goog.require('bloombox.shop.SHOP_API_VERSION');
-goog.require('bloombox.shop.VERSION');
-
-goog.provide('bloombox.shop.Routine');
-goog.provide('bloombox.shop.ShopRPCException');
-goog.provide('bloombox.shop.endpoint');
-goog.provide('bloombox.shop.rpc.ShopRPC');
+goog.provide('bloombox.menu.MenuRPCException');
+goog.provide('bloombox.menu.Routine');
+goog.provide('bloombox.menu.endpoint');
+goog.provide('bloombox.menu.rpc.MenuRPC');
 
 
 
 /**
- * Enumerates methods in the Shop API.
+ * Enumerates methods in the Menu API.
  *
  * @enum {string}
  */
-bloombox.shop.Routine = {
-  VERIFY: 'VERIFY',
-  SUBMIT_ORDER: 'SUBMIT_ORDER',
-  GET_ORDER: 'GET_ORDER',
-  ENROLL_USER: 'ENROLL_USER',
-  CHECK_ZIP: 'CHECK_ZIP',
-  SHOP_INFO: 'SHOP_INFO'
+bloombox.menu.Routine = {
+  RETRIEVE: 'RETRIEVE'
 };
 
 
 /**
- * Calculate a shop API endpoint, given an RPC method and the base API endpoint.
+ * Calculate a menu API endpoint, given an RPC method and the base API endpoint.
  *
  * @param {string} endpoint Method to generate an endpoint for.
  * @return {string} Calculated endpoint URI.
  * @package
  */
-bloombox.shop.endpoint = function(endpoint) {
+bloombox.menu.endpoint = function(endpoint) {
   return [
-    bloombox.shop.SHOP_API_ENDPOINT,
-    'shop',
-    bloombox.shop.SHOP_API_VERSION,
+    bloombox.menu.MENU_API_ENDPOINT,
+    'menu',
+    bloombox.menu.MENU_API_VERSION,
     endpoint.startsWith('/') ? endpoint.slice(1) : endpoint
   ].join('/');
 };
 
 
 /**
- * Exception object for the construction phase of a shop RPC. Usually thrown
+ * Exception object for the construction phase of a menu RPC. Usually thrown
  * when no API key is present, or `setup` is not called before RPC methods.
  *
  * @param {string} message Message for the error.
  * @constructor
  */
-bloombox.shop.ShopRPCException = function ShopRPCException(message) {
+bloombox.menu.MenuRPCException = function MenuRPCException(message) {
   this.message = message;
 };
 
@@ -90,44 +85,44 @@ bloombox.shop.ShopRPCException = function ShopRPCException(message) {
  *
  * @return {string} Message for this exception.
  */
-bloombox.shop.ShopRPCException.prototype.toString = function() {
-  return 'ShopRPCException: ' + this.message;
+bloombox.menu.MenuRPCException.prototype.toString = function() {
+  return 'MenuRPCException: ' + this.message;
 };
 
 
 /**
- * Return a `ShopRPC` instance for a generic HTTP RPC call.
+ * Return a `MenuRPC` instance for a generic HTTP RPC call.
  *
- * @param {bloombox.shop.Routine} rpcMethod Method to generate an endpoint for.
+ * @param {bloombox.menu.Routine} rpcMethod Method to generate an endpoint for.
  * @param {string} httpMethod HTTP method to use.
  * @param {string} endpoint URL endpoint to send the RPC to.
  * @param {Object=} payload Payload to use if we're POST-ing or PUT-ing.
- * @throws {bloombox.shop.ShopRPCException} If the provided values are invalid
+ * @throws {bloombox.menu.MenuRPCException} If the provided values are invalid
  *         in some way.
  * @constructor
  * @struct
  */
-bloombox.shop.rpc.ShopRPC = function ShopRPC(rpcMethod,
+bloombox.menu.rpc.MenuRPC = function MenuRPC(rpcMethod,
                                              httpMethod,
                                              endpoint,
                                              payload) {
-  let targetEndpoint = bloombox.shop.endpoint(endpoint);
+  let targetEndpoint = bloombox.menu.endpoint(endpoint);
 
-  if (typeof httpMethod !== 'string')  // @TODO better method validation?
-    throw new bloombox.shop.ShopRPCException(
+  if (typeof httpMethod !== 'string')
+    throw new bloombox.menu.MenuRPCException(
       'Invalid HTTP method: ' + httpMethod);
   if (typeof endpoint !== 'string')
-    throw new bloombox.shop.ShopRPCException(
+    throw new bloombox.menu.MenuRPCException(
       'Invalid RPC endpoint: ' + endpoint);
   if (payload !== null && payload !== undefined && (
       typeof payload !== 'object'))
-    throw new bloombox.shop.ShopRPCException(
+    throw new bloombox.menu.MenuRPCException(
       'Cannot provide non-object type as payload: ' + payload);
 
   /**
-   * Shop RPC routine we're calling.
+   * Menu RPC routine we're calling.
    *
-   * @type {bloombox.shop.Routine}
+   * @type {bloombox.menu.Routine}
    * @public
    */
   this.rpcMethod = rpcMethod;
@@ -149,16 +144,16 @@ bloombox.shop.rpc.ShopRPC = function ShopRPC(rpcMethod,
  * @param {function(?Object)} callback Callback to dispatch once we're done.
  * @param {function(?number=)} error Error callback.
  */
-bloombox.shop.rpc.ShopRPC.prototype.send = function(callback, error) {
+bloombox.menu.rpc.MenuRPC.prototype.send = function(callback, error) {
   // send underlying RPC w/callback and errors passed through
   this.rpc.send((function(response) {
     bloombox.logging.log(
-      'Shop RPC for method \'' + this.rpcMethod + '\' completed.');
+      'Menu RPC for method \'' + this.rpcMethod + '\' completed.');
     callback(response);
   }).bind(this), /** @type {function(?number=)} */ ((function(error_code) {
     bloombox.logging.error(
-      'Failed to resolve Shop API RPC for method \'' +
-        this.rpcMethod + '\': status ' + error_code);
+      'Failed to resolve Menu API RPC for method \'' +
+      this.rpcMethod + '\': status ' + error_code);
     error(error_code);
   }).bind(this)));
 };

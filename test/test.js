@@ -2,7 +2,7 @@
 // demo config
 let partnerCode = 'caliva';
 let locationCode = 'sjc';
-let apiKey = 'AIzaSyB_-R9mmvOy7HdyKEbhJOKIoDYFDOt0740';
+let apiKey = 'AIzaSyAEOsmEqQP5vX8aPvrlZH0f3AN7eGubL60';
 let zipToCheck = '95126';
 let enrollAccount = 'info+barack@bloombox.io';
 let enrollPhone = '+19163419482';
@@ -62,6 +62,57 @@ function doFailureTest() {
     });
   });
 }
+
+
+/**
+ * Run a test that fetches menu data.
+ */
+function doMenuTest(callback) {
+  bloombox.setup(partnerCode, locationCode, apiKey, function() {
+    bloombox.menu.retrieve(function(menu, err) {
+      if (err) {
+        console.log(
+          '%cThere was an error retrieving menu data: ',
+          'color: red',
+          err);
+        callback();
+        return;
+      }
+      console.log(
+        '%cMenu data ready.',
+        'color: green',
+        menu);
+      callback();
+    });
+  });
+}
+
+
+/**
+ * Run a test that errors in a protected method.
+ */
+function doErrorTest() {
+  bloombox.setup(partnerCode, locationCode, apiKey, function() {
+    function errorTest(blab) {
+      throw new bloombox.rpc.RPCException('woopsie');
+    }
+    let op = stackdriver.protect(errorTest);
+    op('hello, failure!');
+  });
+}
+
+
+/**
+ * Run a test that errors in a protected method.
+ */
+function doFatalTest() {
+  function errorTest() {
+    blabble.blabble / x02;
+  }
+  let op = stackdriver.protect(errorTest);
+  op();
+}
+
 
 /**
  * Run a test that queries shop info, then runs a callback.
@@ -277,7 +328,7 @@ function doEnrollTest(callback) {
 
   // enrollment
   let enrollment = new bloombox.shop.enroll.Enrollment(
-    bloombox.shop.enroll.EnrollmentSource.ONLINE,
+    bloombox.identity.EnrollmentSource.ONLINE,
     'test',
     enrollee,
     rec,
@@ -321,8 +372,26 @@ function full() {
   doEnrollTest(doOrderTest);
 }
 
+function err() {
+  try {
+    doErrorTest();
+  } catch (e) {
+
+  }
+
+  try {
+    doFatalTest();
+  } catch (e) {
+
+  }
+}
+
 function simple() {
   doInfoTest(function(next) { next(); }, function() { });
+}
+
+function menu() {
+  doMenuTest(function() { });
 }
 
 function telemetry() {
@@ -332,3 +401,4 @@ function telemetry() {
 console.log("Call the following to run a full test: full()");
 console.log("Call the following to run a limited test: simple()");
 console.log("Call the following to run a telemetry test: telemetry()");
+console.log("Call the following to run a menu test: menu()");

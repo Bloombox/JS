@@ -17,17 +17,17 @@
  */
 
 /**
- * Bloombox: Shop Client
+ * Bloombox: Menu Client
  *
- * @fileoverview Provides the Bloombox shop client.
+ * @fileoverview Provides the Bloombox menu client.
  */
 
 /*global goog */
 
-goog.provide('bloombox.shop.DEBUG');
-goog.provide('bloombox.shop.SHOP_API_ENDPOINT');
-goog.provide('bloombox.shop.SHOP_API_VERSION');
-goog.provide('bloombox.shop.VERSION');
+goog.provide('bloombox.menu.DEBUG');
+goog.provide('bloombox.menu.MENU_API_ENDPOINT');
+goog.provide('bloombox.menu.MENU_API_VERSION');
+goog.provide('bloombox.menu.VERSION');
 
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.VERSION');
@@ -35,37 +35,37 @@ goog.require('bloombox.VERSION');
 
 
 /**
- * Shop client debug flag.
+ * Menu client debug flag.
  *
- * @const {boolean} bloombox.shop.DEBUG Global switch for logging and other
+ * @const {boolean} bloombox.menu.DEBUG Global switch for logging and other
  *        debug features.
  * @public
  */
-bloombox.shop.DEBUG = bloombox.DEBUG;
+bloombox.menu.DEBUG = bloombox.DEBUG;
 
 
 /**
- * Shop client library version.
+ * Menu client library version.
  *
- * @const {string} bloombox.shop.VERSION Shop client version string.
+ * @const {string} bloombox.menu.VERSION Menu client version string.
  * @export
  */
-bloombox.shop.VERSION = 'v1r1';
+bloombox.menu.VERSION = 'v1beta1r1';
 
 
 /**
- * Shop API endpoint prefix.
+ * Menu API endpoint prefix.
  *
- * @define {string} bloombox.shop.SHOP_API_ENDPOINT Prefix for API interactions.
+ * @define {string} bloombox.menu.MENU_API_ENDPOINT Prefix for API interactions.
  * @public
  */
-bloombox.shop.SHOP_API_ENDPOINT = 'https://shop.api.bloombox.cloud';
+bloombox.menu.MENU_API_ENDPOINT = 'https://menu.api.bloombox.cloud';
 
 
 /**
- * Shop API version.
+ * Menu API version.
  *
- * @define {string} bloombox.shop.SHOP_API_VERSION Version of the API to use.
+ * @define {string} bloombox.menu.MENU_API_VERSION Version of the API to use.
  * @public
  */
-bloombox.shop.SHOP_API_VERSION = 'v1';
+bloombox.menu.MENU_API_VERSION = 'v1beta1';

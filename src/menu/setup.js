@@ -17,10 +17,10 @@
  */
 
 /**
- * Bloombox Shop: Setup
+ * Bloombox Menu: Setup
  *
  * @fileoverview Provides routines called during page setup for use of the
- * Bloombox Shop API.
+ * Bloombox Menu API.
  */
 
 /*global goog */
@@ -31,32 +31,28 @@ goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
 // - Base
-goog.require('bloombox.shop.DEBUG');
-goog.require('bloombox.shop.SHOP_API_ENDPOINT');
-goog.require('bloombox.shop.VERSION');
+goog.require('bloombox.menu.DEBUG');
+goog.require('bloombox.menu.MENU_API_ENDPOINT');
+goog.require('bloombox.menu.VERSION');
 
-// - Shop Library
-goog.require('bloombox.shop.enroll.Enrollment');
-goog.require('bloombox.shop.info');
-goog.require('bloombox.shop.order.Order');
-goog.require('bloombox.shop.verify');
-goog.require('bloombox.shop.zipcheck');
+// - Menu API
+goog.require('bloombox.menu.retrieve');
 
-goog.provide('bloombox.shop.setup');
+goog.provide('bloombox.menu.setup');
 
 
 /**
- * Setup the Bloombox Shop API. Provide your API key and an endpoint if you
+ * Setup the Bloombox Menu API. Provide your API key and an endpoint if you
  * would like to override the default (most users should not need to).
  *
  * @param {string} partner Partner code to use.
  * @param {string} location Location code to use.
  * @param {string} apikey API key to use.
- * @param {function()} callback Callback dispatched when the Shop API is ready.
+ * @param {function()} callback Callback dispatched when the Menu API is ready.
  * @param {string=} endpoint Override for endpoint. Uses default if unspecified.
  * @export
  */
-bloombox.shop.setup = function(partner, location, apikey, callback, endpoint) {
+bloombox.menu.setup = function(partner, location, apikey, callback, endpoint) {
   if (!partner || !location) {
     bloombox.logging.error('Partner or location code is not defined.');
     return;
@@ -65,14 +61,14 @@ bloombox.shop.setup = function(partner, location, apikey, callback, endpoint) {
   let config = bloombox.config.active();
   let merged = /** @type {bloombox.config.JSConfig} */ (
     Object.assign({}, config, {'endpoints':
-      Object.assign({}, config.endpoints || {}, {
-        shop: endpoint || bloombox.shop.SHOP_API_ENDPOINT})}));
+        Object.assign({}, config.endpoints || {}, {
+          menu: endpoint || bloombox.menu.MENU_API_ENDPOINT})}));
 
   bloombox.config.configure(merged);
 
-  bloombox.logging.log('Shop is ready for use.',
-    {'version': bloombox.shop.VERSION,
-      'debug': bloombox.shop.DEBUG,
+  bloombox.logging.log('Menu is ready for use.',
+    {'version': bloombox.menu.VERSION,
+      'debug': bloombox.menu.DEBUG,
       'config': bloombox.config.active()});
   callback();
 };
