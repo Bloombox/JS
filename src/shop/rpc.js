@@ -63,8 +63,13 @@ bloombox.shop.Routine = {
  * @package
  */
 bloombox.shop.endpoint = function(endpoint) {
+  // force service endpoint in debug mode
+  let prefix = bloombox.DEBUG === true ?
+    'https://shop.api.bloombox.cloud' :
+    bloombox.shop.SHOP_API_ENDPOINT;
+
   return [
-    bloombox.shop.SHOP_API_ENDPOINT,
+    preefix,
     'shop',
     bloombox.shop.SHOP_API_VERSION,
     endpoint.startsWith('/') ? endpoint.slice(1) : endpoint
