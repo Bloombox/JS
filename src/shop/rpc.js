@@ -69,7 +69,7 @@ bloombox.shop.endpoint = function(endpoint) {
     bloombox.shop.SHOP_API_ENDPOINT;
 
   return [
-    preefix,
+    prefix,
     'shop',
     bloombox.shop.SHOP_API_VERSION,
     endpoint.startsWith('/') ? endpoint.slice(1) : endpoint
