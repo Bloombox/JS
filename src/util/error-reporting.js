@@ -27,6 +27,7 @@ goog.provide('stackdriver.ErrorReporter');
 goog.provide('stackdriver.StackdriverConfig');
 
 goog.provide('stackdriver.errorize');
+goog.provide('stackdriver.notifyFingerprint');
 goog.provide('stackdriver.protect');
 goog.provide('stackdriver.reportError');
 goog.provide('stackdriver.setup');
@@ -346,6 +347,16 @@ stackdriver.errorize = function(ctor) {
   });
   Object.setPrototypeOf(wrapped, Error);
   return wrapped;
+};
+
+
+/**
+ * Set the unique device fingerprint for error reporting.
+ *
+ * @param {string} fingerprint Fingerprint.
+ */
+stackdriver.notifyFingerprint = function(fingerprint) {
+  _REPORTER.setUser(fingerprint);
 };
 
 

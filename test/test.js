@@ -106,13 +106,11 @@ function doErrorTest() {
  * Run a test that errors in a protected method.
  */
 function doFatalTest() {
-  bloombox.setup(partnerCode, locationCode, apiKey, function() {
-    function errorTest() {
-      10 / 0;
-    }
-    let op = stackdriver.protect(errorTest);
-    op();
-  });
+  function errorTest() {
+    blabble.blabble / x02;
+  }
+  let op = stackdriver.protect(errorTest);
+  op();
 }
 
 

@@ -36,6 +36,8 @@ goog.require('bloombox.util.generateUUID');
 goog.require('proto.analytics.context.ApplicationType');
 goog.require('proto.analytics.context.DeviceApplication');
 
+goog.require('stackdriver.notifyFingerprint');
+
 
 // - Global Context - //
 /**
@@ -302,6 +304,7 @@ bloombox.telemetry.resolveFingerprint = function() {
     bloombox.telemetry.DEVICE_FINGERPRINT = (
       bloombox.telemetry._resolveGlobalStateUUID(
         bloombox.telemetry.GlobalState.FINGERPRINT));
+    stackdriver.notifyFingerprint(bloombox.telemetry.DEVICE_FINGERPRINT);
   }
   return bloombox.telemetry.DEVICE_FINGERPRINT;
 };
