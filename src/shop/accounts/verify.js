@@ -35,16 +35,15 @@ goog.require('bloombox.shop.Customer');
 goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
-goog.require('proto.commerce.Customer');
-goog.require('proto.services.shop.v1.VerifyError');
-goog.require('proto.services.shop.v1.VerifyMember');
+goog.require('proto.bloombox.schema.services.shop.v1.VerifyError');
+goog.require('proto.bloombox.schema.services.shop.v1.VerifyMember');
 
 
 
 /**
  * Callback function type definition for verify RPCs.
  *
- * @typedef {function(boolean, ?proto.services.shop.v1.VerifyError, ?bloombox.shop.Customer)}
+ * @typedef {function(boolean, ?proto.bloombox.schema.services.shop.v1.VerifyError, ?bloombox.shop.Customer)}
  */
 bloombox.shop.VerifyCallback;
 
@@ -107,7 +106,8 @@ bloombox.shop.verify = function(email,
       bloombox.logging.log('Response received for verify RPC.', response);
 
       // decode the response
-      let inflated = new proto.services.shop.v1.VerifyMember.Response();
+      let inflated = (
+        new proto.bloombox.schema.services.shop.v1.VerifyMember.Response());
       inflated.setVerified((response['verified'] === true) || false);
       if (response['error']) {
         inflated.setError(response['error']);

@@ -28,8 +28,8 @@ goog.provide('bloombox.identity.Person');
 goog.provide('bloombox.identity.PersonException');
 goog.provide('bloombox.identity.StreetAddress');
 
-goog.require('proto.person.Name');
-goog.require('proto.temporal.Date');
+goog.require('proto.opencannabis.person.Name');
+goog.require('proto.opencannabis.temporal.Date');
 
 
 /**
@@ -218,19 +218,19 @@ bloombox.identity.Person = function Person(firstName,
       dateOfBirth + '\'.');
 
   // setup a name object
-  let name = new proto.person.Name();
+  let name = new proto.opencannabis.person.Name();
   name.setFirstName(firstName);
   name.setLastName(lastName);
 
   // setup an instant object
-  let instant = new proto.temporal.Date();
+  let instant = new proto.opencannabis.temporal.Date();
   if (dateOfBirth !== null) {
     instant.setIso8601(dateOfBirth);
   }
 
   /**
    * Person's name.
-   * @type {proto.person.Name}
+   * @type {proto.opencannabis.person.Name}
    * @export
    */
   this.name = name;
@@ -244,7 +244,7 @@ bloombox.identity.Person = function Person(firstName,
 
   /**
    * Person's date of birth.
-   * @type {?proto.temporal.Date}
+   * @type {?proto.opencannabis.temporal.Date}
    * @export
    */
   this.dateOfBirth = dateOfBirth !== null ? instant : null;

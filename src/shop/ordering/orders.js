@@ -49,20 +49,20 @@ goog.require('bloombox.shop.order.DeliveryLocation');
 
 goog.require('bloombox.shop.rpc.ShopRPC');
 
-goog.require('proto.commerce.Item');
-goog.require('proto.commerce.Order');
-goog.require('proto.commerce.OrderScheduling');
-goog.require('proto.commerce.OrderType');
-goog.require('proto.commerce.ProductVariant');
-goog.require('proto.commerce.ProductWeight');
-goog.require('proto.commerce.SchedulingType');
-goog.require('proto.commerce.VariantSpec');
+goog.require('proto.bloombox.schema.services.shop.v1.OrderError');
+goog.require('proto.bloombox.schema.services.shop.v1.SubmitOrder.Request');
+goog.require('proto.bloombox.schema.services.shop.v1.SubmitOrder.Response');
 
-goog.require('proto.services.shop.v1.OrderError');
-goog.require('proto.services.shop.v1.SubmitOrder.Request');
-goog.require('proto.services.shop.v1.SubmitOrder.Response');
+goog.require('proto.opencannabis.commerce.Item');
+goog.require('proto.opencannabis.commerce.Order');
+goog.require('proto.opencannabis.commerce.OrderScheduling');
+goog.require('proto.opencannabis.commerce.OrderType');
+goog.require('proto.opencannabis.commerce.ProductVariant');
+goog.require('proto.opencannabis.commerce.ProductWeight');
+goog.require('proto.opencannabis.commerce.SchedulingType');
+goog.require('proto.opencannabis.commerce.VariantSpec');
 
-goog.require('proto.temporal.Instant');
+goog.require('proto.opencannabis.temporal.Instant');
 
 
 // -- Structures -- //
@@ -81,8 +81,8 @@ bloombox.shop.OrderCallback;
  * @export
  */
 bloombox.shop.order.Type = {
-  'PICKUP': proto.commerce.OrderType.PICKUP,
-  'DELIVERY': proto.commerce.OrderType.DELIVERY
+  'PICKUP': proto.opencannabis.commerce.OrderType.PICKUP,
+  'DELIVERY': proto.opencannabis.commerce.OrderType.DELIVERY
 };
 
 
@@ -93,8 +93,8 @@ bloombox.shop.order.Type = {
  * @export
  */
 bloombox.shop.SchedulingType = {
-  'ASAP': proto.commerce.SchedulingType.ASAP,
-  'TIMED': proto.commerce.SchedulingType.TIMED
+  'ASAP': proto.opencannabis.commerce.SchedulingType.ASAP,
+  'TIMED': proto.opencannabis.commerce.SchedulingType.TIMED
 };
 
 
@@ -131,17 +131,19 @@ bloombox.shop.order.OrderScheduling = function OrderScheduling(scheduling,
  * Export this order scheduling specification as a proto object suitable
  * for use in an RPC.
  *
- * @return {proto.commerce.OrderScheduling} Proto order scheduling spec.
+ * @return {proto.opencannabis.commerce.OrderScheduling} Proto order scheduling
+ *         spec.
  * @package
  */
 bloombox.shop.order.OrderScheduling.prototype.export = function() {
-  let protob = new proto.commerce.OrderScheduling();
-  protob.setScheduling(/** @type {proto.commerce.SchedulingType<number>} */ (
+  let protob = new proto.opencannabis.commerce.OrderScheduling();
+  protob.setScheduling(
+    /** @type {proto.opencannabis.commerce.SchedulingType<number>} */ (
       this.scheduling));
 
   // set desired time, if applicable
   if (this.desiredTime !== null) {
-    let desiredTime = new proto.temporal.Instant();
+    let desiredTime = new proto.opencannabis.temporal.Instant();
     desiredTime.setTimestamp(this.desiredTime);
     protob.setDesiredTime(desiredTime);
   }
@@ -402,8 +404,9 @@ bloombox.shop.order.Order.prototype.addItem = function(item) {
  */
 bloombox.shop.order.Order.prototype.send = function(callback) {
   // set basic properties
-  let payload = new proto.commerce.Order();
-  payload.setType(/** @type {proto.commerce.OrderType<number>} */ (this.type));
+  let payload = new proto.opencannabis.commerce.Order();
+  payload.setType(
+    /** @type {proto.opencannabis.commerce.OrderType<number>} */ (this.type));
 
   // add notes, if any are specified
   let notes = this.notes;
@@ -425,7 +428,8 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
 
   this.items.map(function(item) {
     let itemobj = /** @type {bloombox.shop.Item} */ (item);
-    let protob = /** @type {!proto.commerce.Item} */ (itemobj.export());
+    let protob = /** @type {!proto.opencannabis.commerce.Item} */ (
+      itemobj.export());
     payload.addItem(protob);
   });
 
@@ -537,13 +541,15 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
           'Response received for order submission RPC.', response);
 
         // decode the response
-        let inflated = new proto.services.shop.v1.SubmitOrder.Response();
+        let inflated = (
+          new proto.bloombox.schema.services.shop.v1.SubmitOrder.Response());
         if (response['error'])
           inflated.setError(response['error']);
         inflated.setOrderId(response['orderId']);
 
         if ((
-          inflated.getError() === proto.services.shop.v1.OrderError.NO_ERROR) &&
+          inflated.getError() === (
+            proto.bloombox.schema.services.shop.v1.OrderError.NO_ERROR)) &&
             inflated.getOrderId()) {
           this.id = inflated.getOrderId();
           callback(/** @type {string} */ (inflated.getOrderId()), this, null);

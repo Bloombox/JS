@@ -21,7 +21,7 @@
  * @fileoverview Product lab testing tools and structures.
  */
 
-goog.require('proto.structs.labtesting.CannabinoidRatio');
+goog.require('proto.opencannabis.structs.labtesting.CannabinoidRatio');
 
 goog.provide('bloombox.testing.CannabinoidRatio');
 
@@ -31,19 +31,20 @@ goog.provide('bloombox.testing.CannabinoidRatio');
  * THC to CBD cannabinoid ratio.
  *
  * @export
- * @enum {proto.structs.labtesting.CannabinoidRatio}
+ * @enum {proto.opencannabis.structs.labtesting.CannabinoidRatio}
  */
 bloombox.testing.CannabinoidRatio = {
   'NO_CANNABINOID_PREFERENCE': (
-    proto.structs.labtesting.CannabinoidRatio.NO_CANNABINOID_PREFERENCE),
+    proto.opencannabis.structs.labtesting.CannabinoidRatio
+      .NO_CANNABINOID_PREFERENCE),
   'THC_ONLY': (
-    proto.structs.labtesting.CannabinoidRatio.THC_ONLY),
+    proto.opencannabis.structs.labtesting.CannabinoidRatio.THC_ONLY),
   'THC_OVER_CBD': (
-    proto.structs.labtesting.CannabinoidRatio.THC_OVER_CBD),
+    proto.opencannabis.structs.labtesting.CannabinoidRatio.THC_OVER_CBD),
   'EQUAL': (
-    proto.structs.labtesting.CannabinoidRatio.EQUAL),
+    proto.opencannabis.structs.labtesting.CannabinoidRatio.EQUAL),
   'CBD_OVER_THC': (
-    proto.structs.labtesting.CannabinoidRatio.CBD_OVER_THC),
+    proto.opencannabis.structs.labtesting.CannabinoidRatio.CBD_OVER_THC),
   'CBD_ONLY': (
-    proto.structs.labtesting.CannabinoidRatio.CBD_ONLY)
+    proto.opencannabis.structs.labtesting.CannabinoidRatio.CBD_ONLY)
 };

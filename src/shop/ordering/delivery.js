@@ -28,8 +28,8 @@ goog.provide('bloombox.shop.order.DeliveryLocation');
 
 goog.require('bloombox.identity.StreetAddress');
 
-goog.require('proto.commerce.DeliveryDestination');
-goog.require('proto.geo.Address');
+goog.require('proto.opencannabis.commerce.DeliveryDestination');
+goog.require('proto.opencannabis.geo.Address');
 
 
 // -- Delivery Location -- //
@@ -61,12 +61,12 @@ bloombox.shop.order.DeliveryLocation = function DeliveryLocation(streetAddress,
 /**
  * Export a proto that specifies this delivery location.
  *
- * @return {proto.commerce.DeliveryDestination} Exported proto.
+ * @return {proto.opencannabis.commerce.DeliveryDestination} Exported proto.
  * @public
  */
 bloombox.shop.order.DeliveryLocation.prototype.export = function() {
-  let protobuf = new proto.commerce.DeliveryDestination();
-  let address = new proto.geo.Address();
+  let protobuf = new proto.opencannabis.commerce.DeliveryDestination();
+  let address = new proto.opencannabis.geo.Address();
 
   address.setFirstLine(this.streetAddress.firstLine);
   if (this.streetAddress.secondLine !== null)

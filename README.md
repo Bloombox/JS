@@ -2,7 +2,7 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/b02d3e57e60d030bc818/maintainability)](https://codeclimate.com/github/Bloombox/JS/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/b02d3e57e60d030bc818/test_coverage)](https://codeclimate.com/github/Bloombox/JS/test_coverage)
 
-Latest Version: `v1.0.0-beta19`
+Latest Version: `v1.0.0-beta20`
 
 This package provides support for Bloombox APIs in browser-oriented JavaScript. It's built using the Closure stack from
 Google, including Closure Compiler, Library, builder, and so on.
@@ -43,13 +43,13 @@ Then, you'll see debug logs in your console that describe what's going on.
 If you would like to pin your application to a specific version of the library, you can do that:
 
 ```html
-  <script type="text/javascript" src="https://js.bloombox.cloud/client/v1.0.0-beta19.min.js"></script>
+  <script type="text/javascript" src="https://js.bloombox.cloud/client/v1.0.0-beta20.min.js"></script>
 ```
 
 and...
 
 ```html
-  <script type="text/javascript" src="https://js.bloombox.cloud/client/v1.0.0-beta19-debug.min.js"></script>
+  <script type="text/javascript" src="https://js.bloombox.cloud/client/v1.0.0-beta20-debug.min.js"></script>
 ```
 
 

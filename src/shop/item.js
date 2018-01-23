@@ -27,9 +27,9 @@ goog.provide('bloombox.shop.Item');
 
 goog.require('bloombox.util.Exportable');
 
-goog.require('proto.commerce.Item');
-goog.require('proto.commerce.VariantSpec');
-goog.require('proto.temporal.Instant');
+goog.require('proto.opencannabis.commerce.Item');
+goog.require('proto.opencannabis.commerce.VariantSpec');
+goog.require('proto.opencannabis.temporal.Instant');
 
 
 // -- Item -- //
@@ -38,7 +38,7 @@ goog.require('proto.temporal.Instant');
  *
  * @param {bloombox.product.Key} key Key for the item.
  * @param {number} count Count of this item to add to the order.
- * @implements {bloombox.util.Exportable<proto.commerce.Item>}
+ * @implements {bloombox.util.Exportable<proto.opencannabis.commerce.Item>}
  * @constructor
  * @export
  */
@@ -61,7 +61,7 @@ bloombox.shop.Item = function Item(key,
   /**
    * Variant specifications for this item.
    *
-   * @type {Array<!proto.commerce.VariantSpec>}
+   * @type {Array<!proto.opencannabis.commerce.VariantSpec>}
    */
   this.variants = [];
 };
@@ -70,11 +70,11 @@ bloombox.shop.Item = function Item(key,
 /**
  * Prepare a proto from an order item, suitable for use in an RPC.
  *
- * @return {proto.commerce.Item} Prepared proto.
+ * @return {proto.opencannabis.commerce.Item} Prepared proto.
  * @public
  */
 bloombox.shop.Item.prototype.export = function() {
-  let protob = new proto.commerce.Item();
+  let protob = new proto.opencannabis.commerce.Item();
 
   // set key
   let protoKey = this.key.export();
@@ -85,7 +85,8 @@ bloombox.shop.Item.prototype.export = function() {
 
   // prepare variant specs
   this.variants.map(function(item) {
-    protob.addVariant(/** @type {!proto.commerce.VariantSpec} */ (item));
+    protob.addVariant(/** @type {!proto.opencannabis.commerce.VariantSpec} */ (
+      item));
   });
   return protob;
 };
@@ -94,25 +95,26 @@ bloombox.shop.Item.prototype.export = function() {
 /**
  * Add a product variant.
  *
- * @param {proto.commerce.ProductVariant} type Type of variance to specify.
+ * @param {proto.opencannabis.commerce.ProductVariant} type Type of variance to
+ *        specify.
  * @param {*} content Content to specify as part of this variance.
  * @return {bloombox.shop.Item} Subject item, for chain-ability.
  * @package
  */
 bloombox.shop.Item.prototype._addVariant = function(type, content) {
   // make a variant spec
-  let variantSpec = new proto.commerce.VariantSpec();
+  let variantSpec = new proto.opencannabis.commerce.VariantSpec();
   variantSpec.setVariant(type);
 
   switch (type) {
-    case proto.commerce.ProductVariant.SIZE:
+    case proto.opencannabis.commerce.ProductVariant.SIZE:
       variantSpec.setSize(/** @type {string} */ (content));
       break;
-    case proto.commerce.ProductVariant.WEIGHT:
-      variantSpec.setWeight(/** @type {proto.commerce.ProductWeight} */ (
-        content));
+    case proto.opencannabis.commerce.ProductVariant.WEIGHT:
+      variantSpec.setWeight(
+        /** @type {proto.opencannabis.commerce.ProductWeight} */ (content));
       break;
-    case proto.commerce.ProductVariant.COLOR:
+    case proto.opencannabis.commerce.ProductVariant.COLOR:
       variantSpec.setColor(/** @type {string} */ (content));
       break;
   }
@@ -133,7 +135,8 @@ bloombox.shop.Item.prototype._addVariant = function(type, content) {
  * @export
  */
 bloombox.shop.Item.prototype.addWeightVariant = function(weight) {
-  return this._addVariant(proto.commerce.ProductVariant.WEIGHT, weight);
+  return this._addVariant(proto.opencannabis.commerce.ProductVariant.WEIGHT,
+    weight);
 };
 
 
@@ -146,7 +149,8 @@ bloombox.shop.Item.prototype.addWeightVariant = function(weight) {
  * @export
  */
 bloombox.shop.Item.prototype.addSizeVariant = function(size) {
-  return this._addVariant(proto.commerce.ProductVariant.SIZE, size);
+  return this._addVariant(proto.opencannabis.commerce.ProductVariant.SIZE,
+    size);
 };
 
 
@@ -159,5 +163,6 @@ bloombox.shop.Item.prototype.addSizeVariant = function(size) {
  * @export
  */
 bloombox.shop.Item.prototype.addColorVariant = function(color) {
-  return this._addVariant(proto.commerce.ProductVariant.COLOR, color);
+  return this._addVariant(proto.opencannabis.commerce.ProductVariant.COLOR,
+    color);
 };
