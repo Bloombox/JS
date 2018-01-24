@@ -31,15 +31,15 @@ goog.require('bloombox.logging.log');
 
 goog.require('bloombox.util.Exportable');
 
-goog.require('proto.commerce.Customer');
-goog.require('proto.contact.ContactInfo');
-goog.require('proto.contact.EmailAddress');
-goog.require('proto.contact.PhoneNumber');
-goog.require('proto.geo.Address');
-goog.require('proto.geo.Location');
-goog.require('proto.identity.ConsumerProfile');
+goog.require('proto.bloombox.schema.identity.ConsumerProfile');
 
-goog.require('proto.person.Name');
+goog.require('proto.opencannabis.commerce.Customer');
+goog.require('proto.opencannabis.contact.ContactInfo');
+goog.require('proto.opencannabis.contact.EmailAddress');
+goog.require('proto.opencannabis.contact.PhoneNumber');
+goog.require('proto.opencannabis.geo.Address');
+goog.require('proto.opencannabis.geo.Location');
+goog.require('proto.opencannabis.person.Name');
 
 goog.provide('bloombox.shop.Customer');
 goog.provide('bloombox.shop.CustomerException');
@@ -78,7 +78,7 @@ bloombox.shop.CustomerName;
  * @param {string} foreignID Foreign system ID, for submitting the order (i.e.
  *                 Greenbits).
  * @throws {bloombox.shop.CustomerException} If params provided are invalid.
- * @implements {bloombox.util.Exportable<proto.commerce.Customer>}
+ * @implements {bloombox.util.Exportable<proto.opencannabis.commerce.Customer>}
  * @constructor
  * @export
  */
@@ -221,21 +221,21 @@ bloombox.shop.Customer.fromResponse = function(proto) {
 /**
  * Export this customer to a proto we can use in an RPC.
  *
- * @return {proto.commerce.Customer} Customer proto.
+ * @return {proto.opencannabis.commerce.Customer} Customer proto.
  * @throws {bloombox.shop.CustomerException} If data is missing/invalid.
  * @public
  */
 bloombox.shop.Customer.prototype.export = function() {
-  let customer = new proto.commerce.Customer();
+  let customer = new proto.opencannabis.commerce.Customer();
 
   // prep customer name
-  let name = new proto.person.Name();
+  let name = new proto.opencannabis.person.Name();
   name.setFirstName(this.person.name.getFirstName());
   name.setLastName(this.person.name.getLastName());
 
-  let contactInfo = new proto.contact.ContactInfo();
-  let contactLocation = new proto.geo.Location();
-  let contactAddress = new proto.geo.Address();
+  let contactInfo = new proto.opencannabis.contact.ContactInfo();
+  let contactLocation = new proto.opencannabis.geo.Location();
+  let contactAddress = new proto.opencannabis.geo.Address();
 
   // prep street address, if available
   if (this.person.contactInfo.streetAddress !== null) {
@@ -254,7 +254,7 @@ bloombox.shop.Customer.prototype.export = function() {
   }
 
   // prep contact info
-  let emailAddress = new proto.contact.EmailAddress();
+  let emailAddress = new proto.opencannabis.contact.EmailAddress();
 
   // casting this because orders require an email address
   if (!(typeof this.person.contactInfo.emailAddress === 'string') ||
@@ -271,7 +271,7 @@ bloombox.shop.Customer.prototype.export = function() {
     throw new bloombox.shop.CustomerException(
       'Must provide a valid phone number.');
   }
-  let phoneNumber = new proto.contact.PhoneNumber();
+  let phoneNumber = new proto.opencannabis.contact.PhoneNumber();
   phoneNumber.setE164(
     /** @type {string} */ (this.person.contactInfo.phoneNumber));
   contactInfo.setPhone(phoneNumber);

@@ -25,14 +25,14 @@
 
 /*global goog */
 
-goog.require('proto.analytics.context.WebApplication');
+goog.require('proto.bloombox.schema.analytics.context.WebApplication');
 goog.provide('bloombox.telemetry.buildWebappContext');
 
 
 /**
  * Generate and return context for the current web application.
  *
- * @return {proto.analytics.context.WebApplication}
+ * @return {proto.bloombox.schema.analytics.context.WebApplication}
  * @package
  */
 bloombox.telemetry.buildWebappContext = function() {
@@ -45,7 +45,7 @@ bloombox.telemetry.buildWebappContext = function() {
   let referrer = document.referrer;
 
   // fill out object
-  let webapp = new proto.analytics.context.WebApplication();
+  let webapp = new proto.bloombox.schema.analytics.context.WebApplication();
   webapp.setOrigin(origin);
   webapp.setLocation(location);
   webapp.setTitle(title);

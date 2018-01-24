@@ -29,44 +29,44 @@ goog.provide('bloombox.product.Weight');
 
 goog.require('bloombox.util.Exportable');
 
-goog.require('proto.base.ProductKey');
-goog.require('proto.base.ProductKind');
-goog.require('proto.base.ProductType');
-goog.require('proto.commerce.ProductWeight');
+goog.require('proto.opencannabis.base.ProductKey');
+goog.require('proto.opencannabis.base.ProductKind');
+goog.require('proto.opencannabis.base.ProductType');
+goog.require('proto.opencannabis.commerce.ProductWeight');
 
 
 /**
  * Specifies kinds of products.
  *
- * @enum {proto.base.ProductKind}
+ * @enum {proto.opencannabis.base.ProductKind}
  * @export
  */
 bloombox.product.Kind = {
-  'FLOWERS': proto.base.ProductKind.FLOWERS,
-  'EDIBLES': proto.base.ProductKind.EDIBLES,
-  'EXTRACTS': proto.base.ProductKind.EXTRACTS,
-  'PREROLLS': proto.base.ProductKind.PREROLLS,
-  'APOTHECARY': proto.base.ProductKind.APOTHECARY,
-  'CARTRIDGES': proto.base.ProductKind.CARTRIDGES,
-  'PLANTS': proto.base.ProductKind.PLANTS,
-  'MERCHANDISE': proto.base.ProductKind.MERCHANDISE
+  'FLOWERS': proto.opencannabis.base.ProductKind.FLOWERS,
+  'EDIBLES': proto.opencannabis.base.ProductKind.EDIBLES,
+  'EXTRACTS': proto.opencannabis.base.ProductKind.EXTRACTS,
+  'PREROLLS': proto.opencannabis.base.ProductKind.PREROLLS,
+  'APOTHECARY': proto.opencannabis.base.ProductKind.APOTHECARY,
+  'CARTRIDGES': proto.opencannabis.base.ProductKind.CARTRIDGES,
+  'PLANTS': proto.opencannabis.base.ProductKind.PLANTS,
+  'MERCHANDISE': proto.opencannabis.base.ProductKind.MERCHANDISE
 };
 
 
 /**
  * Specifies weights products are sold at.
  *
- * @enum {proto.commerce.ProductWeight}
+ * @enum {proto.opencannabis.commerce.ProductWeight}
  * @export
  */
 bloombox.product.Weight = {
-  'NO_WEIGHT': proto.commerce.ProductWeight.NO_WEIGHT,
-  'HALFGRAM': proto.commerce.ProductWeight.HALFGRAM,
-  'GRAM': proto.commerce.ProductWeight.GRAM,
-  'EIGHTH': proto.commerce.ProductWeight.EIGHTH,
-  'QUARTER': proto.commerce.ProductWeight.QUARTER,
-  'HALF': proto.commerce.ProductWeight.HALF,
-  'OZ': proto.commerce.ProductWeight.OZ
+  'NO_WEIGHT': proto.opencannabis.commerce.ProductWeight.NO_WEIGHT,
+  'HALFGRAM': proto.opencannabis.commerce.ProductWeight.HALFGRAM,
+  'GRAM': proto.opencannabis.commerce.ProductWeight.GRAM,
+  'EIGHTH': proto.opencannabis.commerce.ProductWeight.EIGHTH,
+  'QUARTER': proto.opencannabis.commerce.ProductWeight.QUARTER,
+  'HALF': proto.opencannabis.commerce.ProductWeight.HALF,
+  'OZ': proto.opencannabis.commerce.ProductWeight.OZ
 };
 
 
@@ -78,7 +78,7 @@ bloombox.product.Weight = {
  * @param {string} id ID of the product.
  * @param {bloombox.product.Kind} kind Kind of product this key is for.
  * @constructor
- * @implements {bloombox.util.Exportable<proto.base.ProductKey>}
+ * @implements {bloombox.util.Exportable<proto.opencannabis.base.ProductKey>}
  * @export
  */
 bloombox.product.Key = function Key(id,
@@ -102,15 +102,16 @@ bloombox.product.Key = function Key(id,
 /**
  * Export this key as a proto, suitable for use in an RPC.
  *
- * @return {proto.base.ProductKey} Exported proto.
+ * @return {proto.opencannabis.base.ProductKey} Exported proto.
  * @public
  */
 bloombox.product.Key.prototype.export = function() {
-  let protobuf = new proto.base.ProductKey();
+  let protobuf = new proto.opencannabis.base.ProductKey();
   protobuf.setId(this.id);
 
-  let protoType = new proto.base.ProductType();
-  protoType.setKind(/** @type {proto.base.ProductKind} */ (this.kind));
+  let protoType = new proto.opencannabis.base.ProductType();
+  protoType.setKind(/** @type {proto.opencannabis.base.ProductKind} */ (
+    this.kind));
   protobuf.setType(protoType);
   return protobuf;
 };

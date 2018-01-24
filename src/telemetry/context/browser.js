@@ -28,18 +28,19 @@ goog.provide('bloombox.telemetry.buildBrowserContext');
 
 goog.require('goog.userAgent');
 
-goog.require('proto.analytics.context.BrowserDeviceContext');
-goog.require('proto.structs.VersionSpec');
+goog.require('proto.bloombox.schema.analytics.context.BrowserDeviceContext');
+goog.require('proto.opencannabis.structs.VersionSpec');
 
 
 /**
  * Build local browser context from the available environment.
  *
- * @return {proto.analytics.context.BrowserDeviceContext}
+ * @return {proto.bloombox.schema.analytics.context.BrowserDeviceContext}
  * @package
  */
 bloombox.telemetry.buildBrowserContext = function() {
-  let context = new proto.analytics.context.BrowserDeviceContext();
+  let context = (
+    new proto.bloombox.schema.analytics.context.BrowserDeviceContext());
   let language = navigator.language;
   let ua = navigator.userAgent;
   context.setLanguage(language);
@@ -56,26 +57,26 @@ bloombox.telemetry.buildBrowserContext = function() {
   // detect browser type and version
   let browserVersion = goog.userAgent.VERSION;
   let browserType = (
-    proto.analytics.context.BrowserType.BROWSER_UNKNOWN);
+    proto.bloombox.schema.analytics.context.BrowserType.BROWSER_UNKNOWN);
   if (goog.userAgent.product.CHROME)
     browserType = (
-      proto.analytics.context.BrowserType.CHROME);
+      proto.bloombox.schema.analytics.context.BrowserType.CHROME);
   else if (goog.userAgent.product.SAFARI)
     browserType = (
-      proto.analytics.context.BrowserType.SAFARI);
+      proto.bloombox.schema.analytics.context.BrowserType.SAFARI);
   else if (goog.userAgent.product.FIREFOX)
     browserType = (
-      proto.analytics.context.BrowserType.FIREFOX);
+      proto.bloombox.schema.analytics.context.BrowserType.FIREFOX);
   else if (goog.userAgent.product.OPERA)
     browserType = (
-      proto.analytics.context.BrowserType.OPERA);
+      proto.bloombox.schema.analytics.context.BrowserType.OPERA);
   else if (goog.userAgent.EDGE_OR_IE)
     browserType = (
-      proto.analytics.context.BrowserType.IE_OR_EDGE);
+      proto.bloombox.schema.analytics.context.BrowserType.IE_OR_EDGE);
   context.setBrowserType(browserType);
 
   // browser version mount
-  let browserVersionObj = new proto.structs.VersionSpec();
+  let browserVersionObj = new proto.opencannabis.structs.VersionSpec();
   browserVersionObj.setName(browserVersion);
   context.setVersion(browserVersionObj);
   return context;

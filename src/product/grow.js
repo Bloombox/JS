@@ -21,7 +21,7 @@
  * @fileoverview Enumerates product grow types.
  */
 
-goog.require('proto.structs.Grow');
+goog.require('proto.opencannabis.structs.Grow');
 
 goog.provide('bloombox.product.Grow');
 
@@ -31,11 +31,11 @@ goog.provide('bloombox.product.Grow');
  * Product grow types.
  *
  * @export
- * @enum {proto.structs.Grow}
+ * @enum {proto.opencannabis.structs.Grow}
  */
 bloombox.product.Grow = {
-  'GENERIC': proto.structs.Grow.GENERIC,
-  'INDOOR': proto.structs.Grow.INDOOR,
-  'GREENHOUSE': proto.structs.Grow.GREENHOUSE,
-  'OUTDOOR': proto.structs.Grow.OUTDOOR
+  'GENERIC': proto.opencannabis.structs.Grow.GENERIC,
+  'INDOOR': proto.opencannabis.structs.Grow.INDOOR,
+  'GREENHOUSE': proto.opencannabis.structs.Grow.GREENHOUSE,
+  'OUTDOOR': proto.opencannabis.structs.Grow.OUTDOOR
 };

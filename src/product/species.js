@@ -21,7 +21,7 @@
  * @fileoverview Enumerates product species types.
  */
 
-goog.require('proto.structs.Species');
+goog.require('proto.opencannabis.structs.Species');
 
 goog.provide('bloombox.product.Species');
 
@@ -31,13 +31,13 @@ goog.provide('bloombox.product.Species');
  * Product species types.
  *
  * @export
- * @enum {proto.structs.Species}
+ * @enum {proto.opencannabis.structs.Species}
  */
 bloombox.product.Species = {
-  'UNSPECIFIED': proto.structs.Species.UNSPECIFIED,
-  'SATIVA': proto.structs.Species.SATIVA,
-  'HYBRID_SATIVA': proto.structs.Species.HYBRID_SATIVA,
-  'HYBRID': proto.structs.Species.HYBRID,
-  'HYBRID_INDICA': proto.structs.Species.HYBRID_INDICA,
-  'INDICA': proto.structs.Species.INDICA
+  'UNSPECIFIED': proto.opencannabis.structs.Species.UNSPECIFIED,
+  'SATIVA': proto.opencannabis.structs.Species.SATIVA,
+  'HYBRID_SATIVA': proto.opencannabis.structs.Species.HYBRID_SATIVA,
+  'HYBRID': proto.opencannabis.structs.Species.HYBRID,
+  'HYBRID_INDICA': proto.opencannabis.structs.Species.HYBRID_INDICA,
+  'INDICA': proto.opencannabis.structs.Species.INDICA
 };

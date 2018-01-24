@@ -48,15 +48,15 @@ goog.require('bloombox.shop.Customer');
 goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
-goog.require('proto.identity.EnrollmentSource');
-goog.require('proto.services.shop.v1.EnrollMember');
-goog.require('proto.services.shop.v1.EnrollmentError');
+goog.require('proto.bloombox.schema.identity.EnrollmentSource');
+goog.require('proto.bloombox.schema.services.shop.v1.EnrollMember');
+goog.require('proto.bloombox.schema.services.shop.v1.EnrollmentError');
 
 
 /**
  * Callback function type definition for enroll RPCs.
  *
- * @typedef {function(boolean, ?proto.services.shop.v1.EnrollmentError, ?bloombox.shop.Customer)}
+ * @typedef {function(boolean, ?proto.bloombox.schema.services.shop.v1.EnrollmentError, ?bloombox.shop.Customer)}
  */
 bloombox.shop.enroll.EnrollCallback;
 
@@ -294,7 +294,8 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
       done = true;
 
       bloombox.logging.log('Response received for enrollment RPC.', response);
-      let inflated = new proto.services.shop.v1.EnrollMember.Response();
+      let inflated = (
+        new proto.bloombox.schema.services.shop.v1.EnrollMember.Response());
       if (response['error']) {
         // an error occurred
         inflated.setError(response['error']);

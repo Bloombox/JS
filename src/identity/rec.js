@@ -29,8 +29,8 @@ goog.provide('bloombox.identity.RecException');
 
 goog.require('bloombox.identity.ContactInfo');
 
-goog.require('proto.person.Name');
-goog.require('proto.temporal.Date');
+goog.require('proto.opencannabis.person.Name');
+goog.require('proto.opencannabis.temporal.Date');
 
 
 /**
@@ -96,12 +96,12 @@ bloombox.identity.DoctorRec = function DoctorRec(id,
       'Invalid physician phone number: \'' + doctorPhoneNumber + '\'.');
 
   // setup a name object
-  let doctorName = new proto.person.Name();
+  let doctorName = new proto.opencannabis.person.Name();
   doctorName.setFirstName(doctorFirstName);
   doctorName.setLastName(doctorLastName);
 
   // make objects for instants
-  let expirationObj = new proto.temporal.Date();
+  let expirationObj = new proto.opencannabis.temporal.Date();
   expirationObj.setIso8601(expirationDate);
 
   // assign properties
@@ -122,7 +122,7 @@ bloombox.identity.DoctorRec = function DoctorRec(id,
 
   /**
    * Expiration date instant.
-   * @type {proto.temporal.Date}
+   * @type {proto.opencannabis.temporal.Date}
    * @public
    */
   this.expirationDate = expirationObj;
@@ -143,7 +143,7 @@ bloombox.identity.DoctorRec = function DoctorRec(id,
 
   /**
    * Doctor's name.
-   * @type {proto.person.Name}
+   * @type {proto.opencannabis.person.Name}
    * @public
    */
   this.doctorName = doctorName;

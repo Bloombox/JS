@@ -28,8 +28,8 @@ goog.provide('bloombox.identity.ID');
 goog.provide('bloombox.identity.IDException');
 goog.provide('bloombox.identity.IDType');
 
-goog.require('proto.identity.IDType');
-goog.require('proto.temporal.Date');
+goog.require('proto.bloombox.schema.identity.IDType');
+goog.require('proto.opencannabis.temporal.Date');
 
 
 /**
@@ -47,12 +47,12 @@ bloombox.identity.IDException = function IDException(message) {
 /**
  * Specifies supported types of government ID.
  *
- * @enum {proto.identity.IDType}
+ * @enum {proto.bloombox.schema.identity.IDType}
  * @export
  */
 bloombox.identity.IDType = {
-  'USDL': proto.identity.IDType.USDL,
-  'PASSPORT': proto.identity.IDType.PASSPORT
+  'USDL': proto.bloombox.schema.identity.IDType.USDL,
+  'PASSPORT': proto.bloombox.schema.identity.IDType.PASSPORT
 };
 
 
@@ -92,10 +92,10 @@ bloombox.identity.ID = function ID(type,
       jurisdiction + '\'.');
 
   // setup an instant object
-  let expirationObj = new proto.temporal.Date();
+  let expirationObj = new proto.opencannabis.temporal.Date();
   expirationObj.setIso8601(expirationDate);
 
-  let birthObj = new proto.temporal.Date();
+  let birthObj = new proto.opencannabis.temporal.Date();
   birthObj.setIso8601(birthDate);
 
   /**
@@ -114,14 +114,14 @@ bloombox.identity.ID = function ID(type,
 
   /**
    * Document expiration date.
-   * @type {proto.temporal.Date}
+   * @type {proto.opencannabis.temporal.Date}
    * @public
    */
   this.expirationDate = expirationObj;
 
   /**
    * Document birth date.
-   * @type {proto.temporal.Date}
+   * @type {proto.opencannabis.temporal.Date}
    * @public
    */
   this.birthDate = birthObj;

@@ -34,10 +34,10 @@ goog.require('bloombox.testing.subjective.TasteNote');
 goog.require('bloombox.util.Exportable');
 goog.require('bloombox.util.Serializable');
 
-goog.require('proto.identity.ConsumerPreferences');
-goog.require('proto.identity.ConsumerProfile');
-goog.require('proto.identity.EnrollmentSource');
-goog.require('proto.identity.MenuPreferences');
+goog.require('proto.bloombox.schema.identity.ConsumerPreferences');
+goog.require('proto.bloombox.schema.identity.ConsumerProfile');
+goog.require('proto.bloombox.schema.identity.EnrollmentSource');
+goog.require('proto.bloombox.schema.identity.MenuPreferences');
 
 goog.provide('bloombox.identity.ConsumerProfile');
 goog.provide('bloombox.identity.ConsumerType');
@@ -51,14 +51,14 @@ goog.provide('bloombox.identity.ProfileException');
  * Sources for an enrollment.
  *
  * @export
- * @enum {proto.identity.EnrollmentSource}
+ * @enum {proto.bloombox.schema.identity.EnrollmentSource}
  */
 bloombox.identity.EnrollmentSource = {
-  'UNSPECIFIED': proto.identity.EnrollmentSource.UNSPECIFIED,
-  'ONLINE': proto.identity.EnrollmentSource.ONLINE,
-  'INTERNAL_APP': proto.identity.EnrollmentSource.INTERNAL_APP,
-  'PARTNER_APP': proto.identity.EnrollmentSource.PARTNER_APP,
-  'IN_STORE': proto.identity.EnrollmentSource.IN_STORE
+  'UNSPECIFIED': proto.bloombox.schema.identity.EnrollmentSource.UNSPECIFIED,
+  'ONLINE': proto.bloombox.schema.identity.EnrollmentSource.ONLINE,
+  'INTERNAL_APP': proto.bloombox.schema.identity.EnrollmentSource.INTERNAL_APP,
+  'PARTNER_APP': proto.bloombox.schema.identity.EnrollmentSource.PARTNER_APP,
+  'IN_STORE': proto.bloombox.schema.identity.EnrollmentSource.IN_STORE
 };
 
 
@@ -66,12 +66,12 @@ bloombox.identity.EnrollmentSource = {
  * Types of customer profiles.
  *
  * @export
- * @enum {proto.identity.ConsumerType}
+ * @enum {proto.bloombox.schema.identity.ConsumerType}
  */
 bloombox.identity.ConsumerType = {
-  'UNVALIDATED': proto.identity.ConsumerType.UNVALIDATED,
-  'RECREATIONAL': proto.identity.ConsumerType.RECREATIONAL,
-  'MEDICAL': proto.identity.ConsumerType.MEDICAL
+  'UNVALIDATED': proto.bloombox.schema.identity.ConsumerType.UNVALIDATED,
+  'RECREATIONAL': proto.bloombox.schema.identity.ConsumerType.RECREATIONAL,
+  'MEDICAL': proto.bloombox.schema.identity.ConsumerType.MEDICAL
 };
 
 

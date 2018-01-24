@@ -39,9 +39,9 @@ goog.require('bloombox.telemetry.VERSION');
 
 goog.require('bloombox.util.HTTPMethod');
 
-goog.require('proto.services.telemetry.v1beta3.OperationStatus');
-goog.require('proto.services.telemetry.v1beta3.TelemetryError');
-goog.require('proto.services.telemetry.v1beta3.TelemetryResponse');
+goog.require('proto.bloombox.schema.services.telemetry.v1beta3.OperationStatus');
+goog.require('proto.bloombox.schema.services.telemetry.v1beta3.TelemetryError');
+goog.require('proto.bloombox.schema.services.telemetry.v1beta3.TelemetryResponse');
 
 goog.provide('bloombox.telemetry.OperationStatus');
 goog.provide('bloombox.telemetry.Routine');
@@ -96,39 +96,35 @@ bloombox.telemetry.Routine = {
 /**
  * Enumerates operation statuses that result from Telemetry API RPC calls.
  *
- * @enum {proto.services.telemetry.v1beta3.OperationStatus}
+ * @enum {proto.bloombox.schema.services.telemetry.v1beta3.OperationStatus}
  */
 bloombox.telemetry.OperationStatus = {
-  OK: proto.services.telemetry.v1beta3.OperationStatus.OK,
-  ERROR: proto.services.telemetry.v1beta3.OperationStatus.ERROR
+  OK: proto.bloombox.schema.services.telemetry.v1beta3.OperationStatus.OK,
+  ERROR: proto.bloombox.schema.services.telemetry.v1beta3.OperationStatus.ERROR
 };
+
+
+// private alias
+let _TelemetryError = (
+  proto.bloombox.schema.services.telemetry.v1beta3.TelemetryError);
 
 
 /**
  * Enumerates errors in the Telemetry API.
  *
- * @enum {proto.services.telemetry.v1beta3.TelemetryError}
+ * @enum {proto.bloombox.schema.services.telemetry.v1beta3.TelemetryError}
  */
 bloombox.telemetry.TelemetryError = {
-  'UNKNOWN': proto.services.telemetry.v1beta3.TelemetryError.UNKNOWN,
-  'INVALID_COLLECTION': (
-    proto.services.telemetry.v1beta3.TelemetryError.INVALID_COLLECTION),
-  'INVALID_PARTNER': (
-    proto.services.telemetry.v1beta3.TelemetryError.INVALID_PARTNER),
-  'INVALID_LOCATION': (
-    proto.services.telemetry.v1beta3.TelemetryError.INVALID_LOCATION),
-  'INVALID_DEVICE': (
-    proto.services.telemetry.v1beta3.TelemetryError.INVALID_DEVICE),
-  'INVALID_USER': (
-    proto.services.telemetry.v1beta3.TelemetryError.INVALID_USER),
-  'INVALID_CLIENT': (
-    proto.services.telemetry.v1beta3.TelemetryError.INVALID_CLIENT),
-  'PARTNER_NOT_FOUND': (
-    proto.services.telemetry.v1beta3.TelemetryError.PARTNER_NOT_FOUND),
-  'LOCATION_NOT_FOUND': (
-    proto.services.telemetry.v1beta3.TelemetryError.LOCATION_NOT_FOUND),
-  'INVALID_PAYLOAD': (
-    proto.services.telemetry.v1beta3.TelemetryError.INVALID_PAYLOAD)
+  'UNKNOWN': _TelemetryError.UNKNOWN,
+  'INVALID_COLLECTION': _TelemetryError.INVALID_COLLECTION,
+  'INVALID_PARTNER': _TelemetryError.INVALID_PARTNER,
+  'INVALID_LOCATION': _TelemetryError.INVALID_LOCATION,
+  'INVALID_DEVICE': _TelemetryError.INVALID_DEVICE,
+  'INVALID_USER': _TelemetryError.INVALID_USER,
+  'INVALID_CLIENT': _TelemetryError.INVALID_CLIENT,
+  'PARTNER_NOT_FOUND': _TelemetryError.PARTNER_NOT_FOUND,
+  'LOCATION_NOT_FOUND': _TelemetryError.LOCATION_NOT_FOUND,
+  'INVALID_PAYLOAD': _TelemetryError.INVALID_PAYLOAD
 };
 
 
@@ -136,8 +132,8 @@ bloombox.telemetry.TelemetryError = {
  * Render a URL endpoint for a given RPC type.
  *
  * @param {bloombox.telemetry.Routine} type RPC routine.
- * @param {proto.analytics.Context=} opt_context Contextual information that
- *        may be needed to render the URL.
+ * @param {proto.bloombox.schema.analytics.Context=} opt_context Contextual
+ *        information that may be needed to render the URL.
  * @return {string} Rendered URL endpoint.
  * @throws {bloombox.rpc.RPCException} If the subject renderer cannot be found.
  * @package
@@ -158,8 +154,8 @@ bloombox.telemetry.renderEndpoint = function(type, opt_context) {
  *
  * @param {bloombox.telemetry.Routine} type RPC routine.
  * @param {string} apiKey API key to append to the URL.
- * @param {proto.analytics.Context=} opt_context Contextual information that
- *        may be needed to render the URL.
+ * @param {proto.bloombox.schema.analytics.Context=} opt_context Contextual
+ *        information that may be needed to render the URL.
  * @param {string=} opt_target Explicit URL target. Optional.
  * @return {string} Calculated endpoint URI.
  * @package
@@ -192,8 +188,8 @@ bloombox.telemetry.endpoint = function(type, apiKey, opt_context, opt_target) {
  * @param {bloombox.telemetry.FailureCallback} failure Callback to dispatch if
  *        a failure happens.
  * @param {Object=} opt_payload Payload to use if we're POST-ing or PUT-ing.
- * @param {proto.analytics.Context=} opt_context Contextual information to
- *        provide to the URL renderer.
+ * @param {proto.bloombox.schema.analytics.Context=} opt_context Contextual
+ *        information to provide to the URL renderer.
  * @param {Object=} opt_headers Additional headers to add to the request.
  * @param {string=} opt_endpoint URL endpoint to send the RPC to.
  * @throws {bloombox.rpc.RPCException} If the provided values are invalid

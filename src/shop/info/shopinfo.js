@@ -38,8 +38,6 @@ goog.require('bloombox.logging.warn');
 goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
-goog.require('proto.services.shop.v1.ShopStatus');
-
 goog.require('stackdriver.protect');
 
 

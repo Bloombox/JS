@@ -37,8 +37,6 @@ goog.require('bloombox.logging.warn');
 goog.require('bloombox.menu.Routine');
 goog.require('bloombox.menu.rpc.MenuRPC');
 
-goog.require('proto.services.menu.v1beta1.GetMenu');
-
 
 // -- Structures -- //
 

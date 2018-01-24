@@ -30,17 +30,17 @@ goog.require('goog.userAgent');
 goog.require('goog.userAgent.platform');
 goog.require('goog.userAgent.product');
 
-goog.require('proto.analytics.context.DeviceOS');
-goog.require('proto.analytics.context.DeviceRole');
-goog.require('proto.analytics.context.DeviceScreen');
-goog.require('proto.analytics.context.NativeDeviceContext');
-goog.require('proto.analytics.context.OSType');
-goog.require('proto.analytics.context.PixelSize');
-goog.require('proto.analytics.context.ScreenOrientation');
+goog.require('proto.bloombox.schema.analytics.context.DeviceOS');
+goog.require('proto.bloombox.schema.analytics.context.DeviceRole');
+goog.require('proto.bloombox.schema.analytics.context.DeviceScreen');
+goog.require('proto.bloombox.schema.analytics.context.NativeDeviceContext');
+goog.require('proto.bloombox.schema.analytics.context.OSType');
+goog.require('proto.bloombox.schema.analytics.context.PixelSize');
+goog.require('proto.bloombox.schema.analytics.context.ScreenOrientation');
 
-goog.require('proto.device.DeviceType');
+goog.require('proto.opencannabis.device.DeviceType');
 
-goog.require('proto.structs.VersionSpec');
+goog.require('proto.opencannabis.structs.VersionSpec');
 
 goog.provide('bloombox.telemetry.buildNativeContext');
 
@@ -49,22 +49,23 @@ goog.provide('bloombox.telemetry.buildNativeContext');
 /**
  * Build native device context from the available environment.
  *
- * @return {proto.analytics.context.NativeDeviceContext}
+ * @return {proto.bloombox.schema.analytics.context.NativeDeviceContext}
  * @package
  */
 bloombox.telemetry.buildNativeContext = function() {
-  let native = new proto.analytics.context.NativeDeviceContext();
+  let native = (
+    new proto.bloombox.schema.analytics.context.NativeDeviceContext());
 
   // detect device type
-  let deviceType = proto.device.DeviceType.UNKNOWN_DEVICE_TYPE;
+  let deviceType = proto.opencannabis.device.DeviceType.UNKNOWN_DEVICE_TYPE;
   if (goog.labs.userAgent.device.isDesktop)
-    deviceType = proto.device.DeviceType.DESKTOP;
+    deviceType = proto.opencannabis.device.DeviceType.DESKTOP;
   else if (goog.labs.userAgent.device.isTablet)
-    deviceType = proto.device.DeviceType.TABLET;
+    deviceType = proto.opencannabis.device.DeviceType.TABLET;
   else if (goog.labs.userAgent.device.isMobile)
-    deviceType = proto.device.DeviceType.PHONE;
+    deviceType = proto.opencannabis.device.DeviceType.PHONE;
   native.setType(deviceType);
-  native.setRole(proto.analytics.context.DeviceRole.CLIENT);
+  native.setRole(proto.bloombox.schema.analytics.context.DeviceRole.CLIENT);
 
   // touchpoints, concurrency and color depth
   if (window.screen) {
@@ -75,49 +76,52 @@ bloombox.telemetry.buildNativeContext = function() {
     let screenWidth = window.screen.width;
     let pixelDensity = window.devicePixelRatio;
 
-    let pixelSizeViewport = new proto.analytics.context.PixelSize();
+    let pixelSizeViewport = (
+      new proto.bloombox.schema.analytics.context.PixelSize());
     pixelSizeViewport.setHeight(viewportHeight);
     pixelSizeViewport.setWidth(viewportWidth);
 
-    let pixelSizeScreen = new proto.analytics.context.PixelSize();
+    let pixelSizeScreen = (
+      new proto.bloombox.schema.analytics.context.PixelSize());
     pixelSizeScreen.setHeight(screenHeight);
     pixelSizeScreen.setWidth(screenWidth);
 
-    let deviceScreen = new proto.analytics.context.DeviceScreen();
+    let deviceScreen = (
+      new proto.bloombox.schema.analytics.context.DeviceScreen());
     deviceScreen.setViewport(pixelSizeViewport);
     deviceScreen.setScreen(pixelSizeScreen);
     deviceScreen.setDensity(pixelDensity);
     deviceScreen.setOrientation((window.innerHeight > window.innerWidth) ?
-      proto.analytics.context.ScreenOrientation.LANDSCAPE :
-      proto.analytics.context.ScreenOrientation.PORTRAIT);
+      proto.bloombox.schema.analytics.context.ScreenOrientation.LANDSCAPE :
+      proto.bloombox.schema.analytics.context.ScreenOrientation.PORTRAIT);
     native.setScreen(deviceScreen);
   }
 
   // detect OS type and version
-  let osType = proto.analytics.context.OSType.OS_UNKNOWN;
+  let osType = proto.bloombox.schema.analytics.context.OSType.OS_UNKNOWN;
   let osVersion = goog.userAgent.platform.VERSION;
 
   if (goog.userAgent.IPAD ||
     goog.userAgent.IPHONE ||
     goog.userAgent.IPOD ||
     goog.userAgent.IOS)
-    osType = proto.analytics.context.OSType.IOS;
+    osType = proto.bloombox.schema.analytics.context.OSType.IOS;
   else if ((goog.userAgent.WINDOWS ||
       goog.userAgent.EDGE_OR_IE) &&
     goog.userAgent.MOBILE)
-    osType = proto.analytics.context.OSType.WINDOWS_PHONE;
+    osType = proto.bloombox.schema.analytics.context.OSType.WINDOWS_PHONE;
   else if (goog.userAgent.WINDOWS ||
     goog.userAgent.EDGE_OR_IE)
-    osType = proto.analytics.context.OSType.WINDOWS;
+    osType = proto.bloombox.schema.analytics.context.OSType.WINDOWS;
   else if (goog.userAgent.product.ANDROID)
-    osType = proto.analytics.context.OSType.ANDROID;
+    osType = proto.bloombox.schema.analytics.context.OSType.ANDROID;
   else if (goog.userAgent.MAC)
-    osType = proto.analytics.context.OSType.MACOS;
+    osType = proto.bloombox.schema.analytics.context.OSType.MACOS;
   else if (goog.userAgent.LINUX)
-    osType = proto.analytics.context.OSType.LINUX;
+    osType = proto.bloombox.schema.analytics.context.OSType.LINUX;
 
-  let osObj = new proto.analytics.context.DeviceOS();
-  let osVersionObj = new proto.structs.VersionSpec();
+  let osObj = new proto.bloombox.schema.analytics.context.DeviceOS();
+  let osVersionObj = new proto.opencannabis.structs.VersionSpec();
   osVersionObj.setName(osVersion);
   osObj.setType(osType);
   osObj.setVersion(osVersionObj);
