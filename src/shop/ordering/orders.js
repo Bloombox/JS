@@ -455,7 +455,7 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
       },
       'variant': item.variants.map(function(variant) {
         let baseVariant = {
-          'variant': variant.getVariant(),
+          'variant': variant.getVariant()
         };
 
         if (variant.getWeight()) {
