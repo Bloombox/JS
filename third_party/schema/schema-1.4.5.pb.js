@@ -6783,6 +6783,1876 @@ proto.opencannabis.person.Person.prototype.hasDateOfBirth = function() {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.opencannabis.commerce.Customer = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.opencannabis.commerce.Customer, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.commerce.Customer.displayName = 'proto.opencannabis.commerce.Customer';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.commerce.Customer.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.commerce.Customer.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.commerce.Customer} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.commerce.Customer.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    person: (f = msg.getPerson()) && proto.opencannabis.person.Person.toObject(includeInstance, f),
+    foreignId: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    userKey: jspb.Message.getFieldWithDefault(msg, 3, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.commerce.Customer}
+ */
+proto.opencannabis.commerce.Customer.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.commerce.Customer;
+  return proto.opencannabis.commerce.Customer.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.commerce.Customer} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.commerce.Customer}
+ */
+proto.opencannabis.commerce.Customer.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.opencannabis.person.Person;
+      reader.readMessage(value,proto.opencannabis.person.Person.deserializeBinaryFromReader);
+      msg.setPerson(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setForeignId(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUserKey(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.commerce.Customer.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.commerce.Customer.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.commerce.Customer} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.commerce.Customer.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getPerson();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.opencannabis.person.Person.serializeBinaryToWriter
+    );
+  }
+  f = message.getForeignId();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getUserKey();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional opencannabis.person.Person person = 1;
+ * @return {?proto.opencannabis.person.Person}
+ */
+proto.opencannabis.commerce.Customer.prototype.getPerson = function() {
+  return /** @type{?proto.opencannabis.person.Person} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.person.Person, 1));
+};
+
+
+/** @param {?proto.opencannabis.person.Person|undefined} value */
+proto.opencannabis.commerce.Customer.prototype.setPerson = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.opencannabis.commerce.Customer.prototype.clearPerson = function() {
+  this.setPerson(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.commerce.Customer.prototype.hasPerson = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional string foreign_id = 2;
+ * @return {string}
+ */
+proto.opencannabis.commerce.Customer.prototype.getForeignId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.commerce.Customer.prototype.setForeignId = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string user_key = 3;
+ * @return {string}
+ */
+proto.opencannabis.commerce.Customer.prototype.getUserKey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.commerce.Customer.prototype.setUserKey = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.temporal.Instant = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.opencannabis.temporal.Instant.oneofGroups_);
+};
+goog.inherits(proto.opencannabis.temporal.Instant, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.temporal.Instant.displayName = 'proto.opencannabis.temporal.Instant';
+}
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.opencannabis.temporal.Instant.oneofGroups_ = [[1,2]];
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.temporal.Instant.SpecCase = {
+  SPEC_NOT_SET: 0,
+  ISO8601: 1,
+  TIMESTAMP: 2
+};
+
+/**
+ * @return {proto.opencannabis.temporal.Instant.SpecCase}
+ */
+proto.opencannabis.temporal.Instant.prototype.getSpecCase = function() {
+  return /** @type {proto.opencannabis.temporal.Instant.SpecCase} */(jspb.Message.computeOneofCase(this, proto.opencannabis.temporal.Instant.oneofGroups_[0]));
+};
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.temporal.Instant.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.temporal.Instant.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.temporal.Instant} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.temporal.Instant.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    iso8601: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    timestamp: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.temporal.Instant}
+ */
+proto.opencannabis.temporal.Instant.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.temporal.Instant;
+  return proto.opencannabis.temporal.Instant.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.temporal.Instant} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.temporal.Instant}
+ */
+proto.opencannabis.temporal.Instant.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setIso8601(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setTimestamp(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.temporal.Instant.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.temporal.Instant.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.temporal.Instant} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.temporal.Instant.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = /** @type {string} */ (jspb.Message.getField(message, 1));
+  if (f != null) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = /** @type {number} */ (jspb.Message.getField(message, 2));
+  if (f != null) {
+    writer.writeUint64(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string iso8601 = 1;
+ * @return {string}
+ */
+proto.opencannabis.temporal.Instant.prototype.getIso8601 = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.temporal.Instant.prototype.setIso8601 = function(value) {
+  jspb.Message.setOneofField(this, 1, proto.opencannabis.temporal.Instant.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.temporal.Instant.prototype.clearIso8601 = function() {
+  jspb.Message.setOneofField(this, 1, proto.opencannabis.temporal.Instant.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.temporal.Instant.prototype.hasIso8601 = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional uint64 timestamp = 2;
+ * @return {number}
+ */
+proto.opencannabis.temporal.Instant.prototype.getTimestamp = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.opencannabis.temporal.Instant.prototype.setTimestamp = function(value) {
+  jspb.Message.setOneofField(this, 2, proto.opencannabis.temporal.Instant.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.temporal.Instant.prototype.clearTimestamp = function() {
+  jspb.Message.setOneofField(this, 2, proto.opencannabis.temporal.Instant.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.temporal.Instant.prototype.hasTimestamp = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.commerce.DiscountSpec = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.opencannabis.commerce.DiscountSpec.oneofGroups_);
+};
+goog.inherits(proto.opencannabis.commerce.DiscountSpec, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.commerce.DiscountSpec.displayName = 'proto.opencannabis.commerce.DiscountSpec';
+}
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.opencannabis.commerce.DiscountSpec.oneofGroups_ = [[3,4]];
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.commerce.DiscountSpec.RateCase = {
+  RATE_NOT_SET: 0,
+  PERCENTAGE: 3,
+  STATIC_VALUE: 4
+};
+
+/**
+ * @return {proto.opencannabis.commerce.DiscountSpec.RateCase}
+ */
+proto.opencannabis.commerce.DiscountSpec.prototype.getRateCase = function() {
+  return /** @type {proto.opencannabis.commerce.DiscountSpec.RateCase} */(jspb.Message.computeOneofCase(this, proto.opencannabis.commerce.DiscountSpec.oneofGroups_[0]));
+};
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.commerce.DiscountSpec.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.commerce.DiscountSpec.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.commerce.DiscountSpec} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.commerce.DiscountSpec.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    type: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    basis: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    percentage: +jspb.Message.getFieldWithDefault(msg, 3, 0.0),
+    staticValue: +jspb.Message.getFieldWithDefault(msg, 4, 0.0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.commerce.DiscountSpec}
+ */
+proto.opencannabis.commerce.DiscountSpec.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.commerce.DiscountSpec;
+  return proto.opencannabis.commerce.DiscountSpec.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.commerce.DiscountSpec} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.commerce.DiscountSpec}
+ */
+proto.opencannabis.commerce.DiscountSpec.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.opencannabis.commerce.DiscountType} */ (reader.readEnum());
+      msg.setType(value);
+      break;
+    case 2:
+      var value = /** @type {!proto.opencannabis.commerce.DiscountBasis} */ (reader.readEnum());
+      msg.setBasis(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setPercentage(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setStaticValue(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.commerce.DiscountSpec.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.commerce.DiscountSpec.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.commerce.DiscountSpec} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.commerce.DiscountSpec.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getBasis();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      2,
+      f
+    );
+  }
+  f = /** @type {number} */ (jspb.Message.getField(message, 3));
+  if (f != null) {
+    writer.writeDouble(
+      3,
+      f
+    );
+  }
+  f = /** @type {number} */ (jspb.Message.getField(message, 4));
+  if (f != null) {
+    writer.writeDouble(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional DiscountType type = 1;
+ * @return {!proto.opencannabis.commerce.DiscountType}
+ */
+proto.opencannabis.commerce.DiscountSpec.prototype.getType = function() {
+  return /** @type {!proto.opencannabis.commerce.DiscountType} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.opencannabis.commerce.DiscountType} value */
+proto.opencannabis.commerce.DiscountSpec.prototype.setType = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional DiscountBasis basis = 2;
+ * @return {!proto.opencannabis.commerce.DiscountBasis}
+ */
+proto.opencannabis.commerce.DiscountSpec.prototype.getBasis = function() {
+  return /** @type {!proto.opencannabis.commerce.DiscountBasis} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {!proto.opencannabis.commerce.DiscountBasis} value */
+proto.opencannabis.commerce.DiscountSpec.prototype.setBasis = function(value) {
+  jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+/**
+ * optional double percentage = 3;
+ * @return {number}
+ */
+proto.opencannabis.commerce.DiscountSpec.prototype.getPercentage = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 3, 0.0));
+};
+
+
+/** @param {number} value */
+proto.opencannabis.commerce.DiscountSpec.prototype.setPercentage = function(value) {
+  jspb.Message.setOneofField(this, 3, proto.opencannabis.commerce.DiscountSpec.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.commerce.DiscountSpec.prototype.clearPercentage = function() {
+  jspb.Message.setOneofField(this, 3, proto.opencannabis.commerce.DiscountSpec.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.commerce.DiscountSpec.prototype.hasPercentage = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional double static_value = 4;
+ * @return {number}
+ */
+proto.opencannabis.commerce.DiscountSpec.prototype.getStaticValue = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 4, 0.0));
+};
+
+
+/** @param {number} value */
+proto.opencannabis.commerce.DiscountSpec.prototype.setStaticValue = function(value) {
+  jspb.Message.setOneofField(this, 4, proto.opencannabis.commerce.DiscountSpec.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.commerce.DiscountSpec.prototype.clearStaticValue = function() {
+  jspb.Message.setOneofField(this, 4, proto.opencannabis.commerce.DiscountSpec.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.commerce.DiscountSpec.prototype.hasStaticValue = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.commerce.Discount = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.opencannabis.commerce.Discount, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.commerce.Discount.displayName = 'proto.opencannabis.commerce.Discount';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.commerce.Discount.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.commerce.Discount.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.commerce.Discount} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.commerce.Discount.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    spec: (f = msg.getSpec()) && proto.opencannabis.commerce.DiscountSpec.toObject(includeInstance, f),
+    name: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    label: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    description: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    modifiedAt: (f = msg.getModifiedAt()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
+    createdAt: (f = msg.getCreatedAt()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.commerce.Discount}
+ */
+proto.opencannabis.commerce.Discount.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.commerce.Discount;
+  return proto.opencannabis.commerce.Discount.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.commerce.Discount} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.commerce.Discount}
+ */
+proto.opencannabis.commerce.Discount.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setId(value);
+      break;
+    case 2:
+      var value = new proto.opencannabis.commerce.DiscountSpec;
+      reader.readMessage(value,proto.opencannabis.commerce.DiscountSpec.deserializeBinaryFromReader);
+      msg.setSpec(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLabel(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDescription(value);
+      break;
+    case 7:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setModifiedAt(value);
+      break;
+    case 6:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setCreatedAt(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.commerce.Discount.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.commerce.Discount.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.commerce.Discount} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.commerce.Discount.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getId();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getSpec();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.opencannabis.commerce.DiscountSpec.serializeBinaryToWriter
+    );
+  }
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getLabel();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getDescription();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getModifiedAt();
+  if (f != null) {
+    writer.writeMessage(
+      7,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+  f = message.getCreatedAt();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string id = 1;
+ * @return {string}
+ */
+proto.opencannabis.commerce.Discount.prototype.getId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.commerce.Discount.prototype.setId = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional DiscountSpec spec = 2;
+ * @return {?proto.opencannabis.commerce.DiscountSpec}
+ */
+proto.opencannabis.commerce.Discount.prototype.getSpec = function() {
+  return /** @type{?proto.opencannabis.commerce.DiscountSpec} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.commerce.DiscountSpec, 2));
+};
+
+
+/** @param {?proto.opencannabis.commerce.DiscountSpec|undefined} value */
+proto.opencannabis.commerce.Discount.prototype.setSpec = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.opencannabis.commerce.Discount.prototype.clearSpec = function() {
+  this.setSpec(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.commerce.Discount.prototype.hasSpec = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional string name = 3;
+ * @return {string}
+ */
+proto.opencannabis.commerce.Discount.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.commerce.Discount.prototype.setName = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string label = 4;
+ * @return {string}
+ */
+proto.opencannabis.commerce.Discount.prototype.getLabel = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.commerce.Discount.prototype.setLabel = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string description = 5;
+ * @return {string}
+ */
+proto.opencannabis.commerce.Discount.prototype.getDescription = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.commerce.Discount.prototype.setDescription = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant modified_at = 7;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.opencannabis.commerce.Discount.prototype.getModifiedAt = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 7));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.opencannabis.commerce.Discount.prototype.setModifiedAt = function(value) {
+  jspb.Message.setWrapperField(this, 7, value);
+};
+
+
+proto.opencannabis.commerce.Discount.prototype.clearModifiedAt = function() {
+  this.setModifiedAt(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.commerce.Discount.prototype.hasModifiedAt = function() {
+  return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant created_at = 6;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.opencannabis.commerce.Discount.prototype.getCreatedAt = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 6));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.opencannabis.commerce.Discount.prototype.setCreatedAt = function(value) {
+  jspb.Message.setWrapperField(this, 6, value);
+};
+
+
+proto.opencannabis.commerce.Discount.prototype.clearCreatedAt = function() {
+  this.setCreatedAt(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.commerce.Discount.prototype.hasCreatedAt = function() {
+  return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.commerce.DiscountType = {
+  CUSTOM: 0,
+  STATUTORY: 1,
+  COMMERCIAL: 2
+};
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.commerce.DiscountBasis = {
+  ITEM: 0,
+  ORDER_SUBTOTAL: 1,
+  ORDER_TOTAL: 2
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.device.Device = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.opencannabis.device.Device, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.device.Device.displayName = 'proto.opencannabis.device.Device';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.device.Device.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.device.Device.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.device.Device} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.device.Device.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    uuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    type: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    flags: (f = msg.getFlags()) && proto.opencannabis.device.DeviceFlags.toObject(includeInstance, f),
+    key: (f = msg.getKey()) && proto.opencannabis.device.DeviceCredentials.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.device.Device}
+ */
+proto.opencannabis.device.Device.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.device.Device;
+  return proto.opencannabis.device.Device.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.device.Device} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.device.Device}
+ */
+proto.opencannabis.device.Device.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUuid(value);
+      break;
+    case 2:
+      var value = /** @type {!proto.opencannabis.device.DeviceType} */ (reader.readEnum());
+      msg.setType(value);
+      break;
+    case 3:
+      var value = new proto.opencannabis.device.DeviceFlags;
+      reader.readMessage(value,proto.opencannabis.device.DeviceFlags.deserializeBinaryFromReader);
+      msg.setFlags(value);
+      break;
+    case 4:
+      var value = new proto.opencannabis.device.DeviceCredentials;
+      reader.readMessage(value,proto.opencannabis.device.DeviceCredentials.deserializeBinaryFromReader);
+      msg.setKey(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.device.Device.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.device.Device.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.device.Device} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.device.Device.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getUuid();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      2,
+      f
+    );
+  }
+  f = message.getFlags();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto.opencannabis.device.DeviceFlags.serializeBinaryToWriter
+    );
+  }
+  f = message.getKey();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      proto.opencannabis.device.DeviceCredentials.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string uuid = 1;
+ * @return {string}
+ */
+proto.opencannabis.device.Device.prototype.getUuid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.device.Device.prototype.setUuid = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional DeviceType type = 2;
+ * @return {!proto.opencannabis.device.DeviceType}
+ */
+proto.opencannabis.device.Device.prototype.getType = function() {
+  return /** @type {!proto.opencannabis.device.DeviceType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {!proto.opencannabis.device.DeviceType} value */
+proto.opencannabis.device.Device.prototype.setType = function(value) {
+  jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+/**
+ * optional DeviceFlags flags = 3;
+ * @return {?proto.opencannabis.device.DeviceFlags}
+ */
+proto.opencannabis.device.Device.prototype.getFlags = function() {
+  return /** @type{?proto.opencannabis.device.DeviceFlags} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.device.DeviceFlags, 3));
+};
+
+
+/** @param {?proto.opencannabis.device.DeviceFlags|undefined} value */
+proto.opencannabis.device.Device.prototype.setFlags = function(value) {
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.opencannabis.device.Device.prototype.clearFlags = function() {
+  this.setFlags(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.device.Device.prototype.hasFlags = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional DeviceCredentials key = 4;
+ * @return {?proto.opencannabis.device.DeviceCredentials}
+ */
+proto.opencannabis.device.Device.prototype.getKey = function() {
+  return /** @type{?proto.opencannabis.device.DeviceCredentials} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.device.DeviceCredentials, 4));
+};
+
+
+/** @param {?proto.opencannabis.device.DeviceCredentials|undefined} value */
+proto.opencannabis.device.Device.prototype.setKey = function(value) {
+  jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+proto.opencannabis.device.Device.prototype.clearKey = function() {
+  this.setKey(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.device.Device.prototype.hasKey = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.device.DeviceFlags = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.opencannabis.device.DeviceFlags, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.device.DeviceFlags.displayName = 'proto.opencannabis.device.DeviceFlags';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.device.DeviceFlags.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.device.DeviceFlags.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.device.DeviceFlags} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.device.DeviceFlags.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    ephemeral: jspb.Message.getFieldWithDefault(msg, 1, false),
+    managed: jspb.Message.getFieldWithDefault(msg, 2, false)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.device.DeviceFlags}
+ */
+proto.opencannabis.device.DeviceFlags.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.device.DeviceFlags;
+  return proto.opencannabis.device.DeviceFlags.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.device.DeviceFlags} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.device.DeviceFlags}
+ */
+proto.opencannabis.device.DeviceFlags.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setEphemeral(value);
+      break;
+    case 2:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setManaged(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.device.DeviceFlags.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.device.DeviceFlags.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.device.DeviceFlags} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.device.DeviceFlags.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getEphemeral();
+  if (f) {
+    writer.writeBool(
+      1,
+      f
+    );
+  }
+  f = message.getManaged();
+  if (f) {
+    writer.writeBool(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bool ephemeral = 1;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.opencannabis.device.DeviceFlags.prototype.getEphemeral = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+};
+
+
+/** @param {boolean} value */
+proto.opencannabis.device.DeviceFlags.prototype.setEphemeral = function(value) {
+  jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+/**
+ * optional bool managed = 2;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.opencannabis.device.DeviceFlags.prototype.getManaged = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+};
+
+
+/** @param {boolean} value */
+proto.opencannabis.device.DeviceFlags.prototype.setManaged = function(value) {
+  jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.device.DeviceCredentials = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.opencannabis.device.DeviceCredentials.repeatedFields_, null);
+};
+goog.inherits(proto.opencannabis.device.DeviceCredentials, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.device.DeviceCredentials.displayName = 'proto.opencannabis.device.DeviceCredentials';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.opencannabis.device.DeviceCredentials.repeatedFields_ = [5];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.device.DeviceCredentials.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.device.DeviceCredentials} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.device.DeviceCredentials.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    publicKey: msg.getPublicKey_asB64(),
+    privateKey: msg.getPrivateKey_asB64(),
+    sha256: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    identity: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    authoritiesList: msg.getAuthoritiesList_asB64()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.device.DeviceCredentials}
+ */
+proto.opencannabis.device.DeviceCredentials.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.device.DeviceCredentials;
+  return proto.opencannabis.device.DeviceCredentials.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.device.DeviceCredentials} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.device.DeviceCredentials}
+ */
+proto.opencannabis.device.DeviceCredentials.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setPublicKey(value);
+      break;
+    case 2:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setPrivateKey(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSha256(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setIdentity(value);
+      break;
+    case 5:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.addAuthorities(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.device.DeviceCredentials.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.device.DeviceCredentials} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.device.DeviceCredentials.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getPublicKey_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+  f = message.getPrivateKey_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      2,
+      f
+    );
+  }
+  f = message.getSha256();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getIdentity();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getAuthoritiesList_asU8();
+  if (f.length > 0) {
+    writer.writeRepeatedBytes(
+      5,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bytes public_key = 1;
+ * @return {string}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.getPublicKey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes public_key = 1;
+ * This is a type-conversion wrapper around `getPublicKey()`
+ * @return {string}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.getPublicKey_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getPublicKey()));
+};
+
+
+/**
+ * optional bytes public_key = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getPublicKey()`
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.getPublicKey_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getPublicKey()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.opencannabis.device.DeviceCredentials.prototype.setPublicKey = function(value) {
+  jspb.Message.setProto3BytesField(this, 1, value);
+};
+
+
+/**
+ * optional bytes private_key = 2;
+ * @return {string}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.getPrivateKey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * optional bytes private_key = 2;
+ * This is a type-conversion wrapper around `getPrivateKey()`
+ * @return {string}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.getPrivateKey_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getPrivateKey()));
+};
+
+
+/**
+ * optional bytes private_key = 2;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getPrivateKey()`
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.getPrivateKey_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getPrivateKey()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.opencannabis.device.DeviceCredentials.prototype.setPrivateKey = function(value) {
+  jspb.Message.setProto3BytesField(this, 2, value);
+};
+
+
+/**
+ * optional string sha256 = 3;
+ * @return {string}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.getSha256 = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.device.DeviceCredentials.prototype.setSha256 = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string identity = 4;
+ * @return {string}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.getIdentity = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.device.DeviceCredentials.prototype.setIdentity = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * repeated bytes authorities = 5;
+ * @return {!Array.<string>}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.getAuthoritiesList = function() {
+  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 5));
+};
+
+
+/**
+ * repeated bytes authorities = 5;
+ * This is a type-conversion wrapper around `getAuthoritiesList()`
+ * @return {!Array.<string>}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.getAuthoritiesList_asB64 = function() {
+  return /** @type {!Array.<string>} */ (jspb.Message.bytesListAsB64(
+      this.getAuthoritiesList()));
+};
+
+
+/**
+ * repeated bytes authorities = 5;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getAuthoritiesList()`
+ * @return {!Array.<!Uint8Array>}
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.getAuthoritiesList_asU8 = function() {
+  return /** @type {!Array.<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
+      this.getAuthoritiesList()));
+};
+
+
+/** @param {!(Array<!Uint8Array>|Array<string>)} value */
+proto.opencannabis.device.DeviceCredentials.prototype.setAuthoritiesList = function(value) {
+  jspb.Message.setField(this, 5, value || []);
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @param {number=} opt_index
+ */
+proto.opencannabis.device.DeviceCredentials.prototype.addAuthorities = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 5, value, opt_index);
+};
+
+
+proto.opencannabis.device.DeviceCredentials.prototype.clearAuthoritiesList = function() {
+  this.setAuthoritiesList([]);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.device.DeviceType = {
+  UNKNOWN_DEVICE_TYPE: 0,
+  DESKTOP: 1,
+  PHONE: 2,
+  TABLET: 3,
+  TV: 4
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.opencannabis.media.MediaKey = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -7978,39 +9848,13 @@ proto.opencannabis.media.MediaItem.prototype.setUri = function(value) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.opencannabis.temporal.Instant = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.opencannabis.temporal.Instant.oneofGroups_);
+proto.bloombox.schema.partner.PartnerKey = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.opencannabis.temporal.Instant, jspb.Message);
+goog.inherits(proto.bloombox.schema.partner.PartnerKey, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.temporal.Instant.displayName = 'proto.opencannabis.temporal.Instant';
+  proto.bloombox.schema.partner.PartnerKey.displayName = 'proto.bloombox.schema.partner.PartnerKey';
 }
-/**
- * Oneof group definitions for this message. Each group defines the field
- * numbers belonging to that group. When of these fields' value is set, all
- * other fields in the group are cleared. During deserialization, if multiple
- * fields are encountered for a group, only the last value seen will be kept.
- * @private {!Array<!Array<number>>}
- * @const
- */
-proto.opencannabis.temporal.Instant.oneofGroups_ = [[1,2]];
-
-/**
- * @enum {number}
- */
-proto.opencannabis.temporal.Instant.SpecCase = {
-  SPEC_NOT_SET: 0,
-  ISO8601: 1,
-  TIMESTAMP: 2
-};
-
-/**
- * @return {proto.opencannabis.temporal.Instant.SpecCase}
- */
-proto.opencannabis.temporal.Instant.prototype.getSpecCase = function() {
-  return /** @type {proto.opencannabis.temporal.Instant.SpecCase} */(jspb.Message.computeOneofCase(this, proto.opencannabis.temporal.Instant.oneofGroups_[0]));
-};
-
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -8024,8 +9868,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.opencannabis.temporal.Instant.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.temporal.Instant.toObject(opt_includeInstance, this);
+proto.bloombox.schema.partner.PartnerKey.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.PartnerKey.toObject(opt_includeInstance, this);
 };
 
 
@@ -8034,14 +9878,13 @@ proto.opencannabis.temporal.Instant.prototype.toObject = function(opt_includeIns
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.temporal.Instant} msg The msg instance to transform.
+ * @param {!proto.bloombox.schema.partner.PartnerKey} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.opencannabis.temporal.Instant.toObject = function(includeInstance, msg) {
+proto.bloombox.schema.partner.PartnerKey.toObject = function(includeInstance, msg) {
   var f, obj = {
-    iso8601: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    timestamp: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    code: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -8055,23 +9898,23 @@ proto.opencannabis.temporal.Instant.toObject = function(includeInstance, msg) {
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.temporal.Instant}
+ * @return {!proto.bloombox.schema.partner.PartnerKey}
  */
-proto.opencannabis.temporal.Instant.deserializeBinary = function(bytes) {
+proto.bloombox.schema.partner.PartnerKey.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.temporal.Instant;
-  return proto.opencannabis.temporal.Instant.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.bloombox.schema.partner.PartnerKey;
+  return proto.bloombox.schema.partner.PartnerKey.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.opencannabis.temporal.Instant} msg The message object to deserialize into.
+ * @param {!proto.bloombox.schema.partner.PartnerKey} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.temporal.Instant}
+ * @return {!proto.bloombox.schema.partner.PartnerKey}
  */
-proto.opencannabis.temporal.Instant.deserializeBinaryFromReader = function(msg, reader) {
+proto.bloombox.schema.partner.PartnerKey.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -8080,11 +9923,7 @@ proto.opencannabis.temporal.Instant.deserializeBinaryFromReader = function(msg, 
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setIso8601(value);
-      break;
-    case 2:
-      var value = /** @type {number} */ (reader.readUint64());
-      msg.setTimestamp(value);
+      msg.setCode(value);
       break;
     default:
       reader.skipField();
@@ -8099,9 +9938,9 @@ proto.opencannabis.temporal.Instant.deserializeBinaryFromReader = function(msg, 
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.opencannabis.temporal.Instant.prototype.serializeBinary = function() {
+proto.bloombox.schema.partner.PartnerKey.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.opencannabis.temporal.Instant.serializeBinaryToWriter(this, writer);
+  proto.bloombox.schema.partner.PartnerKey.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -8109,22 +9948,881 @@ proto.opencannabis.temporal.Instant.prototype.serializeBinary = function() {
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.temporal.Instant} message
+ * @param {!proto.bloombox.schema.partner.PartnerKey} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.opencannabis.temporal.Instant.serializeBinaryToWriter = function(message, writer) {
+proto.bloombox.schema.partner.PartnerKey.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = /** @type {string} */ (jspb.Message.getField(message, 1));
-  if (f != null) {
+  f = message.getCode();
+  if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = /** @type {number} */ (jspb.Message.getField(message, 2));
+};
+
+
+/**
+ * optional string code = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.partner.PartnerKey.prototype.getCode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.partner.PartnerKey.prototype.setCode = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.Partner = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.Partner, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.Partner.displayName = 'proto.bloombox.schema.partner.Partner';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.Partner.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.Partner.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.Partner} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.Partner.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    code: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    flags: (f = msg.getFlags()) && proto.bloombox.schema.partner.PartnerFlags.toObject(includeInstance, f),
+    legalName: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    contact: (f = msg.getContact()) && proto.opencannabis.contact.ContactInfo.toObject(includeInstance, f),
+    branding: (f = msg.getBranding()) && proto.opencannabis.media.MediaItem.toObject(includeInstance, f),
+    channel: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    created: (f = msg.getCreated()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
+    modified: (f = msg.getModified()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.Partner}
+ */
+proto.bloombox.schema.partner.Partner.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.Partner;
+  return proto.bloombox.schema.partner.Partner.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.Partner} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.Partner}
+ */
+proto.bloombox.schema.partner.Partner.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCode(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 3:
+      var value = new proto.bloombox.schema.partner.PartnerFlags;
+      reader.readMessage(value,proto.bloombox.schema.partner.PartnerFlags.deserializeBinaryFromReader);
+      msg.setFlags(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLegalName(value);
+      break;
+    case 5:
+      var value = new proto.opencannabis.contact.ContactInfo;
+      reader.readMessage(value,proto.opencannabis.contact.ContactInfo.deserializeBinaryFromReader);
+      msg.setContact(value);
+      break;
+    case 6:
+      var value = new proto.opencannabis.media.MediaItem;
+      reader.readMessage(value,proto.opencannabis.media.MediaItem.deserializeBinaryFromReader);
+      msg.setBranding(value);
+      break;
+    case 7:
+      var value = /** @type {!proto.bloombox.schema.partner.PartnerChannel} */ (reader.readEnum());
+      msg.setChannel(value);
+      break;
+    case 100:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setCreated(value);
+      break;
+    case 101:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setModified(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.Partner.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.Partner.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.Partner} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.Partner.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getCode();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getFlags();
   if (f != null) {
-    writer.writeUint64(
+    writer.writeMessage(
+      3,
+      f,
+      proto.bloombox.schema.partner.PartnerFlags.serializeBinaryToWriter
+    );
+  }
+  f = message.getLegalName();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getContact();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      proto.opencannabis.contact.ContactInfo.serializeBinaryToWriter
+    );
+  }
+  f = message.getBranding();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      proto.opencannabis.media.MediaItem.serializeBinaryToWriter
+    );
+  }
+  f = message.getChannel();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      7,
+      f
+    );
+  }
+  f = message.getCreated();
+  if (f != null) {
+    writer.writeMessage(
+      100,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+  f = message.getModified();
+  if (f != null) {
+    writer.writeMessage(
+      101,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string code = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.partner.Partner.prototype.getCode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.partner.Partner.prototype.setCode = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string name = 2;
+ * @return {string}
+ */
+proto.bloombox.schema.partner.Partner.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.partner.Partner.prototype.setName = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional PartnerFlags flags = 3;
+ * @return {?proto.bloombox.schema.partner.PartnerFlags}
+ */
+proto.bloombox.schema.partner.Partner.prototype.getFlags = function() {
+  return /** @type{?proto.bloombox.schema.partner.PartnerFlags} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerFlags, 3));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.PartnerFlags|undefined} value */
+proto.bloombox.schema.partner.Partner.prototype.setFlags = function(value) {
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.bloombox.schema.partner.Partner.prototype.clearFlags = function() {
+  this.setFlags(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.Partner.prototype.hasFlags = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional string legal_name = 4;
+ * @return {string}
+ */
+proto.bloombox.schema.partner.Partner.prototype.getLegalName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.partner.Partner.prototype.setLegalName = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional opencannabis.contact.ContactInfo contact = 5;
+ * @return {?proto.opencannabis.contact.ContactInfo}
+ */
+proto.bloombox.schema.partner.Partner.prototype.getContact = function() {
+  return /** @type{?proto.opencannabis.contact.ContactInfo} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.contact.ContactInfo, 5));
+};
+
+
+/** @param {?proto.opencannabis.contact.ContactInfo|undefined} value */
+proto.bloombox.schema.partner.Partner.prototype.setContact = function(value) {
+  jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+proto.bloombox.schema.partner.Partner.prototype.clearContact = function() {
+  this.setContact(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.Partner.prototype.hasContact = function() {
+  return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional opencannabis.media.MediaItem branding = 6;
+ * @return {?proto.opencannabis.media.MediaItem}
+ */
+proto.bloombox.schema.partner.Partner.prototype.getBranding = function() {
+  return /** @type{?proto.opencannabis.media.MediaItem} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.media.MediaItem, 6));
+};
+
+
+/** @param {?proto.opencannabis.media.MediaItem|undefined} value */
+proto.bloombox.schema.partner.Partner.prototype.setBranding = function(value) {
+  jspb.Message.setWrapperField(this, 6, value);
+};
+
+
+proto.bloombox.schema.partner.Partner.prototype.clearBranding = function() {
+  this.setBranding(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.Partner.prototype.hasBranding = function() {
+  return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * optional PartnerChannel channel = 7;
+ * @return {!proto.bloombox.schema.partner.PartnerChannel}
+ */
+proto.bloombox.schema.partner.Partner.prototype.getChannel = function() {
+  return /** @type {!proto.bloombox.schema.partner.PartnerChannel} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+};
+
+
+/** @param {!proto.bloombox.schema.partner.PartnerChannel} value */
+proto.bloombox.schema.partner.Partner.prototype.setChannel = function(value) {
+  jspb.Message.setProto3EnumField(this, 7, value);
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant created = 100;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.bloombox.schema.partner.Partner.prototype.getCreated = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 100));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.bloombox.schema.partner.Partner.prototype.setCreated = function(value) {
+  jspb.Message.setWrapperField(this, 100, value);
+};
+
+
+proto.bloombox.schema.partner.Partner.prototype.clearCreated = function() {
+  this.setCreated(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.Partner.prototype.hasCreated = function() {
+  return jspb.Message.getField(this, 100) != null;
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant modified = 101;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.bloombox.schema.partner.Partner.prototype.getModified = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 101));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.bloombox.schema.partner.Partner.prototype.setModified = function(value) {
+  jspb.Message.setWrapperField(this, 101, value);
+};
+
+
+proto.bloombox.schema.partner.Partner.prototype.clearModified = function() {
+  this.setModified(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.Partner.prototype.hasModified = function() {
+  return jspb.Message.getField(this, 101) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.PartnerFlags = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.PartnerFlags, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.PartnerFlags.displayName = 'proto.bloombox.schema.partner.PartnerFlags';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.PartnerFlags.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.PartnerFlags.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.PartnerFlags} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.PartnerFlags.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    suspended: jspb.Message.getFieldWithDefault(msg, 1, false),
+    pastdue: jspb.Message.getFieldWithDefault(msg, 2, false),
+    beta: jspb.Message.getFieldWithDefault(msg, 3, false),
+    sandbox: jspb.Message.getFieldWithDefault(msg, 4, false),
+    internal: jspb.Message.getFieldWithDefault(msg, 5, false)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.PartnerFlags}
+ */
+proto.bloombox.schema.partner.PartnerFlags.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.PartnerFlags;
+  return proto.bloombox.schema.partner.PartnerFlags.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.PartnerFlags} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.PartnerFlags}
+ */
+proto.bloombox.schema.partner.PartnerFlags.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSuspended(value);
+      break;
+    case 2:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setPastdue(value);
+      break;
+    case 3:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setBeta(value);
+      break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSandbox(value);
+      break;
+    case 5:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setInternal(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.PartnerFlags.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.PartnerFlags.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.PartnerFlags} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.PartnerFlags.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getSuspended();
+  if (f) {
+    writer.writeBool(
+      1,
+      f
+    );
+  }
+  f = message.getPastdue();
+  if (f) {
+    writer.writeBool(
+      2,
+      f
+    );
+  }
+  f = message.getBeta();
+  if (f) {
+    writer.writeBool(
+      3,
+      f
+    );
+  }
+  f = message.getSandbox();
+  if (f) {
+    writer.writeBool(
+      4,
+      f
+    );
+  }
+  f = message.getInternal();
+  if (f) {
+    writer.writeBool(
+      5,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bool suspended = 1;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.PartnerFlags.prototype.getSuspended = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.PartnerFlags.prototype.setSuspended = function(value) {
+  jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+/**
+ * optional bool pastdue = 2;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.PartnerFlags.prototype.getPastdue = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.PartnerFlags.prototype.setPastdue = function(value) {
+  jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+/**
+ * optional bool beta = 3;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.PartnerFlags.prototype.getBeta = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 3, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.PartnerFlags.prototype.setBeta = function(value) {
+  jspb.Message.setProto3BooleanField(this, 3, value);
+};
+
+
+/**
+ * optional bool sandbox = 4;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.PartnerFlags.prototype.getSandbox = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 4, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.PartnerFlags.prototype.setSandbox = function(value) {
+  jspb.Message.setProto3BooleanField(this, 4, value);
+};
+
+
+/**
+ * optional bool internal = 5;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.PartnerFlags.prototype.getInternal = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 5, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.PartnerFlags.prototype.setInternal = function(value) {
+  jspb.Message.setProto3BooleanField(this, 5, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.bloombox.schema.partner.PartnerChannel = {
+  DIRECT: 0
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.PartnerLocationKey = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.PartnerLocationKey, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.PartnerLocationKey.displayName = 'proto.bloombox.schema.partner.PartnerLocationKey';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.PartnerLocationKey.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.PartnerLocationKey.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.PartnerLocationKey} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.PartnerLocationKey.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    partner: (f = msg.getPartner()) && proto.bloombox.schema.partner.PartnerKey.toObject(includeInstance, f),
+    code: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.PartnerLocationKey}
+ */
+proto.bloombox.schema.partner.PartnerLocationKey.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.PartnerLocationKey;
+  return proto.bloombox.schema.partner.PartnerLocationKey.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.PartnerLocationKey} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.PartnerLocationKey}
+ */
+proto.bloombox.schema.partner.PartnerLocationKey.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.bloombox.schema.partner.PartnerKey;
+      reader.readMessage(value,proto.bloombox.schema.partner.PartnerKey.deserializeBinaryFromReader);
+      msg.setPartner(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCode(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.PartnerLocationKey.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.PartnerLocationKey.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.PartnerLocationKey} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.PartnerLocationKey.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getPartner();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.bloombox.schema.partner.PartnerKey.serializeBinaryToWriter
+    );
+  }
+  f = message.getCode();
+  if (f.length > 0) {
+    writer.writeString(
       2,
       f
     );
@@ -8133,22 +10831,23 @@ proto.opencannabis.temporal.Instant.serializeBinaryToWriter = function(message, 
 
 
 /**
- * optional string iso8601 = 1;
- * @return {string}
+ * optional PartnerKey partner = 1;
+ * @return {?proto.bloombox.schema.partner.PartnerKey}
  */
-proto.opencannabis.temporal.Instant.prototype.getIso8601 = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+proto.bloombox.schema.partner.PartnerLocationKey.prototype.getPartner = function() {
+  return /** @type{?proto.bloombox.schema.partner.PartnerKey} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerKey, 1));
 };
 
 
-/** @param {string} value */
-proto.opencannabis.temporal.Instant.prototype.setIso8601 = function(value) {
-  jspb.Message.setOneofField(this, 1, proto.opencannabis.temporal.Instant.oneofGroups_[0], value);
+/** @param {?proto.bloombox.schema.partner.PartnerKey|undefined} value */
+proto.bloombox.schema.partner.PartnerLocationKey.prototype.setPartner = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
 };
 
 
-proto.opencannabis.temporal.Instant.prototype.clearIso8601 = function() {
-  jspb.Message.setOneofField(this, 1, proto.opencannabis.temporal.Instant.oneofGroups_[0], undefined);
+proto.bloombox.schema.partner.PartnerLocationKey.prototype.clearPartner = function() {
+  this.setPartner(undefined);
 };
 
 
@@ -8156,28 +10855,294 @@ proto.opencannabis.temporal.Instant.prototype.clearIso8601 = function() {
  * Returns whether this field is set.
  * @return {!boolean}
  */
-proto.opencannabis.temporal.Instant.prototype.hasIso8601 = function() {
+proto.bloombox.schema.partner.PartnerLocationKey.prototype.hasPartner = function() {
   return jspb.Message.getField(this, 1) != null;
 };
 
 
 /**
- * optional uint64 timestamp = 2;
- * @return {number}
+ * optional string code = 2;
+ * @return {string}
  */
-proto.opencannabis.temporal.Instant.prototype.getTimestamp = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+proto.bloombox.schema.partner.PartnerLocationKey.prototype.getCode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
-/** @param {number} value */
-proto.opencannabis.temporal.Instant.prototype.setTimestamp = function(value) {
-  jspb.Message.setOneofField(this, 2, proto.opencannabis.temporal.Instant.oneofGroups_[0], value);
+/** @param {string} value */
+proto.bloombox.schema.partner.PartnerLocationKey.prototype.setCode = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
-proto.opencannabis.temporal.Instant.prototype.clearTimestamp = function() {
-  jspb.Message.setOneofField(this, 2, proto.opencannabis.temporal.Instant.oneofGroups_[0], undefined);
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.PartnerLocation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.PartnerLocation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.PartnerLocation.displayName = 'proto.bloombox.schema.partner.PartnerLocation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.PartnerLocation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.PartnerLocation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.PartnerLocation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    code: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    partner: (f = msg.getPartner()) && proto.bloombox.schema.partner.Partner.toObject(includeInstance, f),
+    name: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    label: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    flags: (f = msg.getFlags()) && proto.bloombox.schema.partner.PartnerFlags.toObject(includeInstance, f),
+    contact: (f = msg.getContact()) && proto.opencannabis.contact.ContactInfo.toObject(includeInstance, f),
+    branding: (f = msg.getBranding()) && proto.opencannabis.media.MediaItem.toObject(includeInstance, f),
+    created: (f = msg.getCreated()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
+    modified: (f = msg.getModified()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.PartnerLocation}
+ */
+proto.bloombox.schema.partner.PartnerLocation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.PartnerLocation;
+  return proto.bloombox.schema.partner.PartnerLocation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.PartnerLocation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.PartnerLocation}
+ */
+proto.bloombox.schema.partner.PartnerLocation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCode(value);
+      break;
+    case 2:
+      var value = new proto.bloombox.schema.partner.Partner;
+      reader.readMessage(value,proto.bloombox.schema.partner.Partner.deserializeBinaryFromReader);
+      msg.setPartner(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLabel(value);
+      break;
+    case 5:
+      var value = new proto.bloombox.schema.partner.PartnerFlags;
+      reader.readMessage(value,proto.bloombox.schema.partner.PartnerFlags.deserializeBinaryFromReader);
+      msg.setFlags(value);
+      break;
+    case 7:
+      var value = new proto.opencannabis.contact.ContactInfo;
+      reader.readMessage(value,proto.opencannabis.contact.ContactInfo.deserializeBinaryFromReader);
+      msg.setContact(value);
+      break;
+    case 6:
+      var value = new proto.opencannabis.media.MediaItem;
+      reader.readMessage(value,proto.opencannabis.media.MediaItem.deserializeBinaryFromReader);
+      msg.setBranding(value);
+      break;
+    case 8:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setCreated(value);
+      break;
+    case 9:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setModified(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.PartnerLocation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.PartnerLocation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.PartnerLocation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getCode();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getPartner();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.bloombox.schema.partner.Partner.serializeBinaryToWriter
+    );
+  }
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getLabel();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getFlags();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      proto.bloombox.schema.partner.PartnerFlags.serializeBinaryToWriter
+    );
+  }
+  f = message.getContact();
+  if (f != null) {
+    writer.writeMessage(
+      7,
+      f,
+      proto.opencannabis.contact.ContactInfo.serializeBinaryToWriter
+    );
+  }
+  f = message.getBranding();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      proto.opencannabis.media.MediaItem.serializeBinaryToWriter
+    );
+  }
+  f = message.getCreated();
+  if (f != null) {
+    writer.writeMessage(
+      8,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+  f = message.getModified();
+  if (f != null) {
+    writer.writeMessage(
+      9,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string code = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.getCode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.partner.PartnerLocation.prototype.setCode = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional Partner partner = 2;
+ * @return {?proto.bloombox.schema.partner.Partner}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.getPartner = function() {
+  return /** @type{?proto.bloombox.schema.partner.Partner} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.Partner, 2));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.Partner|undefined} value */
+proto.bloombox.schema.partner.PartnerLocation.prototype.setPartner = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerLocation.prototype.clearPartner = function() {
+  this.setPartner(undefined);
 };
 
 
@@ -8185,8 +11150,2566 @@ proto.opencannabis.temporal.Instant.prototype.clearTimestamp = function() {
  * Returns whether this field is set.
  * @return {!boolean}
  */
-proto.opencannabis.temporal.Instant.prototype.hasTimestamp = function() {
+proto.bloombox.schema.partner.PartnerLocation.prototype.hasPartner = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional string name = 3;
+ * @return {string}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.partner.PartnerLocation.prototype.setName = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string label = 4;
+ * @return {string}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.getLabel = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.partner.PartnerLocation.prototype.setLabel = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional PartnerFlags flags = 5;
+ * @return {?proto.bloombox.schema.partner.PartnerFlags}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.getFlags = function() {
+  return /** @type{?proto.bloombox.schema.partner.PartnerFlags} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerFlags, 5));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.PartnerFlags|undefined} value */
+proto.bloombox.schema.partner.PartnerLocation.prototype.setFlags = function(value) {
+  jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerLocation.prototype.clearFlags = function() {
+  this.setFlags(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.hasFlags = function() {
+  return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional opencannabis.contact.ContactInfo contact = 7;
+ * @return {?proto.opencannabis.contact.ContactInfo}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.getContact = function() {
+  return /** @type{?proto.opencannabis.contact.ContactInfo} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.contact.ContactInfo, 7));
+};
+
+
+/** @param {?proto.opencannabis.contact.ContactInfo|undefined} value */
+proto.bloombox.schema.partner.PartnerLocation.prototype.setContact = function(value) {
+  jspb.Message.setWrapperField(this, 7, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerLocation.prototype.clearContact = function() {
+  this.setContact(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.hasContact = function() {
+  return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional opencannabis.media.MediaItem branding = 6;
+ * @return {?proto.opencannabis.media.MediaItem}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.getBranding = function() {
+  return /** @type{?proto.opencannabis.media.MediaItem} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.media.MediaItem, 6));
+};
+
+
+/** @param {?proto.opencannabis.media.MediaItem|undefined} value */
+proto.bloombox.schema.partner.PartnerLocation.prototype.setBranding = function(value) {
+  jspb.Message.setWrapperField(this, 6, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerLocation.prototype.clearBranding = function() {
+  this.setBranding(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.hasBranding = function() {
+  return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant created = 8;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.getCreated = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 8));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.bloombox.schema.partner.PartnerLocation.prototype.setCreated = function(value) {
+  jspb.Message.setWrapperField(this, 8, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerLocation.prototype.clearCreated = function() {
+  this.setCreated(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.hasCreated = function() {
+  return jspb.Message.getField(this, 8) != null;
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant modified = 9;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.getModified = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 9));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.bloombox.schema.partner.PartnerLocation.prototype.setModified = function(value) {
+  jspb.Message.setWrapperField(this, 9, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerLocation.prototype.clearModified = function() {
+  this.setModified(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.PartnerLocation.prototype.hasModified = function() {
+  return jspb.Message.getField(this, 9) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.PartnerDeviceKey = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.PartnerDeviceKey, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.PartnerDeviceKey.displayName = 'proto.bloombox.schema.partner.PartnerDeviceKey';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.PartnerDeviceKey.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.PartnerDeviceKey.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.PartnerDeviceKey} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.PartnerDeviceKey.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    location: (f = msg.getLocation()) && proto.bloombox.schema.partner.PartnerLocationKey.toObject(includeInstance, f),
+    uuid: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.PartnerDeviceKey}
+ */
+proto.bloombox.schema.partner.PartnerDeviceKey.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.PartnerDeviceKey;
+  return proto.bloombox.schema.partner.PartnerDeviceKey.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.PartnerDeviceKey} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.PartnerDeviceKey}
+ */
+proto.bloombox.schema.partner.PartnerDeviceKey.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.bloombox.schema.partner.PartnerLocationKey;
+      reader.readMessage(value,proto.bloombox.schema.partner.PartnerLocationKey.deserializeBinaryFromReader);
+      msg.setLocation(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUuid(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.PartnerDeviceKey.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.PartnerDeviceKey.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.PartnerDeviceKey} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.PartnerDeviceKey.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getLocation();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.bloombox.schema.partner.PartnerLocationKey.serializeBinaryToWriter
+    );
+  }
+  f = message.getUuid();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional PartnerLocationKey location = 1;
+ * @return {?proto.bloombox.schema.partner.PartnerLocationKey}
+ */
+proto.bloombox.schema.partner.PartnerDeviceKey.prototype.getLocation = function() {
+  return /** @type{?proto.bloombox.schema.partner.PartnerLocationKey} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerLocationKey, 1));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.PartnerLocationKey|undefined} value */
+proto.bloombox.schema.partner.PartnerDeviceKey.prototype.setLocation = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerDeviceKey.prototype.clearLocation = function() {
+  this.setLocation(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.PartnerDeviceKey.prototype.hasLocation = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional string uuid = 2;
+ * @return {string}
+ */
+proto.bloombox.schema.partner.PartnerDeviceKey.prototype.getUuid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.partner.PartnerDeviceKey.prototype.setUuid = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.PartnerDevice = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.PartnerDevice, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.PartnerDevice.displayName = 'proto.bloombox.schema.partner.PartnerDevice';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.PartnerDevice.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.PartnerDevice} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.PartnerDevice.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    uuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    partner: (f = msg.getPartner()) && proto.bloombox.schema.partner.Partner.toObject(includeInstance, f),
+    location: (f = msg.getLocation()) && proto.bloombox.schema.partner.PartnerLocation.toObject(includeInstance, f),
+    type: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    flags: (f = msg.getFlags()) && proto.bloombox.schema.partner.PartnerDeviceFlags.toObject(includeInstance, f),
+    device: (f = msg.getDevice()) && proto.opencannabis.device.Device.toObject(includeInstance, f),
+    seen: (f = msg.getSeen()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
+    registered: (f = msg.getRegistered()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.PartnerDevice}
+ */
+proto.bloombox.schema.partner.PartnerDevice.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.PartnerDevice;
+  return proto.bloombox.schema.partner.PartnerDevice.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.PartnerDevice} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.PartnerDevice}
+ */
+proto.bloombox.schema.partner.PartnerDevice.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUuid(value);
+      break;
+    case 2:
+      var value = new proto.bloombox.schema.partner.Partner;
+      reader.readMessage(value,proto.bloombox.schema.partner.Partner.deserializeBinaryFromReader);
+      msg.setPartner(value);
+      break;
+    case 3:
+      var value = new proto.bloombox.schema.partner.PartnerLocation;
+      reader.readMessage(value,proto.bloombox.schema.partner.PartnerLocation.deserializeBinaryFromReader);
+      msg.setLocation(value);
+      break;
+    case 4:
+      var value = /** @type {!proto.bloombox.schema.partner.PartnerDeviceType} */ (reader.readEnum());
+      msg.setType(value);
+      break;
+    case 5:
+      var value = new proto.bloombox.schema.partner.PartnerDeviceFlags;
+      reader.readMessage(value,proto.bloombox.schema.partner.PartnerDeviceFlags.deserializeBinaryFromReader);
+      msg.setFlags(value);
+      break;
+    case 6:
+      var value = new proto.opencannabis.device.Device;
+      reader.readMessage(value,proto.opencannabis.device.Device.deserializeBinaryFromReader);
+      msg.setDevice(value);
+      break;
+    case 7:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setSeen(value);
+      break;
+    case 8:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setRegistered(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.PartnerDevice.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.PartnerDevice} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.PartnerDevice.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getUuid();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getPartner();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.bloombox.schema.partner.Partner.serializeBinaryToWriter
+    );
+  }
+  f = message.getLocation();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto.bloombox.schema.partner.PartnerLocation.serializeBinaryToWriter
+    );
+  }
+  f = message.getType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      4,
+      f
+    );
+  }
+  f = message.getFlags();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      proto.bloombox.schema.partner.PartnerDeviceFlags.serializeBinaryToWriter
+    );
+  }
+  f = message.getDevice();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      proto.opencannabis.device.Device.serializeBinaryToWriter
+    );
+  }
+  f = message.getSeen();
+  if (f != null) {
+    writer.writeMessage(
+      7,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+  f = message.getRegistered();
+  if (f != null) {
+    writer.writeMessage(
+      8,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string uuid = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.getUuid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.partner.PartnerDevice.prototype.setUuid = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional Partner partner = 2;
+ * @return {?proto.bloombox.schema.partner.Partner}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.getPartner = function() {
+  return /** @type{?proto.bloombox.schema.partner.Partner} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.Partner, 2));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.Partner|undefined} value */
+proto.bloombox.schema.partner.PartnerDevice.prototype.setPartner = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerDevice.prototype.clearPartner = function() {
+  this.setPartner(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.hasPartner = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional PartnerLocation location = 3;
+ * @return {?proto.bloombox.schema.partner.PartnerLocation}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.getLocation = function() {
+  return /** @type{?proto.bloombox.schema.partner.PartnerLocation} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerLocation, 3));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.PartnerLocation|undefined} value */
+proto.bloombox.schema.partner.PartnerDevice.prototype.setLocation = function(value) {
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerDevice.prototype.clearLocation = function() {
+  this.setLocation(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.hasLocation = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional PartnerDeviceType type = 4;
+ * @return {!proto.bloombox.schema.partner.PartnerDeviceType}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.getType = function() {
+  return /** @type {!proto.bloombox.schema.partner.PartnerDeviceType} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {!proto.bloombox.schema.partner.PartnerDeviceType} value */
+proto.bloombox.schema.partner.PartnerDevice.prototype.setType = function(value) {
+  jspb.Message.setProto3EnumField(this, 4, value);
+};
+
+
+/**
+ * optional PartnerDeviceFlags flags = 5;
+ * @return {?proto.bloombox.schema.partner.PartnerDeviceFlags}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.getFlags = function() {
+  return /** @type{?proto.bloombox.schema.partner.PartnerDeviceFlags} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerDeviceFlags, 5));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.PartnerDeviceFlags|undefined} value */
+proto.bloombox.schema.partner.PartnerDevice.prototype.setFlags = function(value) {
+  jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerDevice.prototype.clearFlags = function() {
+  this.setFlags(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.hasFlags = function() {
+  return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional opencannabis.device.Device device = 6;
+ * @return {?proto.opencannabis.device.Device}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.getDevice = function() {
+  return /** @type{?proto.opencannabis.device.Device} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.device.Device, 6));
+};
+
+
+/** @param {?proto.opencannabis.device.Device|undefined} value */
+proto.bloombox.schema.partner.PartnerDevice.prototype.setDevice = function(value) {
+  jspb.Message.setWrapperField(this, 6, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerDevice.prototype.clearDevice = function() {
+  this.setDevice(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.hasDevice = function() {
+  return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant seen = 7;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.getSeen = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 7));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.bloombox.schema.partner.PartnerDevice.prototype.setSeen = function(value) {
+  jspb.Message.setWrapperField(this, 7, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerDevice.prototype.clearSeen = function() {
+  this.setSeen(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.hasSeen = function() {
+  return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant registered = 8;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.getRegistered = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 8));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.bloombox.schema.partner.PartnerDevice.prototype.setRegistered = function(value) {
+  jspb.Message.setWrapperField(this, 8, value);
+};
+
+
+proto.bloombox.schema.partner.PartnerDevice.prototype.clearRegistered = function() {
+  this.setRegistered(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.PartnerDevice.prototype.hasRegistered = function() {
+  return jspb.Message.getField(this, 8) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.PartnerDeviceFlags = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.PartnerDeviceFlags, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.PartnerDeviceFlags.displayName = 'proto.bloombox.schema.partner.PartnerDeviceFlags';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.PartnerDeviceFlags.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.PartnerDeviceFlags} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.PartnerDeviceFlags.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    active: jspb.Message.getFieldWithDefault(msg, 1, false),
+    suspended: jspb.Message.getFieldWithDefault(msg, 2, false),
+    beta: jspb.Message.getFieldWithDefault(msg, 3, false),
+    sandbox: jspb.Message.getFieldWithDefault(msg, 4, false)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.PartnerDeviceFlags}
+ */
+proto.bloombox.schema.partner.PartnerDeviceFlags.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.PartnerDeviceFlags;
+  return proto.bloombox.schema.partner.PartnerDeviceFlags.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.PartnerDeviceFlags} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.PartnerDeviceFlags}
+ */
+proto.bloombox.schema.partner.PartnerDeviceFlags.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setActive(value);
+      break;
+    case 2:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSuspended(value);
+      break;
+    case 3:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setBeta(value);
+      break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSandbox(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.PartnerDeviceFlags.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.PartnerDeviceFlags} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.PartnerDeviceFlags.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getActive();
+  if (f) {
+    writer.writeBool(
+      1,
+      f
+    );
+  }
+  f = message.getSuspended();
+  if (f) {
+    writer.writeBool(
+      2,
+      f
+    );
+  }
+  f = message.getBeta();
+  if (f) {
+    writer.writeBool(
+      3,
+      f
+    );
+  }
+  f = message.getSandbox();
+  if (f) {
+    writer.writeBool(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bool active = 1;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.getActive = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.setActive = function(value) {
+  jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+/**
+ * optional bool suspended = 2;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.getSuspended = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.setSuspended = function(value) {
+  jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+/**
+ * optional bool beta = 3;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.getBeta = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 3, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.setBeta = function(value) {
+  jspb.Message.setProto3BooleanField(this, 3, value);
+};
+
+
+/**
+ * optional bool sandbox = 4;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.getSandbox = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 4, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.setSandbox = function(value) {
+  jspb.Message.setProto3BooleanField(this, 4, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.bloombox.schema.partner.PartnerDeviceType = {
+  UNSPECIFIED_DEVICE_TYPE: 0,
+  INTERNAL: 1,
+  MENU_TABLET: 10,
+  MENU_TV: 11,
+  CHECKIN_STATION: 20,
+  CHECKIN_TV: 21,
+  POS_REGISTER: 30
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.commerce.pos.PurchaseEvent = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.commerce.pos.PurchaseEvent, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.commerce.pos.PurchaseEvent.displayName = 'proto.bloombox.schema.commerce.pos.PurchaseEvent';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.commerce.pos.PurchaseEvent.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.commerce.pos.PurchaseEvent} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    status: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    instant: (f = msg.getInstant()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
+    message: jspb.Message.getFieldWithDefault(msg, 3, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.commerce.pos.PurchaseEvent}
+ */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.commerce.pos.PurchaseEvent;
+  return proto.bloombox.schema.commerce.pos.PurchaseEvent.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.commerce.pos.PurchaseEvent} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.commerce.pos.PurchaseEvent}
+ */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.bloombox.schema.commerce.pos.PurchaseStatus} */ (reader.readEnum());
+      msg.setStatus(value);
+      break;
+    case 2:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setInstant(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMessage(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.commerce.pos.PurchaseEvent.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.commerce.pos.PurchaseEvent} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getInstant();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+  f = message.getMessage();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional PurchaseStatus status = 1;
+ * @return {!proto.bloombox.schema.commerce.pos.PurchaseStatus}
+ */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.getStatus = function() {
+  return /** @type {!proto.bloombox.schema.commerce.pos.PurchaseStatus} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.bloombox.schema.commerce.pos.PurchaseStatus} value */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.setStatus = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant instant = 2;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.getInstant = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 2));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.setInstant = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.clearInstant = function() {
+  this.setInstant(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.hasInstant = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional string message = 3;
+ * @return {string}
+ */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.getMessage = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.setMessage = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.commerce.pos.Receipt = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.bloombox.schema.commerce.pos.Receipt.repeatedFields_, null);
+};
+goog.inherits(proto.bloombox.schema.commerce.pos.Receipt, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.commerce.pos.Receipt.displayName = 'proto.bloombox.schema.commerce.pos.Receipt';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.bloombox.schema.commerce.pos.Receipt.repeatedFields_ = [2,3];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.commerce.pos.Receipt.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.commerce.pos.Receipt.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.commerce.pos.Receipt} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.commerce.pos.Receipt.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    subtotal: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
+    taxList: jspb.Message.toObjectList(msg.getTaxList(),
+    proto.opencannabis.taxes.Tax.toObject, includeInstance),
+    discountList: jspb.Message.toObjectList(msg.getDiscountList(),
+    proto.opencannabis.commerce.Discount.toObject, includeInstance),
+    total: +jspb.Message.getFieldWithDefault(msg, 4, 0.0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.commerce.pos.Receipt}
+ */
+proto.bloombox.schema.commerce.pos.Receipt.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.commerce.pos.Receipt;
+  return proto.bloombox.schema.commerce.pos.Receipt.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.commerce.pos.Receipt} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.commerce.pos.Receipt}
+ */
+proto.bloombox.schema.commerce.pos.Receipt.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setSubtotal(value);
+      break;
+    case 2:
+      var value = new proto.opencannabis.taxes.Tax;
+      reader.readMessage(value,proto.opencannabis.taxes.Tax.deserializeBinaryFromReader);
+      msg.addTax(value);
+      break;
+    case 3:
+      var value = new proto.opencannabis.commerce.Discount;
+      reader.readMessage(value,proto.opencannabis.commerce.Discount.deserializeBinaryFromReader);
+      msg.addDiscount(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setTotal(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.commerce.pos.Receipt.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.commerce.pos.Receipt.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.commerce.pos.Receipt} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.commerce.pos.Receipt.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getSubtotal();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      1,
+      f
+    );
+  }
+  f = message.getTaxList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      2,
+      f,
+      proto.opencannabis.taxes.Tax.serializeBinaryToWriter
+    );
+  }
+  f = message.getDiscountList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      3,
+      f,
+      proto.opencannabis.commerce.Discount.serializeBinaryToWriter
+    );
+  }
+  f = message.getTotal();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional double subtotal = 1;
+ * @return {number}
+ */
+proto.bloombox.schema.commerce.pos.Receipt.prototype.getSubtotal = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
+};
+
+
+/** @param {number} value */
+proto.bloombox.schema.commerce.pos.Receipt.prototype.setSubtotal = function(value) {
+  jspb.Message.setProto3FloatField(this, 1, value);
+};
+
+
+/**
+ * repeated opencannabis.taxes.Tax tax = 2;
+ * @return {!Array.<!proto.opencannabis.taxes.Tax>}
+ */
+proto.bloombox.schema.commerce.pos.Receipt.prototype.getTaxList = function() {
+  return /** @type{!Array.<!proto.opencannabis.taxes.Tax>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.taxes.Tax, 2));
+};
+
+
+/** @param {!Array.<!proto.opencannabis.taxes.Tax>} value */
+proto.bloombox.schema.commerce.pos.Receipt.prototype.setTaxList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 2, value);
+};
+
+
+/**
+ * @param {!proto.opencannabis.taxes.Tax=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.opencannabis.taxes.Tax}
+ */
+proto.bloombox.schema.commerce.pos.Receipt.prototype.addTax = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.opencannabis.taxes.Tax, opt_index);
+};
+
+
+proto.bloombox.schema.commerce.pos.Receipt.prototype.clearTaxList = function() {
+  this.setTaxList([]);
+};
+
+
+/**
+ * repeated opencannabis.commerce.Discount discount = 3;
+ * @return {!Array.<!proto.opencannabis.commerce.Discount>}
+ */
+proto.bloombox.schema.commerce.pos.Receipt.prototype.getDiscountList = function() {
+  return /** @type{!Array.<!proto.opencannabis.commerce.Discount>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.commerce.Discount, 3));
+};
+
+
+/** @param {!Array.<!proto.opencannabis.commerce.Discount>} value */
+proto.bloombox.schema.commerce.pos.Receipt.prototype.setDiscountList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 3, value);
+};
+
+
+/**
+ * @param {!proto.opencannabis.commerce.Discount=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.opencannabis.commerce.Discount}
+ */
+proto.bloombox.schema.commerce.pos.Receipt.prototype.addDiscount = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 3, opt_value, proto.opencannabis.commerce.Discount, opt_index);
+};
+
+
+proto.bloombox.schema.commerce.pos.Receipt.prototype.clearDiscountList = function() {
+  this.setDiscountList([]);
+};
+
+
+/**
+ * optional double total = 4;
+ * @return {number}
+ */
+proto.bloombox.schema.commerce.pos.Receipt.prototype.getTotal = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 4, 0.0));
+};
+
+
+/** @param {number} value */
+proto.bloombox.schema.commerce.pos.Receipt.prototype.setTotal = function(value) {
+  jspb.Message.setProto3FloatField(this, 4, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.commerce.pos.Purchase = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.bloombox.schema.commerce.pos.Purchase.repeatedFields_, null);
+};
+goog.inherits(proto.bloombox.schema.commerce.pos.Purchase, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.commerce.pos.Purchase.displayName = 'proto.bloombox.schema.commerce.pos.Purchase';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.bloombox.schema.commerce.pos.Purchase.repeatedFields_ = [7,9];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.commerce.pos.Purchase.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.commerce.pos.Purchase} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.commerce.pos.Purchase.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    partnerCode: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    locationCode: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    status: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    customer: (f = msg.getCustomer()) && proto.opencannabis.commerce.Customer.toObject(includeInstance, f),
+    register: (f = msg.getRegister()) && proto.bloombox.schema.partner.PartnerDeviceKey.toObject(includeInstance, f),
+    itemList: jspb.Message.toObjectList(msg.getItemList(),
+    proto.opencannabis.commerce.Item.toObject, includeInstance),
+    receipt: (f = msg.getReceipt()) && proto.bloombox.schema.commerce.pos.Receipt.toObject(includeInstance, f),
+    actionLogList: jspb.Message.toObjectList(msg.getActionLogList(),
+    proto.bloombox.schema.commerce.pos.PurchaseEvent.toObject, includeInstance),
+    createdAt: (f = msg.getCreatedAt()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.commerce.pos.Purchase}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.commerce.pos.Purchase;
+  return proto.bloombox.schema.commerce.pos.Purchase.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.commerce.pos.Purchase} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.commerce.pos.Purchase}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setId(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPartnerCode(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLocationCode(value);
+      break;
+    case 4:
+      var value = /** @type {!proto.bloombox.schema.commerce.pos.PurchaseStatus} */ (reader.readEnum());
+      msg.setStatus(value);
+      break;
+    case 5:
+      var value = new proto.opencannabis.commerce.Customer;
+      reader.readMessage(value,proto.opencannabis.commerce.Customer.deserializeBinaryFromReader);
+      msg.setCustomer(value);
+      break;
+    case 6:
+      var value = new proto.bloombox.schema.partner.PartnerDeviceKey;
+      reader.readMessage(value,proto.bloombox.schema.partner.PartnerDeviceKey.deserializeBinaryFromReader);
+      msg.setRegister(value);
+      break;
+    case 7:
+      var value = new proto.opencannabis.commerce.Item;
+      reader.readMessage(value,proto.opencannabis.commerce.Item.deserializeBinaryFromReader);
+      msg.addItem(value);
+      break;
+    case 8:
+      var value = new proto.bloombox.schema.commerce.pos.Receipt;
+      reader.readMessage(value,proto.bloombox.schema.commerce.pos.Receipt.deserializeBinaryFromReader);
+      msg.setReceipt(value);
+      break;
+    case 9:
+      var value = new proto.bloombox.schema.commerce.pos.PurchaseEvent;
+      reader.readMessage(value,proto.bloombox.schema.commerce.pos.PurchaseEvent.deserializeBinaryFromReader);
+      msg.addActionLog(value);
+      break;
+    case 10:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setCreatedAt(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.commerce.pos.Purchase.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.commerce.pos.Purchase} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.commerce.pos.Purchase.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getId();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getPartnerCode();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getLocationCode();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      4,
+      f
+    );
+  }
+  f = message.getCustomer();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      proto.opencannabis.commerce.Customer.serializeBinaryToWriter
+    );
+  }
+  f = message.getRegister();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      proto.bloombox.schema.partner.PartnerDeviceKey.serializeBinaryToWriter
+    );
+  }
+  f = message.getItemList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      7,
+      f,
+      proto.opencannabis.commerce.Item.serializeBinaryToWriter
+    );
+  }
+  f = message.getReceipt();
+  if (f != null) {
+    writer.writeMessage(
+      8,
+      f,
+      proto.bloombox.schema.commerce.pos.Receipt.serializeBinaryToWriter
+    );
+  }
+  f = message.getActionLogList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      9,
+      f,
+      proto.bloombox.schema.commerce.pos.PurchaseEvent.serializeBinaryToWriter
+    );
+  }
+  f = message.getCreatedAt();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string id = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.getId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.setId = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string partner_code = 2;
+ * @return {string}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.getPartnerCode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.setPartnerCode = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string location_code = 3;
+ * @return {string}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.getLocationCode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.setLocationCode = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional PurchaseStatus status = 4;
+ * @return {!proto.bloombox.schema.commerce.pos.PurchaseStatus}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.getStatus = function() {
+  return /** @type {!proto.bloombox.schema.commerce.pos.PurchaseStatus} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {!proto.bloombox.schema.commerce.pos.PurchaseStatus} value */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.setStatus = function(value) {
+  jspb.Message.setProto3EnumField(this, 4, value);
+};
+
+
+/**
+ * optional opencannabis.commerce.Customer customer = 5;
+ * @return {?proto.opencannabis.commerce.Customer}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.getCustomer = function() {
+  return /** @type{?proto.opencannabis.commerce.Customer} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.commerce.Customer, 5));
+};
+
+
+/** @param {?proto.opencannabis.commerce.Customer|undefined} value */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.setCustomer = function(value) {
+  jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+proto.bloombox.schema.commerce.pos.Purchase.prototype.clearCustomer = function() {
+  this.setCustomer(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.hasCustomer = function() {
+  return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional bloombox.schema.partner.PartnerDeviceKey register = 6;
+ * @return {?proto.bloombox.schema.partner.PartnerDeviceKey}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.getRegister = function() {
+  return /** @type{?proto.bloombox.schema.partner.PartnerDeviceKey} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerDeviceKey, 6));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.PartnerDeviceKey|undefined} value */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.setRegister = function(value) {
+  jspb.Message.setWrapperField(this, 6, value);
+};
+
+
+proto.bloombox.schema.commerce.pos.Purchase.prototype.clearRegister = function() {
+  this.setRegister(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.hasRegister = function() {
+  return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * repeated opencannabis.commerce.Item item = 7;
+ * @return {!Array.<!proto.opencannabis.commerce.Item>}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.getItemList = function() {
+  return /** @type{!Array.<!proto.opencannabis.commerce.Item>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.commerce.Item, 7));
+};
+
+
+/** @param {!Array.<!proto.opencannabis.commerce.Item>} value */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.setItemList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 7, value);
+};
+
+
+/**
+ * @param {!proto.opencannabis.commerce.Item=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.opencannabis.commerce.Item}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.addItem = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 7, opt_value, proto.opencannabis.commerce.Item, opt_index);
+};
+
+
+proto.bloombox.schema.commerce.pos.Purchase.prototype.clearItemList = function() {
+  this.setItemList([]);
+};
+
+
+/**
+ * optional Receipt receipt = 8;
+ * @return {?proto.bloombox.schema.commerce.pos.Receipt}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.getReceipt = function() {
+  return /** @type{?proto.bloombox.schema.commerce.pos.Receipt} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.commerce.pos.Receipt, 8));
+};
+
+
+/** @param {?proto.bloombox.schema.commerce.pos.Receipt|undefined} value */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.setReceipt = function(value) {
+  jspb.Message.setWrapperField(this, 8, value);
+};
+
+
+proto.bloombox.schema.commerce.pos.Purchase.prototype.clearReceipt = function() {
+  this.setReceipt(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.hasReceipt = function() {
+  return jspb.Message.getField(this, 8) != null;
+};
+
+
+/**
+ * repeated PurchaseEvent action_log = 9;
+ * @return {!Array.<!proto.bloombox.schema.commerce.pos.PurchaseEvent>}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.getActionLogList = function() {
+  return /** @type{!Array.<!proto.bloombox.schema.commerce.pos.PurchaseEvent>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.bloombox.schema.commerce.pos.PurchaseEvent, 9));
+};
+
+
+/** @param {!Array.<!proto.bloombox.schema.commerce.pos.PurchaseEvent>} value */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.setActionLogList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 9, value);
+};
+
+
+/**
+ * @param {!proto.bloombox.schema.commerce.pos.PurchaseEvent=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.bloombox.schema.commerce.pos.PurchaseEvent}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.addActionLog = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 9, opt_value, proto.bloombox.schema.commerce.pos.PurchaseEvent, opt_index);
+};
+
+
+proto.bloombox.schema.commerce.pos.Purchase.prototype.clearActionLogList = function() {
+  this.setActionLogList([]);
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant created_at = 10;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.getCreatedAt = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 10));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.setCreatedAt = function(value) {
+  jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+proto.bloombox.schema.commerce.pos.Purchase.prototype.clearCreatedAt = function() {
+  this.setCreatedAt(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.commerce.pos.Purchase.prototype.hasCreatedAt = function() {
+  return jspb.Message.getField(this, 10) != null;
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.bloombox.schema.commerce.pos.PurchaseStatus = {
+  DORMANT: 0,
+  OPEN: 1,
+  VOIDED: 2,
+  CLOSED: 3
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.identity.pass.PassKey = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.identity.pass.PassKey, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.identity.pass.PassKey.displayName = 'proto.bloombox.schema.identity.pass.PassKey';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.identity.pass.PassKey.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.identity.pass.PassKey.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.identity.pass.PassKey} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.identity.pass.PassKey.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    encoded: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    serial: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    uid: jspb.Message.getFieldWithDefault(msg, 3, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.identity.pass.PassKey}
+ */
+proto.bloombox.schema.identity.pass.PassKey.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.identity.pass.PassKey;
+  return proto.bloombox.schema.identity.pass.PassKey.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.identity.pass.PassKey} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.identity.pass.PassKey}
+ */
+proto.bloombox.schema.identity.pass.PassKey.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setEncoded(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSerial(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUid(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.identity.pass.PassKey.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.identity.pass.PassKey.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.identity.pass.PassKey} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.identity.pass.PassKey.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getEncoded();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getSerial();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getUid();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string encoded = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.identity.pass.PassKey.prototype.getEncoded = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.identity.pass.PassKey.prototype.setEncoded = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string serial = 2;
+ * @return {string}
+ */
+proto.bloombox.schema.identity.pass.PassKey.prototype.getSerial = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.identity.pass.PassKey.prototype.setSerial = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string uid = 3;
+ * @return {string}
+ */
+proto.bloombox.schema.identity.pass.PassKey.prototype.getUid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.identity.pass.PassKey.prototype.setUid = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.identity.pass.Pass = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.identity.pass.Pass, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.identity.pass.Pass.displayName = 'proto.bloombox.schema.identity.pass.Pass';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.identity.pass.Pass.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.identity.pass.Pass.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.identity.pass.Pass} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.identity.pass.Pass.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    key: (f = msg.getKey()) && proto.bloombox.schema.identity.pass.PassKey.toObject(includeInstance, f),
+    token: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    uri: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    active: jspb.Message.getFieldWithDefault(msg, 4, false),
+    issued: (f = msg.getIssued()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
+    suspended: (f = msg.getSuspended()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.identity.pass.Pass}
+ */
+proto.bloombox.schema.identity.pass.Pass.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.identity.pass.Pass;
+  return proto.bloombox.schema.identity.pass.Pass.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.identity.pass.Pass} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.identity.pass.Pass}
+ */
+proto.bloombox.schema.identity.pass.Pass.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.bloombox.schema.identity.pass.PassKey;
+      reader.readMessage(value,proto.bloombox.schema.identity.pass.PassKey.deserializeBinaryFromReader);
+      msg.setKey(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setToken(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUri(value);
+      break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setActive(value);
+      break;
+    case 5:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setIssued(value);
+      break;
+    case 6:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setSuspended(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.identity.pass.Pass.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.identity.pass.Pass.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.identity.pass.Pass} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.identity.pass.Pass.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getKey();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.bloombox.schema.identity.pass.PassKey.serializeBinaryToWriter
+    );
+  }
+  f = message.getToken();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getUri();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getActive();
+  if (f) {
+    writer.writeBool(
+      4,
+      f
+    );
+  }
+  f = message.getIssued();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+  f = message.getSuspended();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional PassKey key = 1;
+ * @return {?proto.bloombox.schema.identity.pass.PassKey}
+ */
+proto.bloombox.schema.identity.pass.Pass.prototype.getKey = function() {
+  return /** @type{?proto.bloombox.schema.identity.pass.PassKey} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.identity.pass.PassKey, 1));
+};
+
+
+/** @param {?proto.bloombox.schema.identity.pass.PassKey|undefined} value */
+proto.bloombox.schema.identity.pass.Pass.prototype.setKey = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.bloombox.schema.identity.pass.Pass.prototype.clearKey = function() {
+  this.setKey(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.identity.pass.Pass.prototype.hasKey = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional string token = 2;
+ * @return {string}
+ */
+proto.bloombox.schema.identity.pass.Pass.prototype.getToken = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.identity.pass.Pass.prototype.setToken = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string uri = 3;
+ * @return {string}
+ */
+proto.bloombox.schema.identity.pass.Pass.prototype.getUri = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.identity.pass.Pass.prototype.setUri = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional bool active = 4;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.identity.pass.Pass.prototype.getActive = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 4, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.identity.pass.Pass.prototype.setActive = function(value) {
+  jspb.Message.setProto3BooleanField(this, 4, value);
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant issued = 5;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.bloombox.schema.identity.pass.Pass.prototype.getIssued = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 5));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.bloombox.schema.identity.pass.Pass.prototype.setIssued = function(value) {
+  jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+proto.bloombox.schema.identity.pass.Pass.prototype.clearIssued = function() {
+  this.setIssued(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.identity.pass.Pass.prototype.hasIssued = function() {
+  return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant suspended = 6;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.bloombox.schema.identity.pass.Pass.prototype.getSuspended = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 6));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.bloombox.schema.identity.pass.Pass.prototype.setSuspended = function(value) {
+  jspb.Message.setWrapperField(this, 6, value);
+};
+
+
+proto.bloombox.schema.identity.pass.Pass.prototype.clearSuspended = function() {
+  this.setSuspended(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.identity.pass.Pass.prototype.hasSuspended = function() {
+  return jspb.Message.getField(this, 6) != null;
 };
 
 
@@ -8796,6 +14319,344 @@ proto.bloombox.schema.identity.ids.USDLField = {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.bloombox.schema.identity.ids.UserDoctorRec = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.identity.ids.UserDoctorRec, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.identity.ids.UserDoctorRec.displayName = 'proto.bloombox.schema.identity.ids.UserDoctorRec';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.identity.ids.UserDoctorRec.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.identity.ids.UserDoctorRec} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    expirationDate: (f = msg.getExpirationDate()) && proto.opencannabis.temporal.Date.toObject(includeInstance, f),
+    barcode: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    state: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    country: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    doctorId: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    doctor: (f = msg.getDoctor()) && proto.opencannabis.person.Person.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.identity.ids.UserDoctorRec}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.identity.ids.UserDoctorRec;
+  return proto.bloombox.schema.identity.ids.UserDoctorRec.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.identity.ids.UserDoctorRec} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.identity.ids.UserDoctorRec}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setId(value);
+      break;
+    case 2:
+      var value = new proto.opencannabis.temporal.Date;
+      reader.readMessage(value,proto.opencannabis.temporal.Date.deserializeBinaryFromReader);
+      msg.setExpirationDate(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBarcode(value);
+      break;
+    case 4:
+      var value = /** @type {!proto.opencannabis.geo.usa.USState} */ (reader.readEnum());
+      msg.setState(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCountry(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDoctorId(value);
+      break;
+    case 7:
+      var value = new proto.opencannabis.person.Person;
+      reader.readMessage(value,proto.opencannabis.person.Person.deserializeBinaryFromReader);
+      msg.setDoctor(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.identity.ids.UserDoctorRec.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.identity.ids.UserDoctorRec} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getId();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getExpirationDate();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.opencannabis.temporal.Date.serializeBinaryToWriter
+    );
+  }
+  f = message.getBarcode();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getState();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      4,
+      f
+    );
+  }
+  f = message.getCountry();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getDoctorId();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
+  f = message.getDoctor();
+  if (f != null) {
+    writer.writeMessage(
+      7,
+      f,
+      proto.opencannabis.person.Person.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string id = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setId = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional opencannabis.temporal.Date expiration_date = 2;
+ * @return {?proto.opencannabis.temporal.Date}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getExpirationDate = function() {
+  return /** @type{?proto.opencannabis.temporal.Date} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Date, 2));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Date|undefined} value */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setExpirationDate = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.clearExpirationDate = function() {
+  this.setExpirationDate(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.hasExpirationDate = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional string barcode = 3;
+ * @return {string}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getBarcode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setBarcode = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional opencannabis.geo.usa.USState state = 4;
+ * @return {!proto.opencannabis.geo.usa.USState}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getState = function() {
+  return /** @type {!proto.opencannabis.geo.usa.USState} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {!proto.opencannabis.geo.usa.USState} value */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setState = function(value) {
+  jspb.Message.setProto3EnumField(this, 4, value);
+};
+
+
+/**
+ * optional string country = 5;
+ * @return {string}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getCountry = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setCountry = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string doctor_id = 6;
+ * @return {string}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getDoctorId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setDoctorId = function(value) {
+  jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional opencannabis.person.Person doctor = 7;
+ * @return {?proto.opencannabis.person.Person}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getDoctor = function() {
+  return /** @type{?proto.opencannabis.person.Person} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.person.Person, 7));
+};
+
+
+/** @param {?proto.opencannabis.person.Person|undefined} value */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setDoctor = function(value) {
+  jspb.Message.setWrapperField(this, 7, value);
+};
+
+
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.clearDoctor = function() {
+  this.setDoctor(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.hasDoctor = function() {
+  return jspb.Message.getField(this, 7) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.bloombox.schema.identity.ids.Passport = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -9357,6 +15218,20 @@ proto.bloombox.schema.identity.IDType = {
   PASSPORT: 1
 };
 
+/**
+ * @enum {number}
+ */
+proto.opencannabis.media.MediaOrientation = {
+  UP: 0,
+  DOWN: 1,
+  LEFT: 2,
+  RIGHT: 3,
+  UP_MIRRORED: 4,
+  DOWN_MIRRORED: 5,
+  LEFT_MIRRORED: 6,
+  RIGHT_MIRRORED: 7
+};
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -9368,12 +15243,12 @@ proto.bloombox.schema.identity.IDType = {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.bloombox.schema.identity.ids.UserDoctorRec = function(opt_data) {
+proto.bloombox.schema.identity.IDMediaAttachment = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.bloombox.schema.identity.ids.UserDoctorRec, jspb.Message);
+goog.inherits(proto.bloombox.schema.identity.IDMediaAttachment, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.identity.ids.UserDoctorRec.displayName = 'proto.bloombox.schema.identity.ids.UserDoctorRec';
+  proto.bloombox.schema.identity.IDMediaAttachment.displayName = 'proto.bloombox.schema.identity.IDMediaAttachment';
 }
 
 
@@ -9388,8 +15263,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.identity.ids.UserDoctorRec.toObject(opt_includeInstance, this);
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.identity.IDMediaAttachment.toObject(opt_includeInstance, this);
 };
 
 
@@ -9398,19 +15273,17 @@ proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.toObject = function(o
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.identity.ids.UserDoctorRec} msg The msg instance to transform.
+ * @param {!proto.bloombox.schema.identity.IDMediaAttachment} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.bloombox.schema.identity.ids.UserDoctorRec.toObject = function(includeInstance, msg) {
+proto.bloombox.schema.identity.IDMediaAttachment.toObject = function(includeInstance, msg) {
   var f, obj = {
-    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    expirationDate: (f = msg.getExpirationDate()) && proto.opencannabis.temporal.Date.toObject(includeInstance, f),
-    barcode: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    state: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    country: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    doctorId: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    doctor: (f = msg.getDoctor()) && proto.opencannabis.person.Person.toObject(includeInstance, f)
+    type: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    orientation: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    data: msg.getData_asB64(),
+    imageType: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    quality: +jspb.Message.getFieldWithDefault(msg, 5, 0.0)
   };
 
   if (includeInstance) {
@@ -9424,23 +15297,23 @@ proto.bloombox.schema.identity.ids.UserDoctorRec.toObject = function(includeInst
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.identity.ids.UserDoctorRec}
+ * @return {!proto.bloombox.schema.identity.IDMediaAttachment}
  */
-proto.bloombox.schema.identity.ids.UserDoctorRec.deserializeBinary = function(bytes) {
+proto.bloombox.schema.identity.IDMediaAttachment.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.identity.ids.UserDoctorRec;
-  return proto.bloombox.schema.identity.ids.UserDoctorRec.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.bloombox.schema.identity.IDMediaAttachment;
+  return proto.bloombox.schema.identity.IDMediaAttachment.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.bloombox.schema.identity.ids.UserDoctorRec} msg The message object to deserialize into.
+ * @param {!proto.bloombox.schema.identity.IDMediaAttachment} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.identity.ids.UserDoctorRec}
+ * @return {!proto.bloombox.schema.identity.IDMediaAttachment}
  */
-proto.bloombox.schema.identity.ids.UserDoctorRec.deserializeBinaryFromReader = function(msg, reader) {
+proto.bloombox.schema.identity.IDMediaAttachment.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -9448,34 +15321,24 @@ proto.bloombox.schema.identity.ids.UserDoctorRec.deserializeBinaryFromReader = f
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setId(value);
+      var value = /** @type {!proto.bloombox.schema.identity.IDMedia} */ (reader.readEnum());
+      msg.setType(value);
       break;
     case 2:
-      var value = new proto.opencannabis.temporal.Date;
-      reader.readMessage(value,proto.opencannabis.temporal.Date.deserializeBinaryFromReader);
-      msg.setExpirationDate(value);
+      var value = /** @type {!proto.opencannabis.media.MediaOrientation} */ (reader.readEnum());
+      msg.setOrientation(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setBarcode(value);
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setData(value);
       break;
     case 4:
-      var value = /** @type {!proto.opencannabis.geo.usa.USState} */ (reader.readEnum());
-      msg.setState(value);
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setImageType(value);
       break;
     case 5:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setCountry(value);
-      break;
-    case 6:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setDoctorId(value);
-      break;
-    case 7:
-      var value = new proto.opencannabis.person.Person;
-      reader.readMessage(value,proto.opencannabis.person.Person.deserializeBinaryFromReader);
-      msg.setDoctor(value);
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setQuality(value);
       break;
     default:
       reader.skipField();
@@ -9490,9 +15353,9 @@ proto.bloombox.schema.identity.ids.UserDoctorRec.deserializeBinaryFromReader = f
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.serializeBinary = function() {
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.identity.ids.UserDoctorRec.serializeBinaryToWriter(this, writer);
+  proto.bloombox.schema.identity.IDMediaAttachment.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -9500,200 +15363,157 @@ proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.serializeBinary = fun
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.identity.ids.UserDoctorRec} message
+ * @param {!proto.bloombox.schema.identity.IDMediaAttachment} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.bloombox.schema.identity.ids.UserDoctorRec.serializeBinaryToWriter = function(message, writer) {
+proto.bloombox.schema.identity.IDMediaAttachment.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getId();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getType();
+  if (f !== 0.0) {
+    writer.writeEnum(
       1,
       f
     );
   }
-  f = message.getExpirationDate();
-  if (f != null) {
-    writer.writeMessage(
+  f = message.getOrientation();
+  if (f !== 0.0) {
+    writer.writeEnum(
       2,
-      f,
-      proto.opencannabis.temporal.Date.serializeBinaryToWriter
+      f
     );
   }
-  f = message.getBarcode();
+  f = message.getData_asU8();
   if (f.length > 0) {
-    writer.writeString(
+    writer.writeBytes(
       3,
       f
     );
   }
-  f = message.getState();
-  if (f !== 0.0) {
-    writer.writeEnum(
+  f = message.getImageType();
+  if (f !== 0) {
+    writer.writeUint32(
       4,
       f
     );
   }
-  f = message.getCountry();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getQuality();
+  if (f !== 0.0) {
+    writer.writeDouble(
       5,
       f
     );
   }
-  f = message.getDoctorId();
-  if (f.length > 0) {
-    writer.writeString(
-      6,
-      f
-    );
-  }
-  f = message.getDoctor();
-  if (f != null) {
-    writer.writeMessage(
-      7,
-      f,
-      proto.opencannabis.person.Person.serializeBinaryToWriter
-    );
-  }
 };
 
 
 /**
- * optional string id = 1;
+ * optional IDMedia type = 1;
+ * @return {!proto.bloombox.schema.identity.IDMedia}
+ */
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.getType = function() {
+  return /** @type {!proto.bloombox.schema.identity.IDMedia} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.bloombox.schema.identity.IDMedia} value */
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.setType = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional opencannabis.media.MediaOrientation orientation = 2;
+ * @return {!proto.opencannabis.media.MediaOrientation}
+ */
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.getOrientation = function() {
+  return /** @type {!proto.opencannabis.media.MediaOrientation} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {!proto.opencannabis.media.MediaOrientation} value */
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.setOrientation = function(value) {
+  jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+/**
+ * optional bytes data = 3;
  * @return {string}
  */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setId = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional opencannabis.temporal.Date expiration_date = 2;
- * @return {?proto.opencannabis.temporal.Date}
- */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getExpirationDate = function() {
-  return /** @type{?proto.opencannabis.temporal.Date} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Date, 2));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Date|undefined} value */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setExpirationDate = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.clearExpirationDate = function() {
-  this.setExpirationDate(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.hasExpirationDate = function() {
-  return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * optional string barcode = 3;
- * @return {string}
- */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getBarcode = function() {
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.getData = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
-/** @param {string} value */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setBarcode = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
 /**
- * optional opencannabis.geo.usa.USState state = 4;
- * @return {!proto.opencannabis.geo.usa.USState}
- */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getState = function() {
-  return /** @type {!proto.opencannabis.geo.usa.USState} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
-};
-
-
-/** @param {!proto.opencannabis.geo.usa.USState} value */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setState = function(value) {
-  jspb.Message.setProto3EnumField(this, 4, value);
-};
-
-
-/**
- * optional string country = 5;
+ * optional bytes data = 3;
+ * This is a type-conversion wrapper around `getData()`
  * @return {string}
  */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getCountry = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setCountry = function(value) {
-  jspb.Message.setProto3StringField(this, 5, value);
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.getData_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getData()));
 };
 
 
 /**
- * optional string doctor_id = 6;
- * @return {string}
+ * optional bytes data = 3;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getData()`
+ * @return {!Uint8Array}
  */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getDoctorId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.getData_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getData()));
 };
 
 
-/** @param {string} value */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setDoctorId = function(value) {
-  jspb.Message.setProto3StringField(this, 6, value);
+/** @param {!(string|Uint8Array)} value */
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.setData = function(value) {
+  jspb.Message.setProto3BytesField(this, 3, value);
 };
 
 
 /**
- * optional opencannabis.person.Person doctor = 7;
- * @return {?proto.opencannabis.person.Person}
+ * optional uint32 image_type = 4;
+ * @return {number}
  */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.getDoctor = function() {
-  return /** @type{?proto.opencannabis.person.Person} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.person.Person, 7));
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.getImageType = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
 
-/** @param {?proto.opencannabis.person.Person|undefined} value */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.setDoctor = function(value) {
-  jspb.Message.setWrapperField(this, 7, value);
-};
-
-
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.clearDoctor = function() {
-  this.setDoctor(undefined);
+/** @param {number} value */
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.setImageType = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
 /**
- * Returns whether this field is set.
- * @return {!boolean}
+ * optional double quality = 5;
+ * @return {number}
  */
-proto.bloombox.schema.identity.ids.UserDoctorRec.prototype.hasDoctor = function() {
-  return jspb.Message.getField(this, 7) != null;
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.getQuality = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 5, 0.0));
 };
 
+
+/** @param {number} value */
+proto.bloombox.schema.identity.IDMediaAttachment.prototype.setQuality = function(value) {
+  jspb.Message.setProto3FloatField(this, 5, value);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.bloombox.schema.identity.IDMedia = {
+  DOCUMENT_FRONT: 0,
+  DOCUMENT_REAR: 1,
+  PORTRAIT: 2
+};
 
 
 /**
@@ -16850,5826 +22670,6 @@ proto.bloombox.schema.identity.ConsumerType = {
   UNVALIDATED: 0,
   RECREATIONAL: 1,
   MEDICAL: 2
-};
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.commerce.Customer = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.opencannabis.commerce.Customer, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.commerce.Customer.displayName = 'proto.opencannabis.commerce.Customer';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.commerce.Customer.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.commerce.Customer.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.commerce.Customer} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.commerce.Customer.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    person: (f = msg.getPerson()) && proto.opencannabis.person.Person.toObject(includeInstance, f),
-    foreignId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    userKey: jspb.Message.getFieldWithDefault(msg, 3, "")
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.commerce.Customer}
- */
-proto.opencannabis.commerce.Customer.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.commerce.Customer;
-  return proto.opencannabis.commerce.Customer.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.commerce.Customer} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.commerce.Customer}
- */
-proto.opencannabis.commerce.Customer.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = new proto.opencannabis.person.Person;
-      reader.readMessage(value,proto.opencannabis.person.Person.deserializeBinaryFromReader);
-      msg.setPerson(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setForeignId(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setUserKey(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.commerce.Customer.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.commerce.Customer.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.commerce.Customer} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.commerce.Customer.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getPerson();
-  if (f != null) {
-    writer.writeMessage(
-      1,
-      f,
-      proto.opencannabis.person.Person.serializeBinaryToWriter
-    );
-  }
-  f = message.getForeignId();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
-  f = message.getUserKey();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-};
-
-
-/**
- * optional opencannabis.person.Person person = 1;
- * @return {?proto.opencannabis.person.Person}
- */
-proto.opencannabis.commerce.Customer.prototype.getPerson = function() {
-  return /** @type{?proto.opencannabis.person.Person} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.person.Person, 1));
-};
-
-
-/** @param {?proto.opencannabis.person.Person|undefined} value */
-proto.opencannabis.commerce.Customer.prototype.setPerson = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
-};
-
-
-proto.opencannabis.commerce.Customer.prototype.clearPerson = function() {
-  this.setPerson(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.commerce.Customer.prototype.hasPerson = function() {
-  return jspb.Message.getField(this, 1) != null;
-};
-
-
-/**
- * optional string foreign_id = 2;
- * @return {string}
- */
-proto.opencannabis.commerce.Customer.prototype.getForeignId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
-proto.opencannabis.commerce.Customer.prototype.setForeignId = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional string user_key = 3;
- * @return {string}
- */
-proto.opencannabis.commerce.Customer.prototype.getUserKey = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/** @param {string} value */
-proto.opencannabis.commerce.Customer.prototype.setUserKey = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.commerce.DiscountSpec = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.opencannabis.commerce.DiscountSpec.oneofGroups_);
-};
-goog.inherits(proto.opencannabis.commerce.DiscountSpec, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.commerce.DiscountSpec.displayName = 'proto.opencannabis.commerce.DiscountSpec';
-}
-/**
- * Oneof group definitions for this message. Each group defines the field
- * numbers belonging to that group. When of these fields' value is set, all
- * other fields in the group are cleared. During deserialization, if multiple
- * fields are encountered for a group, only the last value seen will be kept.
- * @private {!Array<!Array<number>>}
- * @const
- */
-proto.opencannabis.commerce.DiscountSpec.oneofGroups_ = [[3,4]];
-
-/**
- * @enum {number}
- */
-proto.opencannabis.commerce.DiscountSpec.RateCase = {
-  RATE_NOT_SET: 0,
-  PERCENTAGE: 3,
-  STATIC_VALUE: 4
-};
-
-/**
- * @return {proto.opencannabis.commerce.DiscountSpec.RateCase}
- */
-proto.opencannabis.commerce.DiscountSpec.prototype.getRateCase = function() {
-  return /** @type {proto.opencannabis.commerce.DiscountSpec.RateCase} */(jspb.Message.computeOneofCase(this, proto.opencannabis.commerce.DiscountSpec.oneofGroups_[0]));
-};
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.commerce.DiscountSpec.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.commerce.DiscountSpec.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.commerce.DiscountSpec} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.commerce.DiscountSpec.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    type: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    basis: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    percentage: +jspb.Message.getFieldWithDefault(msg, 3, 0.0),
-    staticValue: +jspb.Message.getFieldWithDefault(msg, 4, 0.0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.commerce.DiscountSpec}
- */
-proto.opencannabis.commerce.DiscountSpec.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.commerce.DiscountSpec;
-  return proto.opencannabis.commerce.DiscountSpec.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.commerce.DiscountSpec} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.commerce.DiscountSpec}
- */
-proto.opencannabis.commerce.DiscountSpec.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {!proto.opencannabis.commerce.DiscountType} */ (reader.readEnum());
-      msg.setType(value);
-      break;
-    case 2:
-      var value = /** @type {!proto.opencannabis.commerce.DiscountBasis} */ (reader.readEnum());
-      msg.setBasis(value);
-      break;
-    case 3:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setPercentage(value);
-      break;
-    case 4:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setStaticValue(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.commerce.DiscountSpec.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.commerce.DiscountSpec.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.commerce.DiscountSpec} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.commerce.DiscountSpec.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getType();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      1,
-      f
-    );
-  }
-  f = message.getBasis();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      2,
-      f
-    );
-  }
-  f = /** @type {number} */ (jspb.Message.getField(message, 3));
-  if (f != null) {
-    writer.writeDouble(
-      3,
-      f
-    );
-  }
-  f = /** @type {number} */ (jspb.Message.getField(message, 4));
-  if (f != null) {
-    writer.writeDouble(
-      4,
-      f
-    );
-  }
-};
-
-
-/**
- * optional DiscountType type = 1;
- * @return {!proto.opencannabis.commerce.DiscountType}
- */
-proto.opencannabis.commerce.DiscountSpec.prototype.getType = function() {
-  return /** @type {!proto.opencannabis.commerce.DiscountType} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/** @param {!proto.opencannabis.commerce.DiscountType} value */
-proto.opencannabis.commerce.DiscountSpec.prototype.setType = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
-};
-
-
-/**
- * optional DiscountBasis basis = 2;
- * @return {!proto.opencannabis.commerce.DiscountBasis}
- */
-proto.opencannabis.commerce.DiscountSpec.prototype.getBasis = function() {
-  return /** @type {!proto.opencannabis.commerce.DiscountBasis} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
-};
-
-
-/** @param {!proto.opencannabis.commerce.DiscountBasis} value */
-proto.opencannabis.commerce.DiscountSpec.prototype.setBasis = function(value) {
-  jspb.Message.setProto3EnumField(this, 2, value);
-};
-
-
-/**
- * optional double percentage = 3;
- * @return {number}
- */
-proto.opencannabis.commerce.DiscountSpec.prototype.getPercentage = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 3, 0.0));
-};
-
-
-/** @param {number} value */
-proto.opencannabis.commerce.DiscountSpec.prototype.setPercentage = function(value) {
-  jspb.Message.setOneofField(this, 3, proto.opencannabis.commerce.DiscountSpec.oneofGroups_[0], value);
-};
-
-
-proto.opencannabis.commerce.DiscountSpec.prototype.clearPercentage = function() {
-  jspb.Message.setOneofField(this, 3, proto.opencannabis.commerce.DiscountSpec.oneofGroups_[0], undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.commerce.DiscountSpec.prototype.hasPercentage = function() {
-  return jspb.Message.getField(this, 3) != null;
-};
-
-
-/**
- * optional double static_value = 4;
- * @return {number}
- */
-proto.opencannabis.commerce.DiscountSpec.prototype.getStaticValue = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 4, 0.0));
-};
-
-
-/** @param {number} value */
-proto.opencannabis.commerce.DiscountSpec.prototype.setStaticValue = function(value) {
-  jspb.Message.setOneofField(this, 4, proto.opencannabis.commerce.DiscountSpec.oneofGroups_[0], value);
-};
-
-
-proto.opencannabis.commerce.DiscountSpec.prototype.clearStaticValue = function() {
-  jspb.Message.setOneofField(this, 4, proto.opencannabis.commerce.DiscountSpec.oneofGroups_[0], undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.commerce.DiscountSpec.prototype.hasStaticValue = function() {
-  return jspb.Message.getField(this, 4) != null;
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.commerce.Discount = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.opencannabis.commerce.Discount, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.commerce.Discount.displayName = 'proto.opencannabis.commerce.Discount';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.commerce.Discount.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.commerce.Discount.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.commerce.Discount} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.commerce.Discount.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    spec: (f = msg.getSpec()) && proto.opencannabis.commerce.DiscountSpec.toObject(includeInstance, f),
-    name: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    label: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    description: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    modifiedAt: (f = msg.getModifiedAt()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
-    createdAt: (f = msg.getCreatedAt()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.commerce.Discount}
- */
-proto.opencannabis.commerce.Discount.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.commerce.Discount;
-  return proto.opencannabis.commerce.Discount.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.commerce.Discount} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.commerce.Discount}
- */
-proto.opencannabis.commerce.Discount.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setId(value);
-      break;
-    case 2:
-      var value = new proto.opencannabis.commerce.DiscountSpec;
-      reader.readMessage(value,proto.opencannabis.commerce.DiscountSpec.deserializeBinaryFromReader);
-      msg.setSpec(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
-      break;
-    case 4:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setLabel(value);
-      break;
-    case 5:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setDescription(value);
-      break;
-    case 7:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setModifiedAt(value);
-      break;
-    case 6:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setCreatedAt(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.commerce.Discount.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.commerce.Discount.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.commerce.Discount} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.commerce.Discount.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getId();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getSpec();
-  if (f != null) {
-    writer.writeMessage(
-      2,
-      f,
-      proto.opencannabis.commerce.DiscountSpec.serializeBinaryToWriter
-    );
-  }
-  f = message.getName();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-  f = message.getLabel();
-  if (f.length > 0) {
-    writer.writeString(
-      4,
-      f
-    );
-  }
-  f = message.getDescription();
-  if (f.length > 0) {
-    writer.writeString(
-      5,
-      f
-    );
-  }
-  f = message.getModifiedAt();
-  if (f != null) {
-    writer.writeMessage(
-      7,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-  f = message.getCreatedAt();
-  if (f != null) {
-    writer.writeMessage(
-      6,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional string id = 1;
- * @return {string}
- */
-proto.opencannabis.commerce.Discount.prototype.getId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.opencannabis.commerce.Discount.prototype.setId = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional DiscountSpec spec = 2;
- * @return {?proto.opencannabis.commerce.DiscountSpec}
- */
-proto.opencannabis.commerce.Discount.prototype.getSpec = function() {
-  return /** @type{?proto.opencannabis.commerce.DiscountSpec} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.commerce.DiscountSpec, 2));
-};
-
-
-/** @param {?proto.opencannabis.commerce.DiscountSpec|undefined} value */
-proto.opencannabis.commerce.Discount.prototype.setSpec = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-proto.opencannabis.commerce.Discount.prototype.clearSpec = function() {
-  this.setSpec(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.commerce.Discount.prototype.hasSpec = function() {
-  return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * optional string name = 3;
- * @return {string}
- */
-proto.opencannabis.commerce.Discount.prototype.getName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/** @param {string} value */
-proto.opencannabis.commerce.Discount.prototype.setName = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-/**
- * optional string label = 4;
- * @return {string}
- */
-proto.opencannabis.commerce.Discount.prototype.getLabel = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
-};
-
-
-/** @param {string} value */
-proto.opencannabis.commerce.Discount.prototype.setLabel = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value);
-};
-
-
-/**
- * optional string description = 5;
- * @return {string}
- */
-proto.opencannabis.commerce.Discount.prototype.getDescription = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
-};
-
-
-/** @param {string} value */
-proto.opencannabis.commerce.Discount.prototype.setDescription = function(value) {
-  jspb.Message.setProto3StringField(this, 5, value);
-};
-
-
-/**
- * optional opencannabis.temporal.Instant modified_at = 7;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.opencannabis.commerce.Discount.prototype.getModifiedAt = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 7));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.opencannabis.commerce.Discount.prototype.setModifiedAt = function(value) {
-  jspb.Message.setWrapperField(this, 7, value);
-};
-
-
-proto.opencannabis.commerce.Discount.prototype.clearModifiedAt = function() {
-  this.setModifiedAt(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.commerce.Discount.prototype.hasModifiedAt = function() {
-  return jspb.Message.getField(this, 7) != null;
-};
-
-
-/**
- * optional opencannabis.temporal.Instant created_at = 6;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.opencannabis.commerce.Discount.prototype.getCreatedAt = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 6));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.opencannabis.commerce.Discount.prototype.setCreatedAt = function(value) {
-  jspb.Message.setWrapperField(this, 6, value);
-};
-
-
-proto.opencannabis.commerce.Discount.prototype.clearCreatedAt = function() {
-  this.setCreatedAt(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.commerce.Discount.prototype.hasCreatedAt = function() {
-  return jspb.Message.getField(this, 6) != null;
-};
-
-
-/**
- * @enum {number}
- */
-proto.opencannabis.commerce.DiscountType = {
-  CUSTOM: 0,
-  STATUTORY: 1,
-  COMMERCIAL: 2
-};
-
-/**
- * @enum {number}
- */
-proto.opencannabis.commerce.DiscountBasis = {
-  ITEM: 0,
-  ORDER_SUBTOTAL: 1,
-  ORDER_TOTAL: 2
-};
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.device.Device = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.opencannabis.device.Device, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.device.Device.displayName = 'proto.opencannabis.device.Device';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.device.Device.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.device.Device.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.device.Device} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.device.Device.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    uuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    type: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    flags: (f = msg.getFlags()) && proto.opencannabis.device.DeviceFlags.toObject(includeInstance, f),
-    key: (f = msg.getKey()) && proto.opencannabis.device.DeviceCredentials.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.device.Device}
- */
-proto.opencannabis.device.Device.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.device.Device;
-  return proto.opencannabis.device.Device.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.device.Device} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.device.Device}
- */
-proto.opencannabis.device.Device.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setUuid(value);
-      break;
-    case 2:
-      var value = /** @type {!proto.opencannabis.device.DeviceType} */ (reader.readEnum());
-      msg.setType(value);
-      break;
-    case 3:
-      var value = new proto.opencannabis.device.DeviceFlags;
-      reader.readMessage(value,proto.opencannabis.device.DeviceFlags.deserializeBinaryFromReader);
-      msg.setFlags(value);
-      break;
-    case 4:
-      var value = new proto.opencannabis.device.DeviceCredentials;
-      reader.readMessage(value,proto.opencannabis.device.DeviceCredentials.deserializeBinaryFromReader);
-      msg.setKey(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.device.Device.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.device.Device.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.device.Device} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.device.Device.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getUuid();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getType();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      2,
-      f
-    );
-  }
-  f = message.getFlags();
-  if (f != null) {
-    writer.writeMessage(
-      3,
-      f,
-      proto.opencannabis.device.DeviceFlags.serializeBinaryToWriter
-    );
-  }
-  f = message.getKey();
-  if (f != null) {
-    writer.writeMessage(
-      4,
-      f,
-      proto.opencannabis.device.DeviceCredentials.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional string uuid = 1;
- * @return {string}
- */
-proto.opencannabis.device.Device.prototype.getUuid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.opencannabis.device.Device.prototype.setUuid = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional DeviceType type = 2;
- * @return {!proto.opencannabis.device.DeviceType}
- */
-proto.opencannabis.device.Device.prototype.getType = function() {
-  return /** @type {!proto.opencannabis.device.DeviceType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
-};
-
-
-/** @param {!proto.opencannabis.device.DeviceType} value */
-proto.opencannabis.device.Device.prototype.setType = function(value) {
-  jspb.Message.setProto3EnumField(this, 2, value);
-};
-
-
-/**
- * optional DeviceFlags flags = 3;
- * @return {?proto.opencannabis.device.DeviceFlags}
- */
-proto.opencannabis.device.Device.prototype.getFlags = function() {
-  return /** @type{?proto.opencannabis.device.DeviceFlags} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.device.DeviceFlags, 3));
-};
-
-
-/** @param {?proto.opencannabis.device.DeviceFlags|undefined} value */
-proto.opencannabis.device.Device.prototype.setFlags = function(value) {
-  jspb.Message.setWrapperField(this, 3, value);
-};
-
-
-proto.opencannabis.device.Device.prototype.clearFlags = function() {
-  this.setFlags(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.device.Device.prototype.hasFlags = function() {
-  return jspb.Message.getField(this, 3) != null;
-};
-
-
-/**
- * optional DeviceCredentials key = 4;
- * @return {?proto.opencannabis.device.DeviceCredentials}
- */
-proto.opencannabis.device.Device.prototype.getKey = function() {
-  return /** @type{?proto.opencannabis.device.DeviceCredentials} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.device.DeviceCredentials, 4));
-};
-
-
-/** @param {?proto.opencannabis.device.DeviceCredentials|undefined} value */
-proto.opencannabis.device.Device.prototype.setKey = function(value) {
-  jspb.Message.setWrapperField(this, 4, value);
-};
-
-
-proto.opencannabis.device.Device.prototype.clearKey = function() {
-  this.setKey(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.device.Device.prototype.hasKey = function() {
-  return jspb.Message.getField(this, 4) != null;
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.device.DeviceFlags = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.opencannabis.device.DeviceFlags, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.device.DeviceFlags.displayName = 'proto.opencannabis.device.DeviceFlags';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.device.DeviceFlags.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.device.DeviceFlags.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.device.DeviceFlags} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.device.DeviceFlags.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    ephemeral: jspb.Message.getFieldWithDefault(msg, 1, false),
-    managed: jspb.Message.getFieldWithDefault(msg, 2, false)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.device.DeviceFlags}
- */
-proto.opencannabis.device.DeviceFlags.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.device.DeviceFlags;
-  return proto.opencannabis.device.DeviceFlags.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.device.DeviceFlags} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.device.DeviceFlags}
- */
-proto.opencannabis.device.DeviceFlags.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setEphemeral(value);
-      break;
-    case 2:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setManaged(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.device.DeviceFlags.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.device.DeviceFlags.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.device.DeviceFlags} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.device.DeviceFlags.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getEphemeral();
-  if (f) {
-    writer.writeBool(
-      1,
-      f
-    );
-  }
-  f = message.getManaged();
-  if (f) {
-    writer.writeBool(
-      2,
-      f
-    );
-  }
-};
-
-
-/**
- * optional bool ephemeral = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.opencannabis.device.DeviceFlags.prototype.getEphemeral = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
-};
-
-
-/** @param {boolean} value */
-proto.opencannabis.device.DeviceFlags.prototype.setEphemeral = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
-};
-
-
-/**
- * optional bool managed = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.opencannabis.device.DeviceFlags.prototype.getManaged = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
-};
-
-
-/** @param {boolean} value */
-proto.opencannabis.device.DeviceFlags.prototype.setManaged = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.device.DeviceCredentials = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.opencannabis.device.DeviceCredentials.repeatedFields_, null);
-};
-goog.inherits(proto.opencannabis.device.DeviceCredentials, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.device.DeviceCredentials.displayName = 'proto.opencannabis.device.DeviceCredentials';
-}
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.opencannabis.device.DeviceCredentials.repeatedFields_ = [5];
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.device.DeviceCredentials.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.device.DeviceCredentials} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.device.DeviceCredentials.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    publicKey: msg.getPublicKey_asB64(),
-    privateKey: msg.getPrivateKey_asB64(),
-    sha256: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    identity: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    authoritiesList: msg.getAuthoritiesList_asB64()
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.device.DeviceCredentials}
- */
-proto.opencannabis.device.DeviceCredentials.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.device.DeviceCredentials;
-  return proto.opencannabis.device.DeviceCredentials.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.device.DeviceCredentials} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.device.DeviceCredentials}
- */
-proto.opencannabis.device.DeviceCredentials.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setPublicKey(value);
-      break;
-    case 2:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setPrivateKey(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setSha256(value);
-      break;
-    case 4:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setIdentity(value);
-      break;
-    case 5:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.addAuthorities(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.device.DeviceCredentials.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.device.DeviceCredentials} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.device.DeviceCredentials.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getPublicKey_asU8();
-  if (f.length > 0) {
-    writer.writeBytes(
-      1,
-      f
-    );
-  }
-  f = message.getPrivateKey_asU8();
-  if (f.length > 0) {
-    writer.writeBytes(
-      2,
-      f
-    );
-  }
-  f = message.getSha256();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-  f = message.getIdentity();
-  if (f.length > 0) {
-    writer.writeString(
-      4,
-      f
-    );
-  }
-  f = message.getAuthoritiesList_asU8();
-  if (f.length > 0) {
-    writer.writeRepeatedBytes(
-      5,
-      f
-    );
-  }
-};
-
-
-/**
- * optional bytes public_key = 1;
- * @return {string}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.getPublicKey = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/**
- * optional bytes public_key = 1;
- * This is a type-conversion wrapper around `getPublicKey()`
- * @return {string}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.getPublicKey_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getPublicKey()));
-};
-
-
-/**
- * optional bytes public_key = 1;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getPublicKey()`
- * @return {!Uint8Array}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.getPublicKey_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getPublicKey()));
-};
-
-
-/** @param {!(string|Uint8Array)} value */
-proto.opencannabis.device.DeviceCredentials.prototype.setPublicKey = function(value) {
-  jspb.Message.setProto3BytesField(this, 1, value);
-};
-
-
-/**
- * optional bytes private_key = 2;
- * @return {string}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.getPrivateKey = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/**
- * optional bytes private_key = 2;
- * This is a type-conversion wrapper around `getPrivateKey()`
- * @return {string}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.getPrivateKey_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getPrivateKey()));
-};
-
-
-/**
- * optional bytes private_key = 2;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getPrivateKey()`
- * @return {!Uint8Array}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.getPrivateKey_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getPrivateKey()));
-};
-
-
-/** @param {!(string|Uint8Array)} value */
-proto.opencannabis.device.DeviceCredentials.prototype.setPrivateKey = function(value) {
-  jspb.Message.setProto3BytesField(this, 2, value);
-};
-
-
-/**
- * optional string sha256 = 3;
- * @return {string}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.getSha256 = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/** @param {string} value */
-proto.opencannabis.device.DeviceCredentials.prototype.setSha256 = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-/**
- * optional string identity = 4;
- * @return {string}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.getIdentity = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
-};
-
-
-/** @param {string} value */
-proto.opencannabis.device.DeviceCredentials.prototype.setIdentity = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value);
-};
-
-
-/**
- * repeated bytes authorities = 5;
- * @return {!Array.<string>}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.getAuthoritiesList = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.getRepeatedField(this, 5));
-};
-
-
-/**
- * repeated bytes authorities = 5;
- * This is a type-conversion wrapper around `getAuthoritiesList()`
- * @return {!Array.<string>}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.getAuthoritiesList_asB64 = function() {
-  return /** @type {!Array.<string>} */ (jspb.Message.bytesListAsB64(
-      this.getAuthoritiesList()));
-};
-
-
-/**
- * repeated bytes authorities = 5;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getAuthoritiesList()`
- * @return {!Array.<!Uint8Array>}
- */
-proto.opencannabis.device.DeviceCredentials.prototype.getAuthoritiesList_asU8 = function() {
-  return /** @type {!Array.<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
-      this.getAuthoritiesList()));
-};
-
-
-/** @param {!(Array<!Uint8Array>|Array<string>)} value */
-proto.opencannabis.device.DeviceCredentials.prototype.setAuthoritiesList = function(value) {
-  jspb.Message.setField(this, 5, value || []);
-};
-
-
-/**
- * @param {!(string|Uint8Array)} value
- * @param {number=} opt_index
- */
-proto.opencannabis.device.DeviceCredentials.prototype.addAuthorities = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 5, value, opt_index);
-};
-
-
-proto.opencannabis.device.DeviceCredentials.prototype.clearAuthoritiesList = function() {
-  this.setAuthoritiesList([]);
-};
-
-
-/**
- * @enum {number}
- */
-proto.opencannabis.device.DeviceType = {
-  UNKNOWN_DEVICE_TYPE: 0,
-  DESKTOP: 1,
-  PHONE: 2,
-  TABLET: 3,
-  TV: 4
-};
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.partner.PartnerKey = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.bloombox.schema.partner.PartnerKey, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.partner.PartnerKey.displayName = 'proto.bloombox.schema.partner.PartnerKey';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.partner.PartnerKey.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.partner.PartnerKey.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.partner.PartnerKey} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerKey.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    code: jspb.Message.getFieldWithDefault(msg, 1, "")
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.partner.PartnerKey}
- */
-proto.bloombox.schema.partner.PartnerKey.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.partner.PartnerKey;
-  return proto.bloombox.schema.partner.PartnerKey.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.partner.PartnerKey} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.partner.PartnerKey}
- */
-proto.bloombox.schema.partner.PartnerKey.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setCode(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.partner.PartnerKey.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.partner.PartnerKey.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.partner.PartnerKey} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerKey.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getCode();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-};
-
-
-/**
- * optional string code = 1;
- * @return {string}
- */
-proto.bloombox.schema.partner.PartnerKey.prototype.getCode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.partner.PartnerKey.prototype.setCode = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.partner.Partner = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.bloombox.schema.partner.Partner, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.partner.Partner.displayName = 'proto.bloombox.schema.partner.Partner';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.partner.Partner.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.partner.Partner.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.partner.Partner} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.Partner.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    code: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    flags: (f = msg.getFlags()) && proto.bloombox.schema.partner.PartnerFlags.toObject(includeInstance, f),
-    legalName: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    contact: (f = msg.getContact()) && proto.opencannabis.contact.ContactInfo.toObject(includeInstance, f),
-    branding: (f = msg.getBranding()) && proto.opencannabis.media.MediaItem.toObject(includeInstance, f),
-    channel: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    created: (f = msg.getCreated()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
-    modified: (f = msg.getModified()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.partner.Partner}
- */
-proto.bloombox.schema.partner.Partner.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.partner.Partner;
-  return proto.bloombox.schema.partner.Partner.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.partner.Partner} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.partner.Partner}
- */
-proto.bloombox.schema.partner.Partner.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setCode(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
-      break;
-    case 3:
-      var value = new proto.bloombox.schema.partner.PartnerFlags;
-      reader.readMessage(value,proto.bloombox.schema.partner.PartnerFlags.deserializeBinaryFromReader);
-      msg.setFlags(value);
-      break;
-    case 4:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setLegalName(value);
-      break;
-    case 5:
-      var value = new proto.opencannabis.contact.ContactInfo;
-      reader.readMessage(value,proto.opencannabis.contact.ContactInfo.deserializeBinaryFromReader);
-      msg.setContact(value);
-      break;
-    case 6:
-      var value = new proto.opencannabis.media.MediaItem;
-      reader.readMessage(value,proto.opencannabis.media.MediaItem.deserializeBinaryFromReader);
-      msg.setBranding(value);
-      break;
-    case 7:
-      var value = /** @type {!proto.bloombox.schema.partner.PartnerChannel} */ (reader.readEnum());
-      msg.setChannel(value);
-      break;
-    case 100:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setCreated(value);
-      break;
-    case 101:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setModified(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.partner.Partner.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.partner.Partner.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.partner.Partner} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.Partner.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getCode();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getName();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
-  f = message.getFlags();
-  if (f != null) {
-    writer.writeMessage(
-      3,
-      f,
-      proto.bloombox.schema.partner.PartnerFlags.serializeBinaryToWriter
-    );
-  }
-  f = message.getLegalName();
-  if (f.length > 0) {
-    writer.writeString(
-      4,
-      f
-    );
-  }
-  f = message.getContact();
-  if (f != null) {
-    writer.writeMessage(
-      5,
-      f,
-      proto.opencannabis.contact.ContactInfo.serializeBinaryToWriter
-    );
-  }
-  f = message.getBranding();
-  if (f != null) {
-    writer.writeMessage(
-      6,
-      f,
-      proto.opencannabis.media.MediaItem.serializeBinaryToWriter
-    );
-  }
-  f = message.getChannel();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      7,
-      f
-    );
-  }
-  f = message.getCreated();
-  if (f != null) {
-    writer.writeMessage(
-      100,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-  f = message.getModified();
-  if (f != null) {
-    writer.writeMessage(
-      101,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional string code = 1;
- * @return {string}
- */
-proto.bloombox.schema.partner.Partner.prototype.getCode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.partner.Partner.prototype.setCode = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string name = 2;
- * @return {string}
- */
-proto.bloombox.schema.partner.Partner.prototype.getName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.partner.Partner.prototype.setName = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional PartnerFlags flags = 3;
- * @return {?proto.bloombox.schema.partner.PartnerFlags}
- */
-proto.bloombox.schema.partner.Partner.prototype.getFlags = function() {
-  return /** @type{?proto.bloombox.schema.partner.PartnerFlags} */ (
-    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerFlags, 3));
-};
-
-
-/** @param {?proto.bloombox.schema.partner.PartnerFlags|undefined} value */
-proto.bloombox.schema.partner.Partner.prototype.setFlags = function(value) {
-  jspb.Message.setWrapperField(this, 3, value);
-};
-
-
-proto.bloombox.schema.partner.Partner.prototype.clearFlags = function() {
-  this.setFlags(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.Partner.prototype.hasFlags = function() {
-  return jspb.Message.getField(this, 3) != null;
-};
-
-
-/**
- * optional string legal_name = 4;
- * @return {string}
- */
-proto.bloombox.schema.partner.Partner.prototype.getLegalName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.partner.Partner.prototype.setLegalName = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value);
-};
-
-
-/**
- * optional opencannabis.contact.ContactInfo contact = 5;
- * @return {?proto.opencannabis.contact.ContactInfo}
- */
-proto.bloombox.schema.partner.Partner.prototype.getContact = function() {
-  return /** @type{?proto.opencannabis.contact.ContactInfo} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.contact.ContactInfo, 5));
-};
-
-
-/** @param {?proto.opencannabis.contact.ContactInfo|undefined} value */
-proto.bloombox.schema.partner.Partner.prototype.setContact = function(value) {
-  jspb.Message.setWrapperField(this, 5, value);
-};
-
-
-proto.bloombox.schema.partner.Partner.prototype.clearContact = function() {
-  this.setContact(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.Partner.prototype.hasContact = function() {
-  return jspb.Message.getField(this, 5) != null;
-};
-
-
-/**
- * optional opencannabis.media.MediaItem branding = 6;
- * @return {?proto.opencannabis.media.MediaItem}
- */
-proto.bloombox.schema.partner.Partner.prototype.getBranding = function() {
-  return /** @type{?proto.opencannabis.media.MediaItem} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.media.MediaItem, 6));
-};
-
-
-/** @param {?proto.opencannabis.media.MediaItem|undefined} value */
-proto.bloombox.schema.partner.Partner.prototype.setBranding = function(value) {
-  jspb.Message.setWrapperField(this, 6, value);
-};
-
-
-proto.bloombox.schema.partner.Partner.prototype.clearBranding = function() {
-  this.setBranding(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.Partner.prototype.hasBranding = function() {
-  return jspb.Message.getField(this, 6) != null;
-};
-
-
-/**
- * optional PartnerChannel channel = 7;
- * @return {!proto.bloombox.schema.partner.PartnerChannel}
- */
-proto.bloombox.schema.partner.Partner.prototype.getChannel = function() {
-  return /** @type {!proto.bloombox.schema.partner.PartnerChannel} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
-};
-
-
-/** @param {!proto.bloombox.schema.partner.PartnerChannel} value */
-proto.bloombox.schema.partner.Partner.prototype.setChannel = function(value) {
-  jspb.Message.setProto3EnumField(this, 7, value);
-};
-
-
-/**
- * optional opencannabis.temporal.Instant created = 100;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.bloombox.schema.partner.Partner.prototype.getCreated = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 100));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.bloombox.schema.partner.Partner.prototype.setCreated = function(value) {
-  jspb.Message.setWrapperField(this, 100, value);
-};
-
-
-proto.bloombox.schema.partner.Partner.prototype.clearCreated = function() {
-  this.setCreated(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.Partner.prototype.hasCreated = function() {
-  return jspb.Message.getField(this, 100) != null;
-};
-
-
-/**
- * optional opencannabis.temporal.Instant modified = 101;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.bloombox.schema.partner.Partner.prototype.getModified = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 101));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.bloombox.schema.partner.Partner.prototype.setModified = function(value) {
-  jspb.Message.setWrapperField(this, 101, value);
-};
-
-
-proto.bloombox.schema.partner.Partner.prototype.clearModified = function() {
-  this.setModified(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.Partner.prototype.hasModified = function() {
-  return jspb.Message.getField(this, 101) != null;
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.partner.PartnerFlags = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.bloombox.schema.partner.PartnerFlags, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.partner.PartnerFlags.displayName = 'proto.bloombox.schema.partner.PartnerFlags';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.partner.PartnerFlags.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.partner.PartnerFlags.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.partner.PartnerFlags} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerFlags.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    suspended: jspb.Message.getFieldWithDefault(msg, 1, false),
-    pastdue: jspb.Message.getFieldWithDefault(msg, 2, false),
-    beta: jspb.Message.getFieldWithDefault(msg, 3, false),
-    sandbox: jspb.Message.getFieldWithDefault(msg, 4, false),
-    internal: jspb.Message.getFieldWithDefault(msg, 5, false)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.partner.PartnerFlags}
- */
-proto.bloombox.schema.partner.PartnerFlags.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.partner.PartnerFlags;
-  return proto.bloombox.schema.partner.PartnerFlags.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.partner.PartnerFlags} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.partner.PartnerFlags}
- */
-proto.bloombox.schema.partner.PartnerFlags.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setSuspended(value);
-      break;
-    case 2:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setPastdue(value);
-      break;
-    case 3:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setBeta(value);
-      break;
-    case 4:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setSandbox(value);
-      break;
-    case 5:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setInternal(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.partner.PartnerFlags.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.partner.PartnerFlags.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.partner.PartnerFlags} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerFlags.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getSuspended();
-  if (f) {
-    writer.writeBool(
-      1,
-      f
-    );
-  }
-  f = message.getPastdue();
-  if (f) {
-    writer.writeBool(
-      2,
-      f
-    );
-  }
-  f = message.getBeta();
-  if (f) {
-    writer.writeBool(
-      3,
-      f
-    );
-  }
-  f = message.getSandbox();
-  if (f) {
-    writer.writeBool(
-      4,
-      f
-    );
-  }
-  f = message.getInternal();
-  if (f) {
-    writer.writeBool(
-      5,
-      f
-    );
-  }
-};
-
-
-/**
- * optional bool suspended = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.bloombox.schema.partner.PartnerFlags.prototype.getSuspended = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
-};
-
-
-/** @param {boolean} value */
-proto.bloombox.schema.partner.PartnerFlags.prototype.setSuspended = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
-};
-
-
-/**
- * optional bool pastdue = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.bloombox.schema.partner.PartnerFlags.prototype.getPastdue = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
-};
-
-
-/** @param {boolean} value */
-proto.bloombox.schema.partner.PartnerFlags.prototype.setPastdue = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
-};
-
-
-/**
- * optional bool beta = 3;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.bloombox.schema.partner.PartnerFlags.prototype.getBeta = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 3, false));
-};
-
-
-/** @param {boolean} value */
-proto.bloombox.schema.partner.PartnerFlags.prototype.setBeta = function(value) {
-  jspb.Message.setProto3BooleanField(this, 3, value);
-};
-
-
-/**
- * optional bool sandbox = 4;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.bloombox.schema.partner.PartnerFlags.prototype.getSandbox = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 4, false));
-};
-
-
-/** @param {boolean} value */
-proto.bloombox.schema.partner.PartnerFlags.prototype.setSandbox = function(value) {
-  jspb.Message.setProto3BooleanField(this, 4, value);
-};
-
-
-/**
- * optional bool internal = 5;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.bloombox.schema.partner.PartnerFlags.prototype.getInternal = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 5, false));
-};
-
-
-/** @param {boolean} value */
-proto.bloombox.schema.partner.PartnerFlags.prototype.setInternal = function(value) {
-  jspb.Message.setProto3BooleanField(this, 5, value);
-};
-
-
-/**
- * @enum {number}
- */
-proto.bloombox.schema.partner.PartnerChannel = {
-  DIRECT: 0
-};
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.partner.PartnerLocationKey = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.bloombox.schema.partner.PartnerLocationKey, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.partner.PartnerLocationKey.displayName = 'proto.bloombox.schema.partner.PartnerLocationKey';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.partner.PartnerLocationKey.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.partner.PartnerLocationKey.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.partner.PartnerLocationKey} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerLocationKey.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    partner: (f = msg.getPartner()) && proto.bloombox.schema.partner.PartnerKey.toObject(includeInstance, f),
-    code: jspb.Message.getFieldWithDefault(msg, 2, "")
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.partner.PartnerLocationKey}
- */
-proto.bloombox.schema.partner.PartnerLocationKey.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.partner.PartnerLocationKey;
-  return proto.bloombox.schema.partner.PartnerLocationKey.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.partner.PartnerLocationKey} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.partner.PartnerLocationKey}
- */
-proto.bloombox.schema.partner.PartnerLocationKey.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = new proto.bloombox.schema.partner.PartnerKey;
-      reader.readMessage(value,proto.bloombox.schema.partner.PartnerKey.deserializeBinaryFromReader);
-      msg.setPartner(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setCode(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.partner.PartnerLocationKey.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.partner.PartnerLocationKey.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.partner.PartnerLocationKey} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerLocationKey.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getPartner();
-  if (f != null) {
-    writer.writeMessage(
-      1,
-      f,
-      proto.bloombox.schema.partner.PartnerKey.serializeBinaryToWriter
-    );
-  }
-  f = message.getCode();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
-};
-
-
-/**
- * optional PartnerKey partner = 1;
- * @return {?proto.bloombox.schema.partner.PartnerKey}
- */
-proto.bloombox.schema.partner.PartnerLocationKey.prototype.getPartner = function() {
-  return /** @type{?proto.bloombox.schema.partner.PartnerKey} */ (
-    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerKey, 1));
-};
-
-
-/** @param {?proto.bloombox.schema.partner.PartnerKey|undefined} value */
-proto.bloombox.schema.partner.PartnerLocationKey.prototype.setPartner = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerLocationKey.prototype.clearPartner = function() {
-  this.setPartner(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerLocationKey.prototype.hasPartner = function() {
-  return jspb.Message.getField(this, 1) != null;
-};
-
-
-/**
- * optional string code = 2;
- * @return {string}
- */
-proto.bloombox.schema.partner.PartnerLocationKey.prototype.getCode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.partner.PartnerLocationKey.prototype.setCode = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.partner.PartnerLocation = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.bloombox.schema.partner.PartnerLocation, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.partner.PartnerLocation.displayName = 'proto.bloombox.schema.partner.PartnerLocation';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.partner.PartnerLocation.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.partner.PartnerLocation} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerLocation.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    code: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    partner: (f = msg.getPartner()) && proto.bloombox.schema.partner.Partner.toObject(includeInstance, f),
-    name: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    label: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    flags: (f = msg.getFlags()) && proto.bloombox.schema.partner.PartnerFlags.toObject(includeInstance, f),
-    contact: (f = msg.getContact()) && proto.opencannabis.contact.ContactInfo.toObject(includeInstance, f),
-    branding: (f = msg.getBranding()) && proto.opencannabis.media.MediaItem.toObject(includeInstance, f),
-    created: (f = msg.getCreated()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
-    modified: (f = msg.getModified()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.partner.PartnerLocation}
- */
-proto.bloombox.schema.partner.PartnerLocation.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.partner.PartnerLocation;
-  return proto.bloombox.schema.partner.PartnerLocation.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.partner.PartnerLocation} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.partner.PartnerLocation}
- */
-proto.bloombox.schema.partner.PartnerLocation.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setCode(value);
-      break;
-    case 2:
-      var value = new proto.bloombox.schema.partner.Partner;
-      reader.readMessage(value,proto.bloombox.schema.partner.Partner.deserializeBinaryFromReader);
-      msg.setPartner(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
-      break;
-    case 4:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setLabel(value);
-      break;
-    case 5:
-      var value = new proto.bloombox.schema.partner.PartnerFlags;
-      reader.readMessage(value,proto.bloombox.schema.partner.PartnerFlags.deserializeBinaryFromReader);
-      msg.setFlags(value);
-      break;
-    case 7:
-      var value = new proto.opencannabis.contact.ContactInfo;
-      reader.readMessage(value,proto.opencannabis.contact.ContactInfo.deserializeBinaryFromReader);
-      msg.setContact(value);
-      break;
-    case 6:
-      var value = new proto.opencannabis.media.MediaItem;
-      reader.readMessage(value,proto.opencannabis.media.MediaItem.deserializeBinaryFromReader);
-      msg.setBranding(value);
-      break;
-    case 8:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setCreated(value);
-      break;
-    case 9:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setModified(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.partner.PartnerLocation.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.partner.PartnerLocation} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerLocation.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getCode();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getPartner();
-  if (f != null) {
-    writer.writeMessage(
-      2,
-      f,
-      proto.bloombox.schema.partner.Partner.serializeBinaryToWriter
-    );
-  }
-  f = message.getName();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-  f = message.getLabel();
-  if (f.length > 0) {
-    writer.writeString(
-      4,
-      f
-    );
-  }
-  f = message.getFlags();
-  if (f != null) {
-    writer.writeMessage(
-      5,
-      f,
-      proto.bloombox.schema.partner.PartnerFlags.serializeBinaryToWriter
-    );
-  }
-  f = message.getContact();
-  if (f != null) {
-    writer.writeMessage(
-      7,
-      f,
-      proto.opencannabis.contact.ContactInfo.serializeBinaryToWriter
-    );
-  }
-  f = message.getBranding();
-  if (f != null) {
-    writer.writeMessage(
-      6,
-      f,
-      proto.opencannabis.media.MediaItem.serializeBinaryToWriter
-    );
-  }
-  f = message.getCreated();
-  if (f != null) {
-    writer.writeMessage(
-      8,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-  f = message.getModified();
-  if (f != null) {
-    writer.writeMessage(
-      9,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional string code = 1;
- * @return {string}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.getCode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.partner.PartnerLocation.prototype.setCode = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional Partner partner = 2;
- * @return {?proto.bloombox.schema.partner.Partner}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.getPartner = function() {
-  return /** @type{?proto.bloombox.schema.partner.Partner} */ (
-    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.Partner, 2));
-};
-
-
-/** @param {?proto.bloombox.schema.partner.Partner|undefined} value */
-proto.bloombox.schema.partner.PartnerLocation.prototype.setPartner = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerLocation.prototype.clearPartner = function() {
-  this.setPartner(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.hasPartner = function() {
-  return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * optional string name = 3;
- * @return {string}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.getName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.partner.PartnerLocation.prototype.setName = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-/**
- * optional string label = 4;
- * @return {string}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.getLabel = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.partner.PartnerLocation.prototype.setLabel = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value);
-};
-
-
-/**
- * optional PartnerFlags flags = 5;
- * @return {?proto.bloombox.schema.partner.PartnerFlags}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.getFlags = function() {
-  return /** @type{?proto.bloombox.schema.partner.PartnerFlags} */ (
-    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerFlags, 5));
-};
-
-
-/** @param {?proto.bloombox.schema.partner.PartnerFlags|undefined} value */
-proto.bloombox.schema.partner.PartnerLocation.prototype.setFlags = function(value) {
-  jspb.Message.setWrapperField(this, 5, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerLocation.prototype.clearFlags = function() {
-  this.setFlags(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.hasFlags = function() {
-  return jspb.Message.getField(this, 5) != null;
-};
-
-
-/**
- * optional opencannabis.contact.ContactInfo contact = 7;
- * @return {?proto.opencannabis.contact.ContactInfo}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.getContact = function() {
-  return /** @type{?proto.opencannabis.contact.ContactInfo} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.contact.ContactInfo, 7));
-};
-
-
-/** @param {?proto.opencannabis.contact.ContactInfo|undefined} value */
-proto.bloombox.schema.partner.PartnerLocation.prototype.setContact = function(value) {
-  jspb.Message.setWrapperField(this, 7, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerLocation.prototype.clearContact = function() {
-  this.setContact(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.hasContact = function() {
-  return jspb.Message.getField(this, 7) != null;
-};
-
-
-/**
- * optional opencannabis.media.MediaItem branding = 6;
- * @return {?proto.opencannabis.media.MediaItem}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.getBranding = function() {
-  return /** @type{?proto.opencannabis.media.MediaItem} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.media.MediaItem, 6));
-};
-
-
-/** @param {?proto.opencannabis.media.MediaItem|undefined} value */
-proto.bloombox.schema.partner.PartnerLocation.prototype.setBranding = function(value) {
-  jspb.Message.setWrapperField(this, 6, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerLocation.prototype.clearBranding = function() {
-  this.setBranding(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.hasBranding = function() {
-  return jspb.Message.getField(this, 6) != null;
-};
-
-
-/**
- * optional opencannabis.temporal.Instant created = 8;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.getCreated = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 8));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.bloombox.schema.partner.PartnerLocation.prototype.setCreated = function(value) {
-  jspb.Message.setWrapperField(this, 8, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerLocation.prototype.clearCreated = function() {
-  this.setCreated(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.hasCreated = function() {
-  return jspb.Message.getField(this, 8) != null;
-};
-
-
-/**
- * optional opencannabis.temporal.Instant modified = 9;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.getModified = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 9));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.bloombox.schema.partner.PartnerLocation.prototype.setModified = function(value) {
-  jspb.Message.setWrapperField(this, 9, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerLocation.prototype.clearModified = function() {
-  this.setModified(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerLocation.prototype.hasModified = function() {
-  return jspb.Message.getField(this, 9) != null;
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.partner.PartnerDeviceKey = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.bloombox.schema.partner.PartnerDeviceKey, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.partner.PartnerDeviceKey.displayName = 'proto.bloombox.schema.partner.PartnerDeviceKey';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.partner.PartnerDeviceKey.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.partner.PartnerDeviceKey.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.partner.PartnerDeviceKey} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerDeviceKey.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    location: (f = msg.getLocation()) && proto.bloombox.schema.partner.PartnerLocationKey.toObject(includeInstance, f),
-    uuid: jspb.Message.getFieldWithDefault(msg, 2, "")
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.partner.PartnerDeviceKey}
- */
-proto.bloombox.schema.partner.PartnerDeviceKey.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.partner.PartnerDeviceKey;
-  return proto.bloombox.schema.partner.PartnerDeviceKey.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.partner.PartnerDeviceKey} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.partner.PartnerDeviceKey}
- */
-proto.bloombox.schema.partner.PartnerDeviceKey.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = new proto.bloombox.schema.partner.PartnerLocationKey;
-      reader.readMessage(value,proto.bloombox.schema.partner.PartnerLocationKey.deserializeBinaryFromReader);
-      msg.setLocation(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setUuid(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.partner.PartnerDeviceKey.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.partner.PartnerDeviceKey.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.partner.PartnerDeviceKey} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerDeviceKey.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getLocation();
-  if (f != null) {
-    writer.writeMessage(
-      1,
-      f,
-      proto.bloombox.schema.partner.PartnerLocationKey.serializeBinaryToWriter
-    );
-  }
-  f = message.getUuid();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
-};
-
-
-/**
- * optional PartnerLocationKey location = 1;
- * @return {?proto.bloombox.schema.partner.PartnerLocationKey}
- */
-proto.bloombox.schema.partner.PartnerDeviceKey.prototype.getLocation = function() {
-  return /** @type{?proto.bloombox.schema.partner.PartnerLocationKey} */ (
-    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerLocationKey, 1));
-};
-
-
-/** @param {?proto.bloombox.schema.partner.PartnerLocationKey|undefined} value */
-proto.bloombox.schema.partner.PartnerDeviceKey.prototype.setLocation = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerDeviceKey.prototype.clearLocation = function() {
-  this.setLocation(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerDeviceKey.prototype.hasLocation = function() {
-  return jspb.Message.getField(this, 1) != null;
-};
-
-
-/**
- * optional string uuid = 2;
- * @return {string}
- */
-proto.bloombox.schema.partner.PartnerDeviceKey.prototype.getUuid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.partner.PartnerDeviceKey.prototype.setUuid = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.partner.PartnerDevice = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.bloombox.schema.partner.PartnerDevice, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.partner.PartnerDevice.displayName = 'proto.bloombox.schema.partner.PartnerDevice';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.partner.PartnerDevice.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.partner.PartnerDevice} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerDevice.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    uuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    partner: (f = msg.getPartner()) && proto.bloombox.schema.partner.Partner.toObject(includeInstance, f),
-    location: (f = msg.getLocation()) && proto.bloombox.schema.partner.PartnerLocation.toObject(includeInstance, f),
-    type: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    flags: (f = msg.getFlags()) && proto.bloombox.schema.partner.PartnerDeviceFlags.toObject(includeInstance, f),
-    device: (f = msg.getDevice()) && proto.opencannabis.device.Device.toObject(includeInstance, f),
-    seen: (f = msg.getSeen()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
-    registered: (f = msg.getRegistered()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.partner.PartnerDevice}
- */
-proto.bloombox.schema.partner.PartnerDevice.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.partner.PartnerDevice;
-  return proto.bloombox.schema.partner.PartnerDevice.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.partner.PartnerDevice} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.partner.PartnerDevice}
- */
-proto.bloombox.schema.partner.PartnerDevice.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setUuid(value);
-      break;
-    case 2:
-      var value = new proto.bloombox.schema.partner.Partner;
-      reader.readMessage(value,proto.bloombox.schema.partner.Partner.deserializeBinaryFromReader);
-      msg.setPartner(value);
-      break;
-    case 3:
-      var value = new proto.bloombox.schema.partner.PartnerLocation;
-      reader.readMessage(value,proto.bloombox.schema.partner.PartnerLocation.deserializeBinaryFromReader);
-      msg.setLocation(value);
-      break;
-    case 4:
-      var value = /** @type {!proto.bloombox.schema.partner.PartnerDeviceType} */ (reader.readEnum());
-      msg.setType(value);
-      break;
-    case 5:
-      var value = new proto.bloombox.schema.partner.PartnerDeviceFlags;
-      reader.readMessage(value,proto.bloombox.schema.partner.PartnerDeviceFlags.deserializeBinaryFromReader);
-      msg.setFlags(value);
-      break;
-    case 6:
-      var value = new proto.opencannabis.device.Device;
-      reader.readMessage(value,proto.opencannabis.device.Device.deserializeBinaryFromReader);
-      msg.setDevice(value);
-      break;
-    case 7:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setSeen(value);
-      break;
-    case 8:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setRegistered(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.partner.PartnerDevice.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.partner.PartnerDevice} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerDevice.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getUuid();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getPartner();
-  if (f != null) {
-    writer.writeMessage(
-      2,
-      f,
-      proto.bloombox.schema.partner.Partner.serializeBinaryToWriter
-    );
-  }
-  f = message.getLocation();
-  if (f != null) {
-    writer.writeMessage(
-      3,
-      f,
-      proto.bloombox.schema.partner.PartnerLocation.serializeBinaryToWriter
-    );
-  }
-  f = message.getType();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      4,
-      f
-    );
-  }
-  f = message.getFlags();
-  if (f != null) {
-    writer.writeMessage(
-      5,
-      f,
-      proto.bloombox.schema.partner.PartnerDeviceFlags.serializeBinaryToWriter
-    );
-  }
-  f = message.getDevice();
-  if (f != null) {
-    writer.writeMessage(
-      6,
-      f,
-      proto.opencannabis.device.Device.serializeBinaryToWriter
-    );
-  }
-  f = message.getSeen();
-  if (f != null) {
-    writer.writeMessage(
-      7,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-  f = message.getRegistered();
-  if (f != null) {
-    writer.writeMessage(
-      8,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional string uuid = 1;
- * @return {string}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.getUuid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.partner.PartnerDevice.prototype.setUuid = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional Partner partner = 2;
- * @return {?proto.bloombox.schema.partner.Partner}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.getPartner = function() {
-  return /** @type{?proto.bloombox.schema.partner.Partner} */ (
-    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.Partner, 2));
-};
-
-
-/** @param {?proto.bloombox.schema.partner.Partner|undefined} value */
-proto.bloombox.schema.partner.PartnerDevice.prototype.setPartner = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerDevice.prototype.clearPartner = function() {
-  this.setPartner(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.hasPartner = function() {
-  return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * optional PartnerLocation location = 3;
- * @return {?proto.bloombox.schema.partner.PartnerLocation}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.getLocation = function() {
-  return /** @type{?proto.bloombox.schema.partner.PartnerLocation} */ (
-    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerLocation, 3));
-};
-
-
-/** @param {?proto.bloombox.schema.partner.PartnerLocation|undefined} value */
-proto.bloombox.schema.partner.PartnerDevice.prototype.setLocation = function(value) {
-  jspb.Message.setWrapperField(this, 3, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerDevice.prototype.clearLocation = function() {
-  this.setLocation(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.hasLocation = function() {
-  return jspb.Message.getField(this, 3) != null;
-};
-
-
-/**
- * optional PartnerDeviceType type = 4;
- * @return {!proto.bloombox.schema.partner.PartnerDeviceType}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.getType = function() {
-  return /** @type {!proto.bloombox.schema.partner.PartnerDeviceType} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
-};
-
-
-/** @param {!proto.bloombox.schema.partner.PartnerDeviceType} value */
-proto.bloombox.schema.partner.PartnerDevice.prototype.setType = function(value) {
-  jspb.Message.setProto3EnumField(this, 4, value);
-};
-
-
-/**
- * optional PartnerDeviceFlags flags = 5;
- * @return {?proto.bloombox.schema.partner.PartnerDeviceFlags}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.getFlags = function() {
-  return /** @type{?proto.bloombox.schema.partner.PartnerDeviceFlags} */ (
-    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerDeviceFlags, 5));
-};
-
-
-/** @param {?proto.bloombox.schema.partner.PartnerDeviceFlags|undefined} value */
-proto.bloombox.schema.partner.PartnerDevice.prototype.setFlags = function(value) {
-  jspb.Message.setWrapperField(this, 5, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerDevice.prototype.clearFlags = function() {
-  this.setFlags(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.hasFlags = function() {
-  return jspb.Message.getField(this, 5) != null;
-};
-
-
-/**
- * optional opencannabis.device.Device device = 6;
- * @return {?proto.opencannabis.device.Device}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.getDevice = function() {
-  return /** @type{?proto.opencannabis.device.Device} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.device.Device, 6));
-};
-
-
-/** @param {?proto.opencannabis.device.Device|undefined} value */
-proto.bloombox.schema.partner.PartnerDevice.prototype.setDevice = function(value) {
-  jspb.Message.setWrapperField(this, 6, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerDevice.prototype.clearDevice = function() {
-  this.setDevice(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.hasDevice = function() {
-  return jspb.Message.getField(this, 6) != null;
-};
-
-
-/**
- * optional opencannabis.temporal.Instant seen = 7;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.getSeen = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 7));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.bloombox.schema.partner.PartnerDevice.prototype.setSeen = function(value) {
-  jspb.Message.setWrapperField(this, 7, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerDevice.prototype.clearSeen = function() {
-  this.setSeen(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.hasSeen = function() {
-  return jspb.Message.getField(this, 7) != null;
-};
-
-
-/**
- * optional opencannabis.temporal.Instant registered = 8;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.getRegistered = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 8));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.bloombox.schema.partner.PartnerDevice.prototype.setRegistered = function(value) {
-  jspb.Message.setWrapperField(this, 8, value);
-};
-
-
-proto.bloombox.schema.partner.PartnerDevice.prototype.clearRegistered = function() {
-  this.setRegistered(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.partner.PartnerDevice.prototype.hasRegistered = function() {
-  return jspb.Message.getField(this, 8) != null;
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.partner.PartnerDeviceFlags = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.bloombox.schema.partner.PartnerDeviceFlags, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.partner.PartnerDeviceFlags.displayName = 'proto.bloombox.schema.partner.PartnerDeviceFlags';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.partner.PartnerDeviceFlags.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.partner.PartnerDeviceFlags} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerDeviceFlags.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    active: jspb.Message.getFieldWithDefault(msg, 1, false),
-    suspended: jspb.Message.getFieldWithDefault(msg, 2, false),
-    beta: jspb.Message.getFieldWithDefault(msg, 3, false),
-    sandbox: jspb.Message.getFieldWithDefault(msg, 4, false)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.partner.PartnerDeviceFlags}
- */
-proto.bloombox.schema.partner.PartnerDeviceFlags.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.partner.PartnerDeviceFlags;
-  return proto.bloombox.schema.partner.PartnerDeviceFlags.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.partner.PartnerDeviceFlags} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.partner.PartnerDeviceFlags}
- */
-proto.bloombox.schema.partner.PartnerDeviceFlags.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setActive(value);
-      break;
-    case 2:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setSuspended(value);
-      break;
-    case 3:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setBeta(value);
-      break;
-    case 4:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setSandbox(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.partner.PartnerDeviceFlags.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.partner.PartnerDeviceFlags} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.partner.PartnerDeviceFlags.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getActive();
-  if (f) {
-    writer.writeBool(
-      1,
-      f
-    );
-  }
-  f = message.getSuspended();
-  if (f) {
-    writer.writeBool(
-      2,
-      f
-    );
-  }
-  f = message.getBeta();
-  if (f) {
-    writer.writeBool(
-      3,
-      f
-    );
-  }
-  f = message.getSandbox();
-  if (f) {
-    writer.writeBool(
-      4,
-      f
-    );
-  }
-};
-
-
-/**
- * optional bool active = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.getActive = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
-};
-
-
-/** @param {boolean} value */
-proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.setActive = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
-};
-
-
-/**
- * optional bool suspended = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.getSuspended = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
-};
-
-
-/** @param {boolean} value */
-proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.setSuspended = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
-};
-
-
-/**
- * optional bool beta = 3;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.getBeta = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 3, false));
-};
-
-
-/** @param {boolean} value */
-proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.setBeta = function(value) {
-  jspb.Message.setProto3BooleanField(this, 3, value);
-};
-
-
-/**
- * optional bool sandbox = 4;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.getSandbox = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 4, false));
-};
-
-
-/** @param {boolean} value */
-proto.bloombox.schema.partner.PartnerDeviceFlags.prototype.setSandbox = function(value) {
-  jspb.Message.setProto3BooleanField(this, 4, value);
-};
-
-
-/**
- * @enum {number}
- */
-proto.bloombox.schema.partner.PartnerDeviceType = {
-  UNSPECIFIED_DEVICE_TYPE: 0,
-  INTERNAL: 1,
-  MENU_TABLET: 10,
-  MENU_TV: 11,
-  CHECKIN_STATION: 20,
-  CHECKIN_TV: 21,
-  POS_REGISTER: 30
-};
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.commerce.pos.PurchaseEvent = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.bloombox.schema.commerce.pos.PurchaseEvent, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.commerce.pos.PurchaseEvent.displayName = 'proto.bloombox.schema.commerce.pos.PurchaseEvent';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.commerce.pos.PurchaseEvent.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.commerce.pos.PurchaseEvent} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    status: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    instant: (f = msg.getInstant()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
-    message: jspb.Message.getFieldWithDefault(msg, 3, "")
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.commerce.pos.PurchaseEvent}
- */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.commerce.pos.PurchaseEvent;
-  return proto.bloombox.schema.commerce.pos.PurchaseEvent.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.commerce.pos.PurchaseEvent} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.commerce.pos.PurchaseEvent}
- */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {!proto.bloombox.schema.commerce.pos.PurchaseStatus} */ (reader.readEnum());
-      msg.setStatus(value);
-      break;
-    case 2:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setInstant(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setMessage(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.commerce.pos.PurchaseEvent.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.commerce.pos.PurchaseEvent} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getStatus();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      1,
-      f
-    );
-  }
-  f = message.getInstant();
-  if (f != null) {
-    writer.writeMessage(
-      2,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-  f = message.getMessage();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-};
-
-
-/**
- * optional PurchaseStatus status = 1;
- * @return {!proto.bloombox.schema.commerce.pos.PurchaseStatus}
- */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.getStatus = function() {
-  return /** @type {!proto.bloombox.schema.commerce.pos.PurchaseStatus} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/** @param {!proto.bloombox.schema.commerce.pos.PurchaseStatus} value */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.setStatus = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
-};
-
-
-/**
- * optional opencannabis.temporal.Instant instant = 2;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.getInstant = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 2));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.setInstant = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.clearInstant = function() {
-  this.setInstant(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.hasInstant = function() {
-  return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * optional string message = 3;
- * @return {string}
- */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.getMessage = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.commerce.pos.PurchaseEvent.prototype.setMessage = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.commerce.pos.Receipt = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.bloombox.schema.commerce.pos.Receipt.repeatedFields_, null);
-};
-goog.inherits(proto.bloombox.schema.commerce.pos.Receipt, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.commerce.pos.Receipt.displayName = 'proto.bloombox.schema.commerce.pos.Receipt';
-}
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.bloombox.schema.commerce.pos.Receipt.repeatedFields_ = [2,3];
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.commerce.pos.Receipt.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.commerce.pos.Receipt.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.commerce.pos.Receipt} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.commerce.pos.Receipt.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    subtotal: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
-    taxList: jspb.Message.toObjectList(msg.getTaxList(),
-    proto.opencannabis.taxes.Tax.toObject, includeInstance),
-    discountList: jspb.Message.toObjectList(msg.getDiscountList(),
-    proto.opencannabis.commerce.Discount.toObject, includeInstance),
-    total: +jspb.Message.getFieldWithDefault(msg, 4, 0.0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.commerce.pos.Receipt}
- */
-proto.bloombox.schema.commerce.pos.Receipt.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.commerce.pos.Receipt;
-  return proto.bloombox.schema.commerce.pos.Receipt.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.commerce.pos.Receipt} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.commerce.pos.Receipt}
- */
-proto.bloombox.schema.commerce.pos.Receipt.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setSubtotal(value);
-      break;
-    case 2:
-      var value = new proto.opencannabis.taxes.Tax;
-      reader.readMessage(value,proto.opencannabis.taxes.Tax.deserializeBinaryFromReader);
-      msg.addTax(value);
-      break;
-    case 3:
-      var value = new proto.opencannabis.commerce.Discount;
-      reader.readMessage(value,proto.opencannabis.commerce.Discount.deserializeBinaryFromReader);
-      msg.addDiscount(value);
-      break;
-    case 4:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setTotal(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.commerce.pos.Receipt.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.commerce.pos.Receipt.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.commerce.pos.Receipt} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.commerce.pos.Receipt.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getSubtotal();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      1,
-      f
-    );
-  }
-  f = message.getTaxList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      2,
-      f,
-      proto.opencannabis.taxes.Tax.serializeBinaryToWriter
-    );
-  }
-  f = message.getDiscountList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      3,
-      f,
-      proto.opencannabis.commerce.Discount.serializeBinaryToWriter
-    );
-  }
-  f = message.getTotal();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      4,
-      f
-    );
-  }
-};
-
-
-/**
- * optional double subtotal = 1;
- * @return {number}
- */
-proto.bloombox.schema.commerce.pos.Receipt.prototype.getSubtotal = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
-};
-
-
-/** @param {number} value */
-proto.bloombox.schema.commerce.pos.Receipt.prototype.setSubtotal = function(value) {
-  jspb.Message.setProto3FloatField(this, 1, value);
-};
-
-
-/**
- * repeated opencannabis.taxes.Tax tax = 2;
- * @return {!Array.<!proto.opencannabis.taxes.Tax>}
- */
-proto.bloombox.schema.commerce.pos.Receipt.prototype.getTaxList = function() {
-  return /** @type{!Array.<!proto.opencannabis.taxes.Tax>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.taxes.Tax, 2));
-};
-
-
-/** @param {!Array.<!proto.opencannabis.taxes.Tax>} value */
-proto.bloombox.schema.commerce.pos.Receipt.prototype.setTaxList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 2, value);
-};
-
-
-/**
- * @param {!proto.opencannabis.taxes.Tax=} opt_value
- * @param {number=} opt_index
- * @return {!proto.opencannabis.taxes.Tax}
- */
-proto.bloombox.schema.commerce.pos.Receipt.prototype.addTax = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.opencannabis.taxes.Tax, opt_index);
-};
-
-
-proto.bloombox.schema.commerce.pos.Receipt.prototype.clearTaxList = function() {
-  this.setTaxList([]);
-};
-
-
-/**
- * repeated opencannabis.commerce.Discount discount = 3;
- * @return {!Array.<!proto.opencannabis.commerce.Discount>}
- */
-proto.bloombox.schema.commerce.pos.Receipt.prototype.getDiscountList = function() {
-  return /** @type{!Array.<!proto.opencannabis.commerce.Discount>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.commerce.Discount, 3));
-};
-
-
-/** @param {!Array.<!proto.opencannabis.commerce.Discount>} value */
-proto.bloombox.schema.commerce.pos.Receipt.prototype.setDiscountList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 3, value);
-};
-
-
-/**
- * @param {!proto.opencannabis.commerce.Discount=} opt_value
- * @param {number=} opt_index
- * @return {!proto.opencannabis.commerce.Discount}
- */
-proto.bloombox.schema.commerce.pos.Receipt.prototype.addDiscount = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 3, opt_value, proto.opencannabis.commerce.Discount, opt_index);
-};
-
-
-proto.bloombox.schema.commerce.pos.Receipt.prototype.clearDiscountList = function() {
-  this.setDiscountList([]);
-};
-
-
-/**
- * optional double total = 4;
- * @return {number}
- */
-proto.bloombox.schema.commerce.pos.Receipt.prototype.getTotal = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 4, 0.0));
-};
-
-
-/** @param {number} value */
-proto.bloombox.schema.commerce.pos.Receipt.prototype.setTotal = function(value) {
-  jspb.Message.setProto3FloatField(this, 4, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.commerce.pos.Purchase = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.bloombox.schema.commerce.pos.Purchase.repeatedFields_, null);
-};
-goog.inherits(proto.bloombox.schema.commerce.pos.Purchase, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.commerce.pos.Purchase.displayName = 'proto.bloombox.schema.commerce.pos.Purchase';
-}
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.bloombox.schema.commerce.pos.Purchase.repeatedFields_ = [7,9];
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.commerce.pos.Purchase.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.commerce.pos.Purchase} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.commerce.pos.Purchase.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    partnerCode: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    locationCode: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    status: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    customer: (f = msg.getCustomer()) && proto.opencannabis.commerce.Customer.toObject(includeInstance, f),
-    register: (f = msg.getRegister()) && proto.bloombox.schema.partner.PartnerDeviceKey.toObject(includeInstance, f),
-    itemList: jspb.Message.toObjectList(msg.getItemList(),
-    proto.opencannabis.commerce.Item.toObject, includeInstance),
-    receipt: (f = msg.getReceipt()) && proto.bloombox.schema.commerce.pos.Receipt.toObject(includeInstance, f),
-    actionLogList: jspb.Message.toObjectList(msg.getActionLogList(),
-    proto.bloombox.schema.commerce.pos.PurchaseEvent.toObject, includeInstance),
-    createdAt: (f = msg.getCreatedAt()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.commerce.pos.Purchase}
- */
-proto.bloombox.schema.commerce.pos.Purchase.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.commerce.pos.Purchase;
-  return proto.bloombox.schema.commerce.pos.Purchase.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.commerce.pos.Purchase} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.commerce.pos.Purchase}
- */
-proto.bloombox.schema.commerce.pos.Purchase.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setId(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setPartnerCode(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setLocationCode(value);
-      break;
-    case 4:
-      var value = /** @type {!proto.bloombox.schema.commerce.pos.PurchaseStatus} */ (reader.readEnum());
-      msg.setStatus(value);
-      break;
-    case 5:
-      var value = new proto.opencannabis.commerce.Customer;
-      reader.readMessage(value,proto.opencannabis.commerce.Customer.deserializeBinaryFromReader);
-      msg.setCustomer(value);
-      break;
-    case 6:
-      var value = new proto.bloombox.schema.partner.PartnerDeviceKey;
-      reader.readMessage(value,proto.bloombox.schema.partner.PartnerDeviceKey.deserializeBinaryFromReader);
-      msg.setRegister(value);
-      break;
-    case 7:
-      var value = new proto.opencannabis.commerce.Item;
-      reader.readMessage(value,proto.opencannabis.commerce.Item.deserializeBinaryFromReader);
-      msg.addItem(value);
-      break;
-    case 8:
-      var value = new proto.bloombox.schema.commerce.pos.Receipt;
-      reader.readMessage(value,proto.bloombox.schema.commerce.pos.Receipt.deserializeBinaryFromReader);
-      msg.setReceipt(value);
-      break;
-    case 9:
-      var value = new proto.bloombox.schema.commerce.pos.PurchaseEvent;
-      reader.readMessage(value,proto.bloombox.schema.commerce.pos.PurchaseEvent.deserializeBinaryFromReader);
-      msg.addActionLog(value);
-      break;
-    case 10:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setCreatedAt(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.commerce.pos.Purchase.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.commerce.pos.Purchase} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.commerce.pos.Purchase.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getId();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getPartnerCode();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
-  f = message.getLocationCode();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-  f = message.getStatus();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      4,
-      f
-    );
-  }
-  f = message.getCustomer();
-  if (f != null) {
-    writer.writeMessage(
-      5,
-      f,
-      proto.opencannabis.commerce.Customer.serializeBinaryToWriter
-    );
-  }
-  f = message.getRegister();
-  if (f != null) {
-    writer.writeMessage(
-      6,
-      f,
-      proto.bloombox.schema.partner.PartnerDeviceKey.serializeBinaryToWriter
-    );
-  }
-  f = message.getItemList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      7,
-      f,
-      proto.opencannabis.commerce.Item.serializeBinaryToWriter
-    );
-  }
-  f = message.getReceipt();
-  if (f != null) {
-    writer.writeMessage(
-      8,
-      f,
-      proto.bloombox.schema.commerce.pos.Receipt.serializeBinaryToWriter
-    );
-  }
-  f = message.getActionLogList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      9,
-      f,
-      proto.bloombox.schema.commerce.pos.PurchaseEvent.serializeBinaryToWriter
-    );
-  }
-  f = message.getCreatedAt();
-  if (f != null) {
-    writer.writeMessage(
-      10,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional string id = 1;
- * @return {string}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.getId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.setId = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string partner_code = 2;
- * @return {string}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.getPartnerCode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.setPartnerCode = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional string location_code = 3;
- * @return {string}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.getLocationCode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.setLocationCode = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-/**
- * optional PurchaseStatus status = 4;
- * @return {!proto.bloombox.schema.commerce.pos.PurchaseStatus}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.getStatus = function() {
-  return /** @type {!proto.bloombox.schema.commerce.pos.PurchaseStatus} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
-};
-
-
-/** @param {!proto.bloombox.schema.commerce.pos.PurchaseStatus} value */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.setStatus = function(value) {
-  jspb.Message.setProto3EnumField(this, 4, value);
-};
-
-
-/**
- * optional opencannabis.commerce.Customer customer = 5;
- * @return {?proto.opencannabis.commerce.Customer}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.getCustomer = function() {
-  return /** @type{?proto.opencannabis.commerce.Customer} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.commerce.Customer, 5));
-};
-
-
-/** @param {?proto.opencannabis.commerce.Customer|undefined} value */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.setCustomer = function(value) {
-  jspb.Message.setWrapperField(this, 5, value);
-};
-
-
-proto.bloombox.schema.commerce.pos.Purchase.prototype.clearCustomer = function() {
-  this.setCustomer(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.hasCustomer = function() {
-  return jspb.Message.getField(this, 5) != null;
-};
-
-
-/**
- * optional bloombox.schema.partner.PartnerDeviceKey register = 6;
- * @return {?proto.bloombox.schema.partner.PartnerDeviceKey}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.getRegister = function() {
-  return /** @type{?proto.bloombox.schema.partner.PartnerDeviceKey} */ (
-    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerDeviceKey, 6));
-};
-
-
-/** @param {?proto.bloombox.schema.partner.PartnerDeviceKey|undefined} value */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.setRegister = function(value) {
-  jspb.Message.setWrapperField(this, 6, value);
-};
-
-
-proto.bloombox.schema.commerce.pos.Purchase.prototype.clearRegister = function() {
-  this.setRegister(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.hasRegister = function() {
-  return jspb.Message.getField(this, 6) != null;
-};
-
-
-/**
- * repeated opencannabis.commerce.Item item = 7;
- * @return {!Array.<!proto.opencannabis.commerce.Item>}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.getItemList = function() {
-  return /** @type{!Array.<!proto.opencannabis.commerce.Item>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.commerce.Item, 7));
-};
-
-
-/** @param {!Array.<!proto.opencannabis.commerce.Item>} value */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.setItemList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 7, value);
-};
-
-
-/**
- * @param {!proto.opencannabis.commerce.Item=} opt_value
- * @param {number=} opt_index
- * @return {!proto.opencannabis.commerce.Item}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.addItem = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 7, opt_value, proto.opencannabis.commerce.Item, opt_index);
-};
-
-
-proto.bloombox.schema.commerce.pos.Purchase.prototype.clearItemList = function() {
-  this.setItemList([]);
-};
-
-
-/**
- * optional Receipt receipt = 8;
- * @return {?proto.bloombox.schema.commerce.pos.Receipt}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.getReceipt = function() {
-  return /** @type{?proto.bloombox.schema.commerce.pos.Receipt} */ (
-    jspb.Message.getWrapperField(this, proto.bloombox.schema.commerce.pos.Receipt, 8));
-};
-
-
-/** @param {?proto.bloombox.schema.commerce.pos.Receipt|undefined} value */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.setReceipt = function(value) {
-  jspb.Message.setWrapperField(this, 8, value);
-};
-
-
-proto.bloombox.schema.commerce.pos.Purchase.prototype.clearReceipt = function() {
-  this.setReceipt(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.hasReceipt = function() {
-  return jspb.Message.getField(this, 8) != null;
-};
-
-
-/**
- * repeated PurchaseEvent action_log = 9;
- * @return {!Array.<!proto.bloombox.schema.commerce.pos.PurchaseEvent>}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.getActionLogList = function() {
-  return /** @type{!Array.<!proto.bloombox.schema.commerce.pos.PurchaseEvent>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.bloombox.schema.commerce.pos.PurchaseEvent, 9));
-};
-
-
-/** @param {!Array.<!proto.bloombox.schema.commerce.pos.PurchaseEvent>} value */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.setActionLogList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 9, value);
-};
-
-
-/**
- * @param {!proto.bloombox.schema.commerce.pos.PurchaseEvent=} opt_value
- * @param {number=} opt_index
- * @return {!proto.bloombox.schema.commerce.pos.PurchaseEvent}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.addActionLog = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 9, opt_value, proto.bloombox.schema.commerce.pos.PurchaseEvent, opt_index);
-};
-
-
-proto.bloombox.schema.commerce.pos.Purchase.prototype.clearActionLogList = function() {
-  this.setActionLogList([]);
-};
-
-
-/**
- * optional opencannabis.temporal.Instant created_at = 10;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.getCreatedAt = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 10));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.setCreatedAt = function(value) {
-  jspb.Message.setWrapperField(this, 10, value);
-};
-
-
-proto.bloombox.schema.commerce.pos.Purchase.prototype.clearCreatedAt = function() {
-  this.setCreatedAt(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.commerce.pos.Purchase.prototype.hasCreatedAt = function() {
-  return jspb.Message.getField(this, 10) != null;
-};
-
-
-/**
- * @enum {number}
- */
-proto.bloombox.schema.commerce.pos.PurchaseStatus = {
-  DORMANT: 0,
-  OPEN: 1,
-  VOIDED: 2,
-  CLOSED: 3
-};
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.identity.pass.PassKey = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.bloombox.schema.identity.pass.PassKey, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.identity.pass.PassKey.displayName = 'proto.bloombox.schema.identity.pass.PassKey';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.identity.pass.PassKey.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.identity.pass.PassKey.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.identity.pass.PassKey} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.identity.pass.PassKey.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    encoded: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    serial: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    uid: jspb.Message.getFieldWithDefault(msg, 3, "")
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.identity.pass.PassKey}
- */
-proto.bloombox.schema.identity.pass.PassKey.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.identity.pass.PassKey;
-  return proto.bloombox.schema.identity.pass.PassKey.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.identity.pass.PassKey} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.identity.pass.PassKey}
- */
-proto.bloombox.schema.identity.pass.PassKey.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setEncoded(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setSerial(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setUid(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.identity.pass.PassKey.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.identity.pass.PassKey.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.identity.pass.PassKey} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.identity.pass.PassKey.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getEncoded();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getSerial();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
-  f = message.getUid();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-};
-
-
-/**
- * optional string encoded = 1;
- * @return {string}
- */
-proto.bloombox.schema.identity.pass.PassKey.prototype.getEncoded = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.identity.pass.PassKey.prototype.setEncoded = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string serial = 2;
- * @return {string}
- */
-proto.bloombox.schema.identity.pass.PassKey.prototype.getSerial = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.identity.pass.PassKey.prototype.setSerial = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional string uid = 3;
- * @return {string}
- */
-proto.bloombox.schema.identity.pass.PassKey.prototype.getUid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.identity.pass.PassKey.prototype.setUid = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.identity.pass.Pass = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.bloombox.schema.identity.pass.Pass, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.identity.pass.Pass.displayName = 'proto.bloombox.schema.identity.pass.Pass';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.identity.pass.Pass.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.identity.pass.Pass.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.identity.pass.Pass} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.identity.pass.Pass.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    key: (f = msg.getKey()) && proto.bloombox.schema.identity.pass.PassKey.toObject(includeInstance, f),
-    token: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    uri: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    active: jspb.Message.getFieldWithDefault(msg, 4, false),
-    issued: (f = msg.getIssued()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
-    suspended: (f = msg.getSuspended()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.identity.pass.Pass}
- */
-proto.bloombox.schema.identity.pass.Pass.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.identity.pass.Pass;
-  return proto.bloombox.schema.identity.pass.Pass.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.identity.pass.Pass} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.identity.pass.Pass}
- */
-proto.bloombox.schema.identity.pass.Pass.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = new proto.bloombox.schema.identity.pass.PassKey;
-      reader.readMessage(value,proto.bloombox.schema.identity.pass.PassKey.deserializeBinaryFromReader);
-      msg.setKey(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setToken(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setUri(value);
-      break;
-    case 4:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setActive(value);
-      break;
-    case 5:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setIssued(value);
-      break;
-    case 6:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setSuspended(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.identity.pass.Pass.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.identity.pass.Pass.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.identity.pass.Pass} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.identity.pass.Pass.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getKey();
-  if (f != null) {
-    writer.writeMessage(
-      1,
-      f,
-      proto.bloombox.schema.identity.pass.PassKey.serializeBinaryToWriter
-    );
-  }
-  f = message.getToken();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
-  f = message.getUri();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-  f = message.getActive();
-  if (f) {
-    writer.writeBool(
-      4,
-      f
-    );
-  }
-  f = message.getIssued();
-  if (f != null) {
-    writer.writeMessage(
-      5,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-  f = message.getSuspended();
-  if (f != null) {
-    writer.writeMessage(
-      6,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional PassKey key = 1;
- * @return {?proto.bloombox.schema.identity.pass.PassKey}
- */
-proto.bloombox.schema.identity.pass.Pass.prototype.getKey = function() {
-  return /** @type{?proto.bloombox.schema.identity.pass.PassKey} */ (
-    jspb.Message.getWrapperField(this, proto.bloombox.schema.identity.pass.PassKey, 1));
-};
-
-
-/** @param {?proto.bloombox.schema.identity.pass.PassKey|undefined} value */
-proto.bloombox.schema.identity.pass.Pass.prototype.setKey = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
-};
-
-
-proto.bloombox.schema.identity.pass.Pass.prototype.clearKey = function() {
-  this.setKey(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.identity.pass.Pass.prototype.hasKey = function() {
-  return jspb.Message.getField(this, 1) != null;
-};
-
-
-/**
- * optional string token = 2;
- * @return {string}
- */
-proto.bloombox.schema.identity.pass.Pass.prototype.getToken = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.identity.pass.Pass.prototype.setToken = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional string uri = 3;
- * @return {string}
- */
-proto.bloombox.schema.identity.pass.Pass.prototype.getUri = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/** @param {string} value */
-proto.bloombox.schema.identity.pass.Pass.prototype.setUri = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-/**
- * optional bool active = 4;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.bloombox.schema.identity.pass.Pass.prototype.getActive = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 4, false));
-};
-
-
-/** @param {boolean} value */
-proto.bloombox.schema.identity.pass.Pass.prototype.setActive = function(value) {
-  jspb.Message.setProto3BooleanField(this, 4, value);
-};
-
-
-/**
- * optional opencannabis.temporal.Instant issued = 5;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.bloombox.schema.identity.pass.Pass.prototype.getIssued = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 5));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.bloombox.schema.identity.pass.Pass.prototype.setIssued = function(value) {
-  jspb.Message.setWrapperField(this, 5, value);
-};
-
-
-proto.bloombox.schema.identity.pass.Pass.prototype.clearIssued = function() {
-  this.setIssued(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.identity.pass.Pass.prototype.hasIssued = function() {
-  return jspb.Message.getField(this, 5) != null;
-};
-
-
-/**
- * optional opencannabis.temporal.Instant suspended = 6;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.bloombox.schema.identity.pass.Pass.prototype.getSuspended = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 6));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.bloombox.schema.identity.pass.Pass.prototype.setSuspended = function(value) {
-  jspb.Message.setWrapperField(this, 6, value);
-};
-
-
-proto.bloombox.schema.identity.pass.Pass.prototype.clearSuspended = function() {
-  this.setSuspended(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.bloombox.schema.identity.pass.Pass.prototype.hasSuspended = function() {
-  return jspb.Message.getField(this, 6) != null;
-};
-
-
-/**
- * @enum {number}
- */
-proto.opencannabis.media.MediaOrientation = {
-  UP: 0,
-  DOWN: 1,
-  LEFT: 2,
-  RIGHT: 3,
-  UP_MIRRORED: 4,
-  DOWN_MIRRORED: 5,
-  LEFT_MIRRORED: 6,
-  RIGHT_MIRRORED: 7
-};
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.bloombox.schema.identity.IDMediaAttachment = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.bloombox.schema.identity.IDMediaAttachment, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.bloombox.schema.identity.IDMediaAttachment.displayName = 'proto.bloombox.schema.identity.IDMediaAttachment';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.toObject = function(opt_includeInstance) {
-  return proto.bloombox.schema.identity.IDMediaAttachment.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.bloombox.schema.identity.IDMediaAttachment} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.identity.IDMediaAttachment.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    type: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    orientation: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    data: msg.getData_asB64(),
-    imageType: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    quality: +jspb.Message.getFieldWithDefault(msg, 5, 0.0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.bloombox.schema.identity.IDMediaAttachment}
- */
-proto.bloombox.schema.identity.IDMediaAttachment.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.bloombox.schema.identity.IDMediaAttachment;
-  return proto.bloombox.schema.identity.IDMediaAttachment.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.bloombox.schema.identity.IDMediaAttachment} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.bloombox.schema.identity.IDMediaAttachment}
- */
-proto.bloombox.schema.identity.IDMediaAttachment.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {!proto.bloombox.schema.identity.IDMedia} */ (reader.readEnum());
-      msg.setType(value);
-      break;
-    case 2:
-      var value = /** @type {!proto.opencannabis.media.MediaOrientation} */ (reader.readEnum());
-      msg.setOrientation(value);
-      break;
-    case 3:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setData(value);
-      break;
-    case 4:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setImageType(value);
-      break;
-    case 5:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setQuality(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.bloombox.schema.identity.IDMediaAttachment.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.bloombox.schema.identity.IDMediaAttachment} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.bloombox.schema.identity.IDMediaAttachment.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getType();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      1,
-      f
-    );
-  }
-  f = message.getOrientation();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      2,
-      f
-    );
-  }
-  f = message.getData_asU8();
-  if (f.length > 0) {
-    writer.writeBytes(
-      3,
-      f
-    );
-  }
-  f = message.getImageType();
-  if (f !== 0) {
-    writer.writeUint32(
-      4,
-      f
-    );
-  }
-  f = message.getQuality();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      5,
-      f
-    );
-  }
-};
-
-
-/**
- * optional IDMedia type = 1;
- * @return {!proto.bloombox.schema.identity.IDMedia}
- */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.getType = function() {
-  return /** @type {!proto.bloombox.schema.identity.IDMedia} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/** @param {!proto.bloombox.schema.identity.IDMedia} value */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.setType = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
-};
-
-
-/**
- * optional opencannabis.media.MediaOrientation orientation = 2;
- * @return {!proto.opencannabis.media.MediaOrientation}
- */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.getOrientation = function() {
-  return /** @type {!proto.opencannabis.media.MediaOrientation} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
-};
-
-
-/** @param {!proto.opencannabis.media.MediaOrientation} value */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.setOrientation = function(value) {
-  jspb.Message.setProto3EnumField(this, 2, value);
-};
-
-
-/**
- * optional bytes data = 3;
- * @return {string}
- */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.getData = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/**
- * optional bytes data = 3;
- * This is a type-conversion wrapper around `getData()`
- * @return {string}
- */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.getData_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getData()));
-};
-
-
-/**
- * optional bytes data = 3;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getData()`
- * @return {!Uint8Array}
- */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.getData_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getData()));
-};
-
-
-/** @param {!(string|Uint8Array)} value */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.setData = function(value) {
-  jspb.Message.setProto3BytesField(this, 3, value);
-};
-
-
-/**
- * optional uint32 image_type = 4;
- * @return {number}
- */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.getImageType = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
-};
-
-
-/** @param {number} value */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.setImageType = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
-};
-
-
-/**
- * optional double quality = 5;
- * @return {number}
- */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.getQuality = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 5, 0.0));
-};
-
-
-/** @param {number} value */
-proto.bloombox.schema.identity.IDMediaAttachment.prototype.setQuality = function(value) {
-  jspb.Message.setProto3FloatField(this, 5, value);
-};
-
-
-/**
- * @enum {number}
- */
-proto.bloombox.schema.identity.IDMedia = {
-  DOCUMENT_FRONT: 0,
-  DOCUMENT_REAR: 1,
-  PORTRAIT: 2
 };
 
 
@@ -54223,7 +54223,7 @@ proto.bloombox.schema.services.checkin.v1beta1.CardCheckin.Request.prototype.toO
  */
 proto.bloombox.schema.services.checkin.v1beta1.CardCheckin.Request.toObject = function(includeInstance, msg) {
   var f, obj = {
-    cardtype: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    cardType: jspb.Message.getFieldWithDefault(msg, 1, ""),
     payload: jspb.Message.getFieldWithDefault(msg, 2, ""),
     signature: jspb.Message.getFieldWithDefault(msg, 3, ""),
     agent: jspb.Message.getFieldWithDefault(msg, 4, ""),
@@ -54266,7 +54266,7 @@ proto.bloombox.schema.services.checkin.v1beta1.CardCheckin.Request.deserializeBi
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCardtype(value);
+      msg.setCardType(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -54313,7 +54313,7 @@ proto.bloombox.schema.services.checkin.v1beta1.CardCheckin.Request.prototype.ser
  */
 proto.bloombox.schema.services.checkin.v1beta1.CardCheckin.Request.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getCardtype();
+  f = message.getCardType();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -54352,16 +54352,16 @@ proto.bloombox.schema.services.checkin.v1beta1.CardCheckin.Request.serializeBina
 
 
 /**
- * optional string cardType = 1;
+ * optional string card_type = 1;
  * @return {string}
  */
-proto.bloombox.schema.services.checkin.v1beta1.CardCheckin.Request.prototype.getCardtype = function() {
+proto.bloombox.schema.services.checkin.v1beta1.CardCheckin.Request.prototype.getCardType = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.bloombox.schema.services.checkin.v1beta1.CardCheckin.Request.prototype.setCardtype = function(value) {
+proto.bloombox.schema.services.checkin.v1beta1.CardCheckin.Request.prototype.setCardType = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
 };
 
