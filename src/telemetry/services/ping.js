@@ -77,8 +77,6 @@ bloombox.telemetry.onPingError_ = function() {
  * @private
  */
 bloombox.telemetry.onPingSuccess_ = function(callback) {
-  return respond;
-
   /**
    * Responder function.
    */
@@ -89,4 +87,6 @@ bloombox.telemetry.onPingSuccess_ = function(callback) {
     let latency = stats.lastPong - stats.lastPing;
     callback(latency);
   }
+
+  return respond;
 };
