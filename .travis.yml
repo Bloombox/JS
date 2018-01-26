@@ -5,8 +5,9 @@ language: node_js
 node_js:
   - "7"
 cache:
+  yarn: true
   directories:
-    - $HOME/.m2
+  - node_modules/
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
