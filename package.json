@@ -19,7 +19,7 @@
     "google-protobuf": "^3.4.0",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-cache": "^1.0.2",
-    "gulp-clone": "^1.0.0",
+    "gulp-clone": "^2.0.1",
     "gulp-if": "^2.0.2",
     "gulp-ignore": "^2.0.2",
     "gulp-jshint": "*",
