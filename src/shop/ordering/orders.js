@@ -29,6 +29,7 @@ goog.provide('bloombox.shop.SchedulingType');
 goog.provide('bloombox.shop.order.Order');
 goog.provide('bloombox.shop.order.OrderException');
 goog.provide('bloombox.shop.order.OrderScheduling');
+goog.provide('bloombox.shop.order.Status');
 goog.provide('bloombox.shop.order.Type');
 
 goog.require('bloombox.config.active');
@@ -56,6 +57,7 @@ goog.require('proto.bloombox.schema.services.shop.v1.SubmitOrder.Response');
 goog.require('proto.opencannabis.commerce.Item');
 goog.require('proto.opencannabis.commerce.Order');
 goog.require('proto.opencannabis.commerce.OrderScheduling');
+goog.require('proto.opencannabis.commerce.OrderStatus');
 goog.require('proto.opencannabis.commerce.OrderType');
 goog.require('proto.opencannabis.commerce.ProductVariant');
 goog.require('proto.opencannabis.commerce.ProductWeight');
@@ -75,6 +77,15 @@ bloombox.shop.OrderCallback;
 
 
 /**
+ * Callback function for order retrieval.
+ *
+ * @typedef {function(?proto.bloombox.schema.services.shop.v1.OrderError,
+ *                  ?bloombox.shop.order.Order)}
+ */
+bloombox.shop.OrderGetCallback;
+
+
+/**
  * Specifies types of orders.
  *
  * @enum {number}
@@ -83,6 +94,22 @@ bloombox.shop.OrderCallback;
 bloombox.shop.order.Type = {
   'PICKUP': proto.opencannabis.commerce.OrderType.PICKUP,
   'DELIVERY': proto.opencannabis.commerce.OrderType.DELIVERY
+};
+
+
+/**
+ * Specifies statuses an order may be in.
+ *
+ * @enum {number}
+ * @export
+ */
+bloombox.shop.order.Status = {
+  'PENDING': proto.opencannabis.commerce.OrderStatus.PENDING,
+  'REJECTED': proto.opencannabis.commerce.OrderStatus.REJECTED,
+  'APPROVED': proto.opencannabis.commerce.OrderStatus.APPROVED,
+  'ASSIGNED': proto.opencannabis.commerce.OrderStatus.ASSIGNED,
+  'EN_ROUTE': proto.opencannabis.commerce.OrderStatus.EN_ROUTE,
+  'FULFILLED': proto.opencannabis.commerce.OrderStatus.FULFILLED
 };
 
 
@@ -122,7 +149,7 @@ bloombox.shop.order.OrderException = function OrderException(message) {
  */
 bloombox.shop.order.OrderScheduling = function OrderScheduling(scheduling,
                                                                desiredTime) {
-  this.scheduling = scheduling;
+  this.type = scheduling;
   this.desiredTime = desiredTime;
 };
 
@@ -139,7 +166,7 @@ bloombox.shop.order.OrderScheduling.prototype.export = function() {
   let protob = new proto.opencannabis.commerce.OrderScheduling();
   protob.setScheduling(
     /** @type {proto.opencannabis.commerce.SchedulingType<number>} */ (
-      this.scheduling));
+      this.type));
 
   // set desired time, if applicable
   if (this.desiredTime !== null) {
@@ -156,8 +183,8 @@ bloombox.shop.order.OrderScheduling.prototype.export = function() {
  * @return {bloombox.shop.SchedulingType} Scheduling type.
  * @export
  */
-bloombox.shop.order.OrderScheduling.prototype.getScheduling = function() {
-  return this.scheduling;
+bloombox.shop.order.OrderScheduling.prototype.getType = function() {
+  return this.type;
 };
 
 
@@ -207,16 +234,124 @@ bloombox.shop.order.Order = function Order(orderType,
       'Order type was DELIVERY, but no destination info was provided.');
 
   // okay everything is valid
+  /**
+   * Order ID, which defaults to `null` until the order has been submitted to
+   * the shop service, and a resulting ID is assigned and sent back.
+   *
+   * @type {?string}
+   * @package
+   */
+  this.id = null;
+
+  /**
+   * Type of the order, either DELIVERY or PICKUP.
+   *
+   * @type {bloombox.shop.order.Type}
+   * @package
+   */
   this.type = orderType;
+
+  /**
+   * Status for this order.
+   *
+   * @type {bloombox.shop.order.Status}
+   * @package
+   */
+  this.status = bloombox.shop.order.Status['PENDING'];
+
+  /**
+   * Customer who submitted the order.
+   *
+   * @type {bloombox.shop.Customer}
+   * @package
+   */
   this.customer = customer;
+
+  /**
+   * Constituent items that are being ordered as part of this order.
+   *
+   * @type {Array<bloombox.shop.Item>}
+   * @package
+   */
   this.items = [];
+
+  /**
+   * Location to deliver this order to, if it is a delivery order.
+   *
+   * @type {bloombox.shop.order.DeliveryLocation}
+   * @package
+   */
   this.location = location;
+
+  /**
+   * Arbitrary notes attached to this order, if any.
+   *
+   * @type {?string}
+   * @package
+   */
   this.notes = notes || null;
+
+  /**
+   * Scheduling type for this order. Either ASAP or a scheduled time.
+   *
+   * @type {bloombox.shop.order.OrderScheduling}
+   * @package
+   */
   this.scheduling = new bloombox.shop.order.OrderScheduling(
     bloombox.shop.SchedulingType.ASAP, null);
-  this.createdAt = {
-    timestamp: +(new Date())
-  };
+
+  /**
+   * When this order was created.
+   *
+   * @type {{timestamp: number}}
+   * @package
+   */
+  this.createdAt = {'timestamp': +(new Date())};
+};
+
+
+/**
+ * Set the ID for an order, once it has been submitted to the server.
+ *
+ * @param {string} id Order ID.
+ * @package
+ */
+bloombox.shop.order.Order.prototype.setId = function(id) {
+  this.id = id;
+};
+
+
+/**
+ * Get the ID/key for this order.
+ *
+ * @return {?string}
+ * @export
+ */
+bloombox.shop.order.Order.prototype.getId = function() {
+  return this.id;
+};
+
+
+/**
+ * Set the status of this order, after retrieving it/updating status from the
+ * server.
+ *
+ * @param {bloombox.shop.order.Status} status Order status.
+ * @protected
+ */
+bloombox.shop.order.Order.prototype.setStatus = function(status) {
+  this.status = status;
+};
+
+
+/**
+ * Current status of this order.
+ *
+ * @return {bloombox.shop.order.Status}
+ * @export
+ */
+bloombox.shop.order.Order.prototype.getStatus = function() {
+  return this.status;
 };
 
 
@@ -257,6 +392,19 @@ bloombox.shop.order.Order.prototype.setSchedulingTypeTimed = function(ts) {
 
 
 /**
+ * Retrieve the scheduling spec for this order, specifying if it is desired ASAP
+ * or at a specified time. The default case is ASAP for both PICKUP and DELIVERY
+ * orders.
+ *
+ * @return {bloombox.shop.order.OrderScheduling}
+ * @export
+ */
+bloombox.shop.order.Order.prototype.getScheduling = function() {
+  return this.scheduling;
+};
+
+
+/**
  * Set the type of order.
  *
  * @param {bloombox.shop.order.Type} type Type to set the order to.
@@ -275,6 +423,17 @@ bloombox.shop.order.Order.prototype.setType = function(type) {
 
   this.type = type;
   return this;
+};
+
+
+/**
+ * Get the type of order this is, either PICKUP or DELIVERY.
+ *
+ * @return {bloombox.shop.order.Type} Order type.
+ * @export
+ */
+bloombox.shop.order.Order.prototype.getType = function() {
+  return this.type;
 };
 
 
@@ -304,6 +463,16 @@ bloombox.shop.order.Order.prototype.setNotes = function(notes) {
 
 
 /**
+ * Get the notes for the order.
+ * @return {?string} Order notes, or `null` if no notes were specified.
+ * @export
+ */
+bloombox.shop.order.Order.prototype.getNotes = function() {
+  return this.notes;
+};
+
+
+/**
  * Set the location for a delivery order.
  *
  * @param {?bloombox.shop.order.DeliveryLocation} location Location to set.
@@ -321,26 +490,6 @@ bloombox.shop.order.Order.prototype.setLocation = function(location) {
 
   this.location = location;
   return this;
-};
-
-
-/**
- * Get the type of order.
- * @return {bloombox.shop.order.Type} Order type.
- * @export
- */
-bloombox.shop.order.Order.prototype.getType = function() {
-  return this.type;
-};
-
-
-/**
- * Get the notes for the order.
- * @return {?string} Order notes, or `null` if no notes were specified.
- * @export
- */
-bloombox.shop.order.Order.prototype.getNotes = function() {
-  return this.notes;
 };
 
 
@@ -393,6 +542,278 @@ bloombox.shop.order.Order.prototype.addItem = function(item) {
 
   this.items.push(item);
   return this;
+};
+
+
+// noinspection JSUnusedGlobalSymbols
+/**
+ * Retrieve the items on this order.
+ *
+ * @return {Array<bloombox.shop.Item>} Items that are part of this order.
+ * @export
+ */
+bloombox.shop.order.Order.prototype.getItems = function() {
+  return this.items;
+};
+
+
+/**
+ * Inflate a wire order type into a JS SDK order type.
+ *
+ * @param {proto.opencannabis.commerce.OrderType|string|number} type Proto type
+ *        from an order to inflate into a JS SDK order type.
+ * @return {bloombox.shop.order.Type} Inflated order type.
+ * @throws {bloombox.shop.order.OrderException} If the type provided is not
+ *         valid or cannot be identified.
+ * @package
+ */
+bloombox.shop.order.Order.inflateType = function(type) {
+  if (status === null || status === undefined)
+    throw new bloombox.shop.order.OrderException(
+      'Invalid underlying order type value: "' + type + '".');
+  switch (type) {
+    case 'PICKUP': return bloombox.shop.order.Type.PICKUP;
+    case 'DELIVERY': return bloombox.shop.order.Type.DELIVERY;
+    case 0: return bloombox.shop.order.Type.PICKUP;
+    case 1: return bloombox.shop.order.Type.DELIVERY;
+  }
+  bloombox.logging.warn('Unable to resolve order type with value "' +
+    type + '".');
+  throw new bloombox.shop.order.OrderException(
+    'Invalid underlying order type value: "' + type + '".');
+};
+
+
+/**
+ * Inflate a wire order status into a JS SDK order status.
+ *
+ * @param {proto.opencannabis.commerce.OrderStatus|string|number} status Proto
+ *        status from an order to inflate into a JS SDK order status.
+ * @return {bloombox.shop.order.Status} Inflated order status.
+ * @throws {bloombox.shop.order.OrderException} If the status provided is not
+ *         valid or cannot be identified.
+ * @package
+ */
+bloombox.shop.order.Order.inflateStatus = function(status) {
+  if (status === null || status === undefined)
+    throw new bloombox.shop.order.OrderException(
+      'Invalid underlying order status value: "' + status + '".');
+  switch (status) {
+    case 'PENDING': return bloombox.shop.order.Status.PENDING;
+    case 'APPROVED': return bloombox.shop.order.Status.APPROVED;
+    case 'REJECTED': return bloombox.shop.order.Status.REJECTED;
+    case 'ASSIGNED': return bloombox.shop.order.Status.ASSIGNED;
+    case 'EN_ROUTE': return bloombox.shop.order.Status.EN_ROUTE;
+    case 'FULFILLED': return bloombox.shop.order.Status.FULFILLED;
+    case 0: return bloombox.shop.order.Status.PENDING;
+    case 1: return bloombox.shop.order.Status.APPROVED;
+    case 2: return bloombox.shop.order.Status.REJECTED;
+    case 3: return bloombox.shop.order.Status.ASSIGNED;
+    case 4: return bloombox.shop.order.Status.EN_ROUTE;
+    case 5: return bloombox.shop.order.Status.FULFILLED;
+  }
+  bloombox.logging.warn('Unable to resolve order status with value "' +
+    status + '". Defaulting to "PENDING".');
+  return bloombox.shop.order.Status.PENDING;
+};
+
+
+/**
+ * Inflate a shop order from its underlying proto object.
+ *
+ * @param {proto.opencannabis.commerce.Order} protob Commercial order object.
+ * @return {bloombox.shop.order.Order} Inflated SDK order object.
+ * @package
+ */
+bloombox.shop.order.Order.fromProto = function(protob) {
+  // @TODO: decode additional properties here once they are available
+  let targetId = protob.getId();
+  let underlyingOrderType = protob.getType();
+  let underlyingStatus = protob.getStatus();
+
+  let status = bloombox.shop.order.Order.inflateStatus(underlyingStatus);
+  let type = bloombox.shop.order.Order.inflateType(underlyingOrderType);
+  let order = new bloombox.shop.order.Order(type, null, null);
+  order.setId(targetId);
+  order.setStatus(status);
+
+  return order;
+};
+
+
+/**
+ * Retrieve a copy of this order from the server, and update the properties on
+ * it accordingly.
+ *
+ * @param {bloombox.shop.OrderGetCallback} callback Callback to dispatch once
+ *        the order update has completed.
+ * @throws {bloombox.shop.order.OrderException} If no order ID is specified on
+ *        the current order, indicating it has not successfully been submitted
+ *        to the shop service yet.
+ * @export
+ */
+bloombox.shop.order.Order.prototype.update = function(callback) {
+  // check for a valid order ID
+  if (this.id === null)
+    throw new bloombox.shop.order.OrderException(
+      'Cannot update order with no ID.');
+
+  let subject = this;
+
+  bloombox.shop.order.Order.retrieve(this.id, function(err, order) {
+    if (err !== null || order === null) {
+      // could not retrieve order update
+      if (err !== null) {
+        // an error occurred
+        bloombox.logging.error(
+          'Failed to retrieve updated order from server. Got error: "' +
+          err.toString() + ', for order ID "' + subject.id + '".', {
+            'error': err,
+            'order': order
+          });
+        callback(err, null);
+      } else {
+        // got no error and no order
+        bloombox.logging.error(
+          'Failed to retrieve updated order from server. Additionally ' +
+          'got no error. Order ID "' + subject.id + '".', {
+            'error': err,
+            'order': order,
+            'subject': subject
+          });
+        callback(null, null);
+      }
+    } else {
+      // update the order from the response
+      if (order.getStatus())
+        subject.setStatus(
+          bloombox.shop.order.Order.inflateStatus(order.getStatus()));
+
+      // dispatch callback, we're done
+      callback(null, subject);
+    }
+  });
+};
+
+
+/**
+ * Retrieve an order by its key, which is returned after submission of an order
+ * to the shop service.
+ *
+ * @param {string} key Key for the desired order.
+ * @param {bloombox.shop.OrderGetCallback} callback Callback to dispatch with
+ *        the resulting order.
+ * @throws {bloombox.shop.order.OrderException} If no order ID is specified on
+ *        the current order, indicating it has not successfully been submitted
+ *        to the shop service yet.
+ * @export
+ */
+bloombox.shop.order.Order.retrieve = function(key, callback) {
+  // check for a valid order ID
+  if (key === null || key.length === 0)
+    throw new bloombox.shop.order.OrderException(
+      'Cannot retrieve an order with no ID.');
+
+  let done = false;
+
+  let config = bloombox.config.active();
+  let partner = config.partner;
+  let location = config.location;
+
+  let encodedKey = btoa(key);
+
+  if (!partner || !location) {
+    bloombox.logging.error('Partner or location code is not defined.');
+    return;
+  }
+
+  // make the RPC to retrieve it
+  new bloombox.shop.rpc.ShopRPC(
+    /** @type {bloombox.shop.Routine} */ (
+      bloombox.shop.Routine.GET_ORDER), 'GET', [
+      'partners',
+      partner,
+      'locations',
+      location,
+      'orders',
+      encodedKey
+    ].join('/'))
+    .send((function(response) {
+      if (done) return;
+      if (response !== null) {
+        done = true;
+
+        bloombox.logging.log(
+          'Response received for order fetch RPC.', response);
+
+        // decode the response
+        let inflated = (
+          new proto.bloombox.schema.services.shop.v1.GetOrder.Response());
+        if (response['success'] === true || response['order']) {
+          // extract and decode order
+          inflated.setSuccess(true);
+
+          let rawOrder = /** @type {Object|null|undefined} */ (
+            response['order']);
+          if (rawOrder !== null && rawOrder !== undefined &&
+              typeof rawOrder === 'object') {
+            // inflate the order and call back
+            let orderId = /** @type {string} */ (rawOrder['id']);
+            let orderType = /** @type {string} */ (rawOrder['type']);
+            let orderStatus = /** @type {string} */ (rawOrder['status']);
+
+            // if any of those properties look wrong, it's an error
+            if (!orderId ||
+                  !(typeof orderId === 'string') ||
+                  orderId.length < 1 ||
+                !orderType ||
+                  !(typeof orderType === 'string') ||
+                  orderType.length < 1 ||
+                !orderStatus ||
+                  !(typeof orderStatus === 'string') ||
+                  orderStatus.length < 1) {
+              // order details are invalid
+              bloombox.logging.error(
+                'Failed to decode required order details after order ' +
+                'retrieval RPC.', {
+                  'orderId': orderId,
+                  'orderType': orderType,
+                  'orderStatus': orderStatus
+                });
+            } else {
+              // resolve order type and status
+              let objOrderType = (
+                proto.opencannabis.commerce.OrderType.valueOf(orderType));
+              let objOrderStatus = (
+                proto.opencannabis.commerce.OrderStatus.valueOf(orderStatus));
+
+              // build inflated order object
+              let orderObj = (
+                new proto.opencannabis.commerce.Order());
+              orderObj.setId(orderId);
+              orderObj.setType(objOrderType);
+              orderObj.setStatus(objOrderStatus);
+
+              // @TODO implement order properties or a tighter method scope
+              let sdkOrder = bloombox.shop.order.Order.fromProto(orderObj);
+              callback(null, sdkOrder);
+            }
+          }
+        } else {
+          // it failed, with no error
+          // @TODO order error support here
+          bloombox.logging.error(
+            'Order retrieval RPC failed with status: ', status);
+          callback(null, null);
+        }
+      }
+      callback(null, null);  // an error occurred
+    }), function(status) {
+      // we got an error
+      bloombox.logging.error(
+        'Order retrieval RPC failed with status: ', status);
+      callback(null, null, status);
+    });
 };
 
 
