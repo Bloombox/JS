@@ -52,6 +52,7 @@ goog.require('bloombox.shop.rpc.ShopRPC');
 
 goog.require('bloombox.telemetry.event');
 
+goog.require('proto.bloombox.schema.services.shop.v1.GetOrder.Response');
 goog.require('proto.bloombox.schema.services.shop.v1.OrderError');
 goog.require('proto.bloombox.schema.services.shop.v1.SubmitOrder.Request');
 goog.require('proto.bloombox.schema.services.shop.v1.SubmitOrder.Response');
@@ -82,7 +83,8 @@ bloombox.shop.OrderCallback;
  * Callback function for order retrieval.
  *
  * @typedef {function(?proto.bloombox.schema.services.shop.v1.OrderError,
- *                  ?bloombox.shop.order.Order)}
+ *                    ?bloombox.shop.order.Order,
+ *                    ?number=)}
  */
 bloombox.shop.OrderGetCallback;
 
@@ -570,7 +572,7 @@ bloombox.shop.order.Order.prototype.getItems = function() {
  * @package
  */
 bloombox.shop.order.Order.inflateType = function(type) {
-  if (status === null || status === undefined)
+  if (type === null || type === undefined)
     throw new bloombox.shop.order.OrderException(
       'Invalid underlying order type value: "' + type + '".');
   switch (type) {
@@ -725,7 +727,7 @@ bloombox.shop.order.Order.prototype.sendAnalytics = function(orderId,
     // update unique item keys and item counts
     if (!itemKeys[itemId]) {
       itemKeys[itemId] = item.count;
-      uniqueItemKeys.push(itemId.getId());
+      uniqueItemKeys.push(itemId);
     } else {
       itemKeys[itemId] += item.count;
     }
@@ -848,16 +850,20 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
             } else {
               // resolve order type and status
               let objOrderType = (
-                proto.opencannabis.commerce.OrderType.valueOf(orderType));
+                bloombox.shop.order.Order.inflateType(orderType));
               let objOrderStatus = (
-                proto.opencannabis.commerce.OrderStatus.valueOf(orderStatus));
+                bloombox.shop.order.Order.inflateStatus(orderStatus));
 
               // build inflated order object
               let orderObj = (
                 new proto.opencannabis.commerce.Order());
               orderObj.setId(orderId);
-              orderObj.setType(objOrderType);
-              orderObj.setStatus(objOrderStatus);
+              orderObj.setType(
+                /** @type {proto.opencannabis.commerce.OrderType} */ (
+                  objOrderType));
+              orderObj.setStatus(
+                /** @type {proto.opencannabis.commerce.OrderStatus} */ (
+                  objOrderStatus));
 
               // @TODO implement order properties or a tighter method scope
               let sdkOrder = bloombox.shop.order.Order.fromProto(orderObj);
@@ -868,7 +874,7 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
           // it failed, with no error
           // @TODO order error support here
           bloombox.logging.error(
-            'Order retrieval RPC failed with status: ', status);
+            'Order retrieval RPC failed for unknown reason.');
           callback(null, null);
         }
       }
@@ -1056,6 +1062,6 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
       bloombox.logging.error(
           'Order submission RPC failed with status: ', status);
       callback(null, null, status);
-      this.sendAnalytics(null, error, status);
+      this.sendAnalytics(null, null, status);
     });
 };

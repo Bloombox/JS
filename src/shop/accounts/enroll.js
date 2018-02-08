@@ -196,7 +196,7 @@ bloombox.shop.enroll.Enrollment = function Enrollment(source,
 /**
  * Return this enrollment's resulting user ID.
  *
- * @return {string} User ID.
+ * @return {?string} User ID.
  * @export
  */
 bloombox.shop.enroll.Enrollment.prototype.getId = function() {
@@ -218,7 +218,7 @@ bloombox.shop.enroll.Enrollment.prototype.setId = function(id) {
 /**
  * Return this enrollment's resulting user key.
  *
- * @return {string} User key.
+ * @return {?string} User key.
  * @export
  */
 bloombox.shop.enroll.Enrollment.prototype.getKey = function() {
@@ -251,7 +251,7 @@ bloombox.shop.enroll.Enrollment.prototype.setForeignId = function(foreignId) {
 /**
  * Return this enrollment's resulting foreign ID.
  *
- * @return {string} User's foreign ID for the currently-active partner scope.
+ * @return {?string} User's foreign ID for the currently-active partner scope.
  * @export
  */
 bloombox.shop.enroll.Enrollment.prototype.getForeignId = function() {
