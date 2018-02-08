@@ -118,11 +118,15 @@ function doFatalTest() {
  * Run a test that fetches an order by ID.
  */
 function doGetOrderTest() {
+  let done = false;
   bloombox.setup(partnerCode, locationCode, apiKey, function() {
     let orderId = "abc123";
 
     bloombox.shop.order.Order.retrieve(orderId, function(error, order) {
-      if (err) {
+      if (done) return;
+      done = true;
+
+      if (error) {
         console.log(
           '%cThere was an error retrieving order at ID ' + orderId + '.',
           'color: red',
@@ -138,7 +142,7 @@ function doGetOrderTest() {
           order);
       } else {
         console.log(
-          '%Error inflating or retrieving order at ID ' + orderId + '.',
+          '%cError inflating or retrieving order at ID ' + orderId + '.',
           'color: red');
       }
     });
