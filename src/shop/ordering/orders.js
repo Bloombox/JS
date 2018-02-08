@@ -833,24 +833,21 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
                   orderId.length < 1 ||
                 !orderType ||
                   !(typeof orderType === 'string') ||
-                  orderType.length < 1 ||
-                !orderStatus ||
-                  !(typeof orderStatus === 'string') ||
-                  orderStatus.length < 1) {
+                  orderType.length < 1) {
               // order details are invalid
               bloombox.logging.error(
                 'Failed to decode required order details after order ' +
                 'retrieval RPC.', {
                   'orderId': orderId,
-                  'orderType': orderType,
-                  'orderStatus': orderStatus
+                  'orderType': orderType
                 });
             } else {
               // resolve order type and status
               let objOrderType = (
                 bloombox.shop.order.Order.inflateType(orderType));
               let objOrderStatus = (
-                bloombox.shop.order.Order.inflateStatus(orderStatus));
+                bloombox.shop.order.Order.inflateStatus(
+                  orderStatus || 0));
 
               // build inflated order object
               let orderObj = (
@@ -872,11 +869,10 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
           // it failed, with no error
           // @TODO order error support here
           bloombox.logging.error(
-            'Order retrieval RPC failed for unknown reason.');
+            'Order retrieval RPC failed for unknown reason.', response);
           callback(null, null);
         }
       }
-      callback(null, null);  // an error occurred
     }), function(status) {
       // we got an error
       bloombox.logging.error(
