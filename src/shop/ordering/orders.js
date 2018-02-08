@@ -50,6 +50,8 @@ goog.require('bloombox.shop.order.DeliveryLocation');
 
 goog.require('bloombox.shop.rpc.ShopRPC');
 
+goog.require('bloombox.telemetry.event');
+
 goog.require('proto.bloombox.schema.services.shop.v1.OrderError');
 goog.require('proto.bloombox.schema.services.shop.v1.SubmitOrder.Request');
 goog.require('proto.bloombox.schema.services.shop.v1.SubmitOrder.Response');
@@ -697,6 +699,69 @@ bloombox.shop.order.Order.prototype.update = function(callback) {
 
 
 /**
+ * Send analytics data after an order has been submitted.
+ *
+ * @param {?string} orderId Resulting ID of the order, if submission to the shop
+ *        service was completed successfully.
+ * @param {proto.bloombox.schema.services.shop.v1.OrderError=} opt_error Error
+ *        that was encountered when submitting the order, if any.
+ * @param {number=} opt_status Status that the RPC method got back from the
+ *        server, if submission was not successful.
+ */
+bloombox.shop.order.Order.prototype.sendAnalytics = function(orderId,
+                                                             opt_error,
+                                                             opt_status) {
+  let totalItems = 0;
+  let itemKeys = /** @type {Object} */ ({});
+  let itemsBySection = /** @type {Object} */ ({});
+  let uniqueItemKeys = [];
+  let uniqueSections = [];
+  Array.map(this.items, function(item) {
+    let itemId = item.key.getId();
+
+    // update total count
+    totalItems += item.count;
+
+    // update unique item keys and item counts
+    if (!itemKeys[itemId]) {
+      itemKeys[itemId] = item.count;
+      uniqueItemKeys.push(itemId.getId());
+    } else {
+      itemKeys[itemId] += item.count;
+    }
+
+    // update unique sections and section counts
+    let section = item.key.getKind();
+    if (!itemsBySection[section]) {
+      itemsBySection[section] = item.count;
+      uniqueSections.push(section);
+    } else {
+      itemsBySection[section] += item.count;
+    }
+  });
+
+  // @TODO: actual order telemetry event instead of a generic one
+  bloombox.telemetry.event(
+    bloombox.telemetry.InternalCollection.ORDERS,
+    {'action': opt_error ? 'error' : 'order',
+     'status': opt_status ? opt_status : 200,
+     'order': {
+      'id': orderId,
+      'type': this.type,
+      'items': uniqueItemKeys,
+      'sections': uniqueSections,
+      'stats': {
+        'countByKey': itemKeys,
+        'countBySection': itemsBySection,
+        'hasOrderNotes': (
+          typeof this.getNotes() === 'string' && this.getNotes().length > 0),
+        'uniqueItemCount': this.items.length,
+        'totalItemCount': totalItems || 1
+      }}}).send();
+};
+
+
+/**
  * Retrieve an order by its key, which is returned after submission of an order
  * to the shop service.
  *
@@ -974,11 +1039,15 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
             inflated.getOrderId()) {
           this.id = inflated.getOrderId();
           callback(/** @type {string} */ (inflated.getOrderId()), this, null);
+          this.sendAnalytics(inflated.getOrderId());
           return;
         } else {
+          let error = inflated.getError();
           bloombox.logging.error(
-              'Server indicated order submission failed.', response);
-          callback(null, null, inflated.getError());
+              'Server indicated order submission failed.',
+            {'response': response, 'error': error});
+          callback(null, null, error);
+          this.sendAnalytics(null, error);
         }
       }
       callback(null, null);  // an error occurred
@@ -987,5 +1056,6 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
       bloombox.logging.error(
           'Order submission RPC failed with status: ', status);
       callback(null, null, status);
+      this.sendAnalytics(null, error, status);
     });
 };
