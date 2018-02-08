@@ -787,8 +787,6 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
   let partner = config.partner;
   let location = config.location;
 
-  let encodedKey = btoa(key);
-
   if (!partner || !location) {
     bloombox.logging.error('Partner or location code is not defined.');
     return;
@@ -803,7 +801,7 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
       'locations',
       location,
       'orders',
-      encodedKey
+      key
     ].join('/'))
     .send((function(response) {
       if (done) return;
