@@ -48,6 +48,8 @@ goog.require('bloombox.shop.Customer');
 goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
+goog.require('bloombox.telemetry.event');
+
 goog.require('proto.bloombox.schema.identity.EnrollmentSource');
 goog.require('proto.bloombox.schema.services.shop.v1.EnrollMember');
 goog.require('proto.bloombox.schema.services.shop.v1.EnrollmentError');
@@ -98,6 +100,30 @@ bloombox.shop.enroll.Enrollment = function Enrollment(source,
                                                       license,
                                                       opt_password,
                                                       opt_profile) {
+  /**
+   * User ID resulting from this enrollment, once it has completed.
+   *
+   * @type {?string}
+   * @package
+   */
+  this.id = null;
+
+  /**
+   * User key resulting from this enrollment, once it has completed.
+   *
+   * @type {?string}
+   * @package
+   */
+  this.key = null;
+
+  /**
+   * Foreign ID resulting from this enrollment, once it has completed.
+   *
+   * @type {?string}
+   * @package
+   */
+  this.foreignId = null;
+
   /**
    * Enrollment source.
    *
@@ -167,6 +193,72 @@ bloombox.shop.enroll.Enrollment = function Enrollment(source,
 };
 
 
+/**
+ * Return this enrollment's resulting user ID.
+ *
+ * @return {?string} User ID.
+ * @export
+ */
+bloombox.shop.enroll.Enrollment.prototype.getId = function() {
+  return this.id;
+};
+
+
+/**
+ * Set this enrollment's resulting user ID.
+ *
+ * @param {string} id User ID to set.
+ * @package
+ */
+bloombox.shop.enroll.Enrollment.prototype.setId = function(id) {
+  this.id = id;
+};
+
+
+/**
+ * Return this enrollment's resulting user key.
+ *
+ * @return {?string} User key.
+ * @export
+ */
+bloombox.shop.enroll.Enrollment.prototype.getKey = function() {
+  return this.key;
+};
+
+
+/**
+ * Set this enrollment's resulting user key.
+ *
+ * @param {string} key Resulting user key.
+ * @package
+ */
+bloombox.shop.enroll.Enrollment.prototype.setKey = function(key) {
+  this.key = key;
+};
+
+
+/**
+ * Set this user's resulting foreign ID.
+ *
+ * @param {string} foreignId This user's foreign ID.
+ * @package
+ */
+bloombox.shop.enroll.Enrollment.prototype.setForeignId = function(foreignId) {
+  this.foreignId = foreignId;
+};
+
+
+/**
+ * Return this enrollment's resulting foreign ID.
+ *
+ * @return {?string} User's foreign ID for the currently-active partner scope.
+ * @export
+ */
+bloombox.shop.enroll.Enrollment.prototype.getForeignId = function() {
+  return this.foreignId;
+};
+
+
 // noinspection JSUnusedGlobalSymbols
 /**
  * Activate dry run mode.
@@ -177,6 +269,33 @@ bloombox.shop.enroll.Enrollment = function Enrollment(source,
 bloombox.shop.enroll.Enrollment.prototype.enableDryRun = function() {
   this.dryRun = true;
   return this;
+};
+
+
+/**
+ * Submit analytics data after an enrollment request has been sent to the server
+ * and indicate whether it was successful or not.
+ *
+ * @param {?string} key Key for the resulting user, if enrollment succeeded.
+ * @param {?string} foreignId Foreign ID for the user, if enrollment succeeded.
+ * @param {?proto.bloombox.schema.services.shop.v1.EnrollmentError=} opt_error
+ *        Error that was reported by the server, if any.
+ * @param {?number=} opt_status Status reported by the server, if the enrollment
+ *        was rejected.
+ */
+bloombox.shop.enroll.Enrollment.prototype.sendAnalytics = function(key,
+                                                                   foreignId,
+                                                                   opt_error,
+                                                                   opt_status) {
+  bloombox.telemetry.event(
+    bloombox.telemetry.InternalCollection.ENROLLMENT,
+    {'action': opt_error ? 'error' : 'enroll',
+     'status': opt_status ? opt_status : 200,
+     'customer': {'foreignId': this.foreignId},
+     'enrollment': {
+        'key': this.key,
+        'channel': this.channel,
+        'source': this.source}}).send();
 };
 
 
@@ -287,6 +406,7 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
 
   let done = false;
   let personObj = this.person;
+  let enrollment = this;
 
   rpc.send(function(response) {
     if (done) return;
@@ -300,17 +420,23 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
         // an error occurred
         inflated.setError(response['error']);
         callback(false, inflated.getError(), null);
+        enrollment.sendAnalytics(null, null, inflated.getError());
       } else {
         if (response['id'] && response['foreignId']) {
           // we have a resulting customer object and ID
           inflated.setId(response['id']);
           inflated.setForeignId(response['foreignId']);
+
+          enrollment.setKey(inflated.getId());
+          enrollment.setForeignId(inflated.getForeignId());
           let customer = new bloombox.shop.Customer(
             personObj,
             response['foreignId']);
 
           bloombox.logging.log('Decoded customer from response.', customer);
           callback(true, null, customer);
+          enrollment.sendAnalytics(
+            inflated.getId(), inflated.getForeignId(), null);
         } else {
           bloombox.logging.error(
             'Failed to find customer or ID in response.',
@@ -321,11 +447,13 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
     } else {
       bloombox.logging.warn('Failed to inflate RPC.', response);
       callback(false, null, null);
+      enrollment.sendAnalytics(null, null);
     }
   }, function(status) {
     bloombox.logging.error(status ?
       'Enrollment RPC failed with unexpected status: \'' + status + '\'.' :
         'Enrollment RPC response failed to be decoded.');
     callback(false, null, null);
+    enrollment.sendAnalytics(null, null, null, status);
   });
 };

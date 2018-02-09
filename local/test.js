@@ -115,6 +115,42 @@ function doFatalTest() {
 
 
 /**
+ * Run a test that fetches an order by ID.
+ */
+function doGetOrderTest() {
+  let done = false;
+  bloombox.setup(partnerCode, locationCode, apiKey, function() {
+    let orderId = "abc123";
+
+    bloombox.shop.order.Order.retrieve(orderId, function(error, order) {
+      if (done) return;
+      done = true;
+
+      if (error) {
+        console.log(
+          '%cThere was an error retrieving order at ID ' + orderId + '.',
+          'color: red',
+          error);
+        return;
+      }
+
+      if (order) {
+        // we have an order
+        console.log(
+          '%cOrder retrieval worked for ID \'' + orderId + '\'.',
+          'color: green',
+          order);
+      } else {
+        console.log(
+          '%cError inflating or retrieving order at ID ' + orderId + '.',
+          'color: red');
+      }
+    });
+  });
+};
+
+
+/**
  * Run a test that queries shop info, then runs a callback.
  */
 function doInfoTest(callback, nextCallback) {
@@ -398,7 +434,12 @@ function telemetry() {
   doTelemetry();
 }
 
+function getOrder() {
+  doGetOrderTest();
+}
+
 console.log("Call the following to run a full test: full()");
 console.log("Call the following to run a limited test: simple()");
 console.log("Call the following to run a telemetry test: telemetry()");
 console.log("Call the following to run a menu test: menu()");
+console.log("Call the following to retrieve an order: getOrder()");
