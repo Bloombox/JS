@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 
+
 /**
  * @fileoverview
  * @enhanceable
@@ -60824,7 +60825,8 @@ proto.bloombox.schema.services.shop.v1.GetOrder.Response.prototype.toObject = fu
 proto.bloombox.schema.services.shop.v1.GetOrder.Response.toObject = function(includeInstance, msg) {
   var f, obj = {
     success: jspb.Message.getFieldWithDefault(msg, 1, false),
-    order: (f = msg.getOrder()) && proto.opencannabis.commerce.Order.toObject(includeInstance, f)
+    order: (f = msg.getOrder()) && proto.opencannabis.commerce.Order.toObject(includeInstance, f),
+    error: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -60870,6 +60872,10 @@ proto.bloombox.schema.services.shop.v1.GetOrder.Response.deserializeBinaryFromRe
       reader.readMessage(value,proto.opencannabis.commerce.Order.deserializeBinaryFromReader);
       msg.setOrder(value);
       break;
+    case 3:
+      var value = /** @type {!proto.bloombox.schema.services.shop.v1.OrderError} */ (reader.readEnum());
+      msg.setError(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -60912,6 +60918,13 @@ proto.bloombox.schema.services.shop.v1.GetOrder.Response.serializeBinaryToWriter
       2,
       f,
       proto.opencannabis.commerce.Order.serializeBinaryToWriter
+    );
+  }
+  f = message.getError();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      3,
+      f
     );
   }
 };
@@ -60961,6 +60974,21 @@ proto.bloombox.schema.services.shop.v1.GetOrder.Response.prototype.clearOrder = 
  */
 proto.bloombox.schema.services.shop.v1.GetOrder.Response.prototype.hasOrder = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional OrderError error = 3;
+ * @return {!proto.bloombox.schema.services.shop.v1.OrderError}
+ */
+proto.bloombox.schema.services.shop.v1.GetOrder.Response.prototype.getError = function() {
+  return /** @type {!proto.bloombox.schema.services.shop.v1.OrderError} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {!proto.bloombox.schema.services.shop.v1.OrderError} value */
+proto.bloombox.schema.services.shop.v1.GetOrder.Response.prototype.setError = function(value) {
+  jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -62557,7 +62585,7 @@ proto.bloombox.schema.services.menu.v1beta1.GetMenu.Request.toObject = function(
     snapshot: jspb.Message.getFieldWithDefault(msg, 4, ""),
     fingerprint: jspb.Message.getFieldWithDefault(msg, 5, ""),
     section: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    cached: jspb.Message.getFieldWithDefault(msg, 7, false)
+    fresh: jspb.Message.getFieldWithDefault(msg, 7, false)
   };
 
   if (includeInstance) {
@@ -62620,7 +62648,7 @@ proto.bloombox.schema.services.menu.v1beta1.GetMenu.Request.deserializeBinaryFro
       break;
     case 7:
       var value = /** @type {boolean} */ (reader.readBool());
-      msg.setCached(value);
+      msg.setFresh(value);
       break;
     default:
       reader.skipField();
@@ -62693,7 +62721,7 @@ proto.bloombox.schema.services.menu.v1beta1.GetMenu.Request.serializeBinaryToWri
       f
     );
   }
-  f = message.getCached();
+  f = message.getFresh();
   if (f) {
     writer.writeBool(
       7,
@@ -62798,18 +62826,18 @@ proto.bloombox.schema.services.menu.v1beta1.GetMenu.Request.prototype.setSection
 
 
 /**
- * optional bool cached = 7;
+ * optional bool fresh = 7;
  * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
  * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
-proto.bloombox.schema.services.menu.v1beta1.GetMenu.Request.prototype.getCached = function() {
+proto.bloombox.schema.services.menu.v1beta1.GetMenu.Request.prototype.getFresh = function() {
   return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 7, false));
 };
 
 
 /** @param {boolean} value */
-proto.bloombox.schema.services.menu.v1beta1.GetMenu.Request.prototype.setCached = function(value) {
+proto.bloombox.schema.services.menu.v1beta1.GetMenu.Request.prototype.setFresh = function(value) {
   jspb.Message.setProto3BooleanField(this, 7, value);
 };
 
