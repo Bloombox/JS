@@ -224,18 +224,18 @@ bloombox.shop.order.Order = function Order(orderType,
     throw new bloombox.shop.order.OrderException(
       'Invalid order type provided. Must be DELIVERY or PICKUP.');
 
-  // check customer
-  if (!(typeof customer === 'object' && (
-      typeof customer.export === 'function')))
-    throw new bloombox.shop.order.OrderException(
-      'Invalid customer provided for order.');
+  // check customer  @TODO cannot validate until customers return for order get
+  // if (!(typeof customer === 'object' && (
+  //     typeof customer.export === 'function')))
+  //   throw new bloombox.shop.order.OrderException(
+  //     'Invalid customer provided for order.');
 
-  // check location
-  if (orderType === bloombox.shop.order.Type.DELIVERY &&
-      (location === null || !(typeof location === 'object') || !location))
-    // we need a location - it's type `DELIVERY` - but we didn't get one
-    throw new bloombox.shop.order.OrderException(
-      'Order type was DELIVERY, but no destination info was provided.');
+  // check location  @TODO same as above
+  // if (orderType === bloombox.shop.order.Type.DELIVERY &&
+  //     (location === null || !(typeof location === 'object') || !location))
+  //   // we need a location - it's type `DELIVERY` - but we didn't get one
+  //   throw new bloombox.shop.order.OrderException(
+  //     'Order type was DELIVERY, but no destination info was provided.');
 
   // okay everything is valid
   /**
@@ -627,6 +627,8 @@ bloombox.shop.order.Order.inflateStatus = function(status) {
  *
  * @param {proto.opencannabis.commerce.Order} protob Commercial order object.
  * @return {bloombox.shop.order.Order} Inflated SDK order object.
+ * @throws {bloombox.shop.order.OrderException} If required information is not
+ *         provided by the underlying runtime.
  * @package
  */
 bloombox.shop.order.Order.fromProto = function(protob) {
@@ -637,11 +639,19 @@ bloombox.shop.order.Order.fromProto = function(protob) {
 
   let status = bloombox.shop.order.Order.inflateStatus(underlyingStatus);
   let type = bloombox.shop.order.Order.inflateType(underlyingOrderType);
-  let order = new bloombox.shop.order.Order(type, null, null);
-  order.setId(targetId);
-  order.setStatus(status);
-
-  return order;
+  try {
+    let order = new bloombox.shop.order.Order(type, null, null);
+    order.setId(targetId);
+    order.setStatus(status);
+    return order;
+  } catch (e) {
+    bloombox.logging.error('Failed to construct fetched Order object.', {
+      'error': e,
+      'orderId': targetId,
+      'status': status
+    });
+    throw e;  // rethrow
+  }
 };
 
 
