@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 
-
 /**
  * @fileoverview
  * @enhanceable
@@ -83,6 +82,7 @@ goog.provide('proto.bloombox.schema.identity.IDType');
 goog.provide('proto.bloombox.schema.identity.IdentityProvider');
 goog.provide('proto.bloombox.schema.identity.IndustryProfile');
 goog.provide('proto.bloombox.schema.identity.MenuPreferences');
+goog.provide('proto.bloombox.schema.identity.ReferralSource');
 goog.provide('proto.bloombox.schema.identity.User');
 goog.provide('proto.bloombox.schema.identity.UserFlags');
 goog.provide('proto.bloombox.schema.identity.UserIdentity');
@@ -110,7 +110,17 @@ goog.provide('proto.bloombox.schema.partner.integrations.GenericIntegrationSetti
 goog.provide('proto.bloombox.schema.partner.integrations.IntegrationPartner');
 goog.provide('proto.bloombox.schema.partner.integrations.LocationIntegrationSettings');
 goog.provide('proto.bloombox.schema.partner.integrations.PartnerIntegrationSettings');
+goog.provide('proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures');
 goog.provide('proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings');
+goog.provide('proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures');
+goog.provide('proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists');
+goog.provide('proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings');
+goog.provide('proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures');
+goog.provide('proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings');
+goog.provide('proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures');
+goog.provide('proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings');
+goog.provide('proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures');
+goog.provide('proto.bloombox.schema.partner.integrations.twilio.TwilioSettings');
 goog.provide('proto.bloombox.schema.partner.settings.APISettings');
 goog.provide('proto.bloombox.schema.partner.settings.BetaSettings');
 goog.provide('proto.bloombox.schema.partner.settings.CommsSenderSettings');
@@ -155,6 +165,8 @@ goog.provide('proto.bloombox.schema.partner.settings.TVBannerSettings');
 goog.provide('proto.bloombox.schema.partner.settings.TVMenuSettings');
 goog.provide('proto.bloombox.schema.partner.settings.TVSectionSettingsPayload');
 goog.provide('proto.bloombox.schema.partner.settings.TVSettings');
+goog.provide('proto.bloombox.schema.platform.CacheStats');
+goog.provide('proto.bloombox.schema.platform.SearchStats');
 goog.provide('proto.bloombox.schema.search.PartnerSearchResult');
 goog.provide('proto.bloombox.schema.search.ProductResultBound');
 goog.provide('proto.bloombox.schema.search.ProductResultMetadata');
@@ -189,6 +201,10 @@ goog.provide('proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Reque
 goog.provide('proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Response');
 goog.provide('proto.bloombox.schema.services.auth.v1beta1.EmailPasswordAssertion');
 goog.provide('proto.bloombox.schema.services.auth.v1beta1.FirebaseTokenAssertion');
+goog.provide('proto.bloombox.schema.services.auth.v1beta1.GetProfile');
+goog.provide('proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation');
+goog.provide('proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request');
+goog.provide('proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response');
 goog.provide('proto.bloombox.schema.services.auth.v1beta1.Ping');
 goog.provide('proto.bloombox.schema.services.auth.v1beta1.Ping.Operation');
 goog.provide('proto.bloombox.schema.services.auth.v1beta1.Ping.Request');
@@ -241,6 +257,24 @@ goog.provide('proto.bloombox.schema.services.menu.v1beta1.SearchMenu');
 goog.provide('proto.bloombox.schema.services.menu.v1beta1.SearchMenu.Operation');
 goog.provide('proto.bloombox.schema.services.menu.v1beta1.SearchMenu.Request');
 goog.provide('proto.bloombox.schema.services.menu.v1beta1.SearchMenu.Response');
+goog.provide('proto.bloombox.schema.services.platform.v1.Healthcheck');
+goog.provide('proto.bloombox.schema.services.platform.v1.Healthcheck.Operation');
+goog.provide('proto.bloombox.schema.services.platform.v1.Healthcheck.Request');
+goog.provide('proto.bloombox.schema.services.platform.v1.Healthcheck.Response');
+goog.provide('proto.bloombox.schema.services.platform.v1.Ping');
+goog.provide('proto.bloombox.schema.services.platform.v1.Ping.Operation');
+goog.provide('proto.bloombox.schema.services.platform.v1.Ping.Request');
+goog.provide('proto.bloombox.schema.services.platform.v1.Ping.Response');
+goog.provide('proto.bloombox.schema.services.platform.v1.PlatformError');
+goog.provide('proto.bloombox.schema.services.platform.v1.PlatformStats');
+goog.provide('proto.bloombox.schema.services.platform.v1.PlatformStats.Operation');
+goog.provide('proto.bloombox.schema.services.platform.v1.PlatformStats.Request');
+goog.provide('proto.bloombox.schema.services.platform.v1.PlatformStats.Response');
+goog.provide('proto.bloombox.schema.services.platform.v1.SearchReindex');
+goog.provide('proto.bloombox.schema.services.platform.v1.SearchReindex.Index');
+goog.provide('proto.bloombox.schema.services.platform.v1.SearchReindex.Operation');
+goog.provide('proto.bloombox.schema.services.platform.v1.SearchReindex.Request');
+goog.provide('proto.bloombox.schema.services.platform.v1.SearchReindex.Response');
 goog.provide('proto.bloombox.schema.services.pos.v1beta1.POSError');
 goog.provide('proto.bloombox.schema.services.pos.v1beta1.Ping');
 goog.provide('proto.bloombox.schema.services.pos.v1beta1.Ping.Operation');
@@ -21471,7 +21505,9 @@ proto.bloombox.schema.identity.ConsumerProfile.toObject = function(includeInstan
     enrollmentSource: jspb.Message.getFieldWithDefault(msg, 3, 0),
     enrollmentChannel: jspb.Message.getFieldWithDefault(msg, 4, ""),
     preferences: (f = msg.getPreferences()) && proto.bloombox.schema.identity.ConsumerPreferences.toObject(includeInstance, f),
-    type: jspb.Message.getFieldWithDefault(msg, 6, 0)
+    type: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    referralSource: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    referralDetail: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -21532,6 +21568,14 @@ proto.bloombox.schema.identity.ConsumerProfile.deserializeBinaryFromReader = fun
     case 6:
       var value = /** @type {!proto.bloombox.schema.identity.ConsumerType} */ (reader.readEnum());
       msg.setType(value);
+      break;
+    case 7:
+      var value = /** @type {!proto.bloombox.schema.identity.ReferralSource} */ (reader.readEnum());
+      msg.setReferralSource(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setReferralDetail(value);
       break;
     default:
       reader.skipField();
@@ -21602,6 +21646,20 @@ proto.bloombox.schema.identity.ConsumerProfile.serializeBinaryToWriter = functio
   if (f !== 0.0) {
     writer.writeEnum(
       6,
+      f
+    );
+  }
+  f = message.getReferralSource();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      7,
+      f
+    );
+  }
+  f = message.getReferralDetail();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
       f
     );
   }
@@ -21726,6 +21784,36 @@ proto.bloombox.schema.identity.ConsumerProfile.prototype.getType = function() {
 /** @param {!proto.bloombox.schema.identity.ConsumerType} value */
 proto.bloombox.schema.identity.ConsumerProfile.prototype.setType = function(value) {
   jspb.Message.setProto3EnumField(this, 6, value);
+};
+
+
+/**
+ * optional ReferralSource referral_source = 7;
+ * @return {!proto.bloombox.schema.identity.ReferralSource}
+ */
+proto.bloombox.schema.identity.ConsumerProfile.prototype.getReferralSource = function() {
+  return /** @type {!proto.bloombox.schema.identity.ReferralSource} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+};
+
+
+/** @param {!proto.bloombox.schema.identity.ReferralSource} value */
+proto.bloombox.schema.identity.ConsumerProfile.prototype.setReferralSource = function(value) {
+  jspb.Message.setProto3EnumField(this, 7, value);
+};
+
+
+/**
+ * optional string referral_detail = 8;
+ * @return {string}
+ */
+proto.bloombox.schema.identity.ConsumerProfile.prototype.getReferralDetail = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.identity.ConsumerProfile.prototype.setReferralDetail = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -22760,6 +22848,17 @@ proto.bloombox.schema.identity.EnrollmentSource = {
 /**
  * @enum {number}
  */
+proto.bloombox.schema.identity.ReferralSource = {
+  UNKNOWN: 0,
+  OUTDOOR: 1,
+  DIGITAL: 2,
+  SOCIAL_MEDIA: 3,
+  FRIEND: 4
+};
+
+/**
+ * @enum {number}
+ */
 proto.bloombox.schema.identity.ConsumerType = {
   UNVALIDATED: 0,
   RECREATIONAL: 1,
@@ -23403,6 +23502,290 @@ proto.bloombox.schema.security.IdentityTokenIssuer = {
   FIREBASE: 1,
   AUTH0: 2
 };
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.platform.CacheStats = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.platform.CacheStats, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.platform.CacheStats.displayName = 'proto.bloombox.schema.platform.CacheStats';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.platform.CacheStats.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.platform.CacheStats.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.platform.CacheStats} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.platform.CacheStats.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    keyCount: jspb.Message.getFieldWithDefault(msg, 1, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.platform.CacheStats}
+ */
+proto.bloombox.schema.platform.CacheStats.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.platform.CacheStats;
+  return proto.bloombox.schema.platform.CacheStats.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.platform.CacheStats} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.platform.CacheStats}
+ */
+proto.bloombox.schema.platform.CacheStats.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setKeyCount(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.platform.CacheStats.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.platform.CacheStats.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.platform.CacheStats} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.platform.CacheStats.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getKeyCount();
+  if (f !== 0) {
+    writer.writeUint32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional uint32 key_count = 1;
+ * @return {number}
+ */
+proto.bloombox.schema.platform.CacheStats.prototype.getKeyCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.bloombox.schema.platform.CacheStats.prototype.setKeyCount = function(value) {
+  jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.platform.SearchStats = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.platform.SearchStats, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.platform.SearchStats.displayName = 'proto.bloombox.schema.platform.SearchStats';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.platform.SearchStats.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.platform.SearchStats.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.platform.SearchStats} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.platform.SearchStats.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    indexedDocuments: jspb.Message.getFieldWithDefault(msg, 1, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.platform.SearchStats}
+ */
+proto.bloombox.schema.platform.SearchStats.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.platform.SearchStats;
+  return proto.bloombox.schema.platform.SearchStats.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.platform.SearchStats} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.platform.SearchStats}
+ */
+proto.bloombox.schema.platform.SearchStats.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setIndexedDocuments(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.platform.SearchStats.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.platform.SearchStats.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.platform.SearchStats} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.platform.SearchStats.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getIndexedDocuments();
+  if (f !== 0) {
+    writer.writeUint32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional uint32 indexed_documents = 1;
+ * @return {number}
+ */
+proto.bloombox.schema.platform.SearchStats.prototype.getIndexedDocuments = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.bloombox.schema.platform.SearchStats.prototype.setIndexedDocuments = function(value) {
+  jspb.Message.setProto3IntField(this, 1, value);
+};
+
 
 
 /**
@@ -35766,6 +36149,1605 @@ proto.bloombox.schema.search.SearchSortMode = {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.displayName = 'proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures;
+  return proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioSettings = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.integrations.twilio.TwilioSettings, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.displayName = 'proto.bloombox.schema.partner.integrations.twilio.TwilioSettings';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.integrations.twilio.TwilioSettings} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    features: (f = msg.getFeatures()) && proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.integrations.twilio.TwilioSettings}
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.integrations.twilio.TwilioSettings;
+  return proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.integrations.twilio.TwilioSettings} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.integrations.twilio.TwilioSettings}
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 10:
+      var value = new proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures;
+      reader.readMessage(value,proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.deserializeBinaryFromReader);
+      msg.setFeatures(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.integrations.twilio.TwilioSettings} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getFeatures();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional TwilioIntegrationFeatures features = 10;
+ * @return {?proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.prototype.getFeatures = function() {
+  return /** @type{?proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures, 10));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.integrations.twilio.TwilioIntegrationFeatures|undefined} value */
+proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.prototype.setFeatures = function(value) {
+  jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.prototype.clearFeatures = function() {
+  this.setFeatures(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.prototype.hasFeatures = function() {
+  return jspb.Message.getField(this, 10) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.displayName = 'proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures;
+  return proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.displayName = 'proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    features: (f = msg.getFeatures()) && proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings}
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings;
+  return proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings}
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 10:
+      var value = new proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures;
+      reader.readMessage(value,proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.deserializeBinaryFromReader);
+      msg.setFeatures(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getFeatures();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional OnFleetIntegrationFeatures features = 10;
+ * @return {?proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.prototype.getFeatures = function() {
+  return /** @type{?proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures, 10));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.integrations.onfleet.OnFleetIntegrationFeatures|undefined} value */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.prototype.setFeatures = function(value) {
+  jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.prototype.clearFeatures = function() {
+  this.setFeatures(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.prototype.hasFeatures = function() {
+  return jspb.Message.getField(this, 10) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.displayName = 'proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures;
+  return proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.displayName = 'proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    features: (f = msg.getFeatures()) && proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings}
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings;
+  return proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings}
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 10:
+      var value = new proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures;
+      reader.readMessage(value,proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.deserializeBinaryFromReader);
+      msg.setFeatures(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getFeatures();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional SendgridIntegrationFeatures features = 10;
+ * @return {?proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.prototype.getFeatures = function() {
+  return /** @type{?proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures, 10));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.integrations.sendgrid.SendgridIntegrationFeatures|undefined} value */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.prototype.setFeatures = function(value) {
+  jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.prototype.clearFeatures = function() {
+  this.setFeatures(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.prototype.hasFeatures = function() {
+  return jspb.Message.getField(this, 10) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.displayName = 'proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    signups: jspb.Message.getFieldWithDefault(msg, 1, false),
+    segments: jspb.Message.getFieldWithDefault(msg, 2, false),
+    ordering: jspb.Message.getFieldWithDefault(msg, 3, false)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures;
+  return proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSignups(value);
+      break;
+    case 2:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSegments(value);
+      break;
+    case 3:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setOrdering(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getSignups();
+  if (f) {
+    writer.writeBool(
+      1,
+      f
+    );
+  }
+  f = message.getSegments();
+  if (f) {
+    writer.writeBool(
+      2,
+      f
+    );
+  }
+  f = message.getOrdering();
+  if (f) {
+    writer.writeBool(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bool signups = 1;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.prototype.getSignups = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.prototype.setSignups = function(value) {
+  jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+/**
+ * optional bool segments = 2;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.prototype.getSegments = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.prototype.setSegments = function(value) {
+  jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+/**
+ * optional bool ordering = 3;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.prototype.getOrdering = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 3, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.prototype.setOrdering = function(value) {
+  jspb.Message.setProto3BooleanField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.displayName = 'proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    comms: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    marketing: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists;
+  return proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setComms(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMarketing(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getComms();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getMarketing();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string comms = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.prototype.getComms = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.prototype.setComms = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string marketing = 2;
+ * @return {string}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.prototype.getMarketing = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.prototype.setMarketing = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.displayName = 'proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    apiKey: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    features: (f = msg.getFeatures()) && proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.toObject(includeInstance, f),
+    lists: (f = msg.getLists()) && proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings;
+  return proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setApiKey(value);
+      break;
+    case 10:
+      var value = new proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures;
+      reader.readMessage(value,proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.deserializeBinaryFromReader);
+      msg.setFeatures(value);
+      break;
+    case 11:
+      var value = new proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists;
+      reader.readMessage(value,proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.deserializeBinaryFromReader);
+      msg.setLists(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getApiKey();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getFeatures();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures.serializeBinaryToWriter
+    );
+  }
+  f = message.getLists();
+  if (f != null) {
+    writer.writeMessage(
+      11,
+      f,
+      proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string api_key = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.prototype.getApiKey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.prototype.setApiKey = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional MailchimpIntegrationFeatures features = 10;
+ * @return {?proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.prototype.getFeatures = function() {
+  return /** @type{?proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures, 10));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.integrations.mailchimp.MailchimpIntegrationFeatures|undefined} value */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.prototype.setFeatures = function(value) {
+  jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.prototype.clearFeatures = function() {
+  this.setFeatures(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.prototype.hasFeatures = function() {
+  return jspb.Message.getField(this, 10) != null;
+};
+
+
+/**
+ * optional MailchimpLists lists = 11;
+ * @return {?proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.prototype.getLists = function() {
+  return /** @type{?proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists, 11));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.integrations.mailchimp.MailchimpLists|undefined} value */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.prototype.setLists = function(value) {
+  jspb.Message.setWrapperField(this, 11, value);
+};
+
+
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.prototype.clearLists = function() {
+  this.setLists(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.prototype.hasLists = function() {
+  return jspb.Message.getField(this, 11) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.displayName = 'proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    customers: jspb.Message.getFieldWithDefault(msg, 1, false),
+    checkin: jspb.Message.getFieldWithDefault(msg, 2, false)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures;
+  return proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setCustomers(value);
+      break;
+    case 2:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setCheckin(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getCustomers();
+  if (f) {
+    writer.writeBool(
+      1,
+      f
+    );
+  }
+  f = message.getCheckin();
+  if (f) {
+    writer.writeBool(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bool customers = 1;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.prototype.getCustomers = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.prototype.setCustomers = function(value) {
+  jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+/**
+ * optional bool checkin = 2;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.prototype.getCheckin = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+};
+
+
+/** @param {boolean} value */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.prototype.setCheckin = function(value) {
+  jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -35804,7 +37786,8 @@ proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.toObject 
   var f, obj = {
     organization: jspb.Message.getFieldWithDefault(msg, 1, ""),
     apiKey: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    authToken: jspb.Message.getFieldWithDefault(msg, 3, "")
+    authToken: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    features: (f = msg.getFeatures()) && proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -35852,6 +37835,11 @@ proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.deseriali
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setAuthToken(value);
+      break;
+    case 10:
+      var value = new proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures;
+      reader.readMessage(value,proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.deserializeBinaryFromReader);
+      msg.setFeatures(value);
       break;
     default:
       reader.skipField();
@@ -35903,6 +37891,14 @@ proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.serialize
       f
     );
   }
+  f = message.getFeatures();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -35948,6 +37944,36 @@ proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.prototype
 /** @param {string} value */
 proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.prototype.setAuthToken = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional GreenbitsIntegrationFeatures features = 10;
+ * @return {?proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures}
+ */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.prototype.getFeatures = function() {
+  return /** @type{?proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures, 10));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.integrations.greenbits.GreenbitsIntegrationFeatures|undefined} value */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.prototype.setFeatures = function(value) {
+  jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.prototype.clearFeatures = function() {
+  this.setFeatures(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.prototype.hasFeatures = function() {
+  return jspb.Message.getField(this, 10) != null;
 };
 
 
@@ -36251,7 +38277,11 @@ proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.toObject 
   var f, obj = {
     integrationsList: jspb.Message.getRepeatedField(msg, 1),
     genericMap: (f = msg.getGenericMap()) ? f.toObject(includeInstance, proto.bloombox.schema.partner.integrations.GenericIntegrationSettings.toObject) : [],
-    greenbits: (f = msg.getGreenbits()) && proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.toObject(includeInstance, f)
+    greenbits: (f = msg.getGreenbits()) && proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.toObject(includeInstance, f),
+    mailchimp: (f = msg.getMailchimp()) && proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.toObject(includeInstance, f),
+    sendgrid: (f = msg.getSendgrid()) && proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.toObject(includeInstance, f),
+    twilio: (f = msg.getTwilio()) && proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.toObject(includeInstance, f),
+    onfleet: (f = msg.getOnfleet()) && proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -36303,6 +38333,26 @@ proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.deseriali
       reader.readMessage(value,proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.deserializeBinaryFromReader);
       msg.setGreenbits(value);
       break;
+    case 11:
+      var value = new proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings;
+      reader.readMessage(value,proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.deserializeBinaryFromReader);
+      msg.setMailchimp(value);
+      break;
+    case 12:
+      var value = new proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings;
+      reader.readMessage(value,proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.deserializeBinaryFromReader);
+      msg.setSendgrid(value);
+      break;
+    case 13:
+      var value = new proto.bloombox.schema.partner.integrations.twilio.TwilioSettings;
+      reader.readMessage(value,proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.deserializeBinaryFromReader);
+      msg.setTwilio(value);
+      break;
+    case 14:
+      var value = new proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings;
+      reader.readMessage(value,proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.deserializeBinaryFromReader);
+      msg.setOnfleet(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -36349,6 +38399,38 @@ proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.serialize
       10,
       f,
       proto.bloombox.schema.partner.integrations.greenbits.GreenbitsSettings.serializeBinaryToWriter
+    );
+  }
+  f = message.getMailchimp();
+  if (f != null) {
+    writer.writeMessage(
+      11,
+      f,
+      proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings.serializeBinaryToWriter
+    );
+  }
+  f = message.getSendgrid();
+  if (f != null) {
+    writer.writeMessage(
+      12,
+      f,
+      proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings.serializeBinaryToWriter
+    );
+  }
+  f = message.getTwilio();
+  if (f != null) {
+    writer.writeMessage(
+      13,
+      f,
+      proto.bloombox.schema.partner.integrations.twilio.TwilioSettings.serializeBinaryToWriter
+    );
+  }
+  f = message.getOnfleet();
+  if (f != null) {
+    writer.writeMessage(
+      14,
+      f,
+      proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings.serializeBinaryToWriter
     );
   }
 };
@@ -36428,6 +38510,126 @@ proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype
  */
 proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.hasGreenbits = function() {
   return jspb.Message.getField(this, 10) != null;
+};
+
+
+/**
+ * optional mailchimp.MailchimpSettings mailchimp = 11;
+ * @return {?proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings}
+ */
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.getMailchimp = function() {
+  return /** @type{?proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings, 11));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.integrations.mailchimp.MailchimpSettings|undefined} value */
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.setMailchimp = function(value) {
+  jspb.Message.setWrapperField(this, 11, value);
+};
+
+
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.clearMailchimp = function() {
+  this.setMailchimp(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.hasMailchimp = function() {
+  return jspb.Message.getField(this, 11) != null;
+};
+
+
+/**
+ * optional sendgrid.SendgridSettings sendgrid = 12;
+ * @return {?proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings}
+ */
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.getSendgrid = function() {
+  return /** @type{?proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings, 12));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.integrations.sendgrid.SendgridSettings|undefined} value */
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.setSendgrid = function(value) {
+  jspb.Message.setWrapperField(this, 12, value);
+};
+
+
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.clearSendgrid = function() {
+  this.setSendgrid(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.hasSendgrid = function() {
+  return jspb.Message.getField(this, 12) != null;
+};
+
+
+/**
+ * optional twilio.TwilioSettings twilio = 13;
+ * @return {?proto.bloombox.schema.partner.integrations.twilio.TwilioSettings}
+ */
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.getTwilio = function() {
+  return /** @type{?proto.bloombox.schema.partner.integrations.twilio.TwilioSettings} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.integrations.twilio.TwilioSettings, 13));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.integrations.twilio.TwilioSettings|undefined} value */
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.setTwilio = function(value) {
+  jspb.Message.setWrapperField(this, 13, value);
+};
+
+
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.clearTwilio = function() {
+  this.setTwilio(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.hasTwilio = function() {
+  return jspb.Message.getField(this, 13) != null;
+};
+
+
+/**
+ * optional onfleet.OnFleetSettings onfleet = 14;
+ * @return {?proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings}
+ */
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.getOnfleet = function() {
+  return /** @type{?proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings, 14));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.integrations.onfleet.OnFleetSettings|undefined} value */
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.setOnfleet = function(value) {
+  jspb.Message.setWrapperField(this, 14, value);
+};
+
+
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.clearOnfleet = function() {
+  this.setOnfleet(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.partner.integrations.LocationIntegrationSettings.prototype.hasOnfleet = function() {
+  return jspb.Message.getField(this, 14) != null;
 };
 
 
@@ -36556,9 +38758,10 @@ proto.bloombox.schema.partner.integrations.IntegrationPartner = {
   KEEN: 2,
   GREENBITS: 3,
   MAILCHIMP: 4,
-  TWILIO: 5,
-  ONFLEET: 6,
-  GSUITE: 7
+  SENDGRID: 5,
+  TWILIO: 6,
+  ONFLEET: 7,
+  GSUITE: 8
 };
 
 
@@ -51019,7 +53222,8 @@ proto.opencannabis.commerce.Order.toObject = function(includeInstance, msg) {
     actionLogList: jspb.Message.toObjectList(msg.getActionLogList(),
     proto.opencannabis.commerce.StatusCheckin.toObject, includeInstance),
     createdAt: (f = msg.getCreatedAt()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
-    subtotal: +jspb.Message.getFieldWithDefault(msg, 11, 0.0)
+    subtotal: +jspb.Message.getFieldWithDefault(msg, 11, 0.0),
+    updatedAt: (f = msg.getUpdatedAt()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -51105,6 +53309,11 @@ proto.opencannabis.commerce.Order.deserializeBinaryFromReader = function(msg, re
     case 11:
       var value = /** @type {number} */ (reader.readDouble());
       msg.setSubtotal(value);
+      break;
+    case 12:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setUpdatedAt(value);
       break;
     default:
       reader.skipField();
@@ -51216,6 +53425,14 @@ proto.opencannabis.commerce.Order.serializeBinaryToWriter = function(message, wr
     writer.writeDouble(
       11,
       f
+    );
+  }
+  f = message.getUpdatedAt();
+  if (f != null) {
+    writer.writeMessage(
+      12,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
     );
   }
 };
@@ -51475,6 +53692,36 @@ proto.opencannabis.commerce.Order.prototype.getSubtotal = function() {
 /** @param {number} value */
 proto.opencannabis.commerce.Order.prototype.setSubtotal = function(value) {
   jspb.Message.setProto3FloatField(this, 11, value);
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant updated_at = 12;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.opencannabis.commerce.Order.prototype.getUpdatedAt = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 12));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.opencannabis.commerce.Order.prototype.setUpdatedAt = function(value) {
+  jspb.Message.setWrapperField(this, 12, value);
+};
+
+
+proto.opencannabis.commerce.Order.prototype.clearUpdatedAt = function() {
+  this.setUpdatedAt(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.commerce.Order.prototype.hasUpdatedAt = function() {
+  return jspb.Message.getField(this, 12) != null;
 };
 
 
@@ -55741,7 +57988,7 @@ proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Response.prototype.
  */
 proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Response.toObject = function(includeInstance, msg) {
   var f, obj = {
-    status: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    error: jspb.Message.getFieldWithDefault(msg, 1, 0),
     uid: jspb.Message.getFieldWithDefault(msg, 2, ""),
     key: jspb.Message.getFieldWithDefault(msg, 3, ""),
     token: jspb.Message.getFieldWithDefault(msg, 4, "")
@@ -55782,8 +58029,8 @@ proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Response.deserializ
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {!proto.bloombox.schema.services.auth.v1beta1.AuthStatus} */ (reader.readEnum());
-      msg.setStatus(value);
+      var value = /** @type {!proto.bloombox.schema.services.auth.v1beta1.AuthError} */ (reader.readEnum());
+      msg.setError(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -55826,7 +58073,7 @@ proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Response.prototype.
  */
 proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Response.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getStatus();
+  f = message.getError();
   if (f !== 0.0) {
     writer.writeEnum(
       1,
@@ -55858,16 +58105,16 @@ proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Response.serializeB
 
 
 /**
- * optional AuthStatus status = 1;
- * @return {!proto.bloombox.schema.services.auth.v1beta1.AuthStatus}
+ * optional AuthError error = 1;
+ * @return {!proto.bloombox.schema.services.auth.v1beta1.AuthError}
  */
-proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Response.prototype.getStatus = function() {
-  return /** @type {!proto.bloombox.schema.services.auth.v1beta1.AuthStatus} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Response.prototype.getError = function() {
+  return /** @type {!proto.bloombox.schema.services.auth.v1beta1.AuthError} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
-/** @param {!proto.bloombox.schema.services.auth.v1beta1.AuthStatus} value */
-proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Response.prototype.setStatus = function(value) {
+/** @param {!proto.bloombox.schema.services.auth.v1beta1.AuthError} value */
+proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Response.prototype.setError = function(value) {
   jspb.Message.setProto3EnumField(this, 1, value);
 };
 
@@ -56120,21 +58367,3110 @@ proto.bloombox.schema.services.auth.v1beta1.AuthenticateUser.Operation.prototype
 };
 
 
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.auth.v1beta1.GetProfile, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.auth.v1beta1.GetProfile.displayName = 'proto.bloombox.schema.services.auth.v1beta1.GetProfile';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.auth.v1beta1.GetProfile.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.auth.v1beta1.GetProfile} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.auth.v1beta1.GetProfile}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.auth.v1beta1.GetProfile;
+  return proto.bloombox.schema.services.auth.v1beta1.GetProfile.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.auth.v1beta1.GetProfile} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.auth.v1beta1.GetProfile}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.auth.v1beta1.GetProfile.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.auth.v1beta1.GetProfile} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.displayName = 'proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    key: jspb.Message.getFieldWithDefault(msg, 1, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request;
+  return proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setKey(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getKey();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string key = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.prototype.getKey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.prototype.setKey = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.displayName = 'proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    error: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    profile: (f = msg.getProfile()) && proto.bloombox.schema.identity.User.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response;
+  return proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.bloombox.schema.services.auth.v1beta1.AuthError} */ (reader.readEnum());
+      msg.setError(value);
+      break;
+    case 2:
+      var value = new proto.bloombox.schema.identity.User;
+      reader.readMessage(value,proto.bloombox.schema.identity.User.deserializeBinaryFromReader);
+      msg.setProfile(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getError();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getProfile();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.bloombox.schema.identity.User.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional AuthError error = 1;
+ * @return {!proto.bloombox.schema.services.auth.v1beta1.AuthError}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.prototype.getError = function() {
+  return /** @type {!proto.bloombox.schema.services.auth.v1beta1.AuthError} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.bloombox.schema.services.auth.v1beta1.AuthError} value */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.prototype.setError = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional bloombox.schema.identity.User profile = 2;
+ * @return {?proto.bloombox.schema.identity.User}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.prototype.getProfile = function() {
+  return /** @type{?proto.bloombox.schema.identity.User} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.identity.User, 2));
+};
+
+
+/** @param {?proto.bloombox.schema.identity.User|undefined} value */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.prototype.setProfile = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.prototype.clearProfile = function() {
+  this.setProfile(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.prototype.hasProfile = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.displayName = 'proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    request: (f = msg.getRequest()) && proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.toObject(includeInstance, f),
+    response: (f = msg.getResponse()) && proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation;
+  return proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request;
+      reader.readMessage(value,proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.deserializeBinaryFromReader);
+      msg.setRequest(value);
+      break;
+    case 2:
+      var value = new proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response;
+      reader.readMessage(value,proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.deserializeBinaryFromReader);
+      msg.setResponse(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRequest();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getResponse();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional Request request = 1;
+ * @return {?proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.prototype.getRequest = function() {
+  return /** @type{?proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request, 1));
+};
+
+
+/** @param {?proto.bloombox.schema.services.auth.v1beta1.GetProfile.Request|undefined} value */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.prototype.setRequest = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.prototype.clearRequest = function() {
+  this.setRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.prototype.hasRequest = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional Response response = 2;
+ * @return {?proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.prototype.getResponse = function() {
+  return /** @type{?proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response, 2));
+};
+
+
+/** @param {?proto.bloombox.schema.services.auth.v1beta1.GetProfile.Response|undefined} value */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.prototype.setResponse = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.prototype.clearResponse = function() {
+  this.setResponse(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.auth.v1beta1.GetProfile.Operation.prototype.hasResponse = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
 /**
  * @enum {number}
  */
 proto.bloombox.schema.services.auth.v1beta1.AuthError = {
-  NO_ERROR: 0
+  NO_ERROR: 0,
+  ACCOUNT_SUSPENDED: 1,
+  PROFILE_NOT_FOUND: 2,
+  INVALID_USER_KEY: 3,
+  INVALID_ASSERTION: 4,
+  UNSUPPORTED_LOGIN_TYPE: 5
 };
 
 /**
  * @enum {number}
  */
 proto.bloombox.schema.services.auth.v1beta1.AuthStatus = {
-  UNKNOWN: 0,
+  STATUS_UNKNOWN: 0,
   ACCESS_GRANTED: 1,
-  ACCESS_DENIED: 2,
-  ACCOUNT_SUSPENDED: 3
+  ACCESS_DENIED: 2
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.Ping = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.Ping, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.Ping.displayName = 'proto.bloombox.schema.services.platform.v1.Ping';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.Ping.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.Ping} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Ping.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.Ping}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.Ping;
+  return proto.bloombox.schema.services.platform.v1.Ping.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.Ping} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.Ping}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.Ping.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.Ping} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Ping.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Request = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.Ping.Request, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.Ping.Request.displayName = 'proto.bloombox.schema.services.platform.v1.Ping.Request';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Request.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.Ping.Request.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.Ping.Request} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Request.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.Ping.Request}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Request.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.Ping.Request;
+  return proto.bloombox.schema.services.platform.v1.Ping.Request.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.Ping.Request} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.Ping.Request}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Request.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Request.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.Ping.Request.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.Ping.Request} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Request.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Response = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.Ping.Response, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.Ping.Response.displayName = 'proto.bloombox.schema.services.platform.v1.Ping.Response';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Response.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.Ping.Response.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.Ping.Response} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Response.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    status: jspb.Message.getFieldWithDefault(msg, 1, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.Ping.Response}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Response.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.Ping.Response;
+  return proto.bloombox.schema.services.platform.v1.Ping.Response.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.Ping.Response} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.Ping.Response}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Response.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.bloombox.schema.services.ServiceStatus} */ (reader.readEnum());
+      msg.setStatus(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Response.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.Ping.Response.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.Ping.Response} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Response.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bloombox.schema.services.ServiceStatus status = 1;
+ * @return {!proto.bloombox.schema.services.ServiceStatus}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Response.prototype.getStatus = function() {
+  return /** @type {!proto.bloombox.schema.services.ServiceStatus} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.bloombox.schema.services.ServiceStatus} value */
+proto.bloombox.schema.services.platform.v1.Ping.Response.prototype.setStatus = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Operation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.Ping.Operation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.Ping.Operation.displayName = 'proto.bloombox.schema.services.platform.v1.Ping.Operation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Operation.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.Ping.Operation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.Ping.Operation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Operation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    request: (f = msg.getRequest()) && proto.bloombox.schema.services.platform.v1.Ping.Request.toObject(includeInstance, f),
+    response: (f = msg.getResponse()) && proto.bloombox.schema.services.platform.v1.Ping.Response.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.Ping.Operation}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Operation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.Ping.Operation;
+  return proto.bloombox.schema.services.platform.v1.Ping.Operation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.Ping.Operation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.Ping.Operation}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Operation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.bloombox.schema.services.platform.v1.Ping.Request;
+      reader.readMessage(value,proto.bloombox.schema.services.platform.v1.Ping.Request.deserializeBinaryFromReader);
+      msg.setRequest(value);
+      break;
+    case 2:
+      var value = new proto.bloombox.schema.services.platform.v1.Ping.Response;
+      reader.readMessage(value,proto.bloombox.schema.services.platform.v1.Ping.Response.deserializeBinaryFromReader);
+      msg.setResponse(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Operation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.Ping.Operation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.Ping.Operation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Operation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRequest();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.bloombox.schema.services.platform.v1.Ping.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getResponse();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.bloombox.schema.services.platform.v1.Ping.Response.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional Request request = 1;
+ * @return {?proto.bloombox.schema.services.platform.v1.Ping.Request}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Operation.prototype.getRequest = function() {
+  return /** @type{?proto.bloombox.schema.services.platform.v1.Ping.Request} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.platform.v1.Ping.Request, 1));
+};
+
+
+/** @param {?proto.bloombox.schema.services.platform.v1.Ping.Request|undefined} value */
+proto.bloombox.schema.services.platform.v1.Ping.Operation.prototype.setRequest = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.bloombox.schema.services.platform.v1.Ping.Operation.prototype.clearRequest = function() {
+  this.setRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Operation.prototype.hasRequest = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional Response response = 2;
+ * @return {?proto.bloombox.schema.services.platform.v1.Ping.Response}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Operation.prototype.getResponse = function() {
+  return /** @type{?proto.bloombox.schema.services.platform.v1.Ping.Response} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.platform.v1.Ping.Response, 2));
+};
+
+
+/** @param {?proto.bloombox.schema.services.platform.v1.Ping.Response|undefined} value */
+proto.bloombox.schema.services.platform.v1.Ping.Operation.prototype.setResponse = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.services.platform.v1.Ping.Operation.prototype.clearResponse = function() {
+  this.setResponse(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.platform.v1.Ping.Operation.prototype.hasResponse = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.Healthcheck, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.Healthcheck.displayName = 'proto.bloombox.schema.services.platform.v1.Healthcheck';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.Healthcheck.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.Healthcheck} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.Healthcheck}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.Healthcheck;
+  return proto.bloombox.schema.services.platform.v1.Healthcheck.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.Healthcheck} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.Healthcheck}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.Healthcheck.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.Healthcheck} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Request = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.Healthcheck.Request, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.Healthcheck.Request.displayName = 'proto.bloombox.schema.services.platform.v1.Healthcheck.Request';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Request.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.Healthcheck.Request.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.Healthcheck.Request} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Request.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    probe: jspb.Message.getFieldWithDefault(msg, 1, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.Healthcheck.Request}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Request.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.Healthcheck.Request;
+  return proto.bloombox.schema.services.platform.v1.Healthcheck.Request.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.Healthcheck.Request} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.Healthcheck.Request}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Request.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setProbe(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Request.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.Healthcheck.Request.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.Healthcheck.Request} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Request.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getProbe();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string probe = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Request.prototype.getProbe = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Request.prototype.setProbe = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Response = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.Healthcheck.Response, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.Healthcheck.Response.displayName = 'proto.bloombox.schema.services.platform.v1.Healthcheck.Response';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Response.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.Healthcheck.Response.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.Healthcheck.Response} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Response.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    status: jspb.Message.getFieldWithDefault(msg, 1, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.Healthcheck.Response}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Response.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.Healthcheck.Response;
+  return proto.bloombox.schema.services.platform.v1.Healthcheck.Response.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.Healthcheck.Response} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.Healthcheck.Response}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Response.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.bloombox.schema.services.ServiceStatus} */ (reader.readEnum());
+      msg.setStatus(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Response.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.Healthcheck.Response.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.Healthcheck.Response} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Response.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bloombox.schema.services.ServiceStatus status = 1;
+ * @return {!proto.bloombox.schema.services.ServiceStatus}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Response.prototype.getStatus = function() {
+  return /** @type {!proto.bloombox.schema.services.ServiceStatus} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.bloombox.schema.services.ServiceStatus} value */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Response.prototype.setStatus = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.Healthcheck.Operation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.displayName = 'proto.bloombox.schema.services.platform.v1.Healthcheck.Operation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.Healthcheck.Operation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    request: (f = msg.getRequest()) && proto.bloombox.schema.services.platform.v1.Healthcheck.Request.toObject(includeInstance, f),
+    response: (f = msg.getResponse()) && proto.bloombox.schema.services.platform.v1.Healthcheck.Response.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.Healthcheck.Operation}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.Healthcheck.Operation;
+  return proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.Healthcheck.Operation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.Healthcheck.Operation}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.bloombox.schema.services.platform.v1.Healthcheck.Request;
+      reader.readMessage(value,proto.bloombox.schema.services.platform.v1.Healthcheck.Request.deserializeBinaryFromReader);
+      msg.setRequest(value);
+      break;
+    case 2:
+      var value = new proto.bloombox.schema.services.platform.v1.Healthcheck.Response;
+      reader.readMessage(value,proto.bloombox.schema.services.platform.v1.Healthcheck.Response.deserializeBinaryFromReader);
+      msg.setResponse(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.Healthcheck.Operation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRequest();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.bloombox.schema.services.platform.v1.Healthcheck.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getResponse();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.bloombox.schema.services.platform.v1.Healthcheck.Response.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional Request request = 1;
+ * @return {?proto.bloombox.schema.services.platform.v1.Healthcheck.Request}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.prototype.getRequest = function() {
+  return /** @type{?proto.bloombox.schema.services.platform.v1.Healthcheck.Request} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.platform.v1.Healthcheck.Request, 1));
+};
+
+
+/** @param {?proto.bloombox.schema.services.platform.v1.Healthcheck.Request|undefined} value */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.prototype.setRequest = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.prototype.clearRequest = function() {
+  this.setRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.prototype.hasRequest = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional Response response = 2;
+ * @return {?proto.bloombox.schema.services.platform.v1.Healthcheck.Response}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.prototype.getResponse = function() {
+  return /** @type{?proto.bloombox.schema.services.platform.v1.Healthcheck.Response} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.platform.v1.Healthcheck.Response, 2));
+};
+
+
+/** @param {?proto.bloombox.schema.services.platform.v1.Healthcheck.Response|undefined} value */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.prototype.setResponse = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.prototype.clearResponse = function() {
+  this.setResponse(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.prototype.hasResponse = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.SearchReindex, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.SearchReindex.displayName = 'proto.bloombox.schema.services.platform.v1.SearchReindex';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.SearchReindex.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.SearchReindex} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.SearchReindex}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.SearchReindex;
+  return proto.bloombox.schema.services.platform.v1.SearchReindex.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.SearchReindex} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.SearchReindex}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.SearchReindex.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.SearchReindex} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Index = {
+  CATALOG: 0,
+  ACCOUNTS: 1
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Request = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.SearchReindex.Request, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.SearchReindex.Request.displayName = 'proto.bloombox.schema.services.platform.v1.SearchReindex.Request';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Request.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.SearchReindex.Request.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.SearchReindex.Request} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Request.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    scope: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    index: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.SearchReindex.Request}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Request.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.SearchReindex.Request;
+  return proto.bloombox.schema.services.platform.v1.SearchReindex.Request.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.SearchReindex.Request} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.SearchReindex.Request}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Request.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setScope(value);
+      break;
+    case 2:
+      var value = /** @type {!proto.bloombox.schema.services.platform.v1.SearchReindex.Index} */ (reader.readEnum());
+      msg.setIndex(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Request.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.SearchReindex.Request.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.SearchReindex.Request} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Request.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getScope();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getIndex();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string scope = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Request.prototype.getScope = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Request.prototype.setScope = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional Index index = 2;
+ * @return {!proto.bloombox.schema.services.platform.v1.SearchReindex.Index}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Request.prototype.getIndex = function() {
+  return /** @type {!proto.bloombox.schema.services.platform.v1.SearchReindex.Index} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {!proto.bloombox.schema.services.platform.v1.SearchReindex.Index} value */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Request.prototype.setIndex = function(value) {
+  jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Response = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.SearchReindex.Response, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.SearchReindex.Response.displayName = 'proto.bloombox.schema.services.platform.v1.SearchReindex.Response';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Response.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.SearchReindex.Response.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.SearchReindex.Response} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Response.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.SearchReindex.Response}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Response.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.SearchReindex.Response;
+  return proto.bloombox.schema.services.platform.v1.SearchReindex.Response.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.SearchReindex.Response} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.SearchReindex.Response}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Response.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Response.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.SearchReindex.Response.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.SearchReindex.Response} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Response.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.SearchReindex.Operation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.displayName = 'proto.bloombox.schema.services.platform.v1.SearchReindex.Operation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.SearchReindex.Operation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    request: (f = msg.getRequest()) && proto.bloombox.schema.services.platform.v1.SearchReindex.Request.toObject(includeInstance, f),
+    response: (f = msg.getResponse()) && proto.bloombox.schema.services.platform.v1.SearchReindex.Response.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.SearchReindex.Operation}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.SearchReindex.Operation;
+  return proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.SearchReindex.Operation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.SearchReindex.Operation}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.bloombox.schema.services.platform.v1.SearchReindex.Request;
+      reader.readMessage(value,proto.bloombox.schema.services.platform.v1.SearchReindex.Request.deserializeBinaryFromReader);
+      msg.setRequest(value);
+      break;
+    case 2:
+      var value = new proto.bloombox.schema.services.platform.v1.SearchReindex.Response;
+      reader.readMessage(value,proto.bloombox.schema.services.platform.v1.SearchReindex.Response.deserializeBinaryFromReader);
+      msg.setResponse(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.SearchReindex.Operation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRequest();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.bloombox.schema.services.platform.v1.SearchReindex.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getResponse();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.bloombox.schema.services.platform.v1.SearchReindex.Response.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional Request request = 1;
+ * @return {?proto.bloombox.schema.services.platform.v1.SearchReindex.Request}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.prototype.getRequest = function() {
+  return /** @type{?proto.bloombox.schema.services.platform.v1.SearchReindex.Request} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.platform.v1.SearchReindex.Request, 1));
+};
+
+
+/** @param {?proto.bloombox.schema.services.platform.v1.SearchReindex.Request|undefined} value */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.prototype.setRequest = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.prototype.clearRequest = function() {
+  this.setRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.prototype.hasRequest = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional Response response = 2;
+ * @return {?proto.bloombox.schema.services.platform.v1.SearchReindex.Response}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.prototype.getResponse = function() {
+  return /** @type{?proto.bloombox.schema.services.platform.v1.SearchReindex.Response} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.platform.v1.SearchReindex.Response, 2));
+};
+
+
+/** @param {?proto.bloombox.schema.services.platform.v1.SearchReindex.Response|undefined} value */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.prototype.setResponse = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.prototype.clearResponse = function() {
+  this.setResponse(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.platform.v1.SearchReindex.Operation.prototype.hasResponse = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.PlatformStats, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.PlatformStats.displayName = 'proto.bloombox.schema.services.platform.v1.PlatformStats';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.PlatformStats.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.PlatformStats} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.PlatformStats}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.PlatformStats;
+  return proto.bloombox.schema.services.platform.v1.PlatformStats.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.PlatformStats} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.PlatformStats}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.PlatformStats.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.PlatformStats} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Request = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.PlatformStats.Request, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.PlatformStats.Request.displayName = 'proto.bloombox.schema.services.platform.v1.PlatformStats.Request';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Request.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.PlatformStats.Request.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.PlatformStats.Request} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Request.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.PlatformStats.Request}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Request.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.PlatformStats.Request;
+  return proto.bloombox.schema.services.platform.v1.PlatformStats.Request.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.PlatformStats.Request} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.PlatformStats.Request}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Request.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Request.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.PlatformStats.Request.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.PlatformStats.Request} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Request.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.PlatformStats.Response, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.PlatformStats.Response.displayName = 'proto.bloombox.schema.services.platform.v1.PlatformStats.Response';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.PlatformStats.Response.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.PlatformStats.Response} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    cache: (f = msg.getCache()) && proto.bloombox.schema.platform.CacheStats.toObject(includeInstance, f),
+    search: (f = msg.getSearch()) && proto.bloombox.schema.platform.SearchStats.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.PlatformStats.Response}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.PlatformStats.Response;
+  return proto.bloombox.schema.services.platform.v1.PlatformStats.Response.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.PlatformStats.Response} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.PlatformStats.Response}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.bloombox.schema.platform.CacheStats;
+      reader.readMessage(value,proto.bloombox.schema.platform.CacheStats.deserializeBinaryFromReader);
+      msg.setCache(value);
+      break;
+    case 2:
+      var value = new proto.bloombox.schema.platform.SearchStats;
+      reader.readMessage(value,proto.bloombox.schema.platform.SearchStats.deserializeBinaryFromReader);
+      msg.setSearch(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.PlatformStats.Response.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.PlatformStats.Response} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getCache();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.bloombox.schema.platform.CacheStats.serializeBinaryToWriter
+    );
+  }
+  f = message.getSearch();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.bloombox.schema.platform.SearchStats.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional bloombox.schema.platform.CacheStats cache = 1;
+ * @return {?proto.bloombox.schema.platform.CacheStats}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.prototype.getCache = function() {
+  return /** @type{?proto.bloombox.schema.platform.CacheStats} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.platform.CacheStats, 1));
+};
+
+
+/** @param {?proto.bloombox.schema.platform.CacheStats|undefined} value */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.prototype.setCache = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.prototype.clearCache = function() {
+  this.setCache(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.prototype.hasCache = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional bloombox.schema.platform.SearchStats search = 2;
+ * @return {?proto.bloombox.schema.platform.SearchStats}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.prototype.getSearch = function() {
+  return /** @type{?proto.bloombox.schema.platform.SearchStats} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.platform.SearchStats, 2));
+};
+
+
+/** @param {?proto.bloombox.schema.platform.SearchStats|undefined} value */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.prototype.setSearch = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.prototype.clearSearch = function() {
+  this.setSearch(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Response.prototype.hasSearch = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.PlatformStats.Operation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.displayName = 'proto.bloombox.schema.services.platform.v1.PlatformStats.Operation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.PlatformStats.Operation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    request: (f = msg.getRequest()) && proto.bloombox.schema.services.platform.v1.PlatformStats.Request.toObject(includeInstance, f),
+    response: (f = msg.getResponse()) && proto.bloombox.schema.services.platform.v1.PlatformStats.Response.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.PlatformStats.Operation}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.PlatformStats.Operation;
+  return proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.PlatformStats.Operation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.PlatformStats.Operation}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.bloombox.schema.services.platform.v1.PlatformStats.Request;
+      reader.readMessage(value,proto.bloombox.schema.services.platform.v1.PlatformStats.Request.deserializeBinaryFromReader);
+      msg.setRequest(value);
+      break;
+    case 2:
+      var value = new proto.bloombox.schema.services.platform.v1.PlatformStats.Response;
+      reader.readMessage(value,proto.bloombox.schema.services.platform.v1.PlatformStats.Response.deserializeBinaryFromReader);
+      msg.setResponse(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.PlatformStats.Operation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRequest();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.bloombox.schema.services.platform.v1.PlatformStats.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getResponse();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.bloombox.schema.services.platform.v1.PlatformStats.Response.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional Request request = 1;
+ * @return {?proto.bloombox.schema.services.platform.v1.PlatformStats.Request}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.prototype.getRequest = function() {
+  return /** @type{?proto.bloombox.schema.services.platform.v1.PlatformStats.Request} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.platform.v1.PlatformStats.Request, 1));
+};
+
+
+/** @param {?proto.bloombox.schema.services.platform.v1.PlatformStats.Request|undefined} value */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.prototype.setRequest = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.prototype.clearRequest = function() {
+  this.setRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.prototype.hasRequest = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional Response response = 2;
+ * @return {?proto.bloombox.schema.services.platform.v1.PlatformStats.Response}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.prototype.getResponse = function() {
+  return /** @type{?proto.bloombox.schema.services.platform.v1.PlatformStats.Response} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.platform.v1.PlatformStats.Response, 2));
+};
+
+
+/** @param {?proto.bloombox.schema.services.platform.v1.PlatformStats.Response|undefined} value */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.prototype.setResponse = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.prototype.clearResponse = function() {
+  this.setResponse(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.prototype.hasResponse = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.bloombox.schema.services.platform.v1.PlatformError = {
+  NO_ERROR: 0,
+  SEARCH_NOT_AVAILABLE: 1
 };
 
 
