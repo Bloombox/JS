@@ -224,18 +224,18 @@ bloombox.shop.order.Order = function Order(orderType,
     throw new bloombox.shop.order.OrderException(
       'Invalid order type provided. Must be DELIVERY or PICKUP.');
 
-  // check customer  @TODO cannot validate until customers return for order get
-  // if (!(typeof customer === 'object' && (
-  //     typeof customer.export === 'function')))
-  //   throw new bloombox.shop.order.OrderException(
-  //     'Invalid customer provided for order.');
+  // check customer
+  if (!(typeof customer === 'object' && (
+      typeof customer.export === 'function')))
+    throw new bloombox.shop.order.OrderException(
+      'Invalid customer provided for order.');
 
-  // check location  @TODO same as above
-  // if (orderType === bloombox.shop.order.Type.DELIVERY &&
-  //     (location === null || !(typeof location === 'object') || !location))
-  //   // we need a location - it's type `DELIVERY` - but we didn't get one
-  //   throw new bloombox.shop.order.OrderException(
-  //     'Order type was DELIVERY, but no destination info was provided.');
+  // check location
+  if (orderType === bloombox.shop.order.Type.DELIVERY &&
+      (location === null || !(typeof location === 'object') || !location))
+    // we need a location - it's type `DELIVERY` - but we didn't get one
+    throw new bloombox.shop.order.OrderException(
+      'Order type was DELIVERY, but no destination info was provided.');
 
   // okay everything is valid
   /**
@@ -728,7 +728,7 @@ bloombox.shop.order.Order.prototype.sendAnalytics = function(orderId,
   let itemsBySection = /** @type {Object} */ ({});
   let uniqueItemKeys = [];
   let uniqueSections = [];
-  Array.map(this.items, function(item) {
+  this.items.map((function(item) {
     let itemId = item.key.getId();
 
     // update total count
@@ -750,7 +750,8 @@ bloombox.shop.order.Order.prototype.sendAnalytics = function(orderId,
     } else {
       itemsBySection[section] += item.count;
     }
-  });
+  }));
+  debugger;
 
   // @TODO: actual order telemetry event instead of a generic one
   bloombox.telemetry.event(

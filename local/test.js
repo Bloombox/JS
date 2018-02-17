@@ -4,7 +4,7 @@ let partnerCode = 'caliva';
 let locationCode = 'sjc';
 let apiKey = 'AIzaSyAEOsmEqQP5vX8aPvrlZH0f3AN7eGubL60';
 let zipToCheck = '95126';
-let enrollAccount = 'info+barack@bloombox.io';
+let enrollAccount = 'sam@bloombox.io';
 let enrollPhone = '+19163419482';
 let enrollFirstName = 'Barack';
 let enrollLastName = 'Obama';
@@ -264,11 +264,11 @@ function doOrderTest() {
           deliveryInstructions);
 
         let cookieCreek = new bloombox.shop.Item(
-          new bloombox.product.Key("Kl_L57yXUaHlK8DuAxS", bloombox.product.Kind.FLOWERS), 1)
+          new bloombox.product.Key("1437F308-B731-4E1C-8B85-1E6FFCFCAFFD", bloombox.product.Kind.FLOWERS), 1)
           .addWeightVariant(bloombox.product.Weight.EIGHTH);
 
         let classicPurps = new bloombox.shop.Item(
-          new bloombox.product.Key("E8A5B50F-58C8-4074-A92B-A5999380E3EE", bloombox.product.Kind.FLOWERS), 1)
+          new bloombox.product.Key("DA9C3304-DFE7-4E48-9355-99D90125653F", bloombox.product.Kind.FLOWERS), 1)
           .addWeightVariant(bloombox.product.Weight.EIGHTH);
 
         let order = new bloombox.shop.order.Order(
@@ -404,8 +404,7 @@ function doTelemetry() {
 }
 
 function full() {
-  doInfoTest(function(next) { next(); }, function() { });
-  doEnrollTest(doOrderTest);
+  doInfoTest(doOrderTest, function() { });
 }
 
 function err() {
