@@ -751,7 +751,6 @@ bloombox.shop.order.Order.prototype.sendAnalytics = function(orderId,
       itemsBySection[section] += item.count;
     }
   }));
-  debugger;
 
   // @TODO: actual order telemetry event instead of a generic one
   bloombox.telemetry.event(
