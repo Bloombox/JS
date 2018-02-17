@@ -623,24 +623,88 @@ bloombox.shop.order.Order.inflateStatus = function(status) {
 
 
 /**
+ * Inflate order scheduling information from a raw data object.
+ *
+ * @param {?Object} data Raw data object from an order response.
+ * @return {proto.opencannabis.commerce.OrderScheduling} Order scheduling spec
+ *         object.
+ */
+bloombox.shop.order.Order.inflateScheduling = function(data) {
+  if (typeof data === 'object') {
+    let type = proto.opencannabis.commerce.SchedulingType.ASAP;
+
+    // decode scheduling type, which should default to 'ASAP'
+    if (data.hasOwnProperty('scheduling') &&
+       (typeof data['scheduling'] === 'object') &&
+       ((typeof data['scheduling']['scheduling'] === 'string') ||
+        (typeof data['scheduling']['scheduling'] === 'number'))) {
+      switch (data['scheduling']['scheduling'].toUpperCase()) {
+        case 'ASAP':
+          type = proto.opencannabis.commerce.SchedulingType.ASAP;
+          break;
+        case 0:
+          type = proto.opencannabis.commerce.SchedulingType.ASAP;
+          break;
+        case 'TIMED':
+          type = proto.opencannabis.commerce.SchedulingType.TIMED;
+          break;
+        case 1:
+          type = proto.opencannabis.commerce.SchedulingType.TIMED;
+          break;
+        default:
+          type = proto.opencannabis.commerce.SchedulingType.ASAP;
+          break;
+      }
+    }
+
+    let scheduling = new proto.opencannabis.commerce.OrderScheduling();
+    scheduling.setScheduling(type);
+
+    // decode scheduled time, if available
+    let desiredTime = /** @type {?number} */ (null);
+    if (data.hasOwnProperty('desiredTime') &&
+       (typeof data['desiredTime'] === 'object')) {
+      // handle ISO8601
+      if (typeof data['desiredTime']['iso8601'] === 'string') {
+        desiredTime = +(new Date(data['desiredTime']['iso8601']));
+      } else if (typeof data['desiredTime']['timestamp'] === 'number') {
+        desiredTime = data['desiredTime']['timestamp'];
+      } else {
+        bloombox.logging.warn('Unable to decode desired order time.', data);
+      }
+      let timestamp = new proto.opencannabis.temporal.Instant();
+      timestamp.setTimestamp(desiredTime);
+      scheduling.setDesiredTime(timestamp);
+    }
+    return scheduling;
+  }
+};
+
+
+/**
  * Inflate a shop order from its underlying proto object.
  *
  * @param {proto.opencannabis.commerce.Order} protob Commercial order object.
+ * @param {bloombox.shop.Customer} customer Customer object for the order.
+ * @param {?bloombox.shop.order.DeliveryLocation} location Delivery destination
+ *        spec object, if applicable.
  * @return {bloombox.shop.order.Order} Inflated SDK order object.
  * @throws {bloombox.shop.order.OrderException} If required information is not
  *         provided by the underlying runtime.
  * @package
  */
-bloombox.shop.order.Order.fromProto = function(protob) {
+bloombox.shop.order.Order.fromProto = function(protob, customer, location) {
   // @TODO: decode additional properties here once they are available
   let targetId = protob.getId();
   let underlyingOrderType = protob.getType();
   let underlyingStatus = protob.getStatus();
+  let notes = protob.getNotes();
 
   let status = bloombox.shop.order.Order.inflateStatus(underlyingStatus);
   let type = bloombox.shop.order.Order.inflateType(underlyingOrderType);
   try {
-    let order = new bloombox.shop.order.Order(type, null, null);
+    let order = new bloombox.shop.order.Order(
+      type, customer, location, notes);
     order.setId(targetId);
     order.setStatus(status);
     return order;
@@ -836,6 +900,10 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
             let orderId = /** @type {string} */ (rawOrder['id']);
             let orderType = /** @type {string} */ (rawOrder['type']);
             let orderStatus = /** @type {string} */ (rawOrder['status']);
+            let orderNotes = /** @type {string|null|undefined} */ (
+              rawOrder['notes']);
+            let orderScheduling = /** @type {Object} */ (
+              rawOrder['scheduling']);
 
             // if any of those properties look wrong, it's an error
             if (!orderId ||
@@ -858,6 +926,14 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
               let objOrderStatus = (
                 bloombox.shop.order.Order.inflateStatus(
                   orderStatus || 0));
+              let objOrderScheduling = (
+                bloombox.shop.order.Order.inflateScheduling(orderScheduling));
+
+              let customerObj = bloombox.shop.Customer.fromResponse(rawOrder);
+              let locationObj = (
+                bloombox.shop.order.DeliveryLocation.fromResponse(rawOrder));
+
+              // @TODO: decode order items, and created-at
 
               // build inflated order object
               let orderObj = (
@@ -869,9 +945,11 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
               orderObj.setStatus(
                 /** @type {proto.opencannabis.commerce.OrderStatus} */ (
                   objOrderStatus));
+              orderObj.setScheduling(objOrderScheduling);
+              if (orderNotes) orderObj.setNotes(orderNotes);
 
-              // @TODO implement order properties or a tighter method scope
-              let sdkOrder = bloombox.shop.order.Order.fromProto(orderObj);
+              let sdkOrder = bloombox.shop.order.Order.fromProto(
+                orderObj, customerObj, locationObj);
               callback(null, sdkOrder);
             }
           }

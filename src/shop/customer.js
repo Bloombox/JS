@@ -42,10 +42,9 @@ goog.require('proto.opencannabis.geo.Location');
 goog.require('proto.opencannabis.person.Name');
 
 goog.provide('bloombox.shop.Customer');
+goog.provide('bloombox.shop.Customer.fromResponse');
 goog.provide('bloombox.shop.CustomerException');
 goog.provide('bloombox.shop.CustomerName');
-
-goog.provide('bloombox.shop.order.customerFromResponse');
 
 
 
