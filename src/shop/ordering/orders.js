@@ -709,7 +709,6 @@ bloombox.shop.order.Order.fromProto = function(protob,
                                                customer,
                                                location,
                                                items) {
-  // @TODO: decode additional properties here once they are available
   let targetId = protob.getId();
   let underlyingOrderType = protob.getType();
   let underlyingStatus = protob.getStatus();
@@ -968,8 +967,6 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
               let locationObj = (
                 bloombox.shop.order.DeliveryLocation.fromResponse(rawOrder));
 
-              // @TODO: decode order items, and created-at
-
               // build inflated order object
               let orderObj = (
                 new proto.opencannabis.commerce.Order());
@@ -982,14 +979,6 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
                   objOrderStatus));
               orderObj.setScheduling(objOrderScheduling);
               if (orderNotes) orderObj.setNotes(orderNotes);
-
-              if (orderItems) {
-
-              } else {
-                bloombox.logging.warn('Unable to decode items for order.', {
-                  'items': orderItems,
-                  'data': rawOrder});
-              }
 
               let sdkOrder = bloombox.shop.order.Order.fromProto(
                 orderObj, customerObj, locationObj, orderItems);
@@ -1124,7 +1113,7 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
         'city': payload.getDestination().getAddress().getCity(),
         'state': payload.getDestination().getAddress().getState(),
         'zipcode': payload.getDestination().getAddress().getZipcode(),
-        'country': 'USA'  // @TODO maybe make this configurable
+        'country': payload.getDestination().getAddress().getCountry() || 'USA'
       }
     };
     if (payload.getNotes())
