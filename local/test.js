@@ -139,7 +139,7 @@ function doGetOrderTest() {
         console.log(
           '%cOrder retrieval worked for ID \'' + orderId + '\'.',
           'color: green',
-          order);
+          {'order': order});
       } else {
         console.log(
           '%cError inflating or retrieving order at ID ' + orderId + '.',

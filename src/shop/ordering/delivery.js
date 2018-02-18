@@ -70,8 +70,8 @@ bloombox.shop.order.DeliveryLocation.fromResponse = function(protob) {
   if ((typeof protob === 'object') &&
       (typeof protob['destination'] === 'object')) {
     // decode location
-    let data = /** @type {object} */ (protob['destination']);
-    let address = /** @type {object|undefined} */ (data['address']);
+    let data = /** @type {Object} */ (protob['destination']);
+    let address = /** @type {Object|undefined} */ (data['address']);
     let instructions = /** @type {string|null|undefined} */ (
       data['instructions']);
 
@@ -93,13 +93,13 @@ bloombox.shop.order.DeliveryLocation.fromResponse = function(protob) {
           typeof state === 'string' &&
           typeof zipcode === 'string') {
         // we are good to go
-        new bloombox.shop.order.DeliveryLocation(
+        return new bloombox.shop.order.DeliveryLocation(
           new bloombox.identity.StreetAddress(
             firstLine,
             secondLine,
             city,
             state,
-            zip),
+            zipcode),
           instructions);
       } else {
         // invalid address
@@ -135,6 +135,18 @@ bloombox.shop.order.DeliveryLocation.prototype.export = function() {
     protobuf.setInstructions(this.deliveryInstructions);
   return protobuf;
 };
+
+
+/**
+ * Retrieve the street address associated with this delivery location.
+ *
+ * @return {bloombox.identity.StreetAddress} Delivery street address.
+ * @export
+ */
+bloombox.shop.order.DeliveryLocation.prototype.getAddress = function() {
+  return this.streetAddress;
+};
+
 
 /**
  * Set special delivery instructions.

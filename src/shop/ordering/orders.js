@@ -498,6 +498,18 @@ bloombox.shop.order.Order.prototype.setLocation = function(location) {
 
 
 /**
+ * Return the delivery location information attached to this order, if any.
+ *
+ * @return {?bloombox.shop.order.DeliveryLocation} Delivery location info, or
+ *         `null` if none is attached to the order.
+ * @export
+ */
+bloombox.shop.order.Order.prototype.getLocation = function() {
+  return this.location || null;
+};
+
+
+/**
  * Set the customer for this order.
  *
  * @param {bloombox.shop.Customer} customer Customer to set.
@@ -630,6 +642,7 @@ bloombox.shop.order.Order.inflateStatus = function(status) {
  *         object.
  */
 bloombox.shop.order.Order.inflateScheduling = function(data) {
+  let scheduling = new proto.opencannabis.commerce.OrderScheduling();
   if (typeof data === 'object') {
     let type = proto.opencannabis.commerce.SchedulingType.ASAP;
 
@@ -656,8 +669,6 @@ bloombox.shop.order.Order.inflateScheduling = function(data) {
           break;
       }
     }
-
-    let scheduling = new proto.opencannabis.commerce.OrderScheduling();
     scheduling.setScheduling(type);
 
     // decode scheduled time, if available
@@ -676,8 +687,8 @@ bloombox.shop.order.Order.inflateScheduling = function(data) {
       timestamp.setTimestamp(desiredTime);
       scheduling.setDesiredTime(timestamp);
     }
-    return scheduling;
   }
+  return scheduling;
 };
 
 
@@ -688,12 +699,16 @@ bloombox.shop.order.Order.inflateScheduling = function(data) {
  * @param {bloombox.shop.Customer} customer Customer object for the order.
  * @param {?bloombox.shop.order.DeliveryLocation} location Delivery destination
  *        spec object, if applicable.
+ * @param {Array<Object>} items Array of raw items to be attached to the order.
  * @return {bloombox.shop.order.Order} Inflated SDK order object.
  * @throws {bloombox.shop.order.OrderException} If required information is not
  *         provided by the underlying runtime.
  * @package
  */
-bloombox.shop.order.Order.fromProto = function(protob, customer, location) {
+bloombox.shop.order.Order.fromProto = function(protob,
+                                               customer,
+                                               location,
+                                               items) {
   // @TODO: decode additional properties here once they are available
   let targetId = protob.getId();
   let underlyingOrderType = protob.getType();
@@ -707,6 +722,25 @@ bloombox.shop.order.Order.fromProto = function(protob, customer, location) {
       type, customer, location, notes);
     order.setId(targetId);
     order.setStatus(status);
+
+    if (Array.isArray(items) && items.length > 0) {
+      // process items from order
+      for (let orderI = 0; orderI < items.length; orderI++) {
+        // for each order, attempt to inflate. if we can inflate it, add it to
+        // the order we are decoding and either way continue on.
+        let inflatedItem = bloombox.shop.Item.fromResponse(items[orderI]);
+        if (inflatedItem !== null) {
+          // we have an inflated item
+          order.addItem(inflatedItem);
+        } else {
+          // failed to inflate the item
+          bloombox.logging.warn('Unable to decode order item. Skipping.', {
+            'index': orderI,
+            'id': protob.getId()
+          });
+        }
+      }
+    }
     return order;
   } catch (e) {
     bloombox.logging.error('Failed to construct fetched Order object.', {
@@ -904,6 +938,7 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
               rawOrder['notes']);
             let orderScheduling = /** @type {Object} */ (
               rawOrder['scheduling']);
+            let orderItems = /** @type {Array<Object>} */ (rawOrder['item']);
 
             // if any of those properties look wrong, it's an error
             if (!orderId ||
@@ -948,8 +983,16 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
               orderObj.setScheduling(objOrderScheduling);
               if (orderNotes) orderObj.setNotes(orderNotes);
 
+              if (orderItems) {
+
+              } else {
+                bloombox.logging.warn('Unable to decode items for order.', {
+                  'items': orderItems,
+                  'data': rawOrder});
+              }
+
               let sdkOrder = bloombox.shop.order.Order.fromProto(
-                orderObj, customerObj, locationObj);
+                orderObj, customerObj, locationObj, orderItems);
               callback(null, sdkOrder);
             }
           }

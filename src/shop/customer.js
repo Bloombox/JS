@@ -91,16 +91,38 @@ bloombox.shop.Customer = function Customer(person,
   /**
    * Human being who is this customer.
    * @type {bloombox.identity.Person}
-   * @export
+   * @public
    */
   this.person = person;
 
   /**
    * Foreign ID for this customer.
    * @type {string}
-   * @export
+   * @public
    */
   this.foreignId = foreignID;
+};
+
+
+/**
+ * Return the backing person information for this customer.
+ *
+ * @return {bloombox.identity.Person} Customer's personal information.
+ * @export
+ */
+bloombox.shop.Customer.prototype.getPerson = function() {
+  return this.person;
+};
+
+
+/**
+ * Retrieve this user's foreign ID, i.e, the partner-scoped ID for this user.
+ *
+ * @return {string} Partner-level ID for this user account.
+ * @export
+ */
+bloombox.shop.Customer.prototype.getForeignId = function() {
+  return this.foreignId;
 };
 
 
@@ -128,13 +150,37 @@ bloombox.shop.Customer.prototype.setPhoneNumber = function(phone) {
 
 
 /**
+ * Return this customer's phone number, as reported by the underlying customer
+ * contact information.
+ *
+ * @return {?string} Customer's phone number, or `null` if none is set.
+ * @export
+ */
+bloombox.shop.Customer.prototype.getPhoneNumber = function() {
+  return this.person.contactInfo.phoneNumber || null;
+};
+
+
+/**
+ * Return this customer's email address, as reported by the underlying customer
+ * contact information.
+ *
+ * @return {?string} Customer's email address, or `null` if none is set.
+ * @export
+ */
+bloombox.shop.Customer.prototype.getEmailAddress = function() {
+  return this.person.contactInfo.emailAddress || null;
+};
+
+
+/**
  * Build a customer object from a proto customer response.
  *
  * @param {Object} proto Protobuf object.
  * @return {bloombox.shop.Customer} Inflated customer object.
  * @throws {bloombox.shop.CustomerException} If the name, email, or foreign ID
  *         could not be resolved.
- * @export
+ * @public
  */
 bloombox.shop.Customer.fromResponse = function(proto) {
   if (typeof proto !== 'object' || !proto)

@@ -100,6 +100,37 @@ bloombox.product.Key = function Key(id,
 
 
 /**
+ * Inflate a key kind object from a raw value.
+ *
+ * @param {string|number} rawKind Raw kind to inflate.
+ * @return {bloombox.product.Kind} Kind for the key. Defaults to FLOWERS.
+ */
+bloombox.product.Key.inflateKind = function(rawKind) {
+  if (typeof rawKind === 'string' || typeof rawKind === 'number') {
+    switch (rawKind) {
+      case 'FLOWERS': return bloombox.product.Kind.FLOWERS;
+      case 0: return bloombox.product.Kind.FLOWERS;
+      case 'EDIBLES': return bloombox.product.Kind.EDIBLES;
+      case 1: return bloombox.product.Kind.EDIBLES;
+      case 'EXTRACTS': return bloombox.product.Kind.EXTRACTS;
+      case 2: return bloombox.product.Kind.EXTRACTS;
+      case 'PREROLLS': return bloombox.product.Kind.PREROLLS;
+      case 3: return bloombox.product.Kind.PREROLLS;
+      case 'APOTHECARY': return bloombox.product.Kind.APOTHECARY;
+      case 4: return bloombox.product.Kind.APOTHECARY;
+      case 'CARTRIDGES': return bloombox.product.Kind.CARTRIDGES;
+      case 5: return bloombox.product.Kind.CARTRIDGES;
+      case 'PLANTS': return bloombox.product.Kind.CARTRIDGES;
+      case 6: return bloombox.product.Kind.CARTRIDGES;
+      case 'MERCHANDISE': return bloombox.product.Kind.MERCHANDISE;
+      case 7: return bloombox.product.Kind.MERCHANDISE;
+    }
+  }
+  return bloombox.product.Kind.FLOWERS;
+};
+
+
+/**
  * Export this key as a proto, suitable for use in an RPC.
  *
  * @return {proto.opencannabis.base.ProductKey} Exported proto.
