@@ -359,6 +359,30 @@ bloombox.shop.order.Order.prototype.getStatus = function() {
 };
 
 
+/**
+ * Set the created-at time for this order.
+ *
+ * @param {number} ts Timestamp to set this order's creation time to.
+ * @package
+ */
+bloombox.shop.order.Order.prototype.setCreatedAt = function(ts) {
+  this.createdAt = {'timestamp': ts};
+};
+
+
+/**
+ * Get the creation timestamp for this order. Available whether or not the order
+ * has been sent to the server. May differ after saving the order depending on
+ * latency and other factors.
+ *
+ * @return {number} Order creation timestamp, at millisecond resolution.
+ * @export
+ */
+bloombox.shop.order.Order.prototype.getCreatedAt = function() {
+  return this.createdAt['timestamp'];
+};
+
+
 // noinspection JSUnusedGlobalSymbols
 /**
  * Set an order to ASAP-style scheduling.
@@ -721,6 +745,7 @@ bloombox.shop.order.Order.fromProto = function(protob,
       type, customer, location, notes);
     order.setId(targetId);
     order.setStatus(status);
+    order.setCreatedAt(protob.getCreatedAt().getTimestamp());
 
     if (Array.isArray(items) && items.length > 0) {
       // process items from order
@@ -937,6 +962,8 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
               rawOrder['notes']);
             let orderScheduling = /** @type {Object} */ (
               rawOrder['scheduling']);
+            let orderCreatedAt = /** @type {Object} */ (
+              rawOrder['createdAt']);
             let orderItems = /** @type {Array<Object>} */ (rawOrder['item']);
 
             // if any of those properties look wrong, it's an error
@@ -967,10 +994,34 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
               let locationObj = (
                 bloombox.shop.order.DeliveryLocation.fromResponse(rawOrder));
 
+              let instant = new proto.opencannabis.temporal.Instant();
+
+              if (orderCreatedAt) {
+                if (typeof orderCreatedAt === 'object') {
+                  if (typeof orderCreatedAt['iso8601'] === 'string') {
+                    // it's an ISO8601 string
+                    let orderTimestamp = +(new Date(orderCreatedAt['iso8601']));
+                    instant.setTimestamp(orderTimestamp);
+                  } else if (typeof orderCreatedAt['timestamp'] === 'number') {
+                    let orderTimestamp = orderCreatedAt['timestamp'];
+                    instant.setTimestamp(orderTimestamp);
+                  } else {
+                    bloombox.logging.warn(
+                      'Unable to type-identify order createdAt.',
+                      {'data': orderCreatedAt});
+                  }
+                } else {
+                  bloombox.logging.warn(
+                    'Unable to decode order createdAt.',
+                    {'data': orderCreatedAt});
+                }
+              }
+
               // build inflated order object
               let orderObj = (
                 new proto.opencannabis.commerce.Order());
               orderObj.setId(orderId);
+              orderObj.setCreatedAt(instant);
               orderObj.setType(
                 /** @type {proto.opencannabis.commerce.OrderType} */ (
                   objOrderType));
