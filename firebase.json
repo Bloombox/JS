@@ -10,7 +10,7 @@
       "source": "*.min.js",
       "headers": [{
         "key": "Cache-Control",
-        "value": "public, max-age=500, no-transform"}]
+        "value": "public, max-age=500, s-max-age=3600, no-transform"}]
     }],
     "redirects": [{
       "source" : "/latest.min.js",
