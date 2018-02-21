@@ -339,12 +339,14 @@ bloombox.telemetry.BaseEvent.prototype.renderPayload = function() {};
  *
  * @param {bloombox.telemetry.OperationStatus} status Status of the operation we
  *        are calling back from.
+ * @param {?Object=} opt_mark Sentinel to check for to prevent recursion.
  * @public
  */
-bloombox.telemetry.BaseEvent.prototype.onSuccess = function(status) {
+bloombox.telemetry.BaseEvent.prototype.onSuccess = function(status, opt_mark) {
   // if there is a success callback attached, call it
-  if (this.successCallback && typeof this.successCallback === 'function')
-    this.successCallback(status);
+  if (this.successCallback && typeof this.successCallback === 'function' &&
+      opt_mark !== '_BASE_EVENT_ON_SUCCESS_')
+    this.successCallback(status, '_BASE_EVENT_ON_SUCCESS_');
   this.successCallback = null;
 };
 
