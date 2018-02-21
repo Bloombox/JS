@@ -65,7 +65,7 @@ goog.provide('bloombox.telemetry.TelemetryEvent');
  * Success callback, specifying one parameter: the result of the operation we
  * are calling back from.
  *
- * @typedef {function(bloombox.telemetry.OperationStatus)}
+ * @typedef {function(bloombox.telemetry.OperationStatus, ?string=)}
  */
 bloombox.telemetry.SuccessCallback;
 
@@ -80,7 +80,8 @@ bloombox.telemetry.SuccessCallback;
  * @typedef {function(
  *   bloombox.telemetry.OperationStatus,
  *   ?bloombox.telemetry.TelemetryError,
- *   ?number)}
+ *   ?number,
+ *   ?string=)}
  */
 bloombox.telemetry.FailureCallback;
 
@@ -339,7 +340,7 @@ bloombox.telemetry.BaseEvent.prototype.renderPayload = function() {};
  *
  * @param {bloombox.telemetry.OperationStatus} status Status of the operation we
  *        are calling back from.
- * @param {?Object=} opt_mark Sentinel to check for to prevent recursion.
+ * @param {?string=} opt_mark Sentinel to check for to prevent recursion.
  * @public
  */
 bloombox.telemetry.BaseEvent.prototype.onSuccess = function(status, opt_mark) {
@@ -358,12 +359,17 @@ bloombox.telemetry.BaseEvent.prototype.onSuccess = function(status, opt_mark) {
  *        calling back from.
  * @param {?bloombox.telemetry.TelemetryError} error Known error, if any.
  * @param {?number} code Status code of the underlying RPC, if any.
+ * @param {?string=} opt_mark Sentinel to check for to prevent recursion.
  * @public
  */
-bloombox.telemetry.BaseEvent.prototype.onFailure = function(op, error, code) {
+bloombox.telemetry.BaseEvent.prototype.onFailure = function(op,
+                                                            error,
+                                                            code,
+                                                            opt_mark) {
   // if there is a failure callback attached, call it
-  if (this.failureCallback && typeof this.failureCallback === 'function')
-    this.failureCallback(op, error, code);
+  if (this.failureCallback && typeof this.failureCallback === 'function' &&
+      opt_mark !== '_BASE_EVENT_ON_FAILURE_')
+    this.failureCallback(op, error, code, '_BASE_EVENT_ON_FAILURE_');
   this.failureCallback = null;
 };
 
