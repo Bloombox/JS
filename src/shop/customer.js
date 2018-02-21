@@ -90,6 +90,7 @@ bloombox.shop.Customer = function Customer(person,
 
   /**
    * Human being who is this customer.
+   *
    * @type {bloombox.identity.Person}
    * @public
    */
@@ -97,10 +98,18 @@ bloombox.shop.Customer = function Customer(person,
 
   /**
    * Foreign ID for this customer.
+   *
    * @type {string}
    * @public
    */
   this.foreignId = foreignID;
+
+  /**
+   * User key for this customer.
+   *
+   * @type {?string}
+   */
+  this.userKey = null;
 };
 
 
@@ -123,6 +132,28 @@ bloombox.shop.Customer.prototype.getPerson = function() {
  */
 bloombox.shop.Customer.prototype.getForeignId = function() {
   return this.foreignId;
+};
+
+
+/**
+ * Set this customer's user key value.
+ *
+ * @param {string} key User key to set.
+ * @public
+ */
+bloombox.shop.Customer.prototype.setUserKey = function(key) {
+  this.userKey = key;
+};
+
+
+/**
+ * Get this customer's user key value, or `null` if it is unset.
+ *
+ * @return {?string} User key, if set.
+ * @export
+ */
+bloombox.shop.Customer.prototype.getUserKey = function() {
+  return this.userKey;
 };
 
 
@@ -208,6 +239,9 @@ bloombox.shop.Customer.fromResponse = function(proto) {
     throw new bloombox.shop.CustomerException(
       'Failed to resolve email address.');
 
+  // decode user key, if present
+  let userKey = /** @type {?string|undefined} */ (proto['customer']['userKey']);
+
   // decode phone number
   let phone = /** @type {?string} */ (
     (typeof proto['customer']['person']['contact']['phone'] === 'object' &&
@@ -257,9 +291,13 @@ bloombox.shop.Customer.fromResponse = function(proto) {
     contactInfo,
     dobValue);
 
-  return new bloombox.shop.Customer(
+  let customer = new bloombox.shop.Customer(
     person,
     proto['customer']['foreignId']);
+
+  if (typeof userKey === 'string')
+    customer.setUserKey(userKey);
+  return customer;
 };
 
 
