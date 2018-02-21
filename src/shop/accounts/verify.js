@@ -35,6 +35,10 @@ goog.require('bloombox.shop.Customer');
 goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
+goog.require('bloombox.telemetry.InternalCollection');
+goog.require('bloombox.telemetry.event');
+goog.require('bloombox.telemetry.notifyUserID');
+
 goog.require('proto.bloombox.schema.services.shop.v1.VerifyError');
 goog.require('proto.bloombox.schema.services.shop.v1.VerifyMember');
 
@@ -117,14 +121,40 @@ bloombox.shop.verify = function(email,
         let customer = (response['verified'] === true) ?
           bloombox.shop.Customer.fromResponse(
             /** @type {Object} */ (response)) : null;
-        if (response['verified'] === true)
+        let verified = response['verified'] === true;
+        if (verified) {
           bloombox.logging.log('Loaded \'Customer\' record from response.',
-              customer);
-        else
+            customer);
+        } else {
           bloombox.logging.log(
             'Customer could not be verified at email address \'' +
-              email + '\'.');
+            email + '\'.');
+        }
         callback(inflated.getVerified(), null, customer);
+
+        // if we succeeded, get the user's key and set it for analytics
+        if (customer.getUserKey() !== null) {
+          bloombox.telemetry.notifyUserID(customer.getUserKey());
+        } else {
+          bloombox.logging.info('Unable to resolve user key from decoded ' +
+            'customer.', {'customer': customer});
+        }
+
+        // indicate verification status
+        let verificationData = {
+          'allowed': inflated.getVerified()
+        };
+
+        // attach customer to payload if we have one
+        if (verified) {
+          verificationData['customer'] = customer;
+        }
+
+        // verification event
+        bloombox.telemetry.event(
+          bloombox.telemetry.InternalCollection.VERIFICATION,
+          {'action': 'verify',
+           'verification': verificationData}).send();
       } else {
         bloombox.logging.warn('Failed to inflate RPC.', response);
       }
