@@ -150,24 +150,26 @@ bloombox.shop.verify = function(email,
           verificationData['customer'] = {
             'person': {
               'name': {
-                'firstName': customer.getPerson().getFirstName(),
-                'lastName': customer.getPerson().getLastName()
+                'firstName': customer.getPerson().getFirstName().trim(),
+                'lastName': customer.getPerson().getLastName().trim()
               },
               'contactInfo': {
                 'email': {
                   'address': (
-                    customer.getPerson().getContactInfo().getEmailAddress())
+                    customer.getPerson().getContactInfo().getEmailAddress()
+                      .trim())
                 },
                 'phone': {
                   'e164': (
-                    customer.getPerson().getContactInfo().getPhoneNumber())
+                    customer.getPerson().getContactInfo().getPhoneNumber()
+                      .trim())
                 }
               },
               'dateOfBirth': {
-                'iso8601': customer.getPerson().getDateOfBirth()
+                'iso8601': customer.getPerson().getDateOfBirth().trim()
               }
             },
-            'foreignId': customer.getForeignId(),
+            'foreignId': customer.getForeignId().trim(),
             'userKey': customer.getUserKey()
           };
         }
