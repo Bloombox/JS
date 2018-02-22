@@ -147,7 +147,29 @@ bloombox.shop.verify = function(email,
             bloombox.logging.info('Unable to resolve user key from decoded ' +
               'customer.', {'customer': customer});
           }
-          verificationData['customer'] = customer;
+          verificationData['customer'] = {
+            'person': {
+              'name': {
+                'firstName': customer.getPerson().getFirstName(),
+                'lastName': customer.getPerson().getLastName()
+              },
+              'contactInfo': {
+                'email': {
+                  'address': (
+                    customer.getPerson().getContactInfo().getEmailAddress())
+                },
+                'phone': {
+                  'e164': (
+                    customer.getPerson().getContactInfo().getPhoneNumber())
+                }
+              },
+              'dateOfBirth': {
+                'iso8601': customer.getPerson().getDateOfBirth()
+              }
+            },
+            'foreignId': customer.getForeignId(),
+            'userKey': customer.getUserKey()
+          };
         }
 
         // verification event
