@@ -73,7 +73,7 @@ function doVerifyTest() {
     bloombox.shop.verify('sam@bloombox.io', function(verified, err, customer) {
       if (verified === true) {
         // ok the user is verified
-        console.warn(
+        console.log(
           'The user \'' +
           failureAccount +
           '\' is valid and eligible to submit orders.', 'color: green',
