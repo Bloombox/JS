@@ -292,9 +292,9 @@ bloombox.shop.enroll.Enrollment.prototype.sendAnalytics = function(key,
     bloombox.telemetry.InternalCollection.ENROLLMENT,
     {'action': opt_error ? 'error' : 'enroll',
      'status': opt_status ? opt_status : 200,
-     'customer': {'foreignId': this.foreignId},
+     'customer': {'foreignId': this.foreignId.trim()},
      'enrollment': {
-        'key': this.key,
+        'key': this.key.trim(),
         'channel': this.channel,
         'source': this.source}}).send();
 };
