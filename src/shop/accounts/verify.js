@@ -132,21 +132,21 @@ bloombox.shop.verify = function(email,
         }
         callback(inflated.getVerified(), null, customer);
 
-        // if we succeeded, get the user's key and set it for analytics
-        if (customer.getUserKey() !== null) {
-          bloombox.telemetry.notifyUserID(customer.getUserKey());
-        } else {
-          bloombox.logging.info('Unable to resolve user key from decoded ' +
-            'customer.', {'customer': customer});
-        }
+        let userKey = customer.getUserKey();
 
         // indicate verification status
         let verificationData = {
           'allowed': inflated.getVerified()
         };
 
-        // attach customer to payload if we have one
+        // if we succeeded, get the user's key and set it for analytics
         if (verified) {
+          if (userKey && typeof userKey === 'string') {
+            bloombox.telemetry.notifyUserID(userKey);
+          } else {
+            bloombox.logging.info('Unable to resolve user key from decoded ' +
+              'customer.', {'customer': customer});
+          }
           verificationData['customer'] = customer;
         }
 
