@@ -218,6 +218,7 @@ bloombox.identity.ContactInfo = function ContactInfo(emailAddress,
 
   /**
    * Email address.
+   *
    * @type {string}
    * @export
    */
@@ -225,6 +226,7 @@ bloombox.identity.ContactInfo = function ContactInfo(emailAddress,
 
   /**
    * Phone number.
+   *
    * @type {?string}
    * @export
    */
@@ -232,10 +234,44 @@ bloombox.identity.ContactInfo = function ContactInfo(emailAddress,
 
   /**
    * Street address.
+   *
    * @type {?bloombox.identity.StreetAddress}
    * @export
    */
   this.streetAddress = streetAddress || null;
+};
+
+
+/**
+ * Return this user's email address.
+ *
+ * @return {string} User's email address.
+ * @export
+ */
+bloombox.identity.ContactInfo.prototype.getEmailAddress = function() {
+  return this.emailAddress;
+};
+
+
+/**
+ * Return this user's phone number.
+ *
+ * @return {?string} User's phone number.
+ * @export
+ */
+bloombox.identity.ContactInfo.prototype.getPhoneNumber = function() {
+  return this.phoneNumber;
+};
+
+
+/**
+ * Return this user's street address.
+ *
+ * @return {bloombox.identity.StreetAddress} User's street address.
+ * @export
+ */
+bloombox.identity.ContactInfo.prototype.getStreetAddress = function() {
+  return this.streetAddress;
 };
 
 
@@ -285,6 +321,7 @@ bloombox.identity.Person = function Person(firstName,
 
   /**
    * Person's name.
+   *
    * @type {proto.opencannabis.person.Name}
    * @public
    */
@@ -292,6 +329,7 @@ bloombox.identity.Person = function Person(firstName,
 
   /**
    * Person's contact info.
+   *
    * @type {bloombox.identity.ContactInfo}
    * @public
    */
@@ -299,6 +337,7 @@ bloombox.identity.Person = function Person(firstName,
 
   /**
    * Person's date of birth.
+   *
    * @type {?proto.opencannabis.temporal.Date}
    * @public
    */
@@ -336,4 +375,15 @@ bloombox.identity.Person.prototype.getLastName = function() {
  */
 bloombox.identity.Person.prototype.getContactInfo = function() {
   return this.contactInfo;
+};
+
+
+/**
+ * Get the user's date of birth.
+ *
+ * @return {?string} User's date of birth.
+ * @export
+ */
+bloombox.identity.Person.prototype.getDateOfBirth = function() {
+  return this.dateOfBirth !== null ? this.dateOfBirth.getIso8601() : null;
 };
