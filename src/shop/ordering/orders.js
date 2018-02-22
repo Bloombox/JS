@@ -51,6 +51,7 @@ goog.require('bloombox.shop.order.DeliveryLocation');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
 goog.require('bloombox.telemetry.event');
+goog.require('bloombox.telemetry.resolveSessionID');
 
 goog.require('proto.bloombox.schema.services.shop.v1.GetOrder.Response');
 goog.require('proto.bloombox.schema.services.shop.v1.OrderError');
@@ -875,6 +876,7 @@ bloombox.shop.order.Order.prototype.sendAnalytics = function(orderId,
     bloombox.telemetry.InternalCollection.ORDERS,
     {'action': opt_error ? 'error' : 'order',
      'status': opt_status ? opt_status : 200,
+     'sid': bloombox.telemetry.resolveSessionID(),
      'order': {
       'id': orderId,
       'type': this.type,
@@ -1058,6 +1060,9 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
   payload.setType(
     /** @type {proto.opencannabis.commerce.OrderType<number>} */ (this.type));
 
+  let sid = bloombox.telemetry.resolveSessionID();
+  payload.setSid(sid);
+
   // add notes, if any are specified
   let notes = this.notes;
   if (notes !== null) payload.setNotes(notes);
@@ -1121,6 +1126,7 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
   });
 
   let payloadObject = {
+    'sid': payload.getSid(),
     'type': payload.getType(),
     'partnerCode': partner,
     'locationCode': location,

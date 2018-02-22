@@ -298,6 +298,7 @@ bloombox.telemetry._resolveGlobalStateUUID = function(item) {
  * returning the existing one if it does.
  *
  * @return {string} Global device fingerprint.
+ * @public
  */
 bloombox.telemetry.resolveFingerprint = function() {
   if (bloombox.telemetry.DEVICE_FINGERPRINT === null) {
@@ -316,7 +317,7 @@ bloombox.telemetry.resolveFingerprint = function() {
  * the existing one if it does.
  *
  * @return {string} Session-scoped UUID.
- * @package
+ * @public
  */
 bloombox.telemetry.resolveSessionID = function() {
   if (bloombox.telemetry.SESSION_ID === null) {
@@ -334,7 +335,7 @@ bloombox.telemetry.resolveSessionID = function() {
  * the existing one if it does.
  *
  * @return {string} Order-scoped UUID.
- * @package
+ * @public
  */
 bloombox.telemetry.resolveOrderID = function() {
   if (bloombox.telemetry.ORDER_ID === null) {
