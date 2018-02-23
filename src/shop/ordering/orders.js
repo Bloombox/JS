@@ -603,14 +603,11 @@ bloombox.shop.order.Order.prototype.getItems = function() {
  * @param {proto.opencannabis.commerce.OrderType|string|number} type Proto type
  *        from an order to inflate into a JS SDK order type.
  * @return {bloombox.shop.order.Type} Inflated order type.
- * @throws {bloombox.shop.order.OrderException} If the type provided is not
- *         valid or cannot be identified.
  * @package
  */
 bloombox.shop.order.Order.inflateType = function(type) {
   if (type === null || type === undefined)
-    throw new bloombox.shop.order.OrderException(
-      'Invalid underlying order type value: "' + type + '".');
+    return bloombox.shop.order.Type.PICKUP;
   switch (type) {
     case 'PICKUP': return bloombox.shop.order.Type.PICKUP;
     case 'DELIVERY': return bloombox.shop.order.Type.DELIVERY;
@@ -618,9 +615,8 @@ bloombox.shop.order.Order.inflateType = function(type) {
     case 1: return bloombox.shop.order.Type.DELIVERY;
   }
   bloombox.logging.warn('Unable to resolve order type with value "' +
-    type + '".');
-  throw new bloombox.shop.order.OrderException(
-    'Invalid underlying order type value: "' + type + '".');
+    type + '". Defaulting to PICKUP.');
+  return bloombox.shop.order.Type.PICKUP;
 };
 
 
@@ -969,10 +965,7 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
             // if any of those properties look wrong, it's an error
             if (!orderId ||
                   !(typeof orderId === 'string') ||
-                  orderId.length < 1 ||
-                !orderType ||
-                  !(typeof orderType === 'string') ||
-                  orderType.length < 1) {
+                  orderId.length < 1) {
               // order details are invalid
               bloombox.logging.error(
                 'Failed to decode required order details after order ' +

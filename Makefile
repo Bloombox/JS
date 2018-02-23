@@ -3,7 +3,7 @@
 ## Bloombox: JS Client
 #
 
-VERSION ?= v1.0.0-beta25
+VERSION ?= v1.0.0-beta27
 ALIAS ?= v1
 TARGET ?= target
 VERBOSE ?= no
@@ -159,7 +159,7 @@ publish-gcs:
 	@cd public && gsutil -h "Cache-Control: public, max-age=300, s-max-age=7200, stale-while-revalidate=3600, stale-if-error=3600" -m cp -a public-read -z html,js "./*" gs://origin.js.bloombox.cloud/
 	@cd public/client && gsutil -h "Cache-Control: public, immutable, max-age=31536000, s-max-age=31536000, stale-while-revalidate=31536000, stale-if-error=31536000" -m cp -a public-read -z js "./*.js" gs://origin.js.bloombox.cloud/client/
 
-publish: build release publish-docs publish-gcs
+publish: build release publish-gcs
 	@echo "Publishing private Bloombox JS..."
 	@cd target && gsutil $(GSUTIL_FLAGS) \
 	    ./*.min.js gs://k9-cdn-bloombox-embed/embed/client/
