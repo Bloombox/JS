@@ -49,6 +49,7 @@ goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
 goog.require('bloombox.telemetry.event');
+goog.require('bloombox.telemetry.notifyUserID');
 
 goog.require('proto.bloombox.schema.identity.EnrollmentSource');
 goog.require('proto.bloombox.schema.services.shop.v1.EnrollMember');
@@ -291,9 +292,9 @@ bloombox.shop.enroll.Enrollment.prototype.sendAnalytics = function(key,
     bloombox.telemetry.InternalCollection.ENROLLMENT,
     {'action': opt_error ? 'error' : 'enroll',
      'status': opt_status ? opt_status : 200,
-     'customer': {'foreignId': this.foreignId},
+     'customer': {'foreignId': this.foreignId.trim()},
      'enrollment': {
-        'key': this.key,
+        'key': this.key.trim(),
         'channel': this.channel,
         'source': this.source}}).send();
 };
@@ -426,6 +427,9 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
           // we have a resulting customer object and ID
           inflated.setId(response['id']);
           inflated.setForeignId(response['foreignId']);
+
+          // Notify analytics of the new active user ID.
+          bloombox.telemetry.notifyUserID(inflated.getId());
 
           enrollment.setKey(inflated.getId());
           enrollment.setForeignId(inflated.getForeignId());

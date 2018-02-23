@@ -247,7 +247,8 @@ bloombox.telemetry.InternalCollection = {
   PAGEVIEW: bloombox.telemetry.internalCollectionName('pageview'),
   SERVICE: bloombox.telemetry.internalCollectionName('service'),
   ORDERS: bloombox.telemetry.internalCollectionName('orders'),
-  ENROLLMENT: bloombox.telemetry.internalCollectionName('enrollment')
+  ENROLLMENT: bloombox.telemetry.internalCollectionName('enrollment'),
+  VERIFICATION: bloombox.telemetry.internalCollectionName('verification')
 };
 
 

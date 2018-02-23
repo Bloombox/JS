@@ -65,6 +65,32 @@ function doFailureTest() {
 
 
 /**
+ * Run a test where a user that is known to exist is verified.
+ */
+function doVerifyTest() {
+  bloombox.setup(partnerCode, locationCode, apiKey, function() {
+    // test a failure case
+    bloombox.shop.verify('sam@bloombox.io', function(verified, err, customer) {
+      if (verified === true) {
+        // ok the user is verified
+        console.log(
+          'The user \'' +
+          failureAccount +
+          '\' is valid and eligible to submit orders.', 'color: green',
+          customer);
+      } else {
+        // an error occurred - err is an enum and it specifies what happened
+        console.log(
+          '%cThe user \'' +
+          failureAccount +
+          '\' could not be verified.', 'color: red', err);
+      }
+    });
+  });
+}
+
+
+/**
  * Run a test that fetches menu data.
  */
 function doMenuTest(callback) {
@@ -433,11 +459,16 @@ function telemetry() {
   doTelemetry();
 }
 
+function verify() {
+  doVerifyTest();
+}
+
 function getOrder() {
   doGetOrderTest();
 }
 
 console.log("Call the following to run a full test: full()");
+console.log("Call the following to run a verify test: verify()");
 console.log("Call the following to run a limited test: simple()");
 console.log("Call the following to run a telemetry test: telemetry()");
 console.log("Call the following to run a menu test: menu()");

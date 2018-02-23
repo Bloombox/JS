@@ -27,6 +27,7 @@
 
 goog.provide('bloombox.telemetry.GlobalStateException');
 goog.provide('bloombox.telemetry.globalContext');
+goog.provide('bloombox.telemetry.notifyUserID');
 goog.provide('bloombox.telemetry.resolveFingerprint');
 goog.provide('bloombox.telemetry.resolveSessionID');
 
@@ -361,7 +362,7 @@ bloombox.telemetry.resolveUserID = function() {
  * Notify the telemetry layer of a ready-to-use user ID.
  *
  * @param {string} userId User ID value to set.
- * @package
+ * @public
  */
 bloombox.telemetry.notifyUserID = function(userId) {
   bloombox.telemetry.USER_ID = userId;
