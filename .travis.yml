@@ -1,6 +1,11 @@
 env:
   global:
     - CC_TEST_REPORTER_ID=aa7d09060adc8243f2a6f51b6051ea2629b2f9a3c28042076f2494193bc8ad06
+addons:
+  browserstack:
+    username: "bloombox"
+    access_key:
+      secure: "jXUc+ILvweMNlYYtGcC4+WC8tZivgIq90g23bsHeLUc73q+tW5V6GoiAkawTaYmJES9r8WnUZuSvLqrnq+Z8TktGXakmRZzmpunkJXFB6wQr+PjPfvHJ4UJ/1WN5jJWMs/wuCgUGdXVrCErps4AvaR8tN1o4fWJkjtQGucKooXsE2M2yj6c+idL/CYyInCZ5W4sCH56tgLyAlqUqOd8CTNjxqujGbTt2MwJZoSYjyGZ+NCM8lfFYTxIHAe/xvotGPgl4lPeCcYYFpVedms6gR39K5uB+ifk3USJzhBH7J5CHzl7OT7CUvLyqHfYQvK9/vITB73jjAaERVDwc/lU71p1kgkL43HfaIgsAV6DXXtT1wWI+gx4VO1JBzeuHMPvR1oxMr/kPDJuZnMO+/XBdGCMrHUwGFhul6df8ZQ+8b+oyLQ43QlbJrYyKhV1Cw3xJLzgyD1+bAFFhTlFoQKLlrE+rvDvF0eeZHuJO1gnt22IJwZOFCtksmmNIAqAMsjdSqDx2NtQSCa+vhUzXlvfIREAsKScDNSte2qw7b4xdytO68Hs8+PsDz/WaxpdCIdvbHKoi+6PqRYvRq0UflFAgDHZJJw1RtWA5s8y8KeXpqFTv8jCvNWesZbB0VC/ksjd9BKgMkIC8020ZkonLfKbsH4otUWEVQASG0qRkw6VaHTg="
 language: node_js
 node_js:
   - "7"
