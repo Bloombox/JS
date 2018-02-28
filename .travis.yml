@@ -1,28 +1,27 @@
 env:
   global:
-    - CC_TEST_REPORTER_ID=aa7d09060adc8243f2a6f51b6051ea2629b2f9a3c28042076f2494193bc8ad06
-    - BROWSERSTACK_KEY
-      secure: "jXUc+ILvweMNlYYtGcC4+WC8tZivgIq90g23bsHeLUc73q+tW5V6GoiAkawTaYmJES9r8WnUZuSvLqrnq+Z8TktGXakmRZzmpunkJXFB6wQr+PjPfvHJ4UJ/1WN5jJWMs/wuCgUGdXVrCErps4AvaR8tN1o4fWJkjtQGucKooXsE2M2yj6c+idL/CYyInCZ5W4sCH56tgLyAlqUqOd8CTNjxqujGbTt2MwJZoSYjyGZ+NCM8lfFYTxIHAe/xvotGPgl4lPeCcYYFpVedms6gR39K5uB+ifk3USJzhBH7J5CHzl7OT7CUvLyqHfYQvK9/vITB73jjAaERVDwc/lU71p1kgkL43HfaIgsAV6DXXtT1wWI+gx4VO1JBzeuHMPvR1oxMr/kPDJuZnMO+/XBdGCMrHUwGFhul6df8ZQ+8b+oyLQ43QlbJrYyKhV1Cw3xJLzgyD1+bAFFhTlFoQKLlrE+rvDvF0eeZHuJO1gnt22IJwZOFCtksmmNIAqAMsjdSqDx2NtQSCa+vhUzXlvfIREAsKScDNSte2qw7b4xdytO68Hs8+PsDz/WaxpdCIdvbHKoi+6PqRYvRq0UflFAgDHZJJw1RtWA5s8y8KeXpqFTv8jCvNWesZbB0VC/ksjd9BKgMkIC8020ZkonLfKbsH4otUWEVQASG0qRkw6VaHTg="
+  - CC_TEST_REPORTER_ID=aa7d09060adc8243f2a6f51b6051ea2629b2f9a3c28042076f2494193bc8ad06
+  - secure: PrWcsspNNByfBoQJpGc3w7BLDiUm7P+gHvTA3u6cCLgS8hFMpEDsci9JAJ02iYPYGmhNrdGI4TC6phmplvXLFfM8rIVvDCQgOrZp+wzK+03QjlzzZ2wneE6YGAg/OKTnpcKxhnZ3XnTNZjuC9LmT/ld7No8niYWXFmIP8dokJMfdHkL4fuWcfgYKwHAsqb+EA1W5EnZIM97sKq6BE5MExEHKECIQVsW3KhpEpVqKEB5MDy4/HmC7oJPSybuSZ5TaIYG6wACAnLf9gvbL5EpmeAyvs5Mk9xG5Yhx1jEF/5hiYBe/6PCLlFQSXjADNWUisluRI4DM5Uq8PiUxWwR1RqolejD/0f7JeNnX60SIpz1u4yItDO58AwMjqR9gemzc8+OJadRjoKZ8AHT2eH1XBbGk6sH3fiTXfL+XI/lWVnYrjK9OZ2r3Z536xrOgg5+kFhxn9Tz48BH/kA4RnIoOg7eOqgk+eIfiS+9I3WoccP373uWncqV/mauULRfgFAxqkLZT2GZ9y/48CPgIIy9+QZ6Agvwv9LKbXK4GR5kRyTP3CvY5tk42IgT62xVWCGkvxbALk0CxnmkW72CGYlhoryyeJuq3u2vElSz9UsxAVbeEe+jm78MUK8tjfZ6pbZ6slYO8H9DdRaFjmvc5iE13rTKUGtHk6iJ47UozLKc6g9GU=
 addons:
   browserstack:
-    username: "samgammon2"
+    username: samgammon2
     access_key:
-      secure: "jXUc+ILvweMNlYYtGcC4+WC8tZivgIq90g23bsHeLUc73q+tW5V6GoiAkawTaYmJES9r8WnUZuSvLqrnq+Z8TktGXakmRZzmpunkJXFB6wQr+PjPfvHJ4UJ/1WN5jJWMs/wuCgUGdXVrCErps4AvaR8tN1o4fWJkjtQGucKooXsE2M2yj6c+idL/CYyInCZ5W4sCH56tgLyAlqUqOd8CTNjxqujGbTt2MwJZoSYjyGZ+NCM8lfFYTxIHAe/xvotGPgl4lPeCcYYFpVedms6gR39K5uB+ifk3USJzhBH7J5CHzl7OT7CUvLyqHfYQvK9/vITB73jjAaERVDwc/lU71p1kgkL43HfaIgsAV6DXXtT1wWI+gx4VO1JBzeuHMPvR1oxMr/kPDJuZnMO+/XBdGCMrHUwGFhul6df8ZQ+8b+oyLQ43QlbJrYyKhV1Cw3xJLzgyD1+bAFFhTlFoQKLlrE+rvDvF0eeZHuJO1gnt22IJwZOFCtksmmNIAqAMsjdSqDx2NtQSCa+vhUzXlvfIREAsKScDNSte2qw7b4xdytO68Hs8+PsDz/WaxpdCIdvbHKoi+6PqRYvRq0UflFAgDHZJJw1RtWA5s8y8KeXpqFTv8jCvNWesZbB0VC/ksjd9BKgMkIC8020ZkonLfKbsH4otUWEVQASG0qRkw6VaHTg="
+      secure: jXUc+ILvweMNlYYtGcC4+WC8tZivgIq90g23bsHeLUc73q+tW5V6GoiAkawTaYmJES9r8WnUZuSvLqrnq+Z8TktGXakmRZzmpunkJXFB6wQr+PjPfvHJ4UJ/1WN5jJWMs/wuCgUGdXVrCErps4AvaR8tN1o4fWJkjtQGucKooXsE2M2yj6c+idL/CYyInCZ5W4sCH56tgLyAlqUqOd8CTNjxqujGbTt2MwJZoSYjyGZ+NCM8lfFYTxIHAe/xvotGPgl4lPeCcYYFpVedms6gR39K5uB+ifk3USJzhBH7J5CHzl7OT7CUvLyqHfYQvK9/vITB73jjAaERVDwc/lU71p1kgkL43HfaIgsAV6DXXtT1wWI+gx4VO1JBzeuHMPvR1oxMr/kPDJuZnMO+/XBdGCMrHUwGFhul6df8ZQ+8b+oyLQ43QlbJrYyKhV1Cw3xJLzgyD1+bAFFhTlFoQKLlrE+rvDvF0eeZHuJO1gnt22IJwZOFCtksmmNIAqAMsjdSqDx2NtQSCa+vhUzXlvfIREAsKScDNSte2qw7b4xdytO68Hs8+PsDz/WaxpdCIdvbHKoi+6PqRYvRq0UflFAgDHZJJw1RtWA5s8y8KeXpqFTv8jCvNWesZbB0VC/ksjd9BKgMkIC8020ZkonLfKbsH4otUWEVQASG0qRkw6VaHTg=
 language: node_js
 node_js:
-  - "7"
+- '7'
 cache:
   yarn: true
   directories:
   - node_modules/
 before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- sleep 3
 script:
-  - make && make release
-  - make serve &
-  - karma start karma-ci.conf.js --single-run
-
+- make && make release
+- make serve &
+- karma start karma-ci.conf.js --single-run
