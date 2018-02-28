@@ -69,7 +69,7 @@ module.exports = function(config) {
         os_version: '8.0'
       }
     },
-    browsers: ['firefox_mac_latest', 'chrome_mac_latest', 'safari_mac_latest', 'ie_11', 'edge_16'],
+    browsers: ['PhantomJS', 'firefox_mac_latest', 'chrome_mac_latest', 'safari_mac_latest', 'ie_11', 'edge_16'],
     singleRun: true,
     concurrency: 1
   })
