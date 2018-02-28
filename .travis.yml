@@ -22,5 +22,5 @@ before_script:
 script:
   - make && make release
   - make serve &
-  - karma start --single-run
+  - karma start karma-ci.conf.js --single-run
 
