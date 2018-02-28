@@ -9,8 +9,8 @@
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/protobuf/js/google" />
       <root url="file://$PROJECT_DIR$/protobuf/js/debug.js" />
+      <root url="file://$PROJECT_DIR$/protobuf/js/google" />
       <root url="file://$PROJECT_DIR$/protobuf/js/map.js" />
       <root url="file://$PROJECT_DIR$/protobuf/js/message.js" />
     </CLASSES>
