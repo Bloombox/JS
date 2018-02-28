@@ -22,5 +22,5 @@ before_script:
 script:
   - make && make release
   - make serve &
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost:8000/ci-test.html &
+  - karma start --single-run
 

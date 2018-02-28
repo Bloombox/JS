@@ -1,9 +1,13 @@
+/* eslint-env mocha */
+'use strict'
 
-var test = require('unit.js');
-process.env.NODE_ENV = 'test';
-var goog = require('closure-builder/third_party/closure-library/closure/goog/base.js');
+describe('math should work', function () {
+  it('works', function () {
+    var result = 1 + 1
 
+    if (result !== 2) {
+      throw new Error('fail')
+    }
+  })
+})
 
-describe('Basic Logic', function() {
-
-});

@@ -380,8 +380,6 @@ stackdriver.notifyFingerprint = function(fingerprint) {
  */
 stackdriver.protect = function(operation) {
   let op = /** @type {function(*)} */ (operation);
-  bloombox.logging.log('Protecting function: \'' +
-    op.name + '\'...');
   let wrapped = (function() {
     try {
       // execute with given args
