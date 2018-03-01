@@ -78,6 +78,15 @@ clean: clean-docs
 	@echo "Cleaning targets..."
 	@-rm $(RM_FLAGS) $(TARGET)
 
+test:
+	@echo "Running testsuite..."
+	@karma start --browsers PhantomJS --single-run --no-auto-watch karma.conf.js
+
+test-dev:
+	@echo "Running testsuite (dev mode)..."
+	@karma start karma.conf.js
+
+
 clean-docs:
 	@echo "Cleaning docs..."
 	@rm -fr $(DOCS)
