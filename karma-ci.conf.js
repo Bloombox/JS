@@ -75,7 +75,7 @@ module.exports = function(config) {
     },
     browsers: ['firefox_mac_latest', 'chrome_mac_latest', 'safari_mac_latest', 'ie_11', 'edge_16'],
     singleRun: true,
-    concurrency: 1,
+    concurrency: Infinity,
     tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
     startTunnel: false
   })
