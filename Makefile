@@ -135,6 +135,8 @@ $(SCHEMA)/languages/js: protobuf/js/node_modules
 build: dependencies
 	@echo "Building Bloombox JS..."
 	@gulp $(GULP_FLAGS)
+	@cp -fv target/$(VERSION).min.js target/$(VERSION)-debug.min.js
+	@cp -fv target/$(VERSION).min.js target/debug.min.js
 	@echo "Copying source files..."
 	@mkdir -p $(TARGET)/src
 	@cp -fr src/ $(TARGET)/src/
@@ -148,6 +150,7 @@ release: build dependencies
 	@cp -fv target/$(VERSION).min.js target/$(VERSION)-debug.min.js
 	@echo "Building Bloombox JS (RELEASE)..."
 	@gulp --release $(GULP_FLAGS)
+	@cp -fv target/$(VERSION).min.js target/release.min.js
 	@echo "Copying test files..."
 	@cp -f local/test.js $(TARGET)/test.js
 	@sed 's/__VERSION__/$(VERSION)/g' local/index.html > $(TARGET)/index.html
