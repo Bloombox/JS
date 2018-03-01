@@ -380,8 +380,6 @@ module.exports = function(config) {
     autoWatch: false,
     customLaunchers: Object.assign({}, browserstackProfiles, saucelabsProfiles),
     browsers: [
-      'PhantomJS',
-
       // BrowserStack
       //'firefox_mac_latest', 'chrome_mac_latest', 'safari_mac_latest'
       //'firefox_mac_oldest', 'chrome_mac_oldest', 'safari_mac_oldest',
