@@ -17,6 +17,7 @@ module.exports = function(config) {
   // sauce labs browsers: mac
   let chromeMacLatest = {browserName: 'chrome'};
   chromeMacLatest['name'] = 'chromeMacLatest';
+  chromeMacLatest['base'] = 'SauceLabs';
   chromeMacLatest['platform'] = 'macOS 10.13';
   chromeMacLatest['version'] = '64.0';
   chromeMacLatest['recordVideo'] = false;
@@ -28,6 +29,7 @@ module.exports = function(config) {
 
   let chromeMacOldest = {browserName: 'chrome'};
   chromeMacOldest['name'] = 'chromeMacOldest';
+  chromeMacOldest['base'] = 'SauceLabs';
   chromeMacOldest['platform'] = 'OS X 10.9';
   chromeMacOldest['version'] = '31.0';
   chromeMacOldest['recordVideo'] = false;
@@ -39,6 +41,7 @@ module.exports = function(config) {
 
   let safariMacLatest = {browserName: 'safari'};
   safariMacLatest['name'] = 'safariMacLatest';
+  safariMacLatest['base'] = 'SauceLabs';
   safariMacLatest['platform'] = 'macOS 10.13';
   safariMacLatest['version'] = '11.0';
   safariMacLatest['recordVideo'] = false;
@@ -50,6 +53,7 @@ module.exports = function(config) {
 
   let safariMacOldest = {browserName: 'safari'};
   safariMacOldest['name'] = 'safariMacOldest';
+  safariMacOldest['base'] = 'SauceLabs';
   safariMacOldest['platform'] = 'OS X 10.9';
   safariMacOldest['version'] = '7.0';
   safariMacOldest['recordVideo'] = false;
@@ -61,6 +65,7 @@ module.exports = function(config) {
 
   let firefoxMacLatest = {browserName: 'firefox'};
   firefoxMacLatest['name'] = 'firefoxMacLatest';
+  firefoxMacLatest['base'] = 'SauceLabs';
   firefoxMacLatest['platform'] = 'macOS 10.13';
   firefoxMacLatest['version'] = '58.0';
   firefoxMacLatest['recordVideo'] = false;
@@ -72,6 +77,7 @@ module.exports = function(config) {
 
   let firefoxMacOldest = {browserName: 'firefox'};
   firefoxMacOldest['name'] = 'firefoxMacOldest';
+  firefoxMacOldest['base'] = 'SauceLabs';
   firefoxMacOldest['platform'] = 'OS X 10.9';
   firefoxMacOldest['version'] = '15.0';
   firefoxMacOldest['recordVideo'] = false;
@@ -84,6 +90,7 @@ module.exports = function(config) {
   // sauce labs browsers: windows
   let edgeLatest = {browserName: 'MicrosoftEdge'};
   edgeLatest['name'] = 'edgeLatest';
+  edgeLatest['base'] = 'SauceLabs';
   edgeLatest['platform'] = 'Windows 10';
   edgeLatest['version'] = '16.16299';
   edgeLatest['recordVideo'] = false;
@@ -95,6 +102,7 @@ module.exports = function(config) {
 
   let chromeWindowsLatest = {browserName: 'chrome'};
   chromeWindowsLatest['name'] = 'chromeWindowsLatest';
+  chromeWindowsLatest['base'] = 'SauceLabs';
   chromeWindowsLatest['platform'] = 'Windows 10';
   chromeWindowsLatest['version'] = '64.0';
   chromeWindowsLatest['recordVideo'] = false;
@@ -106,6 +114,7 @@ module.exports = function(config) {
 
   let chromeWindowsOldest = {browserName: 'chrome'};
   chromeWindowsOldest['name'] = 'chromeWindowsOldest';
+  chromeWindowsOldest['base'] = 'SauceLabs';
   chromeWindowsOldest['platform'] = 'Windows 7';
   chromeWindowsOldest['version'] = '31.0';
   chromeWindowsOldest['recordVideo'] = false;
@@ -117,6 +126,7 @@ module.exports = function(config) {
 
   let firefoxWindowsLatest = {browserName: 'firefox'};
   firefoxWindowsLatest['name'] = 'firefoxWindowsLatest';
+  firefoxWindowsLatest['base'] = 'SauceLabs';
   firefoxWindowsLatest['platform'] = 'Windows 10';
   firefoxWindowsLatest['version'] = '58.0';
   firefoxWindowsLatest['recordVideo'] = false;
@@ -128,6 +138,7 @@ module.exports = function(config) {
 
   let firefoxWindowsOldest = {browserName: 'firefox'};
   firefoxWindowsOldest['name'] = 'firefoxWindowsOldest';
+  firefoxWindowsOldest['base'] = 'SauceLabs';
   firefoxWindowsOldest['platform'] = 'Windows 7';
   firefoxWindowsOldest['version'] = '15.0';
   firefoxWindowsOldest['recordVideo'] = false;
@@ -139,6 +150,7 @@ module.exports = function(config) {
 
   let ie11Windows10 = {browserName: 'internet explorer'};
   ie11Windows10['name'] = 'ie11Windows10';
+  ie11Windows10['base'] = 'SauceLabs';
   ie11Windows10['platform'] = 'Windows 10';
   ie11Windows10['version'] = '11.103';
   ie11Windows10['recordVideo'] = false;
@@ -150,6 +162,7 @@ module.exports = function(config) {
 
   let ie8Windows7 = {browserName: 'internet explorer'};
   ie8Windows7['name'] = 'ie8Windows7';
+  ie8Windows7['base'] = 'SauceLabs';
   ie8Windows7['platform'] = 'Windows 7';
   ie8Windows7['version'] = '8.0';
   ie8Windows7['recordVideo'] = false;
@@ -162,6 +175,7 @@ module.exports = function(config) {
   // sauce labs browsers: linux
   let chromeLinuxLatest = {browserName: 'chrome'};
   chromeLinuxLatest['name'] = 'chromeLinuxLatest';
+  chromeLinuxLatest['base'] = 'SauceLabs';
   chromeLinuxLatest['platform'] = 'Linux';
   chromeLinuxLatest['version'] = '48.0';
   chromeLinuxLatest['recordVideo'] = false;
@@ -173,6 +187,7 @@ module.exports = function(config) {
 
   let chromeLinuxOldest = {browserName: 'chrome'};
   chromeLinuxOldest['name'] = 'chromeLinuxOldest';
+  chromeLinuxOldest['base'] = 'SauceLabs';
   chromeLinuxOldest['platform'] = 'Linux';
   chromeLinuxOldest['version'] = '41.0';
   chromeLinuxOldest['recordVideo'] = false;
@@ -184,6 +199,7 @@ module.exports = function(config) {
 
   let firefoxLinuxLatest = {browserName: 'firefox'};
   firefoxLinuxLatest['name'] = 'firefoxLinuxLatest';
+  firefoxLinuxLatest['base'] = 'SauceLabs';
   firefoxLinuxLatest['platform'] = 'Linux';
   firefoxLinuxLatest['version'] = '45.0';
   firefoxLinuxLatest['recordVideo'] = false;
@@ -195,6 +211,7 @@ module.exports = function(config) {
 
   let firefoxLinuxOldest = {browserName: 'firefox'};
   firefoxLinuxOldest['name'] = 'firefoxLinuxOldest';
+  firefoxLinuxOldest['base'] = 'SauceLabs';
   firefoxLinuxOldest['platform'] = 'Linux';
   firefoxLinuxOldest['version'] = '38.0';
   firefoxLinuxOldest['recordVideo'] = false;
