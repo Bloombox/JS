@@ -16,7 +16,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'target/*-debug.min.js',
-      'tests/**/*.js'
+      'tests/suites/**/*.js',
+      'tests/*.js'
     ],
 
 

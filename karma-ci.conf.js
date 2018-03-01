@@ -7,7 +7,8 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
     files: [
       'target/*-debug.min.js',
-      'tests/**/*.js'
+      'tests/suites/**/*.js',
+      'tests/*.js'
     ],
     exclude: [
     ],
@@ -158,6 +159,7 @@ module.exports = function(config) {
       //'ie_11', 'edge_16', 'firefox_windows_oldest', 'chrome_windows_oldest',
       //'ie_10', 'ie_9', 'ie_8', 'safari_windows',
       //'iphoneX_safari_11', 'pixel8'],
+      ],
     singleRun: true,
     concurrency: Infinity,
     tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
