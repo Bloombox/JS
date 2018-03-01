@@ -373,9 +373,9 @@ module.exports = function(config) {
       //'ie_10', 'ie_9', 'ie_8', 'safari_windows',
       //'iphoneX_safari_11', 'pixel8'],
 
-      ] + latestBrowsers.map(function(item) {
+      ].concat(latestBrowsers.map(function(item) {
        return item.name;
-      }),
+      })),
     singleRun: true,
     concurrency: Infinity,
     tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
