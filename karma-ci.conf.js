@@ -49,7 +49,7 @@ module.exports = function(config) {
         browser: 'IE',
         browser_version: '11.0',
         os: 'Windows',
-        os_version: '10.0'
+        os_version: '10'
       },
       edge_16: {
         base: 'BrowserStack',
