@@ -4,7 +4,7 @@
 
 [![Sauce Tests](https://saucelabs.com/browser-matrix/bloomlabs.svg)](https://saucelabs.com/u/bloomlabs)
 
-Latest Version: `v1.0.0-beta30`
+Latest Version: `v1.0.0-rc1`
 
 This package provides support for Bloombox APIs in browser-oriented JavaScript. It's built using the Closure stack from
 Google, including Closure Compiler, Library, builder, and so on.
@@ -45,13 +45,13 @@ Then, you'll see debug logs in your console that describe what's going on.
 If you would like to pin your application to a specific version of the library, you can do that:
 
 ```html
-  <script type="text/javascript" src="https://js.bloombox.cloud/client/v1.0.0-beta30.min.js"></script>
+  <script type="text/javascript" src="https://js.bloombox.cloud/client/v1.0.0-rc1.min.js"></script>
 ```
 
 and...
 
 ```html
-  <script type="text/javascript" src="https://js.bloombox.cloud/client/v1.0.0-beta30-debug.min.js"></script>
+  <script type="text/javascript" src="https://js.bloombox.cloud/client/v1.0.0-rc1-debug.min.js"></script>
 ```
 
 
