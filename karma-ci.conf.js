@@ -108,7 +108,7 @@ module.exports = function(config) {
   chromeWindowsLatest['recordVideo'] = false;
   chromeWindowsLatest['recordScreenshots'] = true;
   saucelabsBrowsers.push(chromeWindowsLatest);
-  latestBrowsers.push(chromeMacLatest);
+  latestBrowsers.push(chromeWindowsLatest);
   windowsBrowsers.push(chromeWindowsLatest);
   chromeBrowsers.push(chromeWindowsLatest);
 
@@ -132,7 +132,7 @@ module.exports = function(config) {
   firefoxWindowsLatest['recordVideo'] = false;
   firefoxWindowsLatest['recordScreenshots'] = true;
   saucelabsBrowsers.push(firefoxWindowsLatest);
-  latestBrowsers.push(chromeMacLatest);
+  latestBrowsers.push(firefoxWindowsLatest);
   windowsBrowsers.push(firefoxWindowsLatest);
   firefoxBrowsers.push(firefoxWindowsLatest);
 
