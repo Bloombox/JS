@@ -526,7 +526,7 @@ module.exports = function(config) {
       'firefox_windows_latest', 'chrome_windows_latest',
       //'ie_11', 'edge_16', 'firefox_windows_oldest', 'chrome_windows_oldest',
       //'ie_10', 'ie_9', 'ie_8', 'safari_windows',
-      'iphoneX_safari_11', 'pixel8'
+      'iphoneX_safari_11' //, 'pixel8'
       ].concat(latestBrowsers.map(function(item) {
         return item.name;
       })))),
