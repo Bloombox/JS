@@ -31,4 +31,4 @@ before_script:
 script:
 - make
 - make serve &
-- #karma start karma-ci.conf.js --single-run
+- karma start karma-ci.conf.js --single-run
