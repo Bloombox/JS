@@ -13,6 +13,9 @@ module.exports = function(config) {
   let safariBrowsers = [];
   let edgeBrowsers = [];
   let ieBrowsers = [];
+  let mobileBrowsers = [];
+  let iosBrowsers = [];
+  let androidBrowsers = [];
 
   // sauce labs browsers: mac
   let chromeMacLatest = {browserName: 'chrome'};
@@ -116,7 +119,7 @@ module.exports = function(config) {
   chromeWindowsOldest['name'] = 'chromeWindowsOldest';
   chromeWindowsOldest['base'] = 'SauceLabs';
   chromeWindowsOldest['platform'] = 'Windows 7';
-  chromeWindowsOldest['version'] = '31.0';
+  chromeWindowsOldest['version'] = '26.0';
   chromeWindowsOldest['recordVideo'] = true;
   chromeWindowsOldest['recordScreenshots'] = true;
   saucelabsBrowsers.push(chromeWindowsOldest);
@@ -140,7 +143,7 @@ module.exports = function(config) {
   firefoxWindowsOldest['name'] = 'firefoxWindowsOldest';
   firefoxWindowsOldest['base'] = 'SauceLabs';
   firefoxWindowsOldest['platform'] = 'Windows 7';
-  firefoxWindowsOldest['version'] = '15.0';
+  firefoxWindowsOldest['version'] = '4.0';
   firefoxWindowsOldest['recordVideo'] = true;
   firefoxWindowsOldest['recordScreenshots'] = true;
   saucelabsBrowsers.push(firefoxWindowsOldest);
@@ -159,6 +162,30 @@ module.exports = function(config) {
   oldBrowsers.push(ie11Windows10);
   windowsBrowsers.push(ie11Windows10);
   ieBrowsers.push(ie11Windows10);
+
+  let ie10Windows7 = {browserName: 'internet explorer'};
+  ie10Windows7['name'] = 'ie10Windows7';
+  ie10Windows7['base'] = 'SauceLabs';
+  ie10Windows7['platform'] = 'Windows 7';
+  ie10Windows7['version'] = '10.0';
+  ie10Windows7['recordVideo'] = true;
+  ie10Windows7['recordScreenshots'] = true;
+  saucelabsBrowsers.push(ie10Windows7);
+  oldBrowsers.push(ie10Windows7);
+  windowsBrowsers.push(ie10Windows7);
+  ieBrowsers.push(ie10Windows7);
+
+  let ie9Windows7 = {browserName: 'internet explorer'};
+  ie9Windows7['name'] = 'ie9Windows7';
+  ie9Windows7['base'] = 'SauceLabs';
+  ie9Windows7['platform'] = 'Windows 7';
+  ie9Windows7['version'] = '9.0';
+  ie9Windows7['recordVideo'] = true;
+  ie9Windows7['recordScreenshots'] = true;
+  saucelabsBrowsers.push(ie9Windows7);
+  oldBrowsers.push(ie9Windows7);
+  windowsBrowsers.push(ie9Windows7);
+  ieBrowsers.push(ie9Windows7);
 
   let ie8Windows7 = {browserName: 'internet explorer'};
   ie8Windows7['name'] = 'ie8Windows7';
@@ -220,6 +247,65 @@ module.exports = function(config) {
   oldBrowsers.push(firefoxLinuxOldest);
   linuxBrowsers.push(firefoxLinuxOldest);
   firefoxBrowsers.push(firefoxLinuxOldest);
+
+  // iOS
+  let iosSafariLatest = {browserName: 'Safari'};
+  iosSafariLatest['name'] = 'iosSafariLatest';
+  iosSafariLatest['appiumVersion'] = '1.7.2';
+  iosSafariLatest['deviceName'] = 'iPhone X Simulator';
+  iosSafariLatest['deviceOrientation'] = 'portrait';
+  iosSafariLatest['platformVersion'] = '11.2';
+  iosSafariLatest['platformName'] = 'iOS';
+  iosSafariLatest['recordVideo'] = true;
+  iosSafariLatest['recordScreenshots'] = true;
+  saucelabsBrowsers.push(iosSafariLatest);
+  latestBrowsers.push(iosSafariLatest);
+  mobileBrowsers.push(iosSafariLatest);
+  iosBrowsers.push(iosSafariLatest);
+
+  let iosSafariOldest = {browserName: 'Safari'};
+  iosSafariOldest['name'] = 'iosSafariOldest';
+  iosSafariOldest['appiumVersion'] = '1.6.5';
+  iosSafariOldest['deviceName'] = 'iPhone 4s Simulator';
+  iosSafariOldest['deviceOrientation'] = 'portrait';
+  iosSafariOldest['platformVersion'] = '8.1';
+  iosSafariOldest['platformName'] = 'iOS';
+  iosSafariOldest['recordVideo'] = true;
+  iosSafariOldest['recordScreenshots'] = true;
+  saucelabsBrowsers.push(iosSafariOldest);
+  oldBrowsers.push(iosSafariOldest);
+  mobileBrowsers.push(iosSafariOldest);
+  iosBrowsers.push(iosSafariOldest);
+
+  // Android
+  let androidLatest = {browserName: 'Android'};
+  androidLatest['name'] = 'androidLatest';
+  androidLatest['appiumVersion'] = '1.7.2';
+  androidLatest['deviceName'] = 'Google Pixel GoogleAPI Emulator';
+  androidLatest['deviceOrientation'] = 'portrait';
+  androidLatest['browserName'] = 'Chrome';
+  androidLatest['platformVersion'] = '7.1';
+  androidLatest['platformName'] = 'Android';
+  androidLatest['recordVideo'] = true;
+  androidLatest['recordScreenshots'] = true;
+  saucelabsBrowsers.push(androidLatest);
+  latestBrowsers.push(androidLatest);
+  mobileBrowsers.push(androidLatest);
+  androidBrowsers.push(androidLatest);
+
+  let androidOldest = {browserName: 'Browser'};
+  androidOldest['name'] = 'androidOldest';
+  androidOldest['appiumVersion'] = '1.7.2';
+  androidOldest['deviceName'] = 'Samsung Galaxy S3 Emulator';
+  androidOldest['deviceOrientation'] = 'portrait';
+  androidOldest['platformVersion'] = '4.4';
+  androidOldest['platformName'] = 'Android';
+  androidOldest['recordVideo'] = true;
+  androidOldest['recordScreenshots'] = true;
+  saucelabsBrowsers.push(androidOldest);
+  oldBrowsers.push(androidOldest);
+  mobileBrowsers.push(androidOldest);
+  androidBrowsers.push(androidOldest);
 
   let saucelabsProfiles = {};
   saucelabsBrowsers.forEach(function(item) {
