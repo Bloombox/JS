@@ -10,14 +10,24 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'mocha', 'chai'],
+    frameworks: ['jasmine', 'closure'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'target/*-debug.min.js',
+      'node_modules/closure-builder/third_party/closure-library/closure/goog/base.js',
+      //'target/*-debug.min.js',
       'tests/suites/**/*.js',
-      'tests/*.js'
+      'tests/*.js',
+      {pattern: 'third_party/schema/*.js', included: false},
+      {pattern: 'third_party/protobuf/js/map.js', included: false},
+      {pattern: 'third_party/protobuf/js/message.js', included: false},
+      {pattern: 'third_party/protobuf/js/google/protobuf/*.js', included: false},
+      {pattern: 'third_party/protobuf/js/binary/*.js', included: false},
+      {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js', included: false, served: false},
+      {pattern: 'src/**/*.js', included: false},
+      {pattern: 'entrypoint/full.js', included: false},
+      {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js', included: false, served: false}
     ],
 
 
@@ -34,14 +44,45 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'tests/suites/**/*.js': ['closure', 'closure-iit'],
+      'tests/*.js': ['closure', 'closure-iit'],
+      'third_party/schema/*.js': ['closure'],
+      'third_party/protobuf/js/binary/*.js': ['closure'],
+      'third_party/protobuf/js/map.js': ['closure'],
+      'third_party/protobuf/js/message.js': ['closure'],
+      'third_party/protobuf/js/google/protobuf/*.js': ['closure'],
+      'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js': ['closure'],
+      'src/**/*.js': ['closure', 'coverage'],
+      'entrypoint/full.js': ['closure'],
+      'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js': ['closure-deps']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['kjhtml', 'mocha'],
+    reporters: [
+      'kjhtml',
+      'mocha',
+      'coverage'
+    ],
 
+    coverageReporter: {
+      dir: 'target/coverage/',
+      watermarks: {
+        statements: [ 50, 75 ],
+        functions: [ 50, 75 ],
+        branches: [ 50, 75 ],
+        lines: [ 50, 75 ]
+      },
+      reporters: [
+        { type: 'html', subdir: 'report-html' },
+        { type: 'lcov', subdir: 'report-lcov' },
+        { type: 'cobertura', subdir: '.', file: 'cobertura.xml' },
+        { type: 'text', subdir: '.', file: 'text.txt' },
+        { type: 'text-summary', subdir: '.', file: 'text-summary.txt' }
+      ]
+    },
 
     // web server port
     port: 9876,
