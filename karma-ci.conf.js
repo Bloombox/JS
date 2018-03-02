@@ -394,9 +394,7 @@ module.exports = function(config) {
 
       ].concat(latestBrowsers.map(function(item) {
        return item.name;
-      }).concat(oldBrowsers.map(function(item) {
-       return item.name;
-      }))),
+      })),
     singleRun: true,
     concurrency: Infinity,
     tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
