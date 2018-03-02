@@ -482,7 +482,7 @@ module.exports = function(config) {
       //'ie_10', 'ie_9', 'ie_8', 'safari_windows',
       //'iphoneX_safari_11', 'pixel8'],
 
-      ].concat(latestBrowsers.map(function(item) {
+      ].concat(saucelabsBrowsers.map(function(item) {
        return item.name;
       })))),
     singleRun: true,
