@@ -383,7 +383,7 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
     autoWatch: false,
     customLaunchers: Object.assign({}, browserstackProfiles, saucelabsProfiles),
-    browsers: [
+    browsers: Array.from(new Set([
       // BrowserStack
       //'firefox_mac_latest', 'chrome_mac_latest', 'safari_mac_latest'
       //'firefox_mac_oldest', 'chrome_mac_oldest', 'safari_mac_oldest',
@@ -394,7 +394,7 @@ module.exports = function(config) {
 
       ].concat(latestBrowsers.map(function(item) {
        return item.name;
-      })),
+      })))),
     singleRun: true,
     concurrency: Infinity,
     tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
