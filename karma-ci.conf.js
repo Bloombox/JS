@@ -478,9 +478,9 @@ module.exports = function(config) {
       username: 'samgammon2',
       accessKey: process.env.BROWSERSTACK_KEY
     },
-    //client: {
-    //  captureConsole: false
-    //},
+    client: {
+      captureConsole: false
+    },
     preprocessors: {
       'tests/suites/**/*.js': ['closure', 'closure-iit'],
       'tests/*.js': ['closure', 'closure-iit'],
