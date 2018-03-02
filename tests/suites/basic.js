@@ -2,7 +2,7 @@
 'use strict';
 
 
-function basicTestsuite(debugShouldBeActive) {
+function basicTestsuite() {
   describe('basics', function() {
     it('should be able to find the Bloombox SDK for JavaScript', function() {
       if (!bloombox) {
@@ -13,14 +13,6 @@ function basicTestsuite(debugShouldBeActive) {
     it('should be able to find the SDK setup function', function() {
       if (!bloombox.setup)
         throw new Error('failed to find the SDK setup function');
-    });
-
-    it('should export the top-level DEBUG property', function() {
-      var expectDebug = !!debugShouldBeActive;
-      if (bloombox.DEBUG !== expectDebug)
-        throw new Error('debug setting for library variant is wrong. ' +
-          'should be: "' + expectDebug + '", was: "' +
-          bloombox.DEBUG + '".');
     });
 
     it('should export the top-level VERSION property', function() {
