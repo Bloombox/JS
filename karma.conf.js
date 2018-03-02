@@ -37,6 +37,20 @@ module.exports = function(config) {
     ],
 
 
+    babelPreprocessor: {
+      options: {
+        presets: ['env'],
+        sourceMap: 'inline'
+      },
+      filename: function (file) {
+        return file.originalPath.replace(/\.js$/, '.es5.js');
+      },
+      sourceFileName: function (file) {
+        return file.originalPath;
+      }
+    },
+
+
     // shut off browser logs
     client: {
       captureConsole: false
@@ -45,16 +59,16 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'tests/suites/**/*.js': ['closure', 'closure-iit'],
-      'tests/*.js': ['closure', 'closure-iit'],
-      'third_party/schema/*.js': ['closure'],
+      'tests/suites/**/*.js': ['closure', 'babel', 'closure-iit'],
+      'tests/*.js': ['closure', 'babel', 'closure-iit'],
+      'third_party/schema/*.js': ['closure', 'babel'],
       'third_party/protobuf/js/binary/*.js': ['closure'],
       'third_party/protobuf/js/map.js': ['closure'],
       'third_party/protobuf/js/message.js': ['closure'],
       'third_party/protobuf/js/google/protobuf/*.js': ['closure'],
       'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js': ['closure'],
-      'src/**/*.js': ['closure', 'coverage'],
-      'entrypoint/full.js': ['closure'],
+      'src/**/*.js': ['closure', 'babel', 'coverage'],
+      'entrypoint/full.js': ['closure', 'babel'],
       'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js': ['closure-deps']
     },
 
@@ -104,6 +118,7 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
+     'PhantomJS',
      'Safari',
      'Firefox',
      'ChromeCanary'],

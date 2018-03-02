@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Bloombox/JS.svg?branch=master)](https://travis-ci.org/Bloombox/JS) [![npm](https://img.shields.io/npm/v/bloombox.svg)]() [![npm](https://img.shields.io/npm/dw/bloombox.svg)](https://github.com/bloombox/JS) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f3dd1253ff8140fd96ff1b4dad0afd2d)](https://www.codacy.com/app/bloombox/JS?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bloombox/JS&amp;utm_campaign=Badge_Grade) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Maintainability](https://api.codeclimate.com/v1/badges/b02d3e57e60d030bc818/maintainability)](https://codeclimate.com/github/Bloombox/JS/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/b02d3e57e60d030bc818/test_coverage)](https://codeclimate.com/github/Bloombox/JS/test_coverage)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/bloomlabs.svg)](https://saucelabs.com/u/bloomlabs)
+[![Sauce Tests](https://saucelabs.com/browser-matrix/bloomlabs.svg)](https://saucelabs.com/u/bloomlabs)
 
 Latest Version: `v1.0.0-beta30`
 

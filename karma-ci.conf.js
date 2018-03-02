@@ -480,16 +480,16 @@ module.exports = function(config) {
       captureConsole: false
     },
     preprocessors: {
-      'tests/suites/**/*.js': ['closure', 'closure-iit'],
-      'tests/*.js': ['closure', 'closure-iit'],
-      'third_party/schema/*.js': ['closure'],
+      'tests/suites/**/*.js': ['closure', 'babel', 'closure-iit'],
+      'tests/*.js': ['closure', 'babel', 'closure-iit'],
+      'third_party/schema/*.js': ['closure', 'babel'],
       'third_party/protobuf/js/binary/*.js': ['closure'],
       'third_party/protobuf/js/map.js': ['closure'],
       'third_party/protobuf/js/message.js': ['closure'],
       'third_party/protobuf/js/google/protobuf/*.js': ['closure'],
       'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js': ['closure'],
-      'src/**/*.js': ['closure', 'coverage'],
-      'entrypoint/full.js': ['closure'],
+      'src/**/*.js': ['closure', 'babel', 'coverage'],
+      'entrypoint/full.js': ['closure', 'babel'],
       'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js': ['closure-deps']
     },
     reporters: [
@@ -498,6 +498,18 @@ module.exports = function(config) {
       'coverage',
       'saucelabs'
     ],
+    babelPreprocessor: {
+      options: {
+        presets: ['env'],
+        sourceMap: 'inline'
+      },
+      filename: function (file) {
+        return file.originalPath.replace(/\.js$/, '.es5.js');
+      },
+      sourceFileName: function (file) {
+        return file.originalPath;
+      }
+    },
     coverageReporter: {
       dir: 'target/coverage/',
       watermarks: {
