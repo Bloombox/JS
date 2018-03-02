@@ -368,7 +368,8 @@ stackdriver.errorize = function(ctor) {
  * @param {string} fingerprint Fingerprint.
  */
 stackdriver.notifyFingerprint = function(fingerprint) {
-  _REPORTER.setUser(fingerprint);
+  if (_REPORTER !== null)
+    _REPORTER.setUser(fingerprint);
 };
 
 
