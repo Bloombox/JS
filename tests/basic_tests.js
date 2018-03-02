@@ -21,6 +21,6 @@ bloombox.setup(partnerCode, locationCode, apiKey, function() {
 
   describe('compiled library: debug build', function() {
       basicTestsuite();
-      shopTestsuite();
+      //shopTestsuite();
     });
 });

@@ -359,7 +359,7 @@ module.exports = function(config) {
 
   config.set({
     basePath: '',
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'mocha', 'chai'],
     files: [
       'tests/init.js',
       'target/*-debug.min.js',
@@ -372,9 +372,12 @@ module.exports = function(config) {
       username: 'samgammon2',
       accessKey: process.env.BROWSERSTACK_KEY
     },
+    client: {
+      captureConsole: false
+    },
     preprocessors: {
     },
-    reporters: ['dots', 'saucelabs'],
+    reporters: ['kjhtml', 'mocha', 'saucelabs'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
