@@ -366,7 +366,7 @@ module.exports = function(config) {
       browser: 'chrome',
       browser_version: '64.0',
       os: 'Windows',
-      os_version: '11'
+      os_version: '10'
     },
     chrome_windows_oldest: {
       base: 'BrowserStack',
@@ -471,7 +471,9 @@ module.exports = function(config) {
     ],
     browserStack: {
       username: 'samgammon2',
-      accessKey: process.env.BROWSERSTACK_KEY
+      accessKey: process.env.BROWSERSTACK_KEY,
+      tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
+      startTunnel: false
     },
     client: {
       captureConsole: false
