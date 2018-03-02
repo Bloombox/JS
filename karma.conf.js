@@ -16,9 +16,16 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'node_modules/closure-builder/third_party/closure-library/closure/goog/base.js',
-      //'target/*-debug.min.js',
       'tests/suites/**/*.js',
-      'tests/*.js',
+      'tests/init.js',
+      'tests/sanity_tests.js',
+      'tests/source_tests.js',
+      'tests/wasabi.js',
+      'public/client.min.js',
+      'tests/release_tests.js',
+      'tests/wasabi.js',
+      'target/debug.min.js',
+      'tests/debug_tests.js',
       {pattern: 'third_party/schema/*.js', included: false},
       {pattern: 'third_party/protobuf/js/map.js', included: false},
       {pattern: 'third_party/protobuf/js/message.js', included: false},
@@ -103,7 +110,7 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
-     //'PhantomJS',
+     'PhantomJS',
      'ChromeCanary'],
 
 

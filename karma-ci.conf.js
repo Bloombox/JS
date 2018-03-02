@@ -449,11 +449,28 @@ module.exports = function(config) {
 
   config.set({
     basePath: '',
-    frameworks: ['jasmine', 'mocha', 'chai'],
+    frameworks: ['jasmine', 'closure'],
     files: [
-      'target/*-debug.min.js',
+      'node_modules/closure-builder/third_party/closure-library/closure/goog/base.js',
       'tests/suites/**/*.js',
-      'tests/basic_tests.js'
+      'tests/init.js',
+      'tests/sanity_tests.js',
+      'tests/source_tests.js',
+      'tests/wasabi.js',
+      'public/client.min.js',
+      'tests/release_tests.js',
+      'tests/wasabi.js',
+      'target/debug.min.js',
+      'tests/debug_tests.js',
+      {pattern: 'third_party/schema/*.js', included: false},
+      {pattern: 'third_party/protobuf/js/map.js', included: false},
+      {pattern: 'third_party/protobuf/js/message.js', included: false},
+      {pattern: 'third_party/protobuf/js/google/protobuf/*.js', included: false},
+      {pattern: 'third_party/protobuf/js/binary/*.js', included: false},
+      {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js', included: false, served: false},
+      {pattern: 'src/**/*.js', included: false},
+      {pattern: 'entrypoint/full.js', included: false},
+      {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js', included: false, served: false}
     ],
     exclude: [
     ],
@@ -465,8 +482,40 @@ module.exports = function(config) {
     //  captureConsole: false
     //},
     preprocessors: {
+      'tests/suites/**/*.js': ['closure', 'closure-iit'],
+      'tests/*.js': ['closure', 'closure-iit'],
+      'third_party/schema/*.js': ['closure'],
+      'third_party/protobuf/js/binary/*.js': ['closure'],
+      'third_party/protobuf/js/map.js': ['closure'],
+      'third_party/protobuf/js/message.js': ['closure'],
+      'third_party/protobuf/js/google/protobuf/*.js': ['closure'],
+      'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js': ['closure'],
+      'src/**/*.js': ['closure', 'coverage'],
+      'entrypoint/full.js': ['closure'],
+      'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js': ['closure-deps']
     },
-    reporters: ['kjhtml', 'mocha', 'saucelabs'],
+    reporters: [
+      'kjhtml',
+      'mocha',
+      'coverage',
+      'saucelabs'
+    ],
+    coverageReporter: {
+      dir: 'target/coverage/',
+      watermarks: {
+        statements: [ 50, 75 ],
+        functions: [ 50, 75 ],
+        branches: [ 50, 75 ],
+        lines: [ 50, 75 ]
+      },
+      reporters: [
+        { type: 'html', subdir: 'report-html' },
+        { type: 'lcov', subdir: 'report-lcov' },
+        { type: 'cobertura', subdir: '.', file: 'cobertura.xml' },
+        { type: 'text', subdir: '.', file: 'text.txt' },
+        { type: 'text-summary', subdir: '.', file: 'text-summary.txt' }
+      ]
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
