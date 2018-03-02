@@ -486,7 +486,7 @@ module.exports = function(config) {
        return item.name;
       })))),
     singleRun: true,
-    concurrency: Infinity,
+    concurrency: 2,
     tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
     startTunnel: false,
     sauceLabs: {
