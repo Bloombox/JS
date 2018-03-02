@@ -38,7 +38,7 @@ goog.require('goog.ui.INLINE_BLOCK_CLASSNAME');
  *
  * @define {boolean} DEBUG Debug flag for global debugging.
  *         features.
- * @public
+ * @export
  */
 bloombox.DEBUG = true;
 
