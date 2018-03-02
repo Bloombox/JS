@@ -82,50 +82,50 @@ function shopTestsuite() {
       // });
     });
 
-    // describe('shop members', function() {
-    //   it('should support verifying a known-good account', function() {
-    //     bloombox.shop.verify('sam@bloombox.io', function(
-    //       verified, err, customer) {
-    //       if (verified === true) {
-    //         // ok the user is verified
-    //         console.log(
-    //           'The user \'' +
-    //           failureAccount +
-    //           '\' is valid and eligible to submit orders.', 'color: green',
-    //           customer);
-    //       } else {
-    //         // an error occurred
-    //         console.log(
-    //           '%cThe user \'' +
-    //           failureAccount +
-    //           '\' could not be verified.', 'color: red', err);
-    //         throw new Error('unable to verify known-good account');
-    //       }
-    //     });
-    //   });
-    //
-    //   it('should reject verifying a known-bad account', function() {
-    //     bloombox.shop.verify('does-not-exist@blabla.com', function(
-    //       verified, err, customer) {
-    //       if (verified === true) {
-    //         // ok the user is verified
-    //         console.log(
-    //           'The known-bad user \'' +
-    //           failureAccount +
-    //           '\' is somehow valid and eligible to submit orders.',
-    //           'color: red',
-    //           customer);
-    //         throw new Error('somehow able to verify known-bad account');
-    //       } else {
-    //         // an error occurred
-    //         console.log(
-    //           '%cThe user \'' +
-    //           failureAccount +
-    //           '\' could not be verified.', 'color: red', err);
-    //       }
-    //     });
-    //   });
-    // });
+    describe('shop members', function() {
+      it('should support verifying a known-good account', function() {
+        bloombox.shop.verify('sam@bloombox.io', function(
+          verified, err, customer) {
+          if (verified === true) {
+            // ok the user is verified
+            console.log(
+              'The user \'' +
+              failureAccount +
+              '\' is valid and eligible to submit orders.', 'color: green',
+              customer);
+          } else {
+            // an error occurred
+            console.log(
+              '%cThe user \'' +
+              failureAccount +
+              '\' could not be verified.', 'color: red', err);
+            throw new Error('unable to verify known-good account');
+          }
+        });
+      });
+
+      // it('should reject verifying a known-bad account', function() {
+      //   bloombox.shop.verify('does-not-exist@blabla.com', function(
+      //     verified, err, customer) {
+      //     if (verified === true) {
+      //       // ok the user is verified
+      //       console.log(
+      //         'The known-bad user \'' +
+      //         failureAccount +
+      //         '\' is somehow valid and eligible to submit orders.',
+      //         'color: red',
+      //         customer);
+      //       throw new Error('somehow able to verify known-bad account');
+      //     } else {
+      //       // an error occurred
+      //       console.log(
+      //         '%cThe user \'' +
+      //         failureAccount +
+      //         '\' could not be verified.', 'color: red', err);
+      //     }
+      //   });
+      // });
+    });
 
     // describe('shop orders', function() {
       // it('should support retrieving an order by ID', function() {
