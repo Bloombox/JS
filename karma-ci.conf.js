@@ -251,6 +251,7 @@ module.exports = function(config) {
   // iOS
   let iosSafariLatest = {browserName: 'Safari'};
   iosSafariLatest['name'] = 'iosSafariLatest';
+  iosSafariLatest['base'] = 'SauceLabs';
   iosSafariLatest['appiumVersion'] = '1.7.2';
   iosSafariLatest['deviceName'] = 'iPhone X Simulator';
   iosSafariLatest['deviceOrientation'] = 'portrait';
@@ -265,6 +266,7 @@ module.exports = function(config) {
 
   let iosSafariOldest = {browserName: 'Safari'};
   iosSafariOldest['name'] = 'iosSafariOldest';
+  iosSafariOldest['base'] = 'SauceLabs';
   iosSafariOldest['appiumVersion'] = '1.6.5';
   iosSafariOldest['deviceName'] = 'iPhone 4s Simulator';
   iosSafariOldest['deviceOrientation'] = 'portrait';
@@ -280,6 +282,7 @@ module.exports = function(config) {
   // Android
   let androidLatest = {browserName: 'Android'};
   androidLatest['name'] = 'androidLatest';
+  androidLatest['base'] = 'SauceLabs';
   androidLatest['appiumVersion'] = '1.7.2';
   androidLatest['deviceName'] = 'Google Pixel GoogleAPI Emulator';
   androidLatest['deviceOrientation'] = 'portrait';
@@ -295,6 +298,7 @@ module.exports = function(config) {
 
   let androidOldest = {browserName: 'Browser'};
   androidOldest['name'] = 'androidOldest';
+  androidOldest['base'] = 'SauceLabs';
   androidOldest['appiumVersion'] = '1.7.2';
   androidOldest['deviceName'] = 'Samsung Galaxy S3 Emulator';
   androidOldest['deviceOrientation'] = 'portrait';
