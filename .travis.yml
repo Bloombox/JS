@@ -1,6 +1,7 @@
 env:
   global:
-  - CC_TEST_REPORTER_ID=aa7d09060adc8243f2a6f51b6051ea2629b2f9a3c28042076f2494193bc8ad06
+  - CC_TEST_REPORTER_ID=18c66a6738c0718369a787a4cb2e97f0bef655c5ccb747332486636fac394664
+  - CODACY_PROJECT_TOKEN=61032013369f42c2883a039c33987e2c
   - SAUCE_USERNAME=bloomlabs
   - secure: PrWcsspNNByfBoQJpGc3w7BLDiUm7P+gHvTA3u6cCLgS8hFMpEDsci9JAJ02iYPYGmhNrdGI4TC6phmplvXLFfM8rIVvDCQgOrZp+wzK+03QjlzzZ2wneE6YGAg/OKTnpcKxhnZ3XnTNZjuC9LmT/ld7No8niYWXFmIP8dokJMfdHkL4fuWcfgYKwHAsqb+EA1W5EnZIM97sKq6BE5MExEHKECIQVsW3KhpEpVqKEB5MDy4/HmC7oJPSybuSZ5TaIYG6wACAnLf9gvbL5EpmeAyvs5Mk9xG5Yhx1jEF/5hiYBe/6PCLlFQSXjADNWUisluRI4DM5Uq8PiUxWwR1RqolejD/0f7JeNnX60SIpz1u4yItDO58AwMjqR9gemzc8+OJadRjoKZ8AHT2eH1XBbGk6sH3fiTXfL+XI/lWVnYrjK9OZ2r3Z536xrOgg5+kFhxn9Tz48BH/kA4RnIoOg7eOqgk+eIfiS+9I3WoccP373uWncqV/mauULRfgFAxqkLZT2GZ9y/48CPgIIy9+QZ6Agvwv9LKbXK4GR5kRyTP3CvY5tk42IgT62xVWCGkvxbALk0CxnmkW72CGYlhoryyeJuq3u2vElSz9UsxAVbeEe+jm78MUK8tjfZ6pbZ6slYO8H9DdRaFjmvc5iE13rTKUGtHk6iJ47UozLKc6g9GU=
   - secure: D2eFSLoV3F3Aa6Ew7PHZcJv6juwOhopQ85Y6UqzBY1QpWZvrQ6tOMvHHyIZcjosy04mQ0LHyuTTAITwzY66G6DQIVQqzbz0fbDDR5v0ZCgaf6IlGpIryd0dOGWPOPcIqZdAd0KJwEaqIqGm2Y5KAu8e3WnAj+QnO6MGQPqU2Zq4h1fMDkLOykKBBD2rD0fWeZmGhd1hrbM18NkmLuydNB/RPpSY38sLdVN4TTB8qnc/xj4Y8KYDZpGTafDoRe1jMcuKSn25QE2ngCFTS8AbcTAXKDR4sZCZhP2JN9kWUqwpqE63pWAYNvCtckWbbkk8h2BAuC7LnrNII+xSTPmQ5O9vK10/yubYypWPRvuvS3RfzIau/etFdEO++nSiRxhDbl4JPe1sV7Ix0YKiF7Vedt5Hlweo8uNhlUq6e2ZPzaYelv8lZnYbWART/AgjPV/I/iBhGgjPVNbUNEP3fhIxMHRmQhPV3yfZSFU5xLg+1gmqSQ6tPEbJBBxNpGosHklyP3R9qWRXkk4nWnSfFcbGBW8CvOy5K0PZ5PA2od7NR+XetxlEHxbuHfdbqK6p6tCaXABZZo6P/iYvLg4G2m8NbQOXwHYV/uLxNTSPmfPV1wuCaKdT1RUWJW00Kvp1JMY87VuxZAmG3MF3M1o07oYWCyfEHBxb5mf0RHuIBuAFMdA0=
@@ -21,14 +22,19 @@ cache:
   directories:
   - node_modules/
 before_script:
-- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
-  > ./cc-test-reporter
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- curl -L https://github.com/codacy/codacy-coverage-reporter/releases/download/2.0.2/codacy-coverage-reporter-2.0.2-assembly.jar > ./codacy-coverage-reporter.jar
 - chmod +x ./cc-test-reporter
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 - sleep 3
 - yarn
+- ./cc-test-reporter before-build
 script:
 - make
 - make serve &
 - karma start karma-ci.conf.js --single-run
+after_script:
+- cp -fv target/coverage/cobertura.xml ./cobertura.xml
+- ./cc-test-reporter after-build -d --exit-code $TRAVIS_TEST_RESULT --coverage-input-type cobertura --prefix /home/travis/build/Bloombox/JS/src
+- java -cp codacy-coverage-reporter-2.0.2-assembly.jar com.codacy.CodacyCoverageReporter --language Javascript -r target/coverage/cobertura.xml --prefix /home/travis/build/Bloombox/JS/src
