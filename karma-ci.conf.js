@@ -20,7 +20,7 @@ module.exports = function(config) {
   chromeMacLatest['base'] = 'SauceLabs';
   chromeMacLatest['platform'] = 'macOS 10.13';
   chromeMacLatest['version'] = '64.0';
-  chromeMacLatest['recordVideo'] = false;
+  chromeMacLatest['recordVideo'] = true;
   chromeMacLatest['recordScreenshots'] = true;
   saucelabsBrowsers.push(chromeMacLatest);
   latestBrowsers.push(chromeMacLatest);
@@ -32,7 +32,7 @@ module.exports = function(config) {
   chromeMacOldest['base'] = 'SauceLabs';
   chromeMacOldest['platform'] = 'OS X 10.9';
   chromeMacOldest['version'] = '31.0';
-  chromeMacOldest['recordVideo'] = false;
+  chromeMacOldest['recordVideo'] = true;
   chromeMacOldest['recordScreenshots'] = true;
   saucelabsBrowsers.push(chromeMacOldest);
   oldBrowsers.push(chromeMacOldest);
@@ -44,7 +44,7 @@ module.exports = function(config) {
   safariMacLatest['base'] = 'SauceLabs';
   safariMacLatest['platform'] = 'macOS 10.13';
   safariMacLatest['version'] = '11.0';
-  safariMacLatest['recordVideo'] = false;
+  safariMacLatest['recordVideo'] = true;
   safariMacLatest['recordScreenshots'] = true;
   saucelabsBrowsers.push(safariMacLatest);
   latestBrowsers.push(safariMacLatest);
@@ -56,7 +56,7 @@ module.exports = function(config) {
   safariMacOldest['base'] = 'SauceLabs';
   safariMacOldest['platform'] = 'OS X 10.9';
   safariMacOldest['version'] = '7.0';
-  safariMacOldest['recordVideo'] = false;
+  safariMacOldest['recordVideo'] = true;
   safariMacOldest['recordScreenshots'] = true;
   saucelabsBrowsers.push(safariMacOldest);
   oldBrowsers.push(safariMacOldest);
@@ -68,7 +68,7 @@ module.exports = function(config) {
   firefoxMacLatest['base'] = 'SauceLabs';
   firefoxMacLatest['platform'] = 'macOS 10.13';
   firefoxMacLatest['version'] = '58.0';
-  firefoxMacLatest['recordVideo'] = false;
+  firefoxMacLatest['recordVideo'] = true;
   firefoxMacLatest['recordScreenshots'] = true;
   saucelabsBrowsers.push(firefoxMacLatest);
   latestBrowsers.push(firefoxMacLatest);
@@ -80,7 +80,7 @@ module.exports = function(config) {
   firefoxMacOldest['base'] = 'SauceLabs';
   firefoxMacOldest['platform'] = 'OS X 10.9';
   firefoxMacOldest['version'] = '15.0';
-  firefoxMacOldest['recordVideo'] = false;
+  firefoxMacOldest['recordVideo'] = true;
   firefoxMacOldest['recordScreenshots'] = true;
   saucelabsBrowsers.push(firefoxMacOldest);
   oldBrowsers.push(firefoxMacOldest);
@@ -93,7 +93,7 @@ module.exports = function(config) {
   edgeLatest['base'] = 'SauceLabs';
   edgeLatest['platform'] = 'Windows 10';
   edgeLatest['version'] = '16.16299';
-  edgeLatest['recordVideo'] = false;
+  edgeLatest['recordVideo'] = true;
   edgeLatest['recordScreenshots'] = true;
   saucelabsBrowsers.push(edgeLatest);
   latestBrowsers.push(edgeLatest);
@@ -105,7 +105,7 @@ module.exports = function(config) {
   chromeWindowsLatest['base'] = 'SauceLabs';
   chromeWindowsLatest['platform'] = 'Windows 10';
   chromeWindowsLatest['version'] = '64.0';
-  chromeWindowsLatest['recordVideo'] = false;
+  chromeWindowsLatest['recordVideo'] = true;
   chromeWindowsLatest['recordScreenshots'] = true;
   saucelabsBrowsers.push(chromeWindowsLatest);
   latestBrowsers.push(chromeWindowsLatest);
@@ -117,7 +117,7 @@ module.exports = function(config) {
   chromeWindowsOldest['base'] = 'SauceLabs';
   chromeWindowsOldest['platform'] = 'Windows 7';
   chromeWindowsOldest['version'] = '31.0';
-  chromeWindowsOldest['recordVideo'] = false;
+  chromeWindowsOldest['recordVideo'] = true;
   chromeWindowsOldest['recordScreenshots'] = true;
   saucelabsBrowsers.push(chromeWindowsOldest);
   oldBrowsers.push(chromeWindowsOldest);
@@ -129,7 +129,7 @@ module.exports = function(config) {
   firefoxWindowsLatest['base'] = 'SauceLabs';
   firefoxWindowsLatest['platform'] = 'Windows 10';
   firefoxWindowsLatest['version'] = '58.0';
-  firefoxWindowsLatest['recordVideo'] = false;
+  firefoxWindowsLatest['recordVideo'] = true;
   firefoxWindowsLatest['recordScreenshots'] = true;
   saucelabsBrowsers.push(firefoxWindowsLatest);
   latestBrowsers.push(firefoxWindowsLatest);
@@ -141,7 +141,7 @@ module.exports = function(config) {
   firefoxWindowsOldest['base'] = 'SauceLabs';
   firefoxWindowsOldest['platform'] = 'Windows 7';
   firefoxWindowsOldest['version'] = '15.0';
-  firefoxWindowsOldest['recordVideo'] = false;
+  firefoxWindowsOldest['recordVideo'] = true;
   firefoxWindowsOldest['recordScreenshots'] = true;
   saucelabsBrowsers.push(firefoxWindowsOldest);
   oldBrowsers.push(firefoxWindowsOldest);
@@ -153,7 +153,7 @@ module.exports = function(config) {
   ie11Windows10['base'] = 'SauceLabs';
   ie11Windows10['platform'] = 'Windows 10';
   ie11Windows10['version'] = '11.103';
-  ie11Windows10['recordVideo'] = false;
+  ie11Windows10['recordVideo'] = true;
   ie11Windows10['recordScreenshots'] = true;
   saucelabsBrowsers.push(ie11Windows10);
   oldBrowsers.push(ie11Windows10);
@@ -165,7 +165,7 @@ module.exports = function(config) {
   ie8Windows7['base'] = 'SauceLabs';
   ie8Windows7['platform'] = 'Windows 7';
   ie8Windows7['version'] = '8.0';
-  ie8Windows7['recordVideo'] = false;
+  ie8Windows7['recordVideo'] = true;
   ie8Windows7['recordScreenshots'] = true;
   saucelabsBrowsers.push(ie8Windows7);
   oldBrowsers.push(ie8Windows7);
@@ -178,7 +178,7 @@ module.exports = function(config) {
   chromeLinuxLatest['base'] = 'SauceLabs';
   chromeLinuxLatest['platform'] = 'Linux';
   chromeLinuxLatest['version'] = '48.0';
-  chromeLinuxLatest['recordVideo'] = false;
+  chromeLinuxLatest['recordVideo'] = true;
   chromeLinuxLatest['recordScreenshots'] = true;
   saucelabsBrowsers.push(chromeLinuxLatest);
   latestBrowsers.push(chromeLinuxLatest);
@@ -190,7 +190,7 @@ module.exports = function(config) {
   chromeLinuxOldest['base'] = 'SauceLabs';
   chromeLinuxOldest['platform'] = 'Linux';
   chromeLinuxOldest['version'] = '41.0';
-  chromeLinuxOldest['recordVideo'] = false;
+  chromeLinuxOldest['recordVideo'] = true;
   chromeLinuxOldest['recordScreenshots'] = true;
   saucelabsBrowsers.push(chromeLinuxOldest);
   oldBrowsers.push(chromeLinuxOldest);
@@ -202,7 +202,7 @@ module.exports = function(config) {
   firefoxLinuxLatest['base'] = 'SauceLabs';
   firefoxLinuxLatest['platform'] = 'Linux';
   firefoxLinuxLatest['version'] = '45.0';
-  firefoxLinuxLatest['recordVideo'] = false;
+  firefoxLinuxLatest['recordVideo'] = true;
   firefoxLinuxLatest['recordScreenshots'] = true;
   saucelabsBrowsers.push(firefoxLinuxLatest);
   latestBrowsers.push(firefoxLinuxLatest);
@@ -214,7 +214,7 @@ module.exports = function(config) {
   firefoxLinuxOldest['base'] = 'SauceLabs';
   firefoxLinuxOldest['platform'] = 'Linux';
   firefoxLinuxOldest['version'] = '38.0';
-  firefoxLinuxOldest['recordVideo'] = false;
+  firefoxLinuxOldest['recordVideo'] = true;
   firefoxLinuxOldest['recordScreenshots'] = true;
   saucelabsBrowsers.push(firefoxLinuxOldest);
   oldBrowsers.push(firefoxLinuxOldest);
