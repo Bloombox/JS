@@ -39,35 +39,35 @@ function shopTestsuite() {
         });
       });
 
-      // it('should support verifying a known-good zipcode', function() {
-      //   bloombox.shop.zipcheck('95126', function(
-      //     zipcodeEligible, minimumDeliverySubtotal) {
-      //     if (zipcodeEligible !== true) {
-      //       console.log(
-      //         '%cThe zipcode \'' +
-      //         zipToCheck + '\' was found to be ineligible. Cannot proceed.',
-      //         'color: red');
-      //       throw new Error('failed to properly validate known-good zipcode.');
-      //     } else {
-      //       if (
-      //         minimumDeliverySubtotal !== null && minimumDeliverySubtotal > 0.0) {
-      //         console.log(
-      //           '%cThe zipcode \'' +
-      //           zipToCheck +
-      //           '\' is eligible for delivery orders, with a delivery minimum of' +
-      //           ' $' + minimumDeliverySubtotal.toString() + '.',
-      //           'color: green');
-      //       } else {
-      //         console.log(
-      //           '%cThe zipcode \'' +
-      //           zipToCheck +
-      //           '\' is eligible for delivery orders.',
-      //           'color: green');
-      //       }
-      //     }
-      //   });
-      // });
-      //
+      it('should support verifying a known-good zipcode', function() {
+        bloombox.shop.zipcheck('95126', function(
+          zipcodeEligible, minimumDeliverySubtotal) {
+          if (zipcodeEligible !== true) {
+            console.log(
+              '%cThe zipcode \'' +
+              zipToCheck + '\' was found to be ineligible. Cannot proceed.',
+              'color: red');
+            throw new Error('failed to properly validate known-good zipcode.');
+          } else {
+            if (
+              minimumDeliverySubtotal !== null && minimumDeliverySubtotal > 0.0) {
+              console.log(
+                '%cThe zipcode \'' +
+                zipToCheck +
+                '\' is eligible for delivery orders, with a delivery minimum of' +
+                ' $' + minimumDeliverySubtotal.toString() + '.',
+                'color: green');
+            } else {
+              console.log(
+                '%cThe zipcode \'' +
+                zipToCheck +
+                '\' is eligible for delivery orders.',
+                'color: green');
+            }
+          }
+        });
+      });
+
       // it('should reject verifying a known-bad zipcode', function() {
       //   bloombox.shop.zipcheck('12345', function(zipcodeEligible) {
       //     if (zipcodeEligible !== true) {
