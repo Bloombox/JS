@@ -451,7 +451,6 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['jasmine', 'mocha', 'chai'],
     files: [
-      'tests/init.js',
       'target/*-debug.min.js',
       'tests/suites/**/*.js',
       'tests/basic_tests.js'
