@@ -535,7 +535,7 @@ module.exports = function(config) {
     tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
     startTunnel: false,
     sauceLabs: {
-      username: 'bloombox',
+      username: 'bloomlabs',
       accessKey: process.env.SAUCE_ACCESS_KEY,
       tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
       startConnect: false,
