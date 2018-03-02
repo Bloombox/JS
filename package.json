@@ -37,10 +37,13 @@
     "yargs": "^11.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
     "chai-as-promised": "^7.1.1",
     "gulp-util": "^3.0.8",
     "jasmine-core": "^2.99.1",
     "karma": "^2.0.0",
+    "karma-babel-preprocessor": "^8.0.0-beta.0",
     "karma-browserstack-launcher": "^1.3.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
