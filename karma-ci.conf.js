@@ -449,7 +449,7 @@ module.exports = function(config) {
 
   config.set({
     basePath: '',
-    frameworks: ['jasmine', 'closure'],
+    frameworks: ['jasmine', 'closure', 'chai', 'mocha'],
     files: [
       'node_modules/closure-builder/third_party/closure-library/closure/goog/base.js',
       'tests/suites/**/*.js',
