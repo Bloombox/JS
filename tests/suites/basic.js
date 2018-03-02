@@ -17,10 +17,10 @@ function basicTestsuite(debugShouldBeActive) {
 
     it('should export the top-level DEBUG property', function() {
       var expectDebug = !!debugShouldBeActive;
-      if (bloombox.DEBUG === expectDebug)
+      if (bloombox.DEBUG !== expectDebug)
         throw new Error('debug setting for library variant is wrong. ' +
-          'should be: "' + expectDebug + "', was: '" +
-          bloombox.DEBUG + "'.");
+          'should be: "' + expectDebug + '", was: "' +
+          bloombox.DEBUG + '".');
     });
 
     it('should export the top-level VERSION property', function() {
