@@ -72,9 +72,11 @@ stackdriver.ErrorReporter = function ErrorReporter(config) {
   // noinspection JSUnresolvedVariable
   if (typeof window['StackTrace'] === 'undefined') {
     // Inform about missing dependency
-    throw new Error('make sure you loaded “stackdriver-errors-concat.js” ' +
+    bloombox.logging.warn('Unable to load Stackdriver Error Reporting. ' +
+      'make sure you loaded “stackdriver-errors-concat.js” ' +
       'or “stackdriver-errors-concat.min.js”, or that you imported the ' +
       '“stacktrace-js” module');
+    throw new Error('Unable to load Stackdriver.');
   }
 
   /**

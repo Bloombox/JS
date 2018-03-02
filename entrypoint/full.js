@@ -123,8 +123,12 @@ bloombox.setup = function(partner, location, apikey, callback) {
     disabled: false
   });
 
-  bloombox.ERROR_REPORTER = new stackdriver.ErrorReporter(errorReporting);
-  stackdriver.setup(bloombox.ERROR_REPORTER);
+  try {
+    bloombox.ERROR_REPORTER = new stackdriver.ErrorReporter(errorReporting);
+    stackdriver.setup(bloombox.ERROR_REPORTER);
+  } catch (e) {
+    // skip error reporting if it cannot be setup
+  }
 
   bloombox.logging.log('BBJS is initializing.',
     {'version': bloombox.VERSION,
