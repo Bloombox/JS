@@ -398,6 +398,8 @@ module.exports = function(config) {
     sauceLabs: {
       username: 'bloombox',
       accessKey: process.env.SAUCE_ACCESS_KEY,
+      tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
+      startConnect: false,
       connectOptions: {
         username: 'bloombox',
         accessKey: process.env.SAUCE_ACCESS_KEY,
