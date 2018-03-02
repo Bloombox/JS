@@ -258,8 +258,6 @@ bloombox.rpc.RPC = function RPC(httpMethod,
  * @return {function(goog.events.Event)} On-load callback function.
  */
 bloombox.rpc.RPC.prototype.onload = function(success, error) {
-  return onload.bind(this);
-
   /**
    * @this {bloombox.rpc.RPC}
    * @param {goog.events.Event} event
@@ -340,6 +338,8 @@ bloombox.rpc.RPC.prototype.onload = function(success, error) {
       }
     }
   }
+
+  return onload.bind(this);
 };
 
 
