@@ -457,6 +457,19 @@ module.exports = function(config) {
       'tests/suites/**/*.js',
       'tests/init.js',
       'tests/sanity_tests.js',
+
+      // Target: Debug
+      'target/debug.min.js',
+      'tests/debug_tests.js',
+      'tests/wasabi.js',
+
+      // Target: Release
+      'public/client.min.js',
+      'tests/release_tests.js',
+      'tests/wasabi.js',
+
+      // Target: Sources
+      'tests/init.js',
       'tests/source_tests.js',
       {pattern: 'third_party/schema/*.js', included: false},
       {pattern: 'third_party/protobuf/js/map.js', included: false},
@@ -466,7 +479,7 @@ module.exports = function(config) {
       {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js', included: false, served: false},
       {pattern: 'src/**/*.js', included: false},
       {pattern: 'entrypoint/full.js', included: false},
-      {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js', included: false, served: false}
+      {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js', included: true, served: false}
     ],
     exclude: [
     ],
