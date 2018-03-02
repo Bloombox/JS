@@ -444,6 +444,7 @@ module.exports = function(config) {
       browserName: 'android',
       device: 'Google Pixel',
       realMobile: 'true',
+      os: 'android',
       os_version: '8.0'
     }
   };
