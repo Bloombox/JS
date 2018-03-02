@@ -110,8 +110,8 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
-     //'PhantomJS',
      'Safari',
+     'Firefox',
      'ChromeCanary'],
 
 
@@ -121,6 +121,6 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: 1
+    concurrency: 3
   });
 };
