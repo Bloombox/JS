@@ -140,7 +140,7 @@ bloombox.config.configure = function(config) {
  * Resolve the active configuration object.
  *
  * @return {bloombox.config.JSConfig} Active JS config.
- * @public
+ * @export
  */
 bloombox.config.active = function() {
   return bloombox.config._ACTIVE_CONFIG_;
