@@ -16,6 +16,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'node_modules/closure-builder/third_party/closure-library/closure/goog/base.js',
+      {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js', included: false, served: true},
+      {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js', included: true, served: false},
       'tests/suites/**/*.js',
       'tests/init.js',
       'tests/sanity_tests.js',
@@ -31,7 +33,7 @@ module.exports = function(config) {
       'tests/wasabi.js',
 
       // Target: Sources
-      'tests/init.js',
+      'tests/init_sources.js',
       'tests/source_tests.js',
       {pattern: 'third_party/schema/*.js', included: false},
       {pattern: 'third_party/protobuf/js/map.js', included: false},
@@ -39,8 +41,7 @@ module.exports = function(config) {
       {pattern: 'third_party/protobuf/js/google/protobuf/*.js', included: false},
       {pattern: 'third_party/protobuf/js/binary/*.js', included: false},
       {pattern: 'src/**/*.js', included: false},
-      {pattern: 'entrypoint/full.js', included: false},
-      {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js', included: true, served: false}
+      {pattern: 'entrypoint/full.js', included: false}
     ],
 
 
