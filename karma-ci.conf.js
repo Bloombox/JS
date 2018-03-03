@@ -552,10 +552,9 @@ module.exports = function(config) {
       //'ie_11', 'edge_16', 'firefox_windows_oldest', 'chrome_windows_oldest',
       //'ie_10', 'ie_9', 'ie_8', 'safari_windows',
       'iphoneX_safari_11' //, 'pixel8'
-      ])),
-      //.concat(latestBrowsers.map(function(item) {
-      //  return item.name;
-      //})))),
+      ].concat(latestBrowsers.map(function(item) {
+        return item.name;
+      })))),
     singleRun: true,
     concurrency: 2,
     tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
