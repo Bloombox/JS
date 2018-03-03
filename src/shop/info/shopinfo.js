@@ -73,7 +73,23 @@ bloombox.shop.ShopStatus = {
  * @export
  */
 bloombox.shop.ShopInfoException = function ShopInfoException(message) {
+  /**
+   * Exception message.
+   *
+   * @type {string}
+   */
   this.message = message;
+};
+
+
+/**
+ * Public accessor method to retrieve this exception's error message.
+ *
+ * @return {string}
+ * @export
+ */
+bloombox.shop.ShopInfoException.prototype.getMessage = function() {
+  return this.message;
 };
 
 

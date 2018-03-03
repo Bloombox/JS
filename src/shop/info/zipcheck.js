@@ -59,7 +59,23 @@ bloombox.shop.ZipCheckCallback;
  * @export
  */
 bloombox.shop.ZipcheckException = function ZipcheckException(message) {
+  /**
+   * Exception message.
+   *
+   * @type {string}
+   */
   this.message = message;
+};
+
+
+/**
+ * Public accessor method to retrieve this exception's error message.
+ *
+ * @return {string}
+ * @export
+ */
+bloombox.shop.ZipcheckException.prototype.getMessage = function() {
+  return this.message;
 };
 
 
