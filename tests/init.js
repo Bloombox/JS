@@ -11,6 +11,7 @@ function runTestsuite(name) {
     describe('library: ' + name, function() {
       basicTestsuite();
       shopTestsuite();
+      menuTestsuite();
     });
   });
 }

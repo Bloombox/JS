@@ -27,6 +27,22 @@ function shopTestsuite() {
           }
         });
       });
+
+      it('should support throwing exceptions with messages', function() {
+        try {
+          throw new bloombox.shop.ShopInfoException('woops');
+        } catch (e) {
+          if (!e.getMessage() || e.getMessage() !== 'woops')
+            throw new Error('ShopInfo error message for exception is wrong');
+        }
+
+        try {
+          throw new bloombox.shop.ZipcheckException('woops');
+        } catch (e) {
+          if (!e.getMessage() || e.getMessage() !== 'woops')
+            throw new Error('Zipcheck error message for exception is wrong');
+        }
+      });
     });
 
     describe('members', function() {
