@@ -12,6 +12,7 @@ function runTestsuite(name) {
       basicTestsuite();
       shopTestsuite();
       menuTestsuite();
+      telemetryTestsuite();
     });
   });
 }

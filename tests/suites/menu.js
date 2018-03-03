@@ -2,7 +2,7 @@
 'use strict';
 
 function menuTestsuite() {
-  describe('menu API: product catalog data', function() {
+  describe('menu: product catalog data', function() {
     it('should be able to retrieve a full menu', function() {
       bloombox.menu.retrieve(function(menu, err) {
         if (err)
