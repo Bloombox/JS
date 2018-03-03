@@ -4,7 +4,7 @@
 #
 
 VERSION ?= v1.0.0-rc1
-ALIAS ?= v1
+ALIAS ?= v1rc1
 TARGET ?= target
 VERBOSE ?= no
 RELEASE ?= no
@@ -178,14 +178,14 @@ publish: build release publish-gcs
 	@echo "Publishing public Bloombox JS..."
 	@firebase deploy
 	@echo "Library $(VERSION) published."
-	@#echo "Publishing to NPM..."
-	@#npm publish --tag $(ALIAS) --access public
-	@#mv package.json package-scoped.json
-	@#mv package-global.json package.json
-	@#npm publish --tag $(ALIAS) --access public
-	@#mv package.json package-global.json
-	@#mv package-scoped.json package.json
-	@#echo "Library '$(VERSION)' published on NPM, with alias '$(ALIAS)'."
+	@echo "Publishing to NPM..."
+	@npm publish --tag $(ALIAS) --access public
+	@mv package.json package-scoped.json
+	@mv package-global.json package.json
+	@npm publish --tag $(ALIAS) --access public
+	@mv package.json package-global.json
+	@mv package-scoped.json package.json
+	@echo "Library '$(VERSION)' published on NPM, with alias '$(ALIAS)'."
 
 
 .PHONY: docs publish build release
