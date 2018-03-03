@@ -556,9 +556,10 @@ module.exports = function(config) {
         return item.name;
       })))),
     singleRun: true,
-    concurrency: 2,
+    concurrency: 1,
     tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
     startTunnel: false,
+    startConnect: false,
     sauceLabs: {
       username: 'bloomlabs',
       accessKey: process.env.SAUCE_ACCESS_KEY,
@@ -566,6 +567,7 @@ module.exports = function(config) {
       startConnect: false,
       connectOptions: {
         username: 'bloombox',
+        startConnect: false,
         accessKey: process.env.SAUCE_ACCESS_KEY,
         tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
         testName: 'Bloombox SDK for JavaScript'
