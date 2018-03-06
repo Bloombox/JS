@@ -254,7 +254,7 @@ bloombox.rpc.RPC = function RPC(httpMethod,
  * RPC onload callback.
  *
  * @param {function(?Object)} success Success callback to bind in.
- * @param {function(?Object|number=)} error Error callback to bind in.
+ * @param {function(?number, ?Object=)} error Error callback to bind in.
  * @return {function(goog.events.Event)} On-load callback function.
  */
 bloombox.rpc.RPC.prototype.onload = function(success, error) {
@@ -313,7 +313,7 @@ bloombox.rpc.RPC.prototype.onload = function(success, error) {
             'Key: ' + this.apiKey);
           err.code = status || this.xhr.getLastErrorCode() || -1;
           stackdriver.reportError(err);
-          error(status);
+          error(status, err);
         }
         if (!this.keep) this.xhr = null;
       } catch (err) {
@@ -333,7 +333,7 @@ bloombox.rpc.RPC.prototype.onload = function(success, error) {
               'error': err
             });
             stackdriver.reportError(err);
-            error(err);
+            error(null, err);
           }
         }
       }
