@@ -254,7 +254,10 @@ bloombox.rpc.RPC = function RPC(httpMethod,
  * RPC onload callback.
  *
  * @param {function(?Object)} success Success callback to bind in.
- * @param {function(?number, ?Object=)} error Error callback to bind in.
+ * @param {function(?number, ?Object=, ?number=, ?string=)} error Error callback
+ *        to dispatch in case a failure is encountered. In the following order,
+ *        the parameter is list: HTTP status code, error object raised (if any),
+ *        specific failure code (if any), and specific failure message (if any).
  * @return {function(goog.events.Event)} On-load callback function.
  */
 bloombox.rpc.RPC.prototype.onload = function(success, error) {
@@ -302,18 +305,51 @@ bloombox.rpc.RPC.prototype.onload = function(success, error) {
             }
           }
         } else {
+          let response = /** @type {?Object} */ (null);
+          try {
+            response = this.xhr.getResponseJson();
+          } catch (e) {
+            // cannot process response JSON
+            bloombox.logging.error('Unable to parse error state JSON, with ' +
+              ' status ' + status + '. Encountered: ' + e.toString(),
+              {'xhr': this.xhr,
+               'status': status,
+               'response': response,
+               'error': e});
+            response = null;
+          }
+
+          let errorCode = /** @type {?string} */ (null);
+          let errorMessage = /** @type {?string} */ (null);
+          if (response !== null) {
+            errorCode = response['code'];
+            errorMessage = response['message'];
+            bloombox.logging.error('Failed to resolve RPC: unrecognized ' +
+              ' status ' + status,
+              {'xhr': this.xhr,
+               'status': status,
+               'response': response,
+               'code': errorCode,
+               'message': errorMessage});
+          } else {
+            bloombox.logging.error('Failed to resolve RPC: unrecognized ' +
+              ' status ' + status + '. Additionally, failed to parse ' +
+              'response JSON.',
+              {'xhr': this.xhr, 'status': status, 'response': response});
+          }
+
           // some error event i.e. unrecognized status code
-          bloombox.logging.error('Failed to resolve RPC: unrecognized status ' +
-            status, {'xhr': this.xhr, 'status': status});
           let err = new Error(
             'RPC Error: "' + this.httpMethod + ' ' + this.endpoint + '"\n' +
             'Status: ' + status.toString() + '\n' +
-            'Failure code: ' + this.xhr.getLastErrorCode() + '\n' +
-            'Failure reason: ' + this.xhr.getLastError() + '\n' +
+            'Error code: ' + errorCode + '\n' +
+            'Error reason: ' + errorMessage + '\n' +
+            'XHR Failure code: ' + this.xhr.getLastErrorCode() + '\n' +
+            'XHR Failure reason: ' + this.xhr.getLastError() + '\n' +
             'Key: ' + this.apiKey);
           err.code = status || this.xhr.getLastErrorCode() || -1;
           stackdriver.reportError(err);
-          error(status, err);
+          error(status, err, errorCode, errorMessage);
         }
         if (!this.keep) this.xhr = null;
       } catch (err) {
