@@ -157,7 +157,8 @@ bloombox.shop.rpc.ShopRPC = function ShopRPC(rpcMethod,
  * Send a prepared RPC.
  *
  * @param {function(?Object)} callback Callback to dispatch once we're done.
- * @param {function(?number=)} error Error callback.
+ * @param {function(?number, ?Object=, ?number=, ?string=)} error Error callback
+ *        to dispatch if a failure is encountered.
  */
 bloombox.shop.rpc.ShopRPC.prototype.send = function(callback, error) {
   // send underlying RPC w/callback and errors passed through
@@ -165,10 +166,15 @@ bloombox.shop.rpc.ShopRPC.prototype.send = function(callback, error) {
     bloombox.logging.log(
       'Shop RPC for method \'' + this.rpcMethod + '\' completed.');
     callback(response);
-  }).bind(this), /** @type {function(?number=)} */ ((function(error_code) {
-    bloombox.logging.error(
-      'Failed to resolve Shop API RPC for method \'' +
-        this.rpcMethod + '\': status ' + error_code);
-    error(error_code);
-  }).bind(this)));
+  }).bind(this), /** @type {function(?number, ?Object=, ?number=, ?string=)} */
+    (function(status_code, error_obj, error_code, message_or_failure_name) {
+      bloombox.logging.error(
+        'Failed to resolve Shop API RPC for method \'' +
+          this.rpcMethod + '\': status ' + error_code, {
+          'status': status_code,
+          'error': error_obj,
+          'code': error_code,
+          'message': message_or_failure_name});
+      error(status_code, error_obj, error_code, message_or_failure_name);
+  }).bind(this));
 };

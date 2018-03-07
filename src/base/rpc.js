@@ -301,7 +301,8 @@ bloombox.rpc.RPC.prototype.onload = function(success, error) {
               bloombox.logging.error(
                 'Server indicated unrecognized content type:',
                 contentType);
-              error(null);
+              error(null, response, status, /** @type {?string} */ (
+                response ? response['message'] : null));
             }
           }
         } else {
@@ -384,7 +385,8 @@ bloombox.rpc.RPC.prototype.onload = function(success, error) {
  * Send a prepared RPC.
  *
  * @param {function(?Object)} callback Callback to dispatch once we're done.
- * @param {function(?number=)} error Error callback.
+ * @param {function(?number, ?Object=, ?number=, ?string=)} error Error callback
+ *        to dispatch in case there is a failure.
  * @throws {bloombox.rpc.RPCException} If `send` is called twice and this
  *         XHR has already send and `keep` is falsy.
  */

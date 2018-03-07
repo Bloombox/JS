@@ -453,22 +453,26 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
       callback(false, null, null);
       enrollment.sendAnalytics(null, null);
     }
-  }, function(status) {
-    // try to parse the error
-    let code = response['code'];
-    let message = response['message'];
-
+  }, function(status, response, error_code, error_message) {
     bloombox.logging.error(status ?
       'Enrollment RPC failed with unexpected status: \'' + status + '\'.' :
       'Enrollment RPC response failed to be decoded.', {
-        'code': code,
-        'message': message});
+        'status': status,
+        'response': response,
+        'code': error_code,
+        'message': error_message});
 
-    let inflated = (
-      new proto.bloombox.schema.services.shop.v1.EnrollMember.Response());
-    inflated.setError(code);
+    if (error_code) {
+      let inflated = (
+        new proto.bloombox.schema.services.shop.v1.EnrollMember.Response());
+      inflated.setError(
+        /** @type {proto.bloombox.schema.services.shop.v1.EnrollmentError} */
+        (error_code));
+      callback(false, inflated.getError(), null);
+    } else {
+      callback(false, null, null);
+    }
 
-    callback(false, inflated, null);
     enrollment.sendAnalytics(null, null, null, status);
   });
 };
