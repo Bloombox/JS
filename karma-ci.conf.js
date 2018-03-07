@@ -548,8 +548,8 @@ module.exports = function(config) {
       // BrowserStack
       'firefox_mac_latest',
       'chrome_mac_latest',
-      'safari_mac_latest',
-      'firefox_windows_latest',
+      //'safari_mac_latest',
+      //'firefox_windows_latest',
       'chrome_windows_latest'
       //'firefox_mac_oldest', 'chrome_mac_oldest', 'safari_mac_oldest',
       //'firefox_windows_latest', 'chrome_windows_latest', 'edge_16',
