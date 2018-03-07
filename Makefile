@@ -3,8 +3,8 @@
 ## Bloombox: JS Client
 #
 
-VERSION ?= v1.0.0-rc5
-ALIAS ?= v1rc5
+VERSION ?= v1.0.0
+ALIAS ?= v1
 TARGET ?= target
 VERBOSE ?= no
 RELEASE ?= no
