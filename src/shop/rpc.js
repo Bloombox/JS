@@ -118,9 +118,14 @@ bloombox.shop.rpc.ShopRPC = function ShopRPC(rpcMethod,
                                              payload) {
   let targetEndpoint = bloombox.shop.endpoint(endpoint);
 
-  if (typeof httpMethod !== 'string')  // @TODO better method validation?
+  if (typeof httpMethod !== 'string')
     throw new bloombox.shop.ShopRPCException(
       'Invalid HTTP method: ' + httpMethod);
+  let methodUppercased = httpMethod.toUpperCase();
+  if (methodUppercased !== 'GET' && methodUppercased !== 'POST') {
+    throw new bloombox.shop.ShopRPCException(
+      'Unrecognized HTTP method: ' + httpMethod);
+  }
   if (typeof endpoint !== 'string')
     throw new bloombox.shop.ShopRPCException(
       'Invalid RPC endpoint: ' + endpoint);

@@ -73,7 +73,23 @@ bloombox.shop.ShopStatus = {
  * @export
  */
 bloombox.shop.ShopInfoException = function ShopInfoException(message) {
+  /**
+   * Exception message.
+   *
+   * @type {string}
+   */
   this.message = message;
+};
+
+
+/**
+ * Public accessor method to retrieve this exception's error message.
+ *
+ * @return {string}
+ * @export
+ */
+bloombox.shop.ShopInfoException.prototype.getMessage = function() {
+  return this.message;
 };
 
 
@@ -145,12 +161,16 @@ bloombox.shop.info = function(callback) {
             delivery = true;
         }
 
-        // dispatch the callback
-        callback(pickup, delivery, null);
+        if (callback) {
+          // dispatch the callback
+          callback(pickup, delivery, null);
+        }
       } else {
         bloombox.logging.error(
           'Received unrecognized response payload for shop info.', response);
-        callback(null, null, null);
+        if (callback) {
+          callback(null, null, null);
+        }
       }
     }
   }, function(status) {

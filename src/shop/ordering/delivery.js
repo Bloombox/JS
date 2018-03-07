@@ -25,6 +25,7 @@
 /*global goog */
 
 goog.provide('bloombox.shop.order.DeliveryLocation');
+goog.provide('bloombox.shop.order.DeliveryLocation.fromResponse');
 
 goog.require('bloombox.identity.StreetAddress');
 
@@ -59,6 +60,60 @@ bloombox.shop.order.DeliveryLocation = function DeliveryLocation(streetAddress,
 
 
 /**
+ * Decode a delivery location from a raw proto object response.
+ *
+ * @param {?Object} protob Raw response object.
+ * @return {?bloombox.shop.order.DeliveryLocation} Decoded delivery location
+ *         object, or `null` if none could be decoded.
+ */
+bloombox.shop.order.DeliveryLocation.fromResponse = function(protob) {
+  if ((typeof protob === 'object') &&
+      (typeof protob['destination'] === 'object')) {
+    // decode location
+    let data = /** @type {Object} */ (protob['destination']);
+    let address = /** @type {Object|undefined} */ (data['address']);
+    let instructions = /** @type {string|null|undefined} */ (
+      data['instructions']);
+
+    if (typeof address === 'object') {
+      // decode address
+      let firstLine = /** @type {string|undefined|null} */ (
+        address['firstLine']);
+      let secondLine = /** @type {string|undefined|null} */ (
+        address['secondLine']) || null;
+      let city = /** @type {string|undefined|null} */ (
+        address['city']);
+      let state = /** @type {string|undefined|null} */ (
+        address['state']);
+      let zipcode = /** @type {string|undefined|null} */ (
+        address['zipcode']);
+
+      if (typeof firstLine === 'string' &&
+          typeof city === 'string' &&
+          typeof state === 'string' &&
+          typeof zipcode === 'string') {
+        // we are good to go
+        return new bloombox.shop.order.DeliveryLocation(
+          new bloombox.identity.StreetAddress(
+            firstLine,
+            secondLine,
+            city,
+            state,
+            zipcode),
+          instructions);
+      } else {
+        // invalid address
+        bloombox.logging.error(
+          'Failed to decode delivery address data.',
+          {'data': data, 'address': address});
+      }
+    }
+  }
+  return null;
+};
+
+
+/**
  * Export a proto that specifies this delivery location.
  *
  * @return {proto.opencannabis.commerce.DeliveryDestination} Exported proto.
@@ -80,6 +135,18 @@ bloombox.shop.order.DeliveryLocation.prototype.export = function() {
     protobuf.setInstructions(this.deliveryInstructions);
   return protobuf;
 };
+
+
+/**
+ * Retrieve the street address associated with this delivery location.
+ *
+ * @return {bloombox.identity.StreetAddress} Delivery street address.
+ * @export
+ */
+bloombox.shop.order.DeliveryLocation.prototype.getAddress = function() {
+  return this.streetAddress;
+};
+
 
 /**
  * Set special delivery instructions.

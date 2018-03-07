@@ -68,15 +68,6 @@ bloombox.config.JSIntegrationConfig;
 
 
 /**
- * Reference to the active global configuration.
- *
- * @type {bloombox.config.JSConfig}
- * @private
- */
-bloombox.config._ACTIVE_CONFIG_ = bloombox.config.buildDefault();
-
-
-/**
  * @typedef {bloombox.config.integration.GoogleAnalyticsConfig}
  * @package
  */
@@ -149,8 +140,17 @@ bloombox.config.configure = function(config) {
  * Resolve the active configuration object.
  *
  * @return {bloombox.config.JSConfig} Active JS config.
- * @public
+ * @export
  */
 bloombox.config.active = function() {
   return bloombox.config._ACTIVE_CONFIG_;
 };
+
+
+/**
+ * Reference to the active global configuration.
+ *
+ * @type {bloombox.config.JSConfig}
+ * @private
+ */
+bloombox.config._ACTIVE_CONFIG_ = bloombox.config.buildDefault();

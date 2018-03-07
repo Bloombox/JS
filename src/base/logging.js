@@ -35,6 +35,7 @@ goog.require('bloombox.DEBUG');
  * Send a log message to the console.
  *
  * @param {...*} var_args Arguments to log.
+ * @public
  */
 bloombox.logging.log = function(var_args) {
   if (bloombox.DEBUG)
@@ -46,6 +47,7 @@ bloombox.logging.log = function(var_args) {
  * Send an INFO-level message to the console.
  *
  * @param {...*} var_args Arguments to log.
+ * @public
  */
 bloombox.logging.info = function(var_args) {
   if (bloombox.DEBUG)
@@ -57,6 +59,7 @@ bloombox.logging.info = function(var_args) {
  * Send a WARN-level message to the console.
  *
  * @param {...*} var_args Arguments to log.
+ * @public
  */
 bloombox.logging.warn = function(var_args) {
   console.warn.apply(console, ['[Bloombox]'].concat(Array.from(arguments)));
@@ -67,6 +70,7 @@ bloombox.logging.warn = function(var_args) {
  * Send an ERROR-level message to the console.
  *
  * @param {...*} var_args Arguments to log.
+ * @public
  */
 bloombox.logging.error = function(var_args) {
   console.error.apply(console, ['[Bloombox]'].concat(Array.from(arguments)));

@@ -35,6 +35,10 @@ goog.require('bloombox.shop.Customer');
 goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
+goog.require('bloombox.telemetry.InternalCollection');
+goog.require('bloombox.telemetry.event');
+goog.require('bloombox.telemetry.notifyUserID');
+
 goog.require('proto.bloombox.schema.services.shop.v1.VerifyError');
 goog.require('proto.bloombox.schema.services.shop.v1.VerifyMember');
 
@@ -117,14 +121,64 @@ bloombox.shop.verify = function(email,
         let customer = (response['verified'] === true) ?
           bloombox.shop.Customer.fromResponse(
             /** @type {Object} */ (response)) : null;
-        if (response['verified'] === true)
+        let verified = response['verified'] === true;
+        if (verified) {
           bloombox.logging.log('Loaded \'Customer\' record from response.',
-              customer);
-        else
+            customer);
+        } else {
           bloombox.logging.log(
             'Customer could not be verified at email address \'' +
-              email + '\'.');
+            email + '\'.');
+        }
         callback(inflated.getVerified(), null, customer);
+
+        let userKey = customer.getUserKey();
+
+        // indicate verification status
+        let verificationData = {
+          'allowed': inflated.getVerified()
+        };
+
+        // if we succeeded, get the user's key and set it for analytics
+        if (verified) {
+          if (userKey && typeof userKey === 'string') {
+            bloombox.telemetry.notifyUserID(userKey);
+          } else {
+            bloombox.logging.info('Unable to resolve user key from decoded ' +
+              'customer.', {'customer': customer});
+          }
+          verificationData['customer'] = {
+            'person': {
+              'name': {
+                'firstName': customer.getPerson().getFirstName().trim(),
+                'lastName': customer.getPerson().getLastName().trim()
+              },
+              'contactInfo': {
+                'email': {
+                  'address': (
+                    customer.getPerson().getContactInfo().getEmailAddress()
+                      .trim())
+                },
+                'phone': {
+                  'e164': (
+                    customer.getPerson().getContactInfo().getPhoneNumber()
+                      .trim())
+                }
+              },
+              'dateOfBirth': {
+                'iso8601': customer.getPerson().getDateOfBirth().trim()
+              }
+            },
+            'foreignId': customer.getForeignId().trim(),
+            'userKey': customer.getUserKey()
+          };
+        }
+
+        // verification event
+        bloombox.telemetry.event(
+          bloombox.telemetry.InternalCollection.VERIFICATION,
+          {'action': 'verify',
+           'verification': verificationData}).send();
       } else {
         bloombox.logging.warn('Failed to inflate RPC.', response);
       }

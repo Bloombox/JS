@@ -81,44 +81,99 @@ bloombox.identity.StreetAddress = function StreetAddress(firstLine,
   /**
    * First address line.
    * @type {string}
-   * @export
+   * @public
    */
   this.firstLine = firstLine;
 
   /**
    * Second address line, if any.
    * @type {?string}
-   * @export
+   * @public
    */
   this.secondLine = secondLine || null;
 
   /**
    * City name.
    * @type {string}
-   * @export
+   * @public
    */
   this.city = city;
 
   /**
    * State code, like "CA" for California.
    * @type {string}
-   * @export
+   * @public
    */
   this.state = state;
 
   /**
    * USPS zipcode.
    * @type {string}
-   * @export
+   * @public
    */
   this.zip = zip;
 
   /**
    * Country code, like "US" for United States.
    * @type {string}
-   * @export
+   * @public
    */
   this.country = country || 'USA';
+};
+
+
+/**
+ * Retrieve the first line of this address.
+ *
+ * @return {string} Address first line.
+ * @export
+ */
+bloombox.identity.StreetAddress.prototype.getFirstLine = function() {
+  return this.firstLine;
+};
+
+
+/**
+ * Retrieve the second line of this address, or `null`, if none is specified.
+ *
+ * @return {?string} Second address line, or `null`.
+ * @export
+ */
+bloombox.identity.StreetAddress.prototype.getSecondLine = function() {
+  return this.secondLine || null;
+};
+
+
+/**
+ * Retrieve the city value of this address.
+ *
+ * @return {string} City name.
+ * @export
+ */
+bloombox.identity.StreetAddress.prototype.getCity = function() {
+  return this.city;
+};
+
+
+/**
+ * Retrieve the state value of this address, in abbreviated form.
+ *
+ * @return {string} State value of this address, i.e. 'CA'.
+ * @export
+ */
+bloombox.identity.StreetAddress.prototype.getState = function() {
+  return this.state;
+};
+
+
+/**
+ * Retrieve the zipcode value of this address.
+ *
+ * @return {string} USPS zipcode, i.e. '95616'.
+ * @export
+ */
+bloombox.identity.StreetAddress.prototype.getZipcode = function() {
+  return this.zip;
 };
 
 
@@ -163,6 +218,7 @@ bloombox.identity.ContactInfo = function ContactInfo(emailAddress,
 
   /**
    * Email address.
+   *
    * @type {string}
    * @export
    */
@@ -170,6 +226,7 @@ bloombox.identity.ContactInfo = function ContactInfo(emailAddress,
 
   /**
    * Phone number.
+   *
    * @type {?string}
    * @export
    */
@@ -177,10 +234,44 @@ bloombox.identity.ContactInfo = function ContactInfo(emailAddress,
 
   /**
    * Street address.
+   *
    * @type {?bloombox.identity.StreetAddress}
    * @export
    */
   this.streetAddress = streetAddress || null;
+};
+
+
+/**
+ * Return this user's email address.
+ *
+ * @return {string} User's email address.
+ * @export
+ */
+bloombox.identity.ContactInfo.prototype.getEmailAddress = function() {
+  return this.emailAddress;
+};
+
+
+/**
+ * Return this user's phone number.
+ *
+ * @return {?string} User's phone number.
+ * @export
+ */
+bloombox.identity.ContactInfo.prototype.getPhoneNumber = function() {
+  return this.phoneNumber;
+};
+
+
+/**
+ * Return this user's street address.
+ *
+ * @return {bloombox.identity.StreetAddress} User's street address.
+ * @export
+ */
+bloombox.identity.ContactInfo.prototype.getStreetAddress = function() {
+  return this.streetAddress;
 };
 
 
@@ -230,22 +321,69 @@ bloombox.identity.Person = function Person(firstName,
 
   /**
    * Person's name.
+   *
    * @type {proto.opencannabis.person.Name}
-   * @export
+   * @public
    */
   this.name = name;
 
   /**
    * Person's contact info.
+   *
    * @type {bloombox.identity.ContactInfo}
-   * @export
+   * @public
    */
   this.contactInfo = contactInfo;
 
   /**
    * Person's date of birth.
+   *
    * @type {?proto.opencannabis.temporal.Date}
-   * @export
+   * @public
    */
   this.dateOfBirth = dateOfBirth !== null ? instant : null;
+};
+
+
+/**
+ * Get the user's first name.
+ *
+ * @return {string} User's given name.
+ * @export
+ */
+bloombox.identity.Person.prototype.getFirstName = function() {
+  return this.name.getFirstName();
+};
+
+
+/**
+ * Get the user's last name.
+ *
+ * @return {string} User's family name.
+ * @export
+ */
+bloombox.identity.Person.prototype.getLastName = function() {
+  return this.name.getLastName();
+};
+
+
+/**
+ * Return this user's contact info.
+ *
+ * @return {bloombox.identity.ContactInfo} Contact info for this user.
+ * @export
+ */
+bloombox.identity.Person.prototype.getContactInfo = function() {
+  return this.contactInfo;
+};
+
+
+/**
+ * Get the user's date of birth.
+ *
+ * @return {?string} User's date of birth.
+ * @export
+ */
+bloombox.identity.Person.prototype.getDateOfBirth = function() {
+  return this.dateOfBirth !== null ? this.dateOfBirth.getIso8601() : null;
 };

@@ -1,19 +1,2 @@
 
-
-/***
- *     /$$$$$$$ /$$                               /$$                                  /$$$$$ /$$$$$$
- *    | $$__  $| $$                              | $$                                 |__  $$/$$__  $$
- *    | $$  \ $| $$ /$$$$$$  /$$$$$$ /$$$$$$/$$$$| $$$$$$$  /$$$$$$ /$$   /$$            | $| $$  \__/
- *    | $$$$$$$| $$/$$__  $$/$$__  $| $$_  $$_  $| $$__  $$/$$__  $|  $$ /$$/            | $|  $$$$$$
- *    | $$__  $| $| $$  \ $| $$  \ $| $$ \ $$ \ $| $$  \ $| $$  \ $$\  $$$$/        /$$  | $$\____  $$
- *    | $$  \ $| $| $$  | $| $$  | $| $$ | $$ | $| $$  | $| $$  | $$ >$$  $$       | $$  | $$/$$  \ $$
- *    | $$$$$$$| $|  $$$$$$|  $$$$$$| $$ | $$ | $| $$$$$$$|  $$$$$$//$$/\  $$      |  $$$$$$|  $$$$$$/
- *    |_______/|__/\______/ \______/|__/ |__/ |__|_______/ \______/|__/  \__/       \______/ \______/
- *
- * Bloombox JS __VERSION__
- *
- * Copyright (c) 2017, Momentum Ideas, Co. All rights reserved. Distributed under the Apache License, Version 2.0,
- * last revised January 2004 and enclosed in this codebase in 'LICENSE.txt'. Also, see third-party license notices
- * in 'NOTICE.txt'.
- *
- */
+/* Bloombox JS __VERSION__ - Copyright (c) 2018, Momentum Ideas, Co. All rights reserved. Distributed under the Apache License, Version 2.0 */

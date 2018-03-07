@@ -304,8 +304,6 @@ bloombox.telemetry.internals._sendEvent = function(queuedEvent) {
  * @return {function(goog.events.Event)} Responder function.
  */
 bloombox.telemetry.internals.rpcCallback = function(queuedEvent) {
-  return respond;
-
   /**
    * Event responder.
    *
@@ -354,6 +352,8 @@ bloombox.telemetry.internals.rpcCallback = function(queuedEvent) {
       queuedEvent.rpc.failureCallback(opStatus, err, status);
     }
   }
+
+  return respond;
 };
 
 

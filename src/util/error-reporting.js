@@ -72,9 +72,11 @@ stackdriver.ErrorReporter = function ErrorReporter(config) {
   // noinspection JSUnresolvedVariable
   if (typeof window['StackTrace'] === 'undefined') {
     // Inform about missing dependency
-    throw new Error('make sure you loaded “stackdriver-errors-concat.js” ' +
+    bloombox.logging.warn('Unable to load Stackdriver Error Reporting. ' +
+      'make sure you loaded “stackdriver-errors-concat.js” ' +
       'or “stackdriver-errors-concat.min.js”, or that you imported the ' +
       '“stacktrace-js” module');
+    throw new Error('Unable to load Stackdriver.');
   }
 
   /**
@@ -366,7 +368,8 @@ stackdriver.errorize = function(ctor) {
  * @param {string} fingerprint Fingerprint.
  */
 stackdriver.notifyFingerprint = function(fingerprint) {
-  _REPORTER.setUser(fingerprint);
+  if (_REPORTER !== null)
+    _REPORTER.setUser(fingerprint);
 };
 
 
@@ -380,8 +383,6 @@ stackdriver.notifyFingerprint = function(fingerprint) {
  */
 stackdriver.protect = function(operation) {
   let op = /** @type {function(*)} */ (operation);
-  bloombox.logging.log('Protecting function: \'' +
-    op.name + '\'...');
   let wrapped = (function() {
     try {
       // execute with given args

@@ -57,7 +57,23 @@ bloombox.menu.MenuRetrieveCallback;
  * @export
  */
 bloombox.menu.MenuRetrieveException = function MenuRetrieveException(message) {
+  /**
+   * Exception message.
+   *
+   * @type {string}
+   */
   this.message = message;
+};
+
+
+/**
+ * Public accessor method to retrieve this exception's error message.
+ *
+ * @return {string}
+ * @export
+ */
+bloombox.menu.MenuRetrieveException.prototype.getMessage = function() {
+  return this.message;
 };
 
 

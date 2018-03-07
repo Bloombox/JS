@@ -10,15 +10,15 @@
       "source": "*.min.js",
       "headers": [{
         "key": "Cache-Control",
-        "value": "public, max-age=500, no-transform"}]
+        "value": "public, max-age=500, s-max-age=3600, no-transform"}]
     }],
     "redirects": [{
       "source" : "/latest.min.js",
-      "destination" : "/client/v1.0.0-beta20.min.js",
+      "destination" : "/client/v1.0.0.min.js",
       "type" : 302
     },{
       "source" : "/latest-debug.min.js",
-      "destination" : "/client/v1.0.0-beta20-debug.min.js",
+      "destination" : "/client/v1.0.0-debug.min.js",
       "type" : 302
     }]
   }

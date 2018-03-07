@@ -25,6 +25,9 @@
 /*global goog */
 goog.provide('bloombox.shop.Item');
 
+goog.require('bloombox.product.Key');
+goog.require('bloombox.product.Kind');
+goog.require('bloombox.product.Weight');
 goog.require('bloombox.util.Exportable');
 
 goog.require('proto.opencannabis.commerce.Item');
@@ -64,6 +67,190 @@ bloombox.shop.Item = function Item(key,
    * @type {Array<!proto.opencannabis.commerce.VariantSpec>}
    */
   this.variants = [];
+};
+
+
+/**
+ * Retrieve the product key associated with this order item.
+ *
+ * @return {bloombox.product.Key} Item key.
+ * @export
+ */
+bloombox.shop.Item.prototype.getKey = function() {
+  return this.key;
+};
+
+
+/**
+ * Return the count desired of this item.
+ *
+ * @return {number} Count desired.
+ * @export
+ */
+bloombox.shop.Item.prototype.getCount = function() {
+  return this.count;
+};
+
+
+/**
+ * Get the weight variant for this item, if any.
+ *
+ * @return {bloombox.product.Weight} Weight variant for this product, if any, or
+ *         `Weight.NO_WEIGHT` if none is specified.
+ * @export
+ */
+bloombox.shop.Item.prototype.getWeightVariant = function() {
+  // look for a weight variant
+  for (let variantI = 0; variantI < this.variants.length; variantI++) {
+    let variantSpec = this.variants[variantI];
+    if (variantSpec.hasWeight()) {
+      return /** @type {bloombox.product.Weight} */ (
+        variantSpec.getWeight());
+    }
+  }
+  return bloombox.product.Weight.NO_WEIGHT;
+};
+
+
+/**
+ * Retrieve the size variant specified for this item, if any.
+ *
+ * @return {?string} Variant size string, if any, or `null`.
+ * @export
+ */
+bloombox.shop.Item.prototype.getSizeVariant = function() {
+  // look for a weight variant
+  for (let variantI = 0; variantI < this.variants.length; variantI++) {
+    let variantSpec = this.variants[variantI];
+    if (variantSpec.hasSize()) {
+      return variantSpec.getSize();
+    }
+  }
+  return null;
+};
+
+
+/**
+ * Retrieve the cp;pr variant specified for this item, if any.
+ *
+ * @return {?string} Variant size string, if any, or `null`.
+ * @export
+ */
+bloombox.shop.Item.prototype.getColorVariant = function() {
+  // look for a weight variant
+  for (let variantI = 0; variantI < this.variants.length; variantI++) {
+    let variantSpec = this.variants[variantI];
+    if (variantSpec.hasColor()) {
+      return variantSpec.getColor();
+    }
+  }
+  return null;
+};
+
+
+/**
+ * Inflate a product weight from a raw string or numerical reference.
+ *
+ * @param {string|number} rawWeight Raw weight value (i.e. 'EIGHTH' or '3').
+ * @return {bloombox.product.Weight} Weight value.
+ */
+bloombox.shop.Item.inflateWeight = function(rawWeight) {
+  if (typeof rawWeight === 'string' || typeof rawWeight === 'number') {
+    switch (rawWeight) {
+      case 'NO_WEIGHT': return bloombox.product.Weight.NO_WEIGHT;
+      case 0: return bloombox.product.Weight.NO_WEIGHT;
+      case 'HALFGRAM': return bloombox.product.Weight.HALFGRAM;
+      case 1: return bloombox.product.Weight.HALFGRAM;
+      case 'GRAM': return bloombox.product.Weight.GRAM;
+      case 2: return bloombox.product.Weight.GRAM;
+      case 'EIGHTH': return bloombox.product.Weight.EIGHTH;
+      case 3: return bloombox.product.Weight.EIGHTH;
+      case 'QUARTER': return bloombox.product.Weight.QUARTER;
+      case 4: return bloombox.product.Weight.QUARTER;
+      case 'HALF': return bloombox.product.Weight.HALF;
+      case 5: return bloombox.product.Weight.HALF;
+      case 'OZ': return bloombox.product.Weight.OZ;
+      case 6: return bloombox.product.Weight.OZ;
+    }
+  }
+  return bloombox.product.Weight.NO_WEIGHT;
+};
+
+
+/**
+ * Decode a variant specification and attach it to the given item.
+ *
+ * @param {?Object} protob Raw protobuf object for the variant spec.
+ * @param {bloombox.shop.Item} item Item to add the variant to, if found.
+ */
+bloombox.shop.Item.decodeVariant = function(protob,
+                                            item) {
+  // decode variant data
+  if (typeof protob === 'object' && item) {
+    // try decoding variant weight
+    if (typeof protob['weight'] === 'string' ||
+        typeof protob['weight'] === 'number') {
+      // decode weight
+      let decodedWeight = bloombox.shop.Item.inflateWeight(protob['weight']);
+      item.addWeightVariant(decodedWeight);
+    } else if (typeof protob['size'] === 'string') {
+      item.addSizeVariant(protob['size']);
+    } else if (typeof protob['color'] === 'string') {
+      item.addColorVariant(protob['color']);
+    }
+  }
+};
+
+
+/**
+ * Decode an order item from a raw object response.
+ *
+ * @param {?Object} protob Raw object to decode an item from.
+ * @return {?bloombox.shop.Item} Decoded item, if one can be decoded, otherwise
+ *         `null` is returned.
+ */
+bloombox.shop.Item.fromResponse = function(protob) {
+  if (typeof protob === 'object') {
+    // extract basic properties first
+    let rawKey = /** @type {Object|null|undefined} */ (protob['key']);
+    let rawCount = /** @type {number|null|undefined} */ (protob['count']);
+    let rawVariants = /** @type {Array<Object>|null|undefined} */ (
+      protob['variant']);
+
+    if ((typeof rawKey === 'object') && (typeof rawCount === 'number')) {
+      // decode key first
+      if (typeof rawKey['id'] === 'string') {
+        let rawKeyId = rawKey['id'];
+        let rawKeyType = /** @type {bloombox.product.Kind} */ (
+          bloombox.product.Kind.FLOWERS);
+
+        if (typeof rawKey['type'] === 'object') {
+          // we have a key type
+          if (rawKey['type']['kind']) {
+            // we have a kind to resolve
+            rawKeyType = bloombox.product.Key.inflateKind(
+              rawKey['type']['kind']);
+          }
+        }
+
+        // create our key
+        let key = new bloombox.product.Key(rawKeyId, rawKeyType);
+
+        // we can proceed: we have the required info to make an item
+        let item = new bloombox.shop.Item(key, rawCount || 1);
+
+        // attempt to decode variants
+        if (rawVariants && Array.isArray(rawVariants)) {
+          for (let variantI = 0; variantI < rawVariants.length; variantI++) {
+            bloombox.shop.Item.decodeVariant(
+              rawVariants[variantI], item);
+          }
+        }
+        return item;
+      }
+    }
+  }
+  return null;
 };
 
 

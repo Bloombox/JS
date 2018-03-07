@@ -1,6 +1,6 @@
 {
   "name": "bloombox",
-  "version": "1.0.0-beta20",
+  "version": "1.0.0",
   "license": "Apache-2.0",
   "private": false,
   "description": "JavaScript API client for Bloombox",
@@ -36,6 +36,10 @@
     "yargs": "^10.0.3"
   },
   "devDependencies": {
+    "jasmine-core": "^2.99.1",
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1",
     "minami": "^1.2.3"
   }
 }

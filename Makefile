@@ -78,6 +78,15 @@ clean: clean-docs
 	@echo "Cleaning targets..."
 	@-rm $(RM_FLAGS) $(TARGET)
 
+test:
+	@echo "Running testsuite..."
+	@karma start --browsers PhantomJS --single-run --no-auto-watch karma.conf.js
+
+test-dev:
+	@echo "Running testsuite (dev mode)..."
+	@karma start karma.conf.js
+
+
 clean-docs:
 	@echo "Cleaning docs..."
 	@rm -fr $(DOCS)
@@ -126,12 +135,14 @@ $(SCHEMA)/languages/js: protobuf/js/node_modules
 build: dependencies
 	@echo "Building Bloombox JS..."
 	@gulp $(GULP_FLAGS)
+	@cp -fv target/$(VERSION).min.js target/$(VERSION)-debug.min.js
+	@cp -fv target/$(VERSION).min.js target/debug.min.js
 	@echo "Copying source files..."
 	@mkdir -p $(TARGET)/src
 	@cp -fr src/ $(TARGET)/src/
 	@echo "Copying test files..."
-	@cp -f test/test.js $(TARGET)/test.js
-	@sed 's/__VERSION__/$(VERSION)/g' test/index.html > $(TARGET)/index.html
+	@cp -f local/test.js $(TARGET)/test.js
+	@sed 's/__VERSION__/$(VERSION)/g' local/index.html > $(TARGET)/index.html
 	@echo "Build complete."
 
 release: build dependencies
@@ -139,10 +150,11 @@ release: build dependencies
 	@cp -fv target/$(VERSION).min.js target/$(VERSION)-debug.min.js
 	@echo "Building Bloombox JS (RELEASE)..."
 	@gulp --release $(GULP_FLAGS)
+	@cp -fv target/$(VERSION).min.js target/release.min.js
 	@echo "Copying test files..."
-	@cp -f test/test.js $(TARGET)/test.js
-	@sed 's/__VERSION__/$(VERSION)/g' test/index.html > $(TARGET)/index.html
-	@sed 's/__VERSION__/$(VERSION)/g' test/prod.html > $(TARGET)/prod.html
+	@cp -f local/test.js $(TARGET)/test.js
+	@sed 's/__VERSION__/$(VERSION)/g' local/index.html > $(TARGET)/index.html
+	@sed 's/__VERSION__/$(VERSION)/g' local/prod.html > $(TARGET)/prod.html
 	@echo "Build complete."
 	@mkdir -p public/client/
 	@cp -fv target/$(VERSION).min.js public/client/
@@ -154,7 +166,12 @@ serve:
 	@echo "Starting test server..."
 	@cd $(TARGET) && python -m SimpleHTTPServer
 
-publish: build release publish-docs
+publish-gcs:
+	@echo "Publishing library to GCS..."
+	@cd public && gsutil -h "Cache-Control: public, max-age=300, s-max-age=7200, stale-while-revalidate=3600, stale-if-error=3600" -m cp -a public-read -z html,js "./*" gs://origin.js.bloombox.cloud/
+	@cd public/client && gsutil -h "Cache-Control: public, immutable, max-age=31536000, s-max-age=31536000, stale-while-revalidate=31536000, stale-if-error=31536000" -m cp -a public-read -z js "./*.js" gs://origin.js.bloombox.cloud/client/
+
+publish: build release publish-gcs
 	@echo "Publishing private Bloombox JS..."
 	@cd target && gsutil $(GSUTIL_FLAGS) \
 	    ./*.min.js gs://k9-cdn-bloombox-embed/embed/client/
