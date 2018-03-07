@@ -546,11 +546,10 @@ module.exports = function(config) {
     customLaunchers: Object.assign({}, browserstackProfiles, saucelabsProfiles),
     browsers: Array.from(new Set([
       // BrowserStack
-      'chrome_mac_latest'
-      //'firefox_mac_latest', 'chrome_mac_latest', 'safari_mac_latest',
+      'firefox_mac_latest', 'chrome_mac_latest', 'safari_mac_latest'
       //'firefox_mac_oldest', 'chrome_mac_oldest', 'safari_mac_oldest',
-      //'firefox_windows_latest', 'chrome_windows_latest',
-      //'ie_11', 'edge_16', 'firefox_windows_oldest', 'chrome_windows_oldest',
+      'firefox_windows_latest', 'chrome_windows_latest', 'edge_16',
+      //'ie_11', 'firefox_windows_oldest', 'chrome_windows_oldest',
       //'ie_10', 'ie_9', 'ie_8', 'safari_windows',
       //'iphoneX_safari_11' //, 'pixel8'
       ])),
