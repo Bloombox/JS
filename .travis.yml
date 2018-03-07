@@ -37,4 +37,4 @@ script:
 after_script:
 - cp -fv target/coverage/cobertura.xml ./cobertura.xml
 - ./cc-test-reporter after-build -d --exit-code $TRAVIS_TEST_RESULT --coverage-input-type cobertura --prefix /home/travis/build/Bloombox/JS
-- java -cp codacy-coverage-reporter-2.0.2-assembly.jar com.codacy.CodacyCoverageReporter --language Javascript -r target/coverage/cobertura.xml --prefix /home/travis/build/Bloombox/JS
+- java -jar codacy-coverage-reporter.jar com.codacy.CodacyCoverageReporter --language Javascript -r target/coverage/cobertura.xml --prefix /home/travis/build/Bloombox/JS
