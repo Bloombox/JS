@@ -161,12 +161,16 @@ bloombox.shop.info = function(callback) {
             delivery = true;
         }
 
-        // dispatch the callback
-        callback(pickup, delivery, null);
+        if (callback) {
+          // dispatch the callback
+          callback(pickup, delivery, null);
+        }
       } else {
         bloombox.logging.error(
           'Received unrecognized response payload for shop info.', response);
-        callback(null, null, null);
+        if (callback) {
+          callback(null, null, null);
+        }
       }
     }
   }, function(status) {
