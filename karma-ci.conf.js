@@ -559,7 +559,7 @@ module.exports = function(config) {
       //  return item.name;
       //})))),
     singleRun: true,
-    concurrency: 2,
+    concurrency: 1,
     tunnelIdentifier: process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
     startTunnel: false,
     startConnect: false,
