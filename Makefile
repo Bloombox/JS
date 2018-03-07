@@ -4,7 +4,6 @@
 #
 
 VERSION ?= v1.0.0
-ALIAS ?= v1
 TARGET ?= target
 VERBOSE ?= no
 RELEASE ?= no
@@ -179,10 +178,10 @@ publish: build release publish-gcs
 	@firebase deploy
 	@echo "Library $(VERSION) published."
 	@echo "Publishing to NPM..."
-	@npm publish --tag $(ALIAS) --access public
+	@npm publish --access public
 	@mv package.json package-scoped.json
 	@mv package-global.json package.json
-	@npm publish --tag $(ALIAS) --access public
+	@npm publish --access public
 	@mv package.json package-global.json
 	@mv package-scoped.json package.json
 	@echo "Library '$(VERSION)' published on NPM, with alias '$(ALIAS)'."
