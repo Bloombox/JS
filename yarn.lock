@@ -3705,8 +3705,8 @@ fined@^1.0.1:
     parse-filepath "^1.0.1"
 
 firebase-tools@^3.17.4:
-  version "3.17.6"
-  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-3.17.6.tgz#78246016d93c8dd12c45591294b46d31392825e2"
+  version "3.17.7"
+  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-3.17.7.tgz#3d5a3011b917864e10389d2d87c9f92a87096707"
   dependencies:
     JSONStream "^1.2.1"
     archiver "^2.1.1"
