@@ -3,7 +3,7 @@
 ## Bloombox: JS Client
 #
 
-VERSION ?= v1.0.1-rc1
+VERSION ?= v1.0.1-rc2
 TARGET ?= target
 VERBOSE ?= no
 RELEASE ?= no
@@ -133,6 +133,7 @@ $(SCHEMA)/languages/js: protobuf/js/node_modules
 
 build: dependencies
 	@echo "Building Bloombox JS..."
+	@mkdir -p $(TARGET)
 	@gulp $(GULP_FLAGS)
 	@cp -fv target/$(VERSION).min.js target/$(VERSION)-debug.min.js
 	@cp -fv target/$(VERSION).min.js target/debug.min.js

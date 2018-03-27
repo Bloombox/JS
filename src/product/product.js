@@ -31,8 +31,7 @@ goog.require('bloombox.util.Exportable');
 
 goog.require('proto.opencannabis.base.ProductKey');
 goog.require('proto.opencannabis.base.ProductKind');
-goog.require('proto.opencannabis.base.ProductType');
-goog.require('proto.opencannabis.commerce.ProductWeight');
+goog.require('proto.opencannabis.structs.pricing.PricingWeightTier');
 
 
 /**
@@ -56,17 +55,18 @@ bloombox.product.Kind = {
 /**
  * Specifies weights products are sold at.
  *
- * @enum {proto.opencannabis.commerce.ProductWeight}
+ * @enum {proto.opencannabis.structs.pricing.PricingWeightTier}
  * @export
  */
 bloombox.product.Weight = {
-  'NO_WEIGHT': proto.opencannabis.commerce.ProductWeight.NO_WEIGHT,
-  'HALFGRAM': proto.opencannabis.commerce.ProductWeight.HALFGRAM,
-  'GRAM': proto.opencannabis.commerce.ProductWeight.GRAM,
-  'EIGHTH': proto.opencannabis.commerce.ProductWeight.EIGHTH,
-  'QUARTER': proto.opencannabis.commerce.ProductWeight.QUARTER,
-  'HALF': proto.opencannabis.commerce.ProductWeight.HALF,
-  'OZ': proto.opencannabis.commerce.ProductWeight.OZ
+  'NO_WEIGHT': proto.opencannabis.structs.pricing.PricingWeightTier.NO_WEIGHT,
+  'HALFGRAM': proto.opencannabis.structs.pricing.PricingWeightTier.HALFGRAM,
+  'GRAM': proto.opencannabis.structs.pricing.PricingWeightTier.GRAM,
+  'EIGHTH': proto.opencannabis.structs.pricing.PricingWeightTier.EIGHTH,
+  'QUARTER': proto.opencannabis.structs.pricing.PricingWeightTier.QUARTER,
+  'HALF': proto.opencannabis.structs.pricing.PricingWeightTier.HALF,
+  'OZ': proto.opencannabis.structs.pricing.PricingWeightTier.OUNCE,
+  'OUNCE': proto.opencannabis.structs.pricing.PricingWeightTier.OUNCE
 };
 
 
@@ -139,11 +139,8 @@ bloombox.product.Key.inflateKind = function(rawKind) {
 bloombox.product.Key.prototype.export = function() {
   let protobuf = new proto.opencannabis.base.ProductKey();
   protobuf.setId(this.id);
-
-  let protoType = new proto.opencannabis.base.ProductType();
-  protoType.setKind(/** @type {proto.opencannabis.base.ProductKind} */ (
+  protobuf.setType(/** @type {proto.opencannabis.base.ProductKind} */ (
     this.kind));
-  protobuf.setType(protoType);
   return protobuf;
 };
 

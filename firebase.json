@@ -20,6 +20,14 @@
       "source" : "/latest-debug.min.js",
       "destination" : "/client/v1.0.1-rc1-debug.min.js",
       "type" : 302
+    },{
+      "source" : "/beta.min.js",
+      "destination" : "/client/v1.0.1-rc2.min.js",
+      "type" : 302
+    },{
+      "source" : "/beta-debug.min.js",
+      "destination" : "/client/v1.0.1-rc2-debug.min.js",
+      "type" : 302
     }]
   }
 }

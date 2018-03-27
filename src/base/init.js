@@ -29,9 +29,6 @@ goog.provide('bloombox.DEBUG_PROPERTY');
 goog.provide('bloombox.INTERNAL');
 goog.provide('bloombox.VERSION');
 
-// force-load closure and closure UI libraries
-goog.require('goog.ui.INLINE_BLOCK_CLASSNAME');
-
 
 /**
  * Global debug flag.
