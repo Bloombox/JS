@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Bloombox/JS.svg?branch=master)](https://travis-ci.org/Bloombox/JS) [![npm](https://img.shields.io/npm/v/bloombox.svg)]() [![npm](https://img.shields.io/npm/dw/bloombox.svg)](https://github.com/bloombox/JS) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f3dd1253ff8140fd96ff1b4dad0afd2d)](https://www.codacy.com/app/bloombox/JS?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bloombox/JS&amp;utm_campaign=Badge_Grade) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Maintainability](https://api.codeclimate.com/v1/badges/b02d3e57e60d030bc818/maintainability)](https://codeclimate.com/github/Bloombox/JS/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/b02d3e57e60d030bc818/test_coverage)](https://codeclimate.com/github/Bloombox/JS/test_coverage)
 
-Latest Version: `v1.0.1-rc2`
+Latest Version: `v1.0.1-rc3`
 
 This package provides support for Bloombox APIs in browser-oriented JavaScript. It's built using the Closure stack from
 Google, including Closure Compiler, Library, builder, and so on.
@@ -43,13 +43,13 @@ Then, you'll see debug logs in your console that describe what's going on.
 If you would like to pin your application to a specific version of the library, you can do that:
 
 ```html
-  <script type="text/javascript" src="https://js.bloombox.cloud/client/v1.0.1-rc2.min.js"></script>
+  <script type="text/javascript" src="https://js.bloombox.cloud/client/v1.0.1-rc3.min.js"></script>
 ```
 
 and...
 
 ```html
-  <script type="text/javascript" src="https://js.bloombox.cloud/client/v1.0.1-rc2-debug.min.js"></script>
+  <script type="text/javascript" src="https://js.bloombox.cloud/client/v1.0.1-rc3-debug.min.js"></script>
 ```
 
 
