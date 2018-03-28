@@ -60,7 +60,7 @@ bloombox.menu.Routine = {
 bloombox.menu.endpoint = function(endpoint) {
   // force service endpoint in debug mode
   let prefix = bloombox.DEBUG === true ?
-    'https://api.sandbox.bloombox.cloud' :
+    'https://api.bloombox.cloud' :
     bloombox.menu.MENU_API_ENDPOINT;
 
   return [
