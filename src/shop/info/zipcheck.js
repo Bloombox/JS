@@ -168,5 +168,3 @@ bloombox.shop.zipcheck = function(zipcode, callback) {
     callback(null, null);
   });
 };
-
-bloombox.shop.zipcheck = stackdriver.protect(bloombox.shop.zipcheck);

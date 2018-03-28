@@ -182,5 +182,3 @@ bloombox.shop.info = function(callback) {
     callback(null, null, status || null);
   });
 };
-
-bloombox.shop.info = stackdriver.protect(bloombox.shop.info);
