@@ -79,6 +79,15 @@ bloombox.JS_PROJECT_ID = 'bloom-js';
 
 
 /**
+ * Whether to enable error reporting.
+ *
+ * @define {bool} ERROR_REPORTING Error reporting.
+ * @export
+ */
+bloombox.ERROR_REPORTING = false;
+
+
+/**
  * Error reporting engine.
  *
  * @type {?stackdriver.ErrorReporter}
@@ -123,11 +132,13 @@ bloombox.setup = function(partner, location, apikey, callback) {
     disabled: false
   });
 
-  try {
-    bloombox.ERROR_REPORTER = new stackdriver.ErrorReporter(errorReporting);
-    stackdriver.setup(bloombox.ERROR_REPORTER);
-  } catch (e) {
-    // skip error reporting if it cannot be setup
+  if (bloombox.ERROR_REPORTING) {
+    try {
+      bloombox.ERROR_REPORTER = new stackdriver.ErrorReporter(errorReporting);
+      stackdriver.setup(bloombox.ERROR_REPORTER);
+    } catch (e) {
+      // skip error reporting if it cannot be setup
+    }
   }
 
   bloombox.logging.log('BBJS is initializing.',
