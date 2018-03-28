@@ -81,7 +81,7 @@ bloombox.JS_PROJECT_ID = 'bloom-js';
 /**
  * Whether to enable error reporting.
  *
- * @define {bool} ERROR_REPORTING Error reporting.
+ * @define {boolean} ERROR_REPORTING Error reporting.
  * @export
  */
 bloombox.ERROR_REPORTING = false;
