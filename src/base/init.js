@@ -29,9 +29,6 @@ goog.provide('bloombox.DEBUG_PROPERTY');
 goog.provide('bloombox.INTERNAL');
 goog.provide('bloombox.VERSION');
 
-// force-load closure and closure UI libraries
-goog.require('goog.ui.INLINE_BLOCK_CLASSNAME');
-
 
 /**
  * Global debug flag.
@@ -78,4 +75,4 @@ bloombox.INTERNAL = false;
  * @define {string} API_ENDPOINT Global API endpoint.
  * @export
  */
-bloombox.API_ENDPOINT = 'https://api.bloombox.cloud';
+bloombox.API_ENDPOINT = 'https://api.sandbox.bloombox.cloud';

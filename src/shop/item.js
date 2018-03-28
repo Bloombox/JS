@@ -32,6 +32,9 @@ goog.require('bloombox.util.Exportable');
 
 goog.require('proto.opencannabis.commerce.Item');
 goog.require('proto.opencannabis.commerce.VariantSpec');
+
+goog.require('proto.opencannabis.structs.pricing.PricingWeightTier');
+
 goog.require('proto.opencannabis.temporal.Instant');
 
 
@@ -299,7 +302,8 @@ bloombox.shop.Item.prototype._addVariant = function(type, content) {
       break;
     case proto.opencannabis.commerce.ProductVariant.WEIGHT:
       variantSpec.setWeight(
-        /** @type {proto.opencannabis.commerce.ProductWeight} */ (content));
+        /** @type {proto.opencannabis.structs.pricing.PricingWeightTier} */ (
+          content));
       break;
     case proto.opencannabis.commerce.ProductVariant.COLOR:
       variantSpec.setColor(/** @type {string} */ (content));

@@ -64,7 +64,6 @@ goog.require('proto.opencannabis.commerce.OrderScheduling');
 goog.require('proto.opencannabis.commerce.OrderStatus');
 goog.require('proto.opencannabis.commerce.OrderType');
 goog.require('proto.opencannabis.commerce.ProductVariant');
-goog.require('proto.opencannabis.commerce.ProductWeight');
 goog.require('proto.opencannabis.commerce.SchedulingType');
 goog.require('proto.opencannabis.commerce.VariantSpec');
 

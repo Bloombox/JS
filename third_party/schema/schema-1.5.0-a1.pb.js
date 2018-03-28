@@ -259,6 +259,10 @@ goog.provide('proto.bloombox.schema.services.menu.v1beta1.SearchMenu');
 goog.provide('proto.bloombox.schema.services.menu.v1beta1.SearchMenu.Operation');
 goog.provide('proto.bloombox.schema.services.menu.v1beta1.SearchMenu.Request');
 goog.provide('proto.bloombox.schema.services.menu.v1beta1.SearchMenu.Response');
+goog.provide('proto.bloombox.schema.services.platform.v1.DomainResolve');
+goog.provide('proto.bloombox.schema.services.platform.v1.DomainResolve.Operation');
+goog.provide('proto.bloombox.schema.services.platform.v1.DomainResolve.Request');
+goog.provide('proto.bloombox.schema.services.platform.v1.DomainResolve.Response');
 goog.provide('proto.bloombox.schema.services.platform.v1.Healthcheck');
 goog.provide('proto.bloombox.schema.services.platform.v1.Healthcheck.Operation');
 goog.provide('proto.bloombox.schema.services.platform.v1.Healthcheck.Request');
@@ -300,6 +304,11 @@ goog.provide('proto.bloombox.schema.services.shop.v1.Ping');
 goog.provide('proto.bloombox.schema.services.shop.v1.Ping.Operation');
 goog.provide('proto.bloombox.schema.services.shop.v1.Ping.Request');
 goog.provide('proto.bloombox.schema.services.shop.v1.Ping.Response');
+goog.provide('proto.bloombox.schema.services.shop.v1.ShareError');
+goog.provide('proto.bloombox.schema.services.shop.v1.ShareOrder');
+goog.provide('proto.bloombox.schema.services.shop.v1.ShareOrder.Operation');
+goog.provide('proto.bloombox.schema.services.shop.v1.ShareOrder.Request');
+goog.provide('proto.bloombox.schema.services.shop.v1.ShareOrder.Response');
 goog.provide('proto.bloombox.schema.services.shop.v1.ShopInfo');
 goog.provide('proto.bloombox.schema.services.shop.v1.ShopInfo.Operation');
 goog.provide('proto.bloombox.schema.services.shop.v1.ShopInfo.Request');
@@ -350,13 +359,15 @@ goog.provide('proto.opencannabis.base.Language');
 goog.provide('proto.opencannabis.base.ProductKey');
 goog.provide('proto.opencannabis.base.ProductKind');
 goog.provide('proto.opencannabis.base.ProductReference');
-goog.provide('proto.opencannabis.base.ProductType');
+goog.provide('proto.opencannabis.commerce.CurrencyType');
+goog.provide('proto.opencannabis.commerce.CurrencyValue');
 goog.provide('proto.opencannabis.commerce.Customer');
 goog.provide('proto.opencannabis.commerce.DeliveryDestination');
 goog.provide('proto.opencannabis.commerce.Discount');
 goog.provide('proto.opencannabis.commerce.DiscountBasis');
 goog.provide('proto.opencannabis.commerce.DiscountSpec');
 goog.provide('proto.opencannabis.commerce.DiscountType');
+goog.provide('proto.opencannabis.commerce.FiatCurrency');
 goog.provide('proto.opencannabis.commerce.Item');
 goog.provide('proto.opencannabis.commerce.Order');
 goog.provide('proto.opencannabis.commerce.OrderKey');
@@ -364,7 +375,6 @@ goog.provide('proto.opencannabis.commerce.OrderScheduling');
 goog.provide('proto.opencannabis.commerce.OrderStatus');
 goog.provide('proto.opencannabis.commerce.OrderType');
 goog.provide('proto.opencannabis.commerce.ProductVariant');
-goog.provide('proto.opencannabis.commerce.ProductWeight');
 goog.provide('proto.opencannabis.commerce.SchedulingType');
 goog.provide('proto.opencannabis.commerce.StatusCheckin');
 goog.provide('proto.opencannabis.commerce.VariantSpec');
@@ -459,7 +469,6 @@ goog.provide('proto.opencannabis.structs.ProductFlag');
 goog.provide('proto.opencannabis.structs.Shelf');
 goog.provide('proto.opencannabis.structs.Species');
 goog.provide('proto.opencannabis.structs.VersionSpec');
-goog.provide('proto.opencannabis.structs.labtesting.BasicTestResults');
 goog.provide('proto.opencannabis.structs.labtesting.Cannabinoid');
 goog.provide('proto.opencannabis.structs.labtesting.CannabinoidRatio');
 goog.provide('proto.opencannabis.structs.labtesting.Cannabinoids');
@@ -473,13 +482,13 @@ goog.provide('proto.opencannabis.structs.labtesting.TasteNote');
 goog.provide('proto.opencannabis.structs.labtesting.Terpene');
 goog.provide('proto.opencannabis.structs.labtesting.Terpenes');
 goog.provide('proto.opencannabis.structs.labtesting.Terpenes.Result');
+goog.provide('proto.opencannabis.structs.labtesting.TestCoordinates');
 goog.provide('proto.opencannabis.structs.labtesting.TestMedia');
 goog.provide('proto.opencannabis.structs.labtesting.TestMediaType');
 goog.provide('proto.opencannabis.structs.labtesting.TestResults');
 goog.provide('proto.opencannabis.structs.labtesting.TestValue');
 goog.provide('proto.opencannabis.structs.labtesting.TestValueType');
 goog.provide('proto.opencannabis.structs.pricing.BOGODiscount');
-goog.provide('proto.opencannabis.structs.pricing.FreebiePricingDescriptor');
 goog.provide('proto.opencannabis.structs.pricing.LoyaltyDiscount');
 goog.provide('proto.opencannabis.structs.pricing.PercentageDiscount');
 goog.provide('proto.opencannabis.structs.pricing.PricingDescriptor');
@@ -2677,148 +2686,6 @@ proto.opencannabis.base.ProductKind = {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.opencannabis.base.ProductType = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.opencannabis.base.ProductType, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.base.ProductType.displayName = 'proto.opencannabis.base.ProductType';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.base.ProductType.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.base.ProductType.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.base.ProductType} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.base.ProductType.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    kind: jspb.Message.getFieldWithDefault(msg, 1, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.base.ProductType}
- */
-proto.opencannabis.base.ProductType.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.base.ProductType;
-  return proto.opencannabis.base.ProductType.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.base.ProductType} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.base.ProductType}
- */
-proto.opencannabis.base.ProductType.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {!proto.opencannabis.base.ProductKind} */ (reader.readEnum());
-      msg.setKind(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.base.ProductType.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.base.ProductType.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.base.ProductType} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.base.ProductType.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getKind();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      1,
-      f
-    );
-  }
-};
-
-
-/**
- * optional ProductKind kind = 1;
- * @return {!proto.opencannabis.base.ProductKind}
- */
-proto.opencannabis.base.ProductType.prototype.getKind = function() {
-  return /** @type {!proto.opencannabis.base.ProductKind} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/** @param {!proto.opencannabis.base.ProductKind} value */
-proto.opencannabis.base.ProductType.prototype.setKind = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
 proto.opencannabis.base.ProductReference = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -3059,7 +2926,7 @@ proto.opencannabis.base.ProductKey.prototype.toObject = function(opt_includeInst
 proto.opencannabis.base.ProductKey.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    type: (f = msg.getType()) && proto.opencannabis.base.ProductType.toObject(includeInstance, f)
+    type: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -3101,8 +2968,7 @@ proto.opencannabis.base.ProductKey.deserializeBinaryFromReader = function(msg, r
       msg.setId(value);
       break;
     case 2:
-      var value = new proto.opencannabis.base.ProductType;
-      reader.readMessage(value,proto.opencannabis.base.ProductType.deserializeBinaryFromReader);
+      var value = /** @type {!proto.opencannabis.base.ProductKind} */ (reader.readEnum());
       msg.setType(value);
       break;
     default:
@@ -3142,11 +3008,10 @@ proto.opencannabis.base.ProductKey.serializeBinaryToWriter = function(message, w
     );
   }
   f = message.getType();
-  if (f != null) {
-    writer.writeMessage(
+  if (f !== 0.0) {
+    writer.writeEnum(
       2,
-      f,
-      proto.opencannabis.base.ProductType.serializeBinaryToWriter
+      f
     );
   }
 };
@@ -3168,23 +3033,256 @@ proto.opencannabis.base.ProductKey.prototype.setId = function(value) {
 
 
 /**
- * optional ProductType type = 2;
- * @return {?proto.opencannabis.base.ProductType}
+ * optional ProductKind type = 2;
+ * @return {!proto.opencannabis.base.ProductKind}
  */
 proto.opencannabis.base.ProductKey.prototype.getType = function() {
-  return /** @type{?proto.opencannabis.base.ProductType} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.base.ProductType, 2));
+  return /** @type {!proto.opencannabis.base.ProductKind} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
-/** @param {?proto.opencannabis.base.ProductType|undefined} value */
+/** @param {!proto.opencannabis.base.ProductKind} value */
 proto.opencannabis.base.ProductKey.prototype.setType = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
-proto.opencannabis.base.ProductKey.prototype.clearType = function() {
-  this.setType(undefined);
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.commerce.CurrencyValue = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.opencannabis.commerce.CurrencyValue.oneofGroups_);
+};
+goog.inherits(proto.opencannabis.commerce.CurrencyValue, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.commerce.CurrencyValue.displayName = 'proto.opencannabis.commerce.CurrencyValue';
+}
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.opencannabis.commerce.CurrencyValue.oneofGroups_ = [[10,100]];
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.commerce.CurrencyValue.SpecCase = {
+  SPEC_NOT_SET: 0,
+  FIAT: 10,
+  CUSTOM: 100
+};
+
+/**
+ * @return {proto.opencannabis.commerce.CurrencyValue.SpecCase}
+ */
+proto.opencannabis.commerce.CurrencyValue.prototype.getSpecCase = function() {
+  return /** @type {proto.opencannabis.commerce.CurrencyValue.SpecCase} */(jspb.Message.computeOneofCase(this, proto.opencannabis.commerce.CurrencyValue.oneofGroups_[0]));
+};
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.commerce.CurrencyValue.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.commerce.CurrencyValue.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.commerce.CurrencyValue} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.commerce.CurrencyValue.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    value: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
+    type: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    fiat: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    custom: jspb.Message.getFieldWithDefault(msg, 100, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.commerce.CurrencyValue}
+ */
+proto.opencannabis.commerce.CurrencyValue.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.commerce.CurrencyValue;
+  return proto.opencannabis.commerce.CurrencyValue.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.commerce.CurrencyValue} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.commerce.CurrencyValue}
+ */
+proto.opencannabis.commerce.CurrencyValue.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setValue(value);
+      break;
+    case 2:
+      var value = /** @type {!proto.opencannabis.commerce.CurrencyType} */ (reader.readEnum());
+      msg.setType(value);
+      break;
+    case 10:
+      var value = /** @type {!proto.opencannabis.commerce.FiatCurrency} */ (reader.readEnum());
+      msg.setFiat(value);
+      break;
+    case 100:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCustom(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.commerce.CurrencyValue.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.commerce.CurrencyValue.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.commerce.CurrencyValue} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.commerce.CurrencyValue.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getValue();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      1,
+      f
+    );
+  }
+  f = message.getType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      2,
+      f
+    );
+  }
+  f = /** @type {!proto.opencannabis.commerce.FiatCurrency} */ (jspb.Message.getField(message, 10));
+  if (f != null) {
+    writer.writeEnum(
+      10,
+      f
+    );
+  }
+  f = /** @type {string} */ (jspb.Message.getField(message, 100));
+  if (f != null) {
+    writer.writeString(
+      100,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional float value = 1;
+ * @return {number}
+ */
+proto.opencannabis.commerce.CurrencyValue.prototype.getValue = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
+};
+
+
+/** @param {number} value */
+proto.opencannabis.commerce.CurrencyValue.prototype.setValue = function(value) {
+  jspb.Message.setProto3FloatField(this, 1, value);
+};
+
+
+/**
+ * optional CurrencyType type = 2;
+ * @return {!proto.opencannabis.commerce.CurrencyType}
+ */
+proto.opencannabis.commerce.CurrencyValue.prototype.getType = function() {
+  return /** @type {!proto.opencannabis.commerce.CurrencyType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {!proto.opencannabis.commerce.CurrencyType} value */
+proto.opencannabis.commerce.CurrencyValue.prototype.setType = function(value) {
+  jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+/**
+ * optional FiatCurrency fiat = 10;
+ * @return {!proto.opencannabis.commerce.FiatCurrency}
+ */
+proto.opencannabis.commerce.CurrencyValue.prototype.getFiat = function() {
+  return /** @type {!proto.opencannabis.commerce.FiatCurrency} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+};
+
+
+/** @param {!proto.opencannabis.commerce.FiatCurrency} value */
+proto.opencannabis.commerce.CurrencyValue.prototype.setFiat = function(value) {
+  jspb.Message.setOneofField(this, 10, proto.opencannabis.commerce.CurrencyValue.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.commerce.CurrencyValue.prototype.clearFiat = function() {
+  jspb.Message.setOneofField(this, 10, proto.opencannabis.commerce.CurrencyValue.oneofGroups_[0], undefined);
 };
 
 
@@ -3192,10 +3290,2296 @@ proto.opencannabis.base.ProductKey.prototype.clearType = function() {
  * Returns whether this field is set.
  * @return {!boolean}
  */
-proto.opencannabis.base.ProductKey.prototype.hasType = function() {
+proto.opencannabis.commerce.CurrencyValue.prototype.hasFiat = function() {
+  return jspb.Message.getField(this, 10) != null;
+};
+
+
+/**
+ * optional string custom = 100;
+ * @return {string}
+ */
+proto.opencannabis.commerce.CurrencyValue.prototype.getCustom = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 100, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.commerce.CurrencyValue.prototype.setCustom = function(value) {
+  jspb.Message.setOneofField(this, 100, proto.opencannabis.commerce.CurrencyValue.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.commerce.CurrencyValue.prototype.clearCustom = function() {
+  jspb.Message.setOneofField(this, 100, proto.opencannabis.commerce.CurrencyValue.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.commerce.CurrencyValue.prototype.hasCustom = function() {
+  return jspb.Message.getField(this, 100) != null;
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.commerce.CurrencyType = {
+  FIAT: 0,
+  REAL: 1,
+  CRYPTO: 2
+};
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.commerce.FiatCurrency = {
+  USD: 0
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.temporal.Instant = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.opencannabis.temporal.Instant.oneofGroups_);
+};
+goog.inherits(proto.opencannabis.temporal.Instant, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.temporal.Instant.displayName = 'proto.opencannabis.temporal.Instant';
+}
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.opencannabis.temporal.Instant.oneofGroups_ = [[1,2]];
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.temporal.Instant.SpecCase = {
+  SPEC_NOT_SET: 0,
+  ISO8601: 1,
+  TIMESTAMP: 2
+};
+
+/**
+ * @return {proto.opencannabis.temporal.Instant.SpecCase}
+ */
+proto.opencannabis.temporal.Instant.prototype.getSpecCase = function() {
+  return /** @type {proto.opencannabis.temporal.Instant.SpecCase} */(jspb.Message.computeOneofCase(this, proto.opencannabis.temporal.Instant.oneofGroups_[0]));
+};
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.temporal.Instant.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.temporal.Instant.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.temporal.Instant} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.temporal.Instant.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    iso8601: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    timestamp: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.temporal.Instant}
+ */
+proto.opencannabis.temporal.Instant.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.temporal.Instant;
+  return proto.opencannabis.temporal.Instant.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.temporal.Instant} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.temporal.Instant}
+ */
+proto.opencannabis.temporal.Instant.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setIso8601(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint64());
+      msg.setTimestamp(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.temporal.Instant.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.temporal.Instant.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.temporal.Instant} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.temporal.Instant.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = /** @type {string} */ (jspb.Message.getField(message, 1));
+  if (f != null) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = /** @type {number} */ (jspb.Message.getField(message, 2));
+  if (f != null) {
+    writer.writeUint64(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string iso8601 = 1;
+ * @return {string}
+ */
+proto.opencannabis.temporal.Instant.prototype.getIso8601 = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.temporal.Instant.prototype.setIso8601 = function(value) {
+  jspb.Message.setOneofField(this, 1, proto.opencannabis.temporal.Instant.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.temporal.Instant.prototype.clearIso8601 = function() {
+  jspb.Message.setOneofField(this, 1, proto.opencannabis.temporal.Instant.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.temporal.Instant.prototype.hasIso8601 = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional uint64 timestamp = 2;
+ * @return {number}
+ */
+proto.opencannabis.temporal.Instant.prototype.getTimestamp = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.opencannabis.temporal.Instant.prototype.setTimestamp = function(value) {
+  jspb.Message.setOneofField(this, 2, proto.opencannabis.temporal.Instant.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.temporal.Instant.prototype.clearTimestamp = function() {
+  jspb.Message.setOneofField(this, 2, proto.opencannabis.temporal.Instant.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.temporal.Instant.prototype.hasTimestamp = function() {
   return jspb.Message.getField(this, 2) != null;
 };
 
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.structs.pricing.PercentageDiscount = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.opencannabis.structs.pricing.PercentageDiscount, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.structs.pricing.PercentageDiscount.displayName = 'proto.opencannabis.structs.pricing.PercentageDiscount';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.structs.pricing.PercentageDiscount.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.structs.pricing.PercentageDiscount.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.structs.pricing.PercentageDiscount} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.PercentageDiscount.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    discount: jspb.Message.getFieldWithDefault(msg, 20, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.structs.pricing.PercentageDiscount}
+ */
+proto.opencannabis.structs.pricing.PercentageDiscount.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.structs.pricing.PercentageDiscount;
+  return proto.opencannabis.structs.pricing.PercentageDiscount.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.structs.pricing.PercentageDiscount} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.structs.pricing.PercentageDiscount}
+ */
+proto.opencannabis.structs.pricing.PercentageDiscount.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 20:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setDiscount(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.structs.pricing.PercentageDiscount.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.structs.pricing.PercentageDiscount.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.structs.pricing.PercentageDiscount} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.PercentageDiscount.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getDiscount();
+  if (f !== 0) {
+    writer.writeUint32(
+      20,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional uint32 discount = 20;
+ * @return {number}
+ */
+proto.opencannabis.structs.pricing.PercentageDiscount.prototype.getDiscount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 20, 0));
+};
+
+
+/** @param {number} value */
+proto.opencannabis.structs.pricing.PercentageDiscount.prototype.setDiscount = function(value) {
+  jspb.Message.setProto3IntField(this, 20, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.structs.pricing.BOGODiscount = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.opencannabis.structs.pricing.BOGODiscount, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.structs.pricing.BOGODiscount.displayName = 'proto.opencannabis.structs.pricing.BOGODiscount';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.structs.pricing.BOGODiscount.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.structs.pricing.BOGODiscount.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.structs.pricing.BOGODiscount} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.BOGODiscount.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    trigger: jspb.Message.getFieldWithDefault(msg, 21, 0),
+    reward: jspb.Message.getFieldWithDefault(msg, 22, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.structs.pricing.BOGODiscount}
+ */
+proto.opencannabis.structs.pricing.BOGODiscount.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.structs.pricing.BOGODiscount;
+  return proto.opencannabis.structs.pricing.BOGODiscount.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.structs.pricing.BOGODiscount} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.structs.pricing.BOGODiscount}
+ */
+proto.opencannabis.structs.pricing.BOGODiscount.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 21:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setTrigger(value);
+      break;
+    case 22:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setReward(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.structs.pricing.BOGODiscount.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.structs.pricing.BOGODiscount.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.structs.pricing.BOGODiscount} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.BOGODiscount.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getTrigger();
+  if (f !== 0) {
+    writer.writeUint32(
+      21,
+      f
+    );
+  }
+  f = message.getReward();
+  if (f !== 0) {
+    writer.writeUint32(
+      22,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional uint32 trigger = 21;
+ * @return {number}
+ */
+proto.opencannabis.structs.pricing.BOGODiscount.prototype.getTrigger = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 21, 0));
+};
+
+
+/** @param {number} value */
+proto.opencannabis.structs.pricing.BOGODiscount.prototype.setTrigger = function(value) {
+  jspb.Message.setProto3IntField(this, 21, value);
+};
+
+
+/**
+ * optional uint32 reward = 22;
+ * @return {number}
+ */
+proto.opencannabis.structs.pricing.BOGODiscount.prototype.getReward = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 22, 0));
+};
+
+
+/** @param {number} value */
+proto.opencannabis.structs.pricing.BOGODiscount.prototype.setReward = function(value) {
+  jspb.Message.setProto3IntField(this, 22, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.structs.pricing.LoyaltyDiscount = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.opencannabis.structs.pricing.LoyaltyDiscount, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.structs.pricing.LoyaltyDiscount.displayName = 'proto.opencannabis.structs.pricing.LoyaltyDiscount';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.structs.pricing.LoyaltyDiscount.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.structs.pricing.LoyaltyDiscount.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.structs.pricing.LoyaltyDiscount} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.LoyaltyDiscount.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    trigger: jspb.Message.getFieldWithDefault(msg, 23, 0),
+    reward: jspb.Message.getFieldWithDefault(msg, 24, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.structs.pricing.LoyaltyDiscount}
+ */
+proto.opencannabis.structs.pricing.LoyaltyDiscount.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.structs.pricing.LoyaltyDiscount;
+  return proto.opencannabis.structs.pricing.LoyaltyDiscount.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.structs.pricing.LoyaltyDiscount} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.structs.pricing.LoyaltyDiscount}
+ */
+proto.opencannabis.structs.pricing.LoyaltyDiscount.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 23:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setTrigger(value);
+      break;
+    case 24:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setReward(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.structs.pricing.LoyaltyDiscount.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.structs.pricing.LoyaltyDiscount.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.structs.pricing.LoyaltyDiscount} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.LoyaltyDiscount.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getTrigger();
+  if (f !== 0) {
+    writer.writeUint32(
+      23,
+      f
+    );
+  }
+  f = message.getReward();
+  if (f !== 0) {
+    writer.writeUint32(
+      24,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional uint32 trigger = 23;
+ * @return {number}
+ */
+proto.opencannabis.structs.pricing.LoyaltyDiscount.prototype.getTrigger = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 23, 0));
+};
+
+
+/** @param {number} value */
+proto.opencannabis.structs.pricing.LoyaltyDiscount.prototype.setTrigger = function(value) {
+  jspb.Message.setProto3IntField(this, 23, value);
+};
+
+
+/**
+ * optional uint32 reward = 24;
+ * @return {number}
+ */
+proto.opencannabis.structs.pricing.LoyaltyDiscount.prototype.getReward = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 24, 0));
+};
+
+
+/** @param {number} value */
+proto.opencannabis.structs.pricing.LoyaltyDiscount.prototype.setReward = function(value) {
+  jspb.Message.setProto3IntField(this, 24, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.opencannabis.structs.pricing.SaleDescriptor.oneofGroups_);
+};
+goog.inherits(proto.opencannabis.structs.pricing.SaleDescriptor, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.structs.pricing.SaleDescriptor.displayName = 'proto.opencannabis.structs.pricing.SaleDescriptor';
+}
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.oneofGroups_ = [[4,5,6]];
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.SaleCase = {
+  SALE_NOT_SET: 0,
+  PERCENTAGE_OFF: 4,
+  BOGO: 5,
+  LOYALTY: 6
+};
+
+/**
+ * @return {proto.opencannabis.structs.pricing.SaleDescriptor.SaleCase}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getSaleCase = function() {
+  return /** @type {proto.opencannabis.structs.pricing.SaleDescriptor.SaleCase} */(jspb.Message.computeOneofCase(this, proto.opencannabis.structs.pricing.SaleDescriptor.oneofGroups_[0]));
+};
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.structs.pricing.SaleDescriptor.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.structs.pricing.SaleDescriptor} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    type: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    effective: (f = msg.getEffective()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
+    expiration: (f = msg.getExpiration()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
+    percentageOff: (f = msg.getPercentageOff()) && proto.opencannabis.structs.pricing.PercentageDiscount.toObject(includeInstance, f),
+    bogo: (f = msg.getBogo()) && proto.opencannabis.structs.pricing.BOGODiscount.toObject(includeInstance, f),
+    loyalty: (f = msg.getLoyalty()) && proto.opencannabis.structs.pricing.LoyaltyDiscount.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.structs.pricing.SaleDescriptor}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.structs.pricing.SaleDescriptor;
+  return proto.opencannabis.structs.pricing.SaleDescriptor.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.structs.pricing.SaleDescriptor} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.structs.pricing.SaleDescriptor}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.opencannabis.structs.pricing.SaleType} */ (reader.readEnum());
+      msg.setType(value);
+      break;
+    case 2:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setEffective(value);
+      break;
+    case 3:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setExpiration(value);
+      break;
+    case 4:
+      var value = new proto.opencannabis.structs.pricing.PercentageDiscount;
+      reader.readMessage(value,proto.opencannabis.structs.pricing.PercentageDiscount.deserializeBinaryFromReader);
+      msg.setPercentageOff(value);
+      break;
+    case 5:
+      var value = new proto.opencannabis.structs.pricing.BOGODiscount;
+      reader.readMessage(value,proto.opencannabis.structs.pricing.BOGODiscount.deserializeBinaryFromReader);
+      msg.setBogo(value);
+      break;
+    case 6:
+      var value = new proto.opencannabis.structs.pricing.LoyaltyDiscount;
+      reader.readMessage(value,proto.opencannabis.structs.pricing.LoyaltyDiscount.deserializeBinaryFromReader);
+      msg.setLoyalty(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.structs.pricing.SaleDescriptor.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.structs.pricing.SaleDescriptor} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getEffective();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+  f = message.getExpiration();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+  f = message.getPercentageOff();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      proto.opencannabis.structs.pricing.PercentageDiscount.serializeBinaryToWriter
+    );
+  }
+  f = message.getBogo();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      proto.opencannabis.structs.pricing.BOGODiscount.serializeBinaryToWriter
+    );
+  }
+  f = message.getLoyalty();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      proto.opencannabis.structs.pricing.LoyaltyDiscount.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional SaleType type = 1;
+ * @return {!proto.opencannabis.structs.pricing.SaleType}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getType = function() {
+  return /** @type {!proto.opencannabis.structs.pricing.SaleType} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.opencannabis.structs.pricing.SaleType} value */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.setType = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant effective = 2;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getEffective = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 2));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.setEffective = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.clearEffective = function() {
+  this.setEffective(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.hasEffective = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant expiration = 3;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getExpiration = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 3));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.setExpiration = function(value) {
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.clearExpiration = function() {
+  this.setExpiration(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.hasExpiration = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional PercentageDiscount percentage_off = 4;
+ * @return {?proto.opencannabis.structs.pricing.PercentageDiscount}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getPercentageOff = function() {
+  return /** @type{?proto.opencannabis.structs.pricing.PercentageDiscount} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.PercentageDiscount, 4));
+};
+
+
+/** @param {?proto.opencannabis.structs.pricing.PercentageDiscount|undefined} value */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.setPercentageOff = function(value) {
+  jspb.Message.setOneofWrapperField(this, 4, proto.opencannabis.structs.pricing.SaleDescriptor.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.clearPercentageOff = function() {
+  this.setPercentageOff(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.hasPercentageOff = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * optional BOGODiscount bogo = 5;
+ * @return {?proto.opencannabis.structs.pricing.BOGODiscount}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getBogo = function() {
+  return /** @type{?proto.opencannabis.structs.pricing.BOGODiscount} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.BOGODiscount, 5));
+};
+
+
+/** @param {?proto.opencannabis.structs.pricing.BOGODiscount|undefined} value */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.setBogo = function(value) {
+  jspb.Message.setOneofWrapperField(this, 5, proto.opencannabis.structs.pricing.SaleDescriptor.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.clearBogo = function() {
+  this.setBogo(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.hasBogo = function() {
+  return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional LoyaltyDiscount loyalty = 6;
+ * @return {?proto.opencannabis.structs.pricing.LoyaltyDiscount}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getLoyalty = function() {
+  return /** @type{?proto.opencannabis.structs.pricing.LoyaltyDiscount} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.LoyaltyDiscount, 6));
+};
+
+
+/** @param {?proto.opencannabis.structs.pricing.LoyaltyDiscount|undefined} value */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.setLoyalty = function(value) {
+  jspb.Message.setOneofWrapperField(this, 6, proto.opencannabis.structs.pricing.SaleDescriptor.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.clearLoyalty = function() {
+  this.setLoyalty(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.structs.pricing.SaleDescriptor.prototype.hasLoyalty = function() {
+  return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.structs.pricing.SaleType = {
+  PERCENTAGE_REDUCTION: 0,
+  VALUE_REDUCTION: 1,
+  BOGO: 2,
+  LOYALTY: 3
+};
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.structs.pricing.PricingTierAvailability = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.opencannabis.structs.pricing.PricingTierAvailability, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.structs.pricing.PricingTierAvailability.displayName = 'proto.opencannabis.structs.pricing.PricingTierAvailability';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.structs.pricing.PricingTierAvailability.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.structs.pricing.PricingTierAvailability.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.structs.pricing.PricingTierAvailability} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.PricingTierAvailability.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    offered: jspb.Message.getFieldWithDefault(msg, 1, false),
+    available: jspb.Message.getFieldWithDefault(msg, 2, false)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.structs.pricing.PricingTierAvailability}
+ */
+proto.opencannabis.structs.pricing.PricingTierAvailability.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.structs.pricing.PricingTierAvailability;
+  return proto.opencannabis.structs.pricing.PricingTierAvailability.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.structs.pricing.PricingTierAvailability} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.structs.pricing.PricingTierAvailability}
+ */
+proto.opencannabis.structs.pricing.PricingTierAvailability.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setOffered(value);
+      break;
+    case 2:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setAvailable(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.structs.pricing.PricingTierAvailability.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.structs.pricing.PricingTierAvailability.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.structs.pricing.PricingTierAvailability} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.PricingTierAvailability.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getOffered();
+  if (f) {
+    writer.writeBool(
+      1,
+      f
+    );
+  }
+  f = message.getAvailable();
+  if (f) {
+    writer.writeBool(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bool offered = 1;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.opencannabis.structs.pricing.PricingTierAvailability.prototype.getOffered = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
+};
+
+
+/** @param {boolean} value */
+proto.opencannabis.structs.pricing.PricingTierAvailability.prototype.setOffered = function(value) {
+  jspb.Message.setProto3BooleanField(this, 1, value);
+};
+
+
+/**
+ * optional bool available = 2;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.opencannabis.structs.pricing.PricingTierAvailability.prototype.getAvailable = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+};
+
+
+/** @param {boolean} value */
+proto.opencannabis.structs.pricing.PricingTierAvailability.prototype.setAvailable = function(value) {
+  jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.opencannabis.structs.pricing.UnitPricingDescriptor.repeatedFields_, null);
+};
+goog.inherits(proto.opencannabis.structs.pricing.UnitPricingDescriptor, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.structs.pricing.UnitPricingDescriptor.displayName = 'proto.opencannabis.structs.pricing.UnitPricingDescriptor';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.repeatedFields_ = [3];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.structs.pricing.UnitPricingDescriptor.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.structs.pricing.UnitPricingDescriptor} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    price: (f = msg.getPrice()) && proto.opencannabis.commerce.CurrencyValue.toObject(includeInstance, f),
+    status: (f = msg.getStatus()) && proto.opencannabis.structs.pricing.PricingTierAvailability.toObject(includeInstance, f),
+    discountsList: jspb.Message.toObjectList(msg.getDiscountsList(),
+    proto.opencannabis.structs.pricing.SaleDescriptor.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.structs.pricing.UnitPricingDescriptor}
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.structs.pricing.UnitPricingDescriptor;
+  return proto.opencannabis.structs.pricing.UnitPricingDescriptor.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.structs.pricing.UnitPricingDescriptor} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.structs.pricing.UnitPricingDescriptor}
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.opencannabis.commerce.CurrencyValue;
+      reader.readMessage(value,proto.opencannabis.commerce.CurrencyValue.deserializeBinaryFromReader);
+      msg.setPrice(value);
+      break;
+    case 2:
+      var value = new proto.opencannabis.structs.pricing.PricingTierAvailability;
+      reader.readMessage(value,proto.opencannabis.structs.pricing.PricingTierAvailability.deserializeBinaryFromReader);
+      msg.setStatus(value);
+      break;
+    case 3:
+      var value = new proto.opencannabis.structs.pricing.SaleDescriptor;
+      reader.readMessage(value,proto.opencannabis.structs.pricing.SaleDescriptor.deserializeBinaryFromReader);
+      msg.addDiscounts(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.structs.pricing.UnitPricingDescriptor.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.structs.pricing.UnitPricingDescriptor} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getPrice();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.opencannabis.commerce.CurrencyValue.serializeBinaryToWriter
+    );
+  }
+  f = message.getStatus();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.opencannabis.structs.pricing.PricingTierAvailability.serializeBinaryToWriter
+    );
+  }
+  f = message.getDiscountsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      3,
+      f,
+      proto.opencannabis.structs.pricing.SaleDescriptor.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional opencannabis.commerce.CurrencyValue price = 1;
+ * @return {?proto.opencannabis.commerce.CurrencyValue}
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.getPrice = function() {
+  return /** @type{?proto.opencannabis.commerce.CurrencyValue} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.commerce.CurrencyValue, 1));
+};
+
+
+/** @param {?proto.opencannabis.commerce.CurrencyValue|undefined} value */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.setPrice = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.clearPrice = function() {
+  this.setPrice(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.hasPrice = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional PricingTierAvailability status = 2;
+ * @return {?proto.opencannabis.structs.pricing.PricingTierAvailability}
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.getStatus = function() {
+  return /** @type{?proto.opencannabis.structs.pricing.PricingTierAvailability} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.PricingTierAvailability, 2));
+};
+
+
+/** @param {?proto.opencannabis.structs.pricing.PricingTierAvailability|undefined} value */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.setStatus = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.clearStatus = function() {
+  this.setStatus(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.hasStatus = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * repeated SaleDescriptor discounts = 3;
+ * @return {!Array.<!proto.opencannabis.structs.pricing.SaleDescriptor>}
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.getDiscountsList = function() {
+  return /** @type{!Array.<!proto.opencannabis.structs.pricing.SaleDescriptor>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.structs.pricing.SaleDescriptor, 3));
+};
+
+
+/** @param {!Array.<!proto.opencannabis.structs.pricing.SaleDescriptor>} value */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.setDiscountsList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 3, value);
+};
+
+
+/**
+ * @param {!proto.opencannabis.structs.pricing.SaleDescriptor=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.opencannabis.structs.pricing.SaleDescriptor}
+ */
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.addDiscounts = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 3, opt_value, proto.opencannabis.structs.pricing.SaleDescriptor, opt_index);
+};
+
+
+proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.clearDiscountsList = function() {
+  this.setDiscountsList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.opencannabis.structs.pricing.WeightedPricingDescriptor, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.structs.pricing.WeightedPricingDescriptor.displayName = 'proto.opencannabis.structs.pricing.WeightedPricingDescriptor';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.structs.pricing.WeightedPricingDescriptor.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.structs.pricing.WeightedPricingDescriptor} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    weight: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    tier: (f = msg.getTier()) && proto.opencannabis.structs.pricing.UnitPricingDescriptor.toObject(includeInstance, f),
+    weightInGrams: +jspb.Message.getFieldWithDefault(msg, 3, 0.0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.structs.pricing.WeightedPricingDescriptor}
+ */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.structs.pricing.WeightedPricingDescriptor;
+  return proto.opencannabis.structs.pricing.WeightedPricingDescriptor.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.structs.pricing.WeightedPricingDescriptor} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.structs.pricing.WeightedPricingDescriptor}
+ */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.opencannabis.structs.pricing.PricingWeightTier} */ (reader.readEnum());
+      msg.setWeight(value);
+      break;
+    case 2:
+      var value = new proto.opencannabis.structs.pricing.UnitPricingDescriptor;
+      reader.readMessage(value,proto.opencannabis.structs.pricing.UnitPricingDescriptor.deserializeBinaryFromReader);
+      msg.setTier(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setWeightInGrams(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.structs.pricing.WeightedPricingDescriptor.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.structs.pricing.WeightedPricingDescriptor} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getWeight();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getTier();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.opencannabis.structs.pricing.UnitPricingDescriptor.serializeBinaryToWriter
+    );
+  }
+  f = message.getWeightInGrams();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional PricingWeightTier weight = 1;
+ * @return {!proto.opencannabis.structs.pricing.PricingWeightTier}
+ */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.getWeight = function() {
+  return /** @type {!proto.opencannabis.structs.pricing.PricingWeightTier} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.opencannabis.structs.pricing.PricingWeightTier} value */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.setWeight = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional UnitPricingDescriptor tier = 2;
+ * @return {?proto.opencannabis.structs.pricing.UnitPricingDescriptor}
+ */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.getTier = function() {
+  return /** @type{?proto.opencannabis.structs.pricing.UnitPricingDescriptor} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.UnitPricingDescriptor, 2));
+};
+
+
+/** @param {?proto.opencannabis.structs.pricing.UnitPricingDescriptor|undefined} value */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.setTier = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.clearTier = function() {
+  this.setTier(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.hasTier = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional float weight_in_grams = 3;
+ * @return {number}
+ */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.getWeightInGrams = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 3, 0.0));
+};
+
+
+/** @param {number} value */
+proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.setWeightInGrams = function(value) {
+  jspb.Message.setProto3FloatField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.opencannabis.structs.pricing.PricingDescriptor.oneofGroups_);
+};
+goog.inherits(proto.opencannabis.structs.pricing.PricingDescriptor, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.structs.pricing.PricingDescriptor.displayName = 'proto.opencannabis.structs.pricing.PricingDescriptor';
+}
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.oneofGroups_ = [[20,21]];
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.TierCase = {
+  TIER_NOT_SET: 0,
+  UNIT: 20,
+  WEIGHTED: 21
+};
+
+/**
+ * @return {proto.opencannabis.structs.pricing.PricingDescriptor.TierCase}
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.getTierCase = function() {
+  return /** @type {proto.opencannabis.structs.pricing.PricingDescriptor.TierCase} */(jspb.Message.computeOneofCase(this, proto.opencannabis.structs.pricing.PricingDescriptor.oneofGroups_[0]));
+};
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.structs.pricing.PricingDescriptor.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.structs.pricing.PricingDescriptor} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    type: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    unit: (f = msg.getUnit()) && proto.opencannabis.structs.pricing.UnitPricingDescriptor.toObject(includeInstance, f),
+    weighted: (f = msg.getWeighted()) && proto.opencannabis.structs.pricing.WeightedPricingDescriptor.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.structs.pricing.PricingDescriptor}
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.structs.pricing.PricingDescriptor;
+  return proto.opencannabis.structs.pricing.PricingDescriptor.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.structs.pricing.PricingDescriptor} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.structs.pricing.PricingDescriptor}
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.opencannabis.structs.pricing.PricingType} */ (reader.readEnum());
+      msg.setType(value);
+      break;
+    case 20:
+      var value = new proto.opencannabis.structs.pricing.UnitPricingDescriptor;
+      reader.readMessage(value,proto.opencannabis.structs.pricing.UnitPricingDescriptor.deserializeBinaryFromReader);
+      msg.setUnit(value);
+      break;
+    case 21:
+      var value = new proto.opencannabis.structs.pricing.WeightedPricingDescriptor;
+      reader.readMessage(value,proto.opencannabis.structs.pricing.WeightedPricingDescriptor.deserializeBinaryFromReader);
+      msg.setWeighted(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.structs.pricing.PricingDescriptor.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.structs.pricing.PricingDescriptor} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getUnit();
+  if (f != null) {
+    writer.writeMessage(
+      20,
+      f,
+      proto.opencannabis.structs.pricing.UnitPricingDescriptor.serializeBinaryToWriter
+    );
+  }
+  f = message.getWeighted();
+  if (f != null) {
+    writer.writeMessage(
+      21,
+      f,
+      proto.opencannabis.structs.pricing.WeightedPricingDescriptor.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional PricingType type = 1;
+ * @return {!proto.opencannabis.structs.pricing.PricingType}
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.getType = function() {
+  return /** @type {!proto.opencannabis.structs.pricing.PricingType} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.opencannabis.structs.pricing.PricingType} value */
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.setType = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional UnitPricingDescriptor unit = 20;
+ * @return {?proto.opencannabis.structs.pricing.UnitPricingDescriptor}
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.getUnit = function() {
+  return /** @type{?proto.opencannabis.structs.pricing.UnitPricingDescriptor} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.UnitPricingDescriptor, 20));
+};
+
+
+/** @param {?proto.opencannabis.structs.pricing.UnitPricingDescriptor|undefined} value */
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.setUnit = function(value) {
+  jspb.Message.setOneofWrapperField(this, 20, proto.opencannabis.structs.pricing.PricingDescriptor.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.clearUnit = function() {
+  this.setUnit(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.hasUnit = function() {
+  return jspb.Message.getField(this, 20) != null;
+};
+
+
+/**
+ * optional WeightedPricingDescriptor weighted = 21;
+ * @return {?proto.opencannabis.structs.pricing.WeightedPricingDescriptor}
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.getWeighted = function() {
+  return /** @type{?proto.opencannabis.structs.pricing.WeightedPricingDescriptor} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.WeightedPricingDescriptor, 21));
+};
+
+
+/** @param {?proto.opencannabis.structs.pricing.WeightedPricingDescriptor|undefined} value */
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.setWeighted = function(value) {
+  jspb.Message.setOneofWrapperField(this, 21, proto.opencannabis.structs.pricing.PricingDescriptor.oneofGroups_[0], value);
+};
+
+
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.clearWeighted = function() {
+  this.setWeighted(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.structs.pricing.PricingDescriptor.prototype.hasWeighted = function() {
+  return jspb.Message.getField(this, 21) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.structs.pricing.ProductPricing = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.opencannabis.structs.pricing.ProductPricing.repeatedFields_, null);
+};
+goog.inherits(proto.opencannabis.structs.pricing.ProductPricing, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.structs.pricing.ProductPricing.displayName = 'proto.opencannabis.structs.pricing.ProductPricing';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.opencannabis.structs.pricing.ProductPricing.repeatedFields_ = [1,2];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.structs.pricing.ProductPricing.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.structs.pricing.ProductPricing.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.structs.pricing.ProductPricing} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.ProductPricing.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    discountsList: jspb.Message.toObjectList(msg.getDiscountsList(),
+    proto.opencannabis.structs.pricing.SaleDescriptor.toObject, includeInstance),
+    manifestList: jspb.Message.toObjectList(msg.getManifestList(),
+    proto.opencannabis.structs.pricing.PricingDescriptor.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.structs.pricing.ProductPricing}
+ */
+proto.opencannabis.structs.pricing.ProductPricing.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.structs.pricing.ProductPricing;
+  return proto.opencannabis.structs.pricing.ProductPricing.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.structs.pricing.ProductPricing} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.structs.pricing.ProductPricing}
+ */
+proto.opencannabis.structs.pricing.ProductPricing.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.opencannabis.structs.pricing.SaleDescriptor;
+      reader.readMessage(value,proto.opencannabis.structs.pricing.SaleDescriptor.deserializeBinaryFromReader);
+      msg.addDiscounts(value);
+      break;
+    case 2:
+      var value = new proto.opencannabis.structs.pricing.PricingDescriptor;
+      reader.readMessage(value,proto.opencannabis.structs.pricing.PricingDescriptor.deserializeBinaryFromReader);
+      msg.addManifest(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.structs.pricing.ProductPricing.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.structs.pricing.ProductPricing.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.structs.pricing.ProductPricing} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.pricing.ProductPricing.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getDiscountsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      1,
+      f,
+      proto.opencannabis.structs.pricing.SaleDescriptor.serializeBinaryToWriter
+    );
+  }
+  f = message.getManifestList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      2,
+      f,
+      proto.opencannabis.structs.pricing.PricingDescriptor.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * repeated SaleDescriptor discounts = 1;
+ * @return {!Array.<!proto.opencannabis.structs.pricing.SaleDescriptor>}
+ */
+proto.opencannabis.structs.pricing.ProductPricing.prototype.getDiscountsList = function() {
+  return /** @type{!Array.<!proto.opencannabis.structs.pricing.SaleDescriptor>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.structs.pricing.SaleDescriptor, 1));
+};
+
+
+/** @param {!Array.<!proto.opencannabis.structs.pricing.SaleDescriptor>} value */
+proto.opencannabis.structs.pricing.ProductPricing.prototype.setDiscountsList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
+};
+
+
+/**
+ * @param {!proto.opencannabis.structs.pricing.SaleDescriptor=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.opencannabis.structs.pricing.SaleDescriptor}
+ */
+proto.opencannabis.structs.pricing.ProductPricing.prototype.addDiscounts = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.opencannabis.structs.pricing.SaleDescriptor, opt_index);
+};
+
+
+proto.opencannabis.structs.pricing.ProductPricing.prototype.clearDiscountsList = function() {
+  this.setDiscountsList([]);
+};
+
+
+/**
+ * repeated PricingDescriptor manifest = 2;
+ * @return {!Array.<!proto.opencannabis.structs.pricing.PricingDescriptor>}
+ */
+proto.opencannabis.structs.pricing.ProductPricing.prototype.getManifestList = function() {
+  return /** @type{!Array.<!proto.opencannabis.structs.pricing.PricingDescriptor>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.structs.pricing.PricingDescriptor, 2));
+};
+
+
+/** @param {!Array.<!proto.opencannabis.structs.pricing.PricingDescriptor>} value */
+proto.opencannabis.structs.pricing.ProductPricing.prototype.setManifestList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 2, value);
+};
+
+
+/**
+ * @param {!proto.opencannabis.structs.pricing.PricingDescriptor=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.opencannabis.structs.pricing.PricingDescriptor}
+ */
+proto.opencannabis.structs.pricing.ProductPricing.prototype.addManifest = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.opencannabis.structs.pricing.PricingDescriptor, opt_index);
+};
+
+
+proto.opencannabis.structs.pricing.ProductPricing.prototype.clearManifestList = function() {
+  this.setManifestList([]);
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.structs.pricing.PricingType = {
+  UNIT: 0,
+  WEIGHTED: 1
+};
+
+/**
+ * @enum {number}
+ */
+proto.opencannabis.structs.pricing.PricingWeightTier = {
+  NO_WEIGHT: 0,
+  GRAM: 1,
+  HALFGRAM: 2,
+  QUARTERGRAM: 3,
+  DUB: 4,
+  EIGHTH: 5,
+  QUARTER: 6,
+  HALF: 7,
+  OUNCE: 8,
+  POUND: 9,
+  KILO: 10,
+  TON: 11,
+  OTHER: 12
+};
 
 
 /**
@@ -3316,7 +5700,7 @@ proto.opencannabis.commerce.VariantSpec.deserializeBinaryFromReader = function(m
       msg.setVariant(value);
       break;
     case 2:
-      var value = /** @type {!proto.opencannabis.commerce.ProductWeight} */ (reader.readEnum());
+      var value = /** @type {!proto.opencannabis.structs.pricing.PricingWeightTier} */ (reader.readEnum());
       msg.setWeight(value);
       break;
     case 3:
@@ -3363,7 +5747,7 @@ proto.opencannabis.commerce.VariantSpec.serializeBinaryToWriter = function(messa
       f
     );
   }
-  f = /** @type {!proto.opencannabis.commerce.ProductWeight} */ (jspb.Message.getField(message, 2));
+  f = /** @type {!proto.opencannabis.structs.pricing.PricingWeightTier} */ (jspb.Message.getField(message, 2));
   if (f != null) {
     writer.writeEnum(
       2,
@@ -3403,15 +5787,15 @@ proto.opencannabis.commerce.VariantSpec.prototype.setVariant = function(value) {
 
 
 /**
- * optional ProductWeight weight = 2;
- * @return {!proto.opencannabis.commerce.ProductWeight}
+ * optional opencannabis.structs.pricing.PricingWeightTier weight = 2;
+ * @return {!proto.opencannabis.structs.pricing.PricingWeightTier}
  */
 proto.opencannabis.commerce.VariantSpec.prototype.getWeight = function() {
-  return /** @type {!proto.opencannabis.commerce.ProductWeight} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+  return /** @type {!proto.opencannabis.structs.pricing.PricingWeightTier} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
-/** @param {!proto.opencannabis.commerce.ProductWeight} value */
+/** @param {!proto.opencannabis.structs.pricing.PricingWeightTier} value */
 proto.opencannabis.commerce.VariantSpec.prototype.setWeight = function(value) {
   jspb.Message.setOneofField(this, 2, proto.opencannabis.commerce.VariantSpec.oneofGroups_[0], value);
 };
@@ -3546,9 +5930,7 @@ proto.opencannabis.commerce.Item.toObject = function(includeInstance, msg) {
     key: (f = msg.getKey()) && proto.opencannabis.base.ProductKey.toObject(includeInstance, f),
     variantList: jspb.Message.toObjectList(msg.getVariantList(),
     proto.opencannabis.commerce.VariantSpec.toObject, includeInstance),
-    count: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    price: +jspb.Message.getFieldWithDefault(msg, 4, 0.0),
-    cost: +jspb.Message.getFieldWithDefault(msg, 5, 0.0)
+    count: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -3599,14 +5981,6 @@ proto.opencannabis.commerce.Item.deserializeBinaryFromReader = function(msg, rea
       var value = /** @type {number} */ (reader.readUint32());
       msg.setCount(value);
       break;
-    case 4:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setPrice(value);
-      break;
-    case 5:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setCost(value);
-      break;
     default:
       reader.skipField();
       break;
@@ -3656,20 +6030,6 @@ proto.opencannabis.commerce.Item.serializeBinaryToWriter = function(message, wri
   if (f !== 0) {
     writer.writeUint32(
       3,
-      f
-    );
-  }
-  f = message.getPrice();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      4,
-      f
-    );
-  }
-  f = message.getCost();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      5,
       f
     );
   }
@@ -3753,55 +6113,12 @@ proto.opencannabis.commerce.Item.prototype.setCount = function(value) {
 
 
 /**
- * optional double price = 4;
- * @return {number}
- */
-proto.opencannabis.commerce.Item.prototype.getPrice = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 4, 0.0));
-};
-
-
-/** @param {number} value */
-proto.opencannabis.commerce.Item.prototype.setPrice = function(value) {
-  jspb.Message.setProto3FloatField(this, 4, value);
-};
-
-
-/**
- * optional double cost = 5;
- * @return {number}
- */
-proto.opencannabis.commerce.Item.prototype.getCost = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 5, 0.0));
-};
-
-
-/** @param {number} value */
-proto.opencannabis.commerce.Item.prototype.setCost = function(value) {
-  jspb.Message.setProto3FloatField(this, 5, value);
-};
-
-
-/**
  * @enum {number}
  */
 proto.opencannabis.commerce.ProductVariant = {
   WEIGHT: 0,
   COLOR: 1,
   SIZE: 2
-};
-
-/**
- * @enum {number}
- */
-proto.opencannabis.commerce.ProductWeight = {
-  NO_WEIGHT: 0,
-  HALFGRAM: 1,
-  GRAM: 2,
-  EIGHTH: 3,
-  QUARTER: 4,
-  HALF: 5,
-  OZ: 6
 };
 
 
@@ -7124,229 +9441,6 @@ proto.opencannabis.commerce.Customer.prototype.getUserKey = function() {
 /** @param {string} value */
 proto.opencannabis.commerce.Customer.prototype.setUserKey = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.temporal.Instant = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.opencannabis.temporal.Instant.oneofGroups_);
-};
-goog.inherits(proto.opencannabis.temporal.Instant, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.temporal.Instant.displayName = 'proto.opencannabis.temporal.Instant';
-}
-/**
- * Oneof group definitions for this message. Each group defines the field
- * numbers belonging to that group. When of these fields' value is set, all
- * other fields in the group are cleared. During deserialization, if multiple
- * fields are encountered for a group, only the last value seen will be kept.
- * @private {!Array<!Array<number>>}
- * @const
- */
-proto.opencannabis.temporal.Instant.oneofGroups_ = [[1,2]];
-
-/**
- * @enum {number}
- */
-proto.opencannabis.temporal.Instant.SpecCase = {
-  SPEC_NOT_SET: 0,
-  ISO8601: 1,
-  TIMESTAMP: 2
-};
-
-/**
- * @return {proto.opencannabis.temporal.Instant.SpecCase}
- */
-proto.opencannabis.temporal.Instant.prototype.getSpecCase = function() {
-  return /** @type {proto.opencannabis.temporal.Instant.SpecCase} */(jspb.Message.computeOneofCase(this, proto.opencannabis.temporal.Instant.oneofGroups_[0]));
-};
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.temporal.Instant.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.temporal.Instant.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.temporal.Instant} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.temporal.Instant.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    iso8601: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    timestamp: jspb.Message.getFieldWithDefault(msg, 2, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.temporal.Instant}
- */
-proto.opencannabis.temporal.Instant.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.temporal.Instant;
-  return proto.opencannabis.temporal.Instant.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.temporal.Instant} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.temporal.Instant}
- */
-proto.opencannabis.temporal.Instant.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setIso8601(value);
-      break;
-    case 2:
-      var value = /** @type {number} */ (reader.readUint64());
-      msg.setTimestamp(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.temporal.Instant.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.temporal.Instant.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.temporal.Instant} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.temporal.Instant.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = /** @type {string} */ (jspb.Message.getField(message, 1));
-  if (f != null) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = /** @type {number} */ (jspb.Message.getField(message, 2));
-  if (f != null) {
-    writer.writeUint64(
-      2,
-      f
-    );
-  }
-};
-
-
-/**
- * optional string iso8601 = 1;
- * @return {string}
- */
-proto.opencannabis.temporal.Instant.prototype.getIso8601 = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.opencannabis.temporal.Instant.prototype.setIso8601 = function(value) {
-  jspb.Message.setOneofField(this, 1, proto.opencannabis.temporal.Instant.oneofGroups_[0], value);
-};
-
-
-proto.opencannabis.temporal.Instant.prototype.clearIso8601 = function() {
-  jspb.Message.setOneofField(this, 1, proto.opencannabis.temporal.Instant.oneofGroups_[0], undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.temporal.Instant.prototype.hasIso8601 = function() {
-  return jspb.Message.getField(this, 1) != null;
-};
-
-
-/**
- * optional uint64 timestamp = 2;
- * @return {number}
- */
-proto.opencannabis.temporal.Instant.prototype.getTimestamp = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
-};
-
-
-/** @param {number} value */
-proto.opencannabis.temporal.Instant.prototype.setTimestamp = function(value) {
-  jspb.Message.setOneofField(this, 2, proto.opencannabis.temporal.Instant.oneofGroups_[0], value);
-};
-
-
-proto.opencannabis.temporal.Instant.prototype.clearTimestamp = function() {
-  jspb.Message.setOneofField(this, 2, proto.opencannabis.temporal.Instant.oneofGroups_[0], undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.temporal.Instant.prototype.hasTimestamp = function() {
-  return jspb.Message.getField(this, 2) != null;
 };
 
 
@@ -16754,7 +18848,10 @@ proto.opencannabis.base.Compression.serializeBinaryToWriter = function(message, 
  * @enum {number}
  */
 proto.opencannabis.base.Compression.Type = {
-  GZIP: 0
+  NO_COMPRESSION: 0,
+  GZIP: 1,
+  BROTLI: 2,
+  SNAPPY: 3
 };
 
 /**
@@ -17553,7 +19650,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.opencannabis.structs.labtesting.TestResults.repeatedFields_ = [2,34];
+proto.opencannabis.structs.labtesting.TestResults.repeatedFields_ = [2,35,36];
 
 
 
@@ -17588,12 +19685,16 @@ proto.opencannabis.structs.labtesting.TestResults.toObject = function(includeIns
     mediaList: jspb.Message.toObjectList(msg.getMediaList(),
     proto.opencannabis.structs.labtesting.TestMedia.toObject, includeInstance),
     lastUpdated: (f = msg.getLastUpdated()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
+    sealed: (f = msg.getSealed()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
+    coordinates: (f = msg.getCoordinates()) && proto.opencannabis.structs.labtesting.TestCoordinates.toObject(includeInstance, f),
     cannabinoids: (f = msg.getCannabinoids()) && proto.opencannabis.structs.labtesting.Cannabinoids.toObject(includeInstance, f),
     terpenes: (f = msg.getTerpenes()) && proto.opencannabis.structs.labtesting.Terpenes.toObject(includeInstance, f),
     pesticides: (f = msg.getPesticides()) && proto.opencannabis.structs.labtesting.Pesticides.toObject(includeInstance, f),
     moisture: (f = msg.getMoisture()) && proto.opencannabis.structs.labtesting.Moisture.toObject(includeInstance, f),
-    aromaList: jspb.Message.getRepeatedField(msg, 34),
-    subjective: (f = msg.getSubjective()) && proto.opencannabis.structs.labtesting.Subjective.toObject(includeInstance, f)
+    subjective: (f = msg.getSubjective()) && proto.opencannabis.structs.labtesting.Subjective.toObject(includeInstance, f),
+    aromaList: jspb.Message.getRepeatedField(msg, 35),
+    dataList: jspb.Message.toObjectList(msg.getDataList(),
+    proto.opencannabis.structs.labtesting.TestResults.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -17644,6 +19745,16 @@ proto.opencannabis.structs.labtesting.TestResults.deserializeBinaryFromReader = 
       reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
       msg.setLastUpdated(value);
       break;
+    case 4:
+      var value = new proto.opencannabis.temporal.Instant;
+      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
+      msg.setSealed(value);
+      break;
+    case 5:
+      var value = new proto.opencannabis.structs.labtesting.TestCoordinates;
+      reader.readMessage(value,proto.opencannabis.structs.labtesting.TestCoordinates.deserializeBinaryFromReader);
+      msg.setCoordinates(value);
+      break;
     case 30:
       var value = new proto.opencannabis.structs.labtesting.Cannabinoids;
       reader.readMessage(value,proto.opencannabis.structs.labtesting.Cannabinoids.deserializeBinaryFromReader);
@@ -17665,13 +19776,18 @@ proto.opencannabis.structs.labtesting.TestResults.deserializeBinaryFromReader = 
       msg.setMoisture(value);
       break;
     case 34:
-      var value = /** @type {!Array.<!proto.opencannabis.structs.labtesting.TasteNote>} */ (reader.readPackedEnum());
-      msg.setAromaList(value);
-      break;
-    case 35:
       var value = new proto.opencannabis.structs.labtesting.Subjective;
       reader.readMessage(value,proto.opencannabis.structs.labtesting.Subjective.deserializeBinaryFromReader);
       msg.setSubjective(value);
+      break;
+    case 35:
+      var value = /** @type {!Array.<!proto.opencannabis.structs.labtesting.TasteNote>} */ (reader.readPackedEnum());
+      msg.setAromaList(value);
+      break;
+    case 36:
+      var value = new proto.opencannabis.structs.labtesting.TestResults;
+      reader.readMessage(value,proto.opencannabis.structs.labtesting.TestResults.deserializeBinaryFromReader);
+      msg.addData(value);
       break;
     default:
       reader.skipField();
@@ -17725,6 +19841,22 @@ proto.opencannabis.structs.labtesting.TestResults.serializeBinaryToWriter = func
       proto.opencannabis.temporal.Instant.serializeBinaryToWriter
     );
   }
+  f = message.getSealed();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
+    );
+  }
+  f = message.getCoordinates();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      proto.opencannabis.structs.labtesting.TestCoordinates.serializeBinaryToWriter
+    );
+  }
   f = message.getCannabinoids();
   if (f != null) {
     writer.writeMessage(
@@ -17757,19 +19889,27 @@ proto.opencannabis.structs.labtesting.TestResults.serializeBinaryToWriter = func
       proto.opencannabis.structs.labtesting.Moisture.serializeBinaryToWriter
     );
   }
-  f = message.getAromaList();
-  if (f.length > 0) {
-    writer.writePackedEnum(
-      34,
-      f
-    );
-  }
   f = message.getSubjective();
   if (f != null) {
     writer.writeMessage(
-      35,
+      34,
       f,
       proto.opencannabis.structs.labtesting.Subjective.serializeBinaryToWriter
+    );
+  }
+  f = message.getAromaList();
+  if (f.length > 0) {
+    writer.writePackedEnum(
+      35,
+      f
+    );
+  }
+  f = message.getDataList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      36,
+      f,
+      proto.opencannabis.structs.labtesting.TestResults.serializeBinaryToWriter
     );
   }
 };
@@ -17850,6 +19990,66 @@ proto.opencannabis.structs.labtesting.TestResults.prototype.clearLastUpdated = f
  */
 proto.opencannabis.structs.labtesting.TestResults.prototype.hasLastUpdated = function() {
   return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional opencannabis.temporal.Instant sealed = 4;
+ * @return {?proto.opencannabis.temporal.Instant}
+ */
+proto.opencannabis.structs.labtesting.TestResults.prototype.getSealed = function() {
+  return /** @type{?proto.opencannabis.temporal.Instant} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 4));
+};
+
+
+/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
+proto.opencannabis.structs.labtesting.TestResults.prototype.setSealed = function(value) {
+  jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+proto.opencannabis.structs.labtesting.TestResults.prototype.clearSealed = function() {
+  this.setSealed(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.structs.labtesting.TestResults.prototype.hasSealed = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * optional TestCoordinates coordinates = 5;
+ * @return {?proto.opencannabis.structs.labtesting.TestCoordinates}
+ */
+proto.opencannabis.structs.labtesting.TestResults.prototype.getCoordinates = function() {
+  return /** @type{?proto.opencannabis.structs.labtesting.TestCoordinates} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.structs.labtesting.TestCoordinates, 5));
+};
+
+
+/** @param {?proto.opencannabis.structs.labtesting.TestCoordinates|undefined} value */
+proto.opencannabis.structs.labtesting.TestResults.prototype.setCoordinates = function(value) {
+  jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+proto.opencannabis.structs.labtesting.TestResults.prototype.clearCoordinates = function() {
+  this.setCoordinates(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.opencannabis.structs.labtesting.TestResults.prototype.hasCoordinates = function() {
+  return jspb.Message.getField(this, 5) != null;
 };
 
 
@@ -17974,47 +20174,18 @@ proto.opencannabis.structs.labtesting.TestResults.prototype.hasMoisture = functi
 
 
 /**
- * repeated TasteNote aroma = 34;
- * @return {!Array.<!proto.opencannabis.structs.labtesting.TasteNote>}
- */
-proto.opencannabis.structs.labtesting.TestResults.prototype.getAromaList = function() {
-  return /** @type {!Array.<!proto.opencannabis.structs.labtesting.TasteNote>} */ (jspb.Message.getRepeatedField(this, 34));
-};
-
-
-/** @param {!Array.<!proto.opencannabis.structs.labtesting.TasteNote>} value */
-proto.opencannabis.structs.labtesting.TestResults.prototype.setAromaList = function(value) {
-  jspb.Message.setField(this, 34, value || []);
-};
-
-
-/**
- * @param {!proto.opencannabis.structs.labtesting.TasteNote} value
- * @param {number=} opt_index
- */
-proto.opencannabis.structs.labtesting.TestResults.prototype.addAroma = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 34, value, opt_index);
-};
-
-
-proto.opencannabis.structs.labtesting.TestResults.prototype.clearAromaList = function() {
-  this.setAromaList([]);
-};
-
-
-/**
- * optional Subjective subjective = 35;
+ * optional Subjective subjective = 34;
  * @return {?proto.opencannabis.structs.labtesting.Subjective}
  */
 proto.opencannabis.structs.labtesting.TestResults.prototype.getSubjective = function() {
   return /** @type{?proto.opencannabis.structs.labtesting.Subjective} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.structs.labtesting.Subjective, 35));
+    jspb.Message.getWrapperField(this, proto.opencannabis.structs.labtesting.Subjective, 34));
 };
 
 
 /** @param {?proto.opencannabis.structs.labtesting.Subjective|undefined} value */
 proto.opencannabis.structs.labtesting.TestResults.prototype.setSubjective = function(value) {
-  jspb.Message.setWrapperField(this, 35, value);
+  jspb.Message.setWrapperField(this, 34, value);
 };
 
 
@@ -18028,7 +20199,236 @@ proto.opencannabis.structs.labtesting.TestResults.prototype.clearSubjective = fu
  * @return {!boolean}
  */
 proto.opencannabis.structs.labtesting.TestResults.prototype.hasSubjective = function() {
-  return jspb.Message.getField(this, 35) != null;
+  return jspb.Message.getField(this, 34) != null;
+};
+
+
+/**
+ * repeated TasteNote aroma = 35;
+ * @return {!Array.<!proto.opencannabis.structs.labtesting.TasteNote>}
+ */
+proto.opencannabis.structs.labtesting.TestResults.prototype.getAromaList = function() {
+  return /** @type {!Array.<!proto.opencannabis.structs.labtesting.TasteNote>} */ (jspb.Message.getRepeatedField(this, 35));
+};
+
+
+/** @param {!Array.<!proto.opencannabis.structs.labtesting.TasteNote>} value */
+proto.opencannabis.structs.labtesting.TestResults.prototype.setAromaList = function(value) {
+  jspb.Message.setField(this, 35, value || []);
+};
+
+
+/**
+ * @param {!proto.opencannabis.structs.labtesting.TasteNote} value
+ * @param {number=} opt_index
+ */
+proto.opencannabis.structs.labtesting.TestResults.prototype.addAroma = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 35, value, opt_index);
+};
+
+
+proto.opencannabis.structs.labtesting.TestResults.prototype.clearAromaList = function() {
+  this.setAromaList([]);
+};
+
+
+/**
+ * repeated TestResults data = 36;
+ * @return {!Array.<!proto.opencannabis.structs.labtesting.TestResults>}
+ */
+proto.opencannabis.structs.labtesting.TestResults.prototype.getDataList = function() {
+  return /** @type{!Array.<!proto.opencannabis.structs.labtesting.TestResults>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.structs.labtesting.TestResults, 36));
+};
+
+
+/** @param {!Array.<!proto.opencannabis.structs.labtesting.TestResults>} value */
+proto.opencannabis.structs.labtesting.TestResults.prototype.setDataList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 36, value);
+};
+
+
+/**
+ * @param {!proto.opencannabis.structs.labtesting.TestResults=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.opencannabis.structs.labtesting.TestResults}
+ */
+proto.opencannabis.structs.labtesting.TestResults.prototype.addData = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 36, opt_value, proto.opencannabis.structs.labtesting.TestResults, opt_index);
+};
+
+
+proto.opencannabis.structs.labtesting.TestResults.prototype.clearDataList = function() {
+  this.setDataList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.opencannabis.structs.labtesting.TestCoordinates = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.opencannabis.structs.labtesting.TestCoordinates, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.opencannabis.structs.labtesting.TestCoordinates.displayName = 'proto.opencannabis.structs.labtesting.TestCoordinates';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.opencannabis.structs.labtesting.TestCoordinates.prototype.toObject = function(opt_includeInstance) {
+  return proto.opencannabis.structs.labtesting.TestCoordinates.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.opencannabis.structs.labtesting.TestCoordinates} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.labtesting.TestCoordinates.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    zone: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    group: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.opencannabis.structs.labtesting.TestCoordinates}
+ */
+proto.opencannabis.structs.labtesting.TestCoordinates.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.opencannabis.structs.labtesting.TestCoordinates;
+  return proto.opencannabis.structs.labtesting.TestCoordinates.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.opencannabis.structs.labtesting.TestCoordinates} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.opencannabis.structs.labtesting.TestCoordinates}
+ */
+proto.opencannabis.structs.labtesting.TestCoordinates.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setZone(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setGroup(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.opencannabis.structs.labtesting.TestCoordinates.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.opencannabis.structs.labtesting.TestCoordinates.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.opencannabis.structs.labtesting.TestCoordinates} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.opencannabis.structs.labtesting.TestCoordinates.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getZone();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getGroup();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string zone = 1;
+ * @return {string}
+ */
+proto.opencannabis.structs.labtesting.TestCoordinates.prototype.getZone = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.structs.labtesting.TestCoordinates.prototype.setZone = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string group = 2;
+ * @return {string}
+ */
+proto.opencannabis.structs.labtesting.TestCoordinates.prototype.getGroup = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.structs.labtesting.TestCoordinates.prototype.setGroup = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -24343,9 +26743,10 @@ proto.opencannabis.crypto.primitives.integrity.HashAlgorithm = {
  * @enum {number}
  */
 proto.opencannabis.structs.Shelf = {
-  ECONOMY: 0,
-  MIDSHELF: 1,
-  TOPSHELF: 2
+  GENERIC_SHELF: 0,
+  ECONOMY: 1,
+  MIDSHELF: 2,
+  TOPSHELF: 3
 };
 
 
@@ -24855,7 +27256,7 @@ proto.opencannabis.content.MaterialsData.toObject = function(includeInstance, ms
     genetics: (f = msg.getGenetics()) && proto.opencannabis.structs.Genetics.toObject(includeInstance, f),
     grow: jspb.Message.getFieldWithDefault(msg, 3, 0),
     shelf: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    channelsList: jspb.Message.toObjectList(msg.getChannelsList(),
+    channelList: jspb.Message.toObjectList(msg.getChannelList(),
     proto.opencannabis.products.distribution.DistributionPolicy.toObject, includeInstance)
   };
 
@@ -24913,7 +27314,7 @@ proto.opencannabis.content.MaterialsData.deserializeBinaryFromReader = function(
     case 5:
       var value = new proto.opencannabis.products.distribution.DistributionPolicy;
       reader.readMessage(value,proto.opencannabis.products.distribution.DistributionPolicy.deserializeBinaryFromReader);
-      msg.addChannels(value);
+      msg.addChannel(value);
       break;
     default:
       reader.skipField();
@@ -24973,7 +27374,7 @@ proto.opencannabis.content.MaterialsData.serializeBinaryToWriter = function(mess
       f
     );
   }
-  f = message.getChannelsList();
+  f = message.getChannelList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
       5,
@@ -25060,17 +27461,17 @@ proto.opencannabis.content.MaterialsData.prototype.setShelf = function(value) {
 
 
 /**
- * repeated opencannabis.products.distribution.DistributionPolicy channels = 5;
+ * repeated opencannabis.products.distribution.DistributionPolicy channel = 5;
  * @return {!Array.<!proto.opencannabis.products.distribution.DistributionPolicy>}
  */
-proto.opencannabis.content.MaterialsData.prototype.getChannelsList = function() {
+proto.opencannabis.content.MaterialsData.prototype.getChannelList = function() {
   return /** @type{!Array.<!proto.opencannabis.products.distribution.DistributionPolicy>} */ (
     jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.products.distribution.DistributionPolicy, 5));
 };
 
 
 /** @param {!Array.<!proto.opencannabis.products.distribution.DistributionPolicy>} value */
-proto.opencannabis.content.MaterialsData.prototype.setChannelsList = function(value) {
+proto.opencannabis.content.MaterialsData.prototype.setChannelList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 5, value);
 };
 
@@ -25080,13 +27481,13 @@ proto.opencannabis.content.MaterialsData.prototype.setChannelsList = function(va
  * @param {number=} opt_index
  * @return {!proto.opencannabis.products.distribution.DistributionPolicy}
  */
-proto.opencannabis.content.MaterialsData.prototype.addChannels = function(opt_value, opt_index) {
+proto.opencannabis.content.MaterialsData.prototype.addChannel = function(opt_value, opt_index) {
   return jspb.Message.addToRepeatedWrapperField(this, 5, opt_value, proto.opencannabis.products.distribution.DistributionPolicy, opt_index);
 };
 
 
-proto.opencannabis.content.MaterialsData.prototype.clearChannelsList = function() {
-  this.setChannelsList([]);
+proto.opencannabis.content.MaterialsData.prototype.clearChannelList = function() {
+  this.setChannelList([]);
 };
 
 
@@ -25398,2172 +27799,12 @@ proto.opencannabis.structs.ProductFlag = {
   HIDDEN: 1,
   PREMIUM: 2,
   FEATURED: 3,
-  ORGANIC: 4,
-  EXCLUSIVE: 5,
-  IN_HOUSE: 6,
-  LAST_CHANCE: 7,
-  LIMITED_TIME: 8,
-  ON_SALE: 9,
-  LOCAL: 10
-};
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.structs.pricing.PercentageDiscount = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.opencannabis.structs.pricing.PercentageDiscount, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.structs.pricing.PercentageDiscount.displayName = 'proto.opencannabis.structs.pricing.PercentageDiscount';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.structs.pricing.PercentageDiscount.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.structs.pricing.PercentageDiscount.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.structs.pricing.PercentageDiscount} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.PercentageDiscount.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    discount: jspb.Message.getFieldWithDefault(msg, 20, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.structs.pricing.PercentageDiscount}
- */
-proto.opencannabis.structs.pricing.PercentageDiscount.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.structs.pricing.PercentageDiscount;
-  return proto.opencannabis.structs.pricing.PercentageDiscount.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.structs.pricing.PercentageDiscount} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.structs.pricing.PercentageDiscount}
- */
-proto.opencannabis.structs.pricing.PercentageDiscount.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 20:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setDiscount(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.structs.pricing.PercentageDiscount.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.structs.pricing.PercentageDiscount.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.structs.pricing.PercentageDiscount} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.PercentageDiscount.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getDiscount();
-  if (f !== 0) {
-    writer.writeUint32(
-      20,
-      f
-    );
-  }
-};
-
-
-/**
- * optional uint32 discount = 20;
- * @return {number}
- */
-proto.opencannabis.structs.pricing.PercentageDiscount.prototype.getDiscount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 20, 0));
-};
-
-
-/** @param {number} value */
-proto.opencannabis.structs.pricing.PercentageDiscount.prototype.setDiscount = function(value) {
-  jspb.Message.setProto3IntField(this, 20, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.structs.pricing.BOGODiscount = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.opencannabis.structs.pricing.BOGODiscount, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.structs.pricing.BOGODiscount.displayName = 'proto.opencannabis.structs.pricing.BOGODiscount';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.structs.pricing.BOGODiscount.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.structs.pricing.BOGODiscount.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.structs.pricing.BOGODiscount} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.BOGODiscount.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    trigger: jspb.Message.getFieldWithDefault(msg, 21, 0),
-    reward: jspb.Message.getFieldWithDefault(msg, 22, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.structs.pricing.BOGODiscount}
- */
-proto.opencannabis.structs.pricing.BOGODiscount.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.structs.pricing.BOGODiscount;
-  return proto.opencannabis.structs.pricing.BOGODiscount.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.structs.pricing.BOGODiscount} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.structs.pricing.BOGODiscount}
- */
-proto.opencannabis.structs.pricing.BOGODiscount.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 21:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setTrigger(value);
-      break;
-    case 22:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setReward(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.structs.pricing.BOGODiscount.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.structs.pricing.BOGODiscount.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.structs.pricing.BOGODiscount} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.BOGODiscount.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getTrigger();
-  if (f !== 0) {
-    writer.writeUint32(
-      21,
-      f
-    );
-  }
-  f = message.getReward();
-  if (f !== 0) {
-    writer.writeUint32(
-      22,
-      f
-    );
-  }
-};
-
-
-/**
- * optional uint32 trigger = 21;
- * @return {number}
- */
-proto.opencannabis.structs.pricing.BOGODiscount.prototype.getTrigger = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 21, 0));
-};
-
-
-/** @param {number} value */
-proto.opencannabis.structs.pricing.BOGODiscount.prototype.setTrigger = function(value) {
-  jspb.Message.setProto3IntField(this, 21, value);
-};
-
-
-/**
- * optional uint32 reward = 22;
- * @return {number}
- */
-proto.opencannabis.structs.pricing.BOGODiscount.prototype.getReward = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 22, 0));
-};
-
-
-/** @param {number} value */
-proto.opencannabis.structs.pricing.BOGODiscount.prototype.setReward = function(value) {
-  jspb.Message.setProto3IntField(this, 22, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.structs.pricing.LoyaltyDiscount = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.opencannabis.structs.pricing.LoyaltyDiscount, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.structs.pricing.LoyaltyDiscount.displayName = 'proto.opencannabis.structs.pricing.LoyaltyDiscount';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.structs.pricing.LoyaltyDiscount.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.structs.pricing.LoyaltyDiscount.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.structs.pricing.LoyaltyDiscount} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.LoyaltyDiscount.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    trigger: jspb.Message.getFieldWithDefault(msg, 23, 0),
-    reward: jspb.Message.getFieldWithDefault(msg, 24, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.structs.pricing.LoyaltyDiscount}
- */
-proto.opencannabis.structs.pricing.LoyaltyDiscount.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.structs.pricing.LoyaltyDiscount;
-  return proto.opencannabis.structs.pricing.LoyaltyDiscount.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.structs.pricing.LoyaltyDiscount} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.structs.pricing.LoyaltyDiscount}
- */
-proto.opencannabis.structs.pricing.LoyaltyDiscount.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 23:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setTrigger(value);
-      break;
-    case 24:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setReward(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.structs.pricing.LoyaltyDiscount.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.structs.pricing.LoyaltyDiscount.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.structs.pricing.LoyaltyDiscount} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.LoyaltyDiscount.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getTrigger();
-  if (f !== 0) {
-    writer.writeUint32(
-      23,
-      f
-    );
-  }
-  f = message.getReward();
-  if (f !== 0) {
-    writer.writeUint32(
-      24,
-      f
-    );
-  }
-};
-
-
-/**
- * optional uint32 trigger = 23;
- * @return {number}
- */
-proto.opencannabis.structs.pricing.LoyaltyDiscount.prototype.getTrigger = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 23, 0));
-};
-
-
-/** @param {number} value */
-proto.opencannabis.structs.pricing.LoyaltyDiscount.prototype.setTrigger = function(value) {
-  jspb.Message.setProto3IntField(this, 23, value);
-};
-
-
-/**
- * optional uint32 reward = 24;
- * @return {number}
- */
-proto.opencannabis.structs.pricing.LoyaltyDiscount.prototype.getReward = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 24, 0));
-};
-
-
-/** @param {number} value */
-proto.opencannabis.structs.pricing.LoyaltyDiscount.prototype.setReward = function(value) {
-  jspb.Message.setProto3IntField(this, 24, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.structs.pricing.SaleDescriptor = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.opencannabis.structs.pricing.SaleDescriptor.oneofGroups_);
-};
-goog.inherits(proto.opencannabis.structs.pricing.SaleDescriptor, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.structs.pricing.SaleDescriptor.displayName = 'proto.opencannabis.structs.pricing.SaleDescriptor';
-}
-/**
- * Oneof group definitions for this message. Each group defines the field
- * numbers belonging to that group. When of these fields' value is set, all
- * other fields in the group are cleared. During deserialization, if multiple
- * fields are encountered for a group, only the last value seen will be kept.
- * @private {!Array<!Array<number>>}
- * @const
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.oneofGroups_ = [[4,5,6]];
-
-/**
- * @enum {number}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.SaleCase = {
-  SALE_NOT_SET: 0,
-  PERCENTAGE_OFF: 4,
-  BOGO: 5,
-  LOYALTY: 6
-};
-
-/**
- * @return {proto.opencannabis.structs.pricing.SaleDescriptor.SaleCase}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getSaleCase = function() {
-  return /** @type {proto.opencannabis.structs.pricing.SaleDescriptor.SaleCase} */(jspb.Message.computeOneofCase(this, proto.opencannabis.structs.pricing.SaleDescriptor.oneofGroups_[0]));
-};
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.structs.pricing.SaleDescriptor.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.structs.pricing.SaleDescriptor} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    type: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    effective: (f = msg.getEffective()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
-    expiration: (f = msg.getExpiration()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
-    percentageOff: (f = msg.getPercentageOff()) && proto.opencannabis.structs.pricing.PercentageDiscount.toObject(includeInstance, f),
-    bogo: (f = msg.getBogo()) && proto.opencannabis.structs.pricing.BOGODiscount.toObject(includeInstance, f),
-    loyalty: (f = msg.getLoyalty()) && proto.opencannabis.structs.pricing.LoyaltyDiscount.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.structs.pricing.SaleDescriptor}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.structs.pricing.SaleDescriptor;
-  return proto.opencannabis.structs.pricing.SaleDescriptor.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.structs.pricing.SaleDescriptor} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.structs.pricing.SaleDescriptor}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {!proto.opencannabis.structs.pricing.SaleType} */ (reader.readEnum());
-      msg.setType(value);
-      break;
-    case 2:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setEffective(value);
-      break;
-    case 3:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setExpiration(value);
-      break;
-    case 4:
-      var value = new proto.opencannabis.structs.pricing.PercentageDiscount;
-      reader.readMessage(value,proto.opencannabis.structs.pricing.PercentageDiscount.deserializeBinaryFromReader);
-      msg.setPercentageOff(value);
-      break;
-    case 5:
-      var value = new proto.opencannabis.structs.pricing.BOGODiscount;
-      reader.readMessage(value,proto.opencannabis.structs.pricing.BOGODiscount.deserializeBinaryFromReader);
-      msg.setBogo(value);
-      break;
-    case 6:
-      var value = new proto.opencannabis.structs.pricing.LoyaltyDiscount;
-      reader.readMessage(value,proto.opencannabis.structs.pricing.LoyaltyDiscount.deserializeBinaryFromReader);
-      msg.setLoyalty(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.structs.pricing.SaleDescriptor.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.structs.pricing.SaleDescriptor} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getType();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      1,
-      f
-    );
-  }
-  f = message.getEffective();
-  if (f != null) {
-    writer.writeMessage(
-      2,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-  f = message.getExpiration();
-  if (f != null) {
-    writer.writeMessage(
-      3,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-  f = message.getPercentageOff();
-  if (f != null) {
-    writer.writeMessage(
-      4,
-      f,
-      proto.opencannabis.structs.pricing.PercentageDiscount.serializeBinaryToWriter
-    );
-  }
-  f = message.getBogo();
-  if (f != null) {
-    writer.writeMessage(
-      5,
-      f,
-      proto.opencannabis.structs.pricing.BOGODiscount.serializeBinaryToWriter
-    );
-  }
-  f = message.getLoyalty();
-  if (f != null) {
-    writer.writeMessage(
-      6,
-      f,
-      proto.opencannabis.structs.pricing.LoyaltyDiscount.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional SaleType type = 1;
- * @return {!proto.opencannabis.structs.pricing.SaleType}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getType = function() {
-  return /** @type {!proto.opencannabis.structs.pricing.SaleType} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/** @param {!proto.opencannabis.structs.pricing.SaleType} value */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.setType = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
-};
-
-
-/**
- * optional opencannabis.temporal.Instant effective = 2;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getEffective = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 2));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.setEffective = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.clearEffective = function() {
-  this.setEffective(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.hasEffective = function() {
-  return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * optional opencannabis.temporal.Instant expiration = 3;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getExpiration = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 3));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.setExpiration = function(value) {
-  jspb.Message.setWrapperField(this, 3, value);
-};
-
-
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.clearExpiration = function() {
-  this.setExpiration(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.hasExpiration = function() {
-  return jspb.Message.getField(this, 3) != null;
-};
-
-
-/**
- * optional PercentageDiscount percentage_off = 4;
- * @return {?proto.opencannabis.structs.pricing.PercentageDiscount}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getPercentageOff = function() {
-  return /** @type{?proto.opencannabis.structs.pricing.PercentageDiscount} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.PercentageDiscount, 4));
-};
-
-
-/** @param {?proto.opencannabis.structs.pricing.PercentageDiscount|undefined} value */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.setPercentageOff = function(value) {
-  jspb.Message.setOneofWrapperField(this, 4, proto.opencannabis.structs.pricing.SaleDescriptor.oneofGroups_[0], value);
-};
-
-
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.clearPercentageOff = function() {
-  this.setPercentageOff(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.hasPercentageOff = function() {
-  return jspb.Message.getField(this, 4) != null;
-};
-
-
-/**
- * optional BOGODiscount bogo = 5;
- * @return {?proto.opencannabis.structs.pricing.BOGODiscount}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getBogo = function() {
-  return /** @type{?proto.opencannabis.structs.pricing.BOGODiscount} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.BOGODiscount, 5));
-};
-
-
-/** @param {?proto.opencannabis.structs.pricing.BOGODiscount|undefined} value */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.setBogo = function(value) {
-  jspb.Message.setOneofWrapperField(this, 5, proto.opencannabis.structs.pricing.SaleDescriptor.oneofGroups_[0], value);
-};
-
-
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.clearBogo = function() {
-  this.setBogo(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.hasBogo = function() {
-  return jspb.Message.getField(this, 5) != null;
-};
-
-
-/**
- * optional LoyaltyDiscount loyalty = 6;
- * @return {?proto.opencannabis.structs.pricing.LoyaltyDiscount}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.getLoyalty = function() {
-  return /** @type{?proto.opencannabis.structs.pricing.LoyaltyDiscount} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.LoyaltyDiscount, 6));
-};
-
-
-/** @param {?proto.opencannabis.structs.pricing.LoyaltyDiscount|undefined} value */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.setLoyalty = function(value) {
-  jspb.Message.setOneofWrapperField(this, 6, proto.opencannabis.structs.pricing.SaleDescriptor.oneofGroups_[0], value);
-};
-
-
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.clearLoyalty = function() {
-  this.setLoyalty(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.pricing.SaleDescriptor.prototype.hasLoyalty = function() {
-  return jspb.Message.getField(this, 6) != null;
-};
-
-
-/**
- * @enum {number}
- */
-proto.opencannabis.structs.pricing.SaleType = {
-  PERCENTAGE_OFF: 0,
-  BOGO: 1,
-  LOYALTY: 2
-};
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.structs.pricing.PricingTierAvailability = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.opencannabis.structs.pricing.PricingTierAvailability, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.structs.pricing.PricingTierAvailability.displayName = 'proto.opencannabis.structs.pricing.PricingTierAvailability';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.structs.pricing.PricingTierAvailability.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.structs.pricing.PricingTierAvailability.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.structs.pricing.PricingTierAvailability} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.PricingTierAvailability.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    offered: jspb.Message.getFieldWithDefault(msg, 1, false),
-    available: jspb.Message.getFieldWithDefault(msg, 2, false)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.structs.pricing.PricingTierAvailability}
- */
-proto.opencannabis.structs.pricing.PricingTierAvailability.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.structs.pricing.PricingTierAvailability;
-  return proto.opencannabis.structs.pricing.PricingTierAvailability.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.structs.pricing.PricingTierAvailability} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.structs.pricing.PricingTierAvailability}
- */
-proto.opencannabis.structs.pricing.PricingTierAvailability.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setOffered(value);
-      break;
-    case 2:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setAvailable(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.structs.pricing.PricingTierAvailability.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.structs.pricing.PricingTierAvailability.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.structs.pricing.PricingTierAvailability} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.PricingTierAvailability.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getOffered();
-  if (f) {
-    writer.writeBool(
-      1,
-      f
-    );
-  }
-  f = message.getAvailable();
-  if (f) {
-    writer.writeBool(
-      2,
-      f
-    );
-  }
-};
-
-
-/**
- * optional bool offered = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.opencannabis.structs.pricing.PricingTierAvailability.prototype.getOffered = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
-};
-
-
-/** @param {boolean} value */
-proto.opencannabis.structs.pricing.PricingTierAvailability.prototype.setOffered = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
-};
-
-
-/**
- * optional bool available = 2;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.opencannabis.structs.pricing.PricingTierAvailability.prototype.getAvailable = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
-};
-
-
-/** @param {boolean} value */
-proto.opencannabis.structs.pricing.PricingTierAvailability.prototype.setAvailable = function(value) {
-  jspb.Message.setProto3BooleanField(this, 2, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.opencannabis.structs.pricing.UnitPricingDescriptor.repeatedFields_, null);
-};
-goog.inherits(proto.opencannabis.structs.pricing.UnitPricingDescriptor, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.structs.pricing.UnitPricingDescriptor.displayName = 'proto.opencannabis.structs.pricing.UnitPricingDescriptor';
-}
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.repeatedFields_ = [3];
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.structs.pricing.UnitPricingDescriptor.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.structs.pricing.UnitPricingDescriptor} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    priceValue: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
-    status: (f = msg.getStatus()) && proto.opencannabis.structs.pricing.PricingTierAvailability.toObject(includeInstance, f),
-    discountsList: jspb.Message.toObjectList(msg.getDiscountsList(),
-    proto.opencannabis.structs.pricing.SaleDescriptor.toObject, includeInstance)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.structs.pricing.UnitPricingDescriptor}
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.structs.pricing.UnitPricingDescriptor;
-  return proto.opencannabis.structs.pricing.UnitPricingDescriptor.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.structs.pricing.UnitPricingDescriptor} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.structs.pricing.UnitPricingDescriptor}
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setPriceValue(value);
-      break;
-    case 2:
-      var value = new proto.opencannabis.structs.pricing.PricingTierAvailability;
-      reader.readMessage(value,proto.opencannabis.structs.pricing.PricingTierAvailability.deserializeBinaryFromReader);
-      msg.setStatus(value);
-      break;
-    case 3:
-      var value = new proto.opencannabis.structs.pricing.SaleDescriptor;
-      reader.readMessage(value,proto.opencannabis.structs.pricing.SaleDescriptor.deserializeBinaryFromReader);
-      msg.addDiscounts(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.structs.pricing.UnitPricingDescriptor.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.structs.pricing.UnitPricingDescriptor} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getPriceValue();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      1,
-      f
-    );
-  }
-  f = message.getStatus();
-  if (f != null) {
-    writer.writeMessage(
-      2,
-      f,
-      proto.opencannabis.structs.pricing.PricingTierAvailability.serializeBinaryToWriter
-    );
-  }
-  f = message.getDiscountsList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      3,
-      f,
-      proto.opencannabis.structs.pricing.SaleDescriptor.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional float price_value = 1;
- * @return {number}
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.getPriceValue = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
-};
-
-
-/** @param {number} value */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.setPriceValue = function(value) {
-  jspb.Message.setProto3FloatField(this, 1, value);
-};
-
-
-/**
- * optional PricingTierAvailability status = 2;
- * @return {?proto.opencannabis.structs.pricing.PricingTierAvailability}
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.getStatus = function() {
-  return /** @type{?proto.opencannabis.structs.pricing.PricingTierAvailability} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.PricingTierAvailability, 2));
-};
-
-
-/** @param {?proto.opencannabis.structs.pricing.PricingTierAvailability|undefined} value */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.setStatus = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.clearStatus = function() {
-  this.setStatus(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.hasStatus = function() {
-  return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * repeated SaleDescriptor discounts = 3;
- * @return {!Array.<!proto.opencannabis.structs.pricing.SaleDescriptor>}
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.getDiscountsList = function() {
-  return /** @type{!Array.<!proto.opencannabis.structs.pricing.SaleDescriptor>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.structs.pricing.SaleDescriptor, 3));
-};
-
-
-/** @param {!Array.<!proto.opencannabis.structs.pricing.SaleDescriptor>} value */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.setDiscountsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 3, value);
-};
-
-
-/**
- * @param {!proto.opencannabis.structs.pricing.SaleDescriptor=} opt_value
- * @param {number=} opt_index
- * @return {!proto.opencannabis.structs.pricing.SaleDescriptor}
- */
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.addDiscounts = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 3, opt_value, proto.opencannabis.structs.pricing.SaleDescriptor, opt_index);
-};
-
-
-proto.opencannabis.structs.pricing.UnitPricingDescriptor.prototype.clearDiscountsList = function() {
-  this.setDiscountsList([]);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.opencannabis.structs.pricing.WeightedPricingDescriptor, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.structs.pricing.WeightedPricingDescriptor.displayName = 'proto.opencannabis.structs.pricing.WeightedPricingDescriptor';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.structs.pricing.WeightedPricingDescriptor.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.structs.pricing.WeightedPricingDescriptor} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    weight: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    tier: (f = msg.getTier()) && proto.opencannabis.structs.pricing.UnitPricingDescriptor.toObject(includeInstance, f),
-    weightInGrams: +jspb.Message.getFieldWithDefault(msg, 3, 0.0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.structs.pricing.WeightedPricingDescriptor}
- */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.structs.pricing.WeightedPricingDescriptor;
-  return proto.opencannabis.structs.pricing.WeightedPricingDescriptor.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.structs.pricing.WeightedPricingDescriptor} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.structs.pricing.WeightedPricingDescriptor}
- */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {!proto.opencannabis.structs.pricing.PricingWeightTier} */ (reader.readEnum());
-      msg.setWeight(value);
-      break;
-    case 2:
-      var value = new proto.opencannabis.structs.pricing.UnitPricingDescriptor;
-      reader.readMessage(value,proto.opencannabis.structs.pricing.UnitPricingDescriptor.deserializeBinaryFromReader);
-      msg.setTier(value);
-      break;
-    case 3:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setWeightInGrams(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.structs.pricing.WeightedPricingDescriptor.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.structs.pricing.WeightedPricingDescriptor} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getWeight();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      1,
-      f
-    );
-  }
-  f = message.getTier();
-  if (f != null) {
-    writer.writeMessage(
-      2,
-      f,
-      proto.opencannabis.structs.pricing.UnitPricingDescriptor.serializeBinaryToWriter
-    );
-  }
-  f = message.getWeightInGrams();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      3,
-      f
-    );
-  }
-};
-
-
-/**
- * optional PricingWeightTier weight = 1;
- * @return {!proto.opencannabis.structs.pricing.PricingWeightTier}
- */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.getWeight = function() {
-  return /** @type {!proto.opencannabis.structs.pricing.PricingWeightTier} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/** @param {!proto.opencannabis.structs.pricing.PricingWeightTier} value */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.setWeight = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
-};
-
-
-/**
- * optional UnitPricingDescriptor tier = 2;
- * @return {?proto.opencannabis.structs.pricing.UnitPricingDescriptor}
- */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.getTier = function() {
-  return /** @type{?proto.opencannabis.structs.pricing.UnitPricingDescriptor} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.UnitPricingDescriptor, 2));
-};
-
-
-/** @param {?proto.opencannabis.structs.pricing.UnitPricingDescriptor|undefined} value */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.setTier = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.clearTier = function() {
-  this.setTier(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.hasTier = function() {
-  return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * optional float weight_in_grams = 3;
- * @return {number}
- */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.getWeightInGrams = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 3, 0.0));
-};
-
-
-/** @param {number} value */
-proto.opencannabis.structs.pricing.WeightedPricingDescriptor.prototype.setWeightInGrams = function(value) {
-  jspb.Message.setProto3FloatField(this, 3, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.structs.pricing.FreebiePricingDescriptor = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.opencannabis.structs.pricing.FreebiePricingDescriptor, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.structs.pricing.FreebiePricingDescriptor.displayName = 'proto.opencannabis.structs.pricing.FreebiePricingDescriptor';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.structs.pricing.FreebiePricingDescriptor.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.structs.pricing.FreebiePricingDescriptor.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.structs.pricing.FreebiePricingDescriptor} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.FreebiePricingDescriptor.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.structs.pricing.FreebiePricingDescriptor}
- */
-proto.opencannabis.structs.pricing.FreebiePricingDescriptor.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.structs.pricing.FreebiePricingDescriptor;
-  return proto.opencannabis.structs.pricing.FreebiePricingDescriptor.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.structs.pricing.FreebiePricingDescriptor} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.structs.pricing.FreebiePricingDescriptor}
- */
-proto.opencannabis.structs.pricing.FreebiePricingDescriptor.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.structs.pricing.FreebiePricingDescriptor.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.structs.pricing.FreebiePricingDescriptor.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.structs.pricing.FreebiePricingDescriptor} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.FreebiePricingDescriptor.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.structs.pricing.PricingDescriptor = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.opencannabis.structs.pricing.PricingDescriptor.oneofGroups_);
-};
-goog.inherits(proto.opencannabis.structs.pricing.PricingDescriptor, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.structs.pricing.PricingDescriptor.displayName = 'proto.opencannabis.structs.pricing.PricingDescriptor';
-}
-/**
- * Oneof group definitions for this message. Each group defines the field
- * numbers belonging to that group. When of these fields' value is set, all
- * other fields in the group are cleared. During deserialization, if multiple
- * fields are encountered for a group, only the last value seen will be kept.
- * @private {!Array<!Array<number>>}
- * @const
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.oneofGroups_ = [[20,21,22]];
-
-/**
- * @enum {number}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.PricingCase = {
-  PRICING_NOT_SET: 0,
-  UNIT: 20,
-  WEIGHTED: 21,
-  FREEBIE: 22
-};
-
-/**
- * @return {proto.opencannabis.structs.pricing.PricingDescriptor.PricingCase}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.getPricingCase = function() {
-  return /** @type {proto.opencannabis.structs.pricing.PricingDescriptor.PricingCase} */(jspb.Message.computeOneofCase(this, proto.opencannabis.structs.pricing.PricingDescriptor.oneofGroups_[0]));
-};
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.structs.pricing.PricingDescriptor.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.structs.pricing.PricingDescriptor} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    type: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    unit: (f = msg.getUnit()) && proto.opencannabis.structs.pricing.UnitPricingDescriptor.toObject(includeInstance, f),
-    weighted: (f = msg.getWeighted()) && proto.opencannabis.structs.pricing.WeightedPricingDescriptor.toObject(includeInstance, f),
-    freebie: (f = msg.getFreebie()) && proto.opencannabis.structs.pricing.FreebiePricingDescriptor.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.structs.pricing.PricingDescriptor}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.structs.pricing.PricingDescriptor;
-  return proto.opencannabis.structs.pricing.PricingDescriptor.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.structs.pricing.PricingDescriptor} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.structs.pricing.PricingDescriptor}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {!proto.opencannabis.structs.pricing.PricingType} */ (reader.readEnum());
-      msg.setType(value);
-      break;
-    case 20:
-      var value = new proto.opencannabis.structs.pricing.UnitPricingDescriptor;
-      reader.readMessage(value,proto.opencannabis.structs.pricing.UnitPricingDescriptor.deserializeBinaryFromReader);
-      msg.setUnit(value);
-      break;
-    case 21:
-      var value = new proto.opencannabis.structs.pricing.WeightedPricingDescriptor;
-      reader.readMessage(value,proto.opencannabis.structs.pricing.WeightedPricingDescriptor.deserializeBinaryFromReader);
-      msg.setWeighted(value);
-      break;
-    case 22:
-      var value = new proto.opencannabis.structs.pricing.FreebiePricingDescriptor;
-      reader.readMessage(value,proto.opencannabis.structs.pricing.FreebiePricingDescriptor.deserializeBinaryFromReader);
-      msg.setFreebie(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.structs.pricing.PricingDescriptor.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.structs.pricing.PricingDescriptor} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getType();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      1,
-      f
-    );
-  }
-  f = message.getUnit();
-  if (f != null) {
-    writer.writeMessage(
-      20,
-      f,
-      proto.opencannabis.structs.pricing.UnitPricingDescriptor.serializeBinaryToWriter
-    );
-  }
-  f = message.getWeighted();
-  if (f != null) {
-    writer.writeMessage(
-      21,
-      f,
-      proto.opencannabis.structs.pricing.WeightedPricingDescriptor.serializeBinaryToWriter
-    );
-  }
-  f = message.getFreebie();
-  if (f != null) {
-    writer.writeMessage(
-      22,
-      f,
-      proto.opencannabis.structs.pricing.FreebiePricingDescriptor.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional PricingType type = 1;
- * @return {!proto.opencannabis.structs.pricing.PricingType}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.getType = function() {
-  return /** @type {!proto.opencannabis.structs.pricing.PricingType} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/** @param {!proto.opencannabis.structs.pricing.PricingType} value */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.setType = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
-};
-
-
-/**
- * optional UnitPricingDescriptor unit = 20;
- * @return {?proto.opencannabis.structs.pricing.UnitPricingDescriptor}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.getUnit = function() {
-  return /** @type{?proto.opencannabis.structs.pricing.UnitPricingDescriptor} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.UnitPricingDescriptor, 20));
-};
-
-
-/** @param {?proto.opencannabis.structs.pricing.UnitPricingDescriptor|undefined} value */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.setUnit = function(value) {
-  jspb.Message.setOneofWrapperField(this, 20, proto.opencannabis.structs.pricing.PricingDescriptor.oneofGroups_[0], value);
-};
-
-
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.clearUnit = function() {
-  this.setUnit(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.hasUnit = function() {
-  return jspb.Message.getField(this, 20) != null;
-};
-
-
-/**
- * optional WeightedPricingDescriptor weighted = 21;
- * @return {?proto.opencannabis.structs.pricing.WeightedPricingDescriptor}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.getWeighted = function() {
-  return /** @type{?proto.opencannabis.structs.pricing.WeightedPricingDescriptor} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.WeightedPricingDescriptor, 21));
-};
-
-
-/** @param {?proto.opencannabis.structs.pricing.WeightedPricingDescriptor|undefined} value */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.setWeighted = function(value) {
-  jspb.Message.setOneofWrapperField(this, 21, proto.opencannabis.structs.pricing.PricingDescriptor.oneofGroups_[0], value);
-};
-
-
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.clearWeighted = function() {
-  this.setWeighted(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.hasWeighted = function() {
-  return jspb.Message.getField(this, 21) != null;
-};
-
-
-/**
- * optional FreebiePricingDescriptor freebie = 22;
- * @return {?proto.opencannabis.structs.pricing.FreebiePricingDescriptor}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.getFreebie = function() {
-  return /** @type{?proto.opencannabis.structs.pricing.FreebiePricingDescriptor} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.structs.pricing.FreebiePricingDescriptor, 22));
-};
-
-
-/** @param {?proto.opencannabis.structs.pricing.FreebiePricingDescriptor|undefined} value */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.setFreebie = function(value) {
-  jspb.Message.setOneofWrapperField(this, 22, proto.opencannabis.structs.pricing.PricingDescriptor.oneofGroups_[0], value);
-};
-
-
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.clearFreebie = function() {
-  this.setFreebie(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.pricing.PricingDescriptor.prototype.hasFreebie = function() {
-  return jspb.Message.getField(this, 22) != null;
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.structs.pricing.ProductPricing = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.opencannabis.structs.pricing.ProductPricing.repeatedFields_, null);
-};
-goog.inherits(proto.opencannabis.structs.pricing.ProductPricing, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.structs.pricing.ProductPricing.displayName = 'proto.opencannabis.structs.pricing.ProductPricing';
-}
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.opencannabis.structs.pricing.ProductPricing.repeatedFields_ = [1,2];
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.structs.pricing.ProductPricing.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.structs.pricing.ProductPricing.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.structs.pricing.ProductPricing} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.ProductPricing.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    discountsList: jspb.Message.toObjectList(msg.getDiscountsList(),
-    proto.opencannabis.structs.pricing.SaleDescriptor.toObject, includeInstance),
-    manifestList: jspb.Message.toObjectList(msg.getManifestList(),
-    proto.opencannabis.structs.pricing.PricingDescriptor.toObject, includeInstance)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.structs.pricing.ProductPricing}
- */
-proto.opencannabis.structs.pricing.ProductPricing.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.structs.pricing.ProductPricing;
-  return proto.opencannabis.structs.pricing.ProductPricing.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.structs.pricing.ProductPricing} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.structs.pricing.ProductPricing}
- */
-proto.opencannabis.structs.pricing.ProductPricing.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = new proto.opencannabis.structs.pricing.SaleDescriptor;
-      reader.readMessage(value,proto.opencannabis.structs.pricing.SaleDescriptor.deserializeBinaryFromReader);
-      msg.addDiscounts(value);
-      break;
-    case 2:
-      var value = new proto.opencannabis.structs.pricing.PricingDescriptor;
-      reader.readMessage(value,proto.opencannabis.structs.pricing.PricingDescriptor.deserializeBinaryFromReader);
-      msg.addManifest(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.structs.pricing.ProductPricing.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.structs.pricing.ProductPricing.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.structs.pricing.ProductPricing} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.pricing.ProductPricing.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getDiscountsList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      1,
-      f,
-      proto.opencannabis.structs.pricing.SaleDescriptor.serializeBinaryToWriter
-    );
-  }
-  f = message.getManifestList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      2,
-      f,
-      proto.opencannabis.structs.pricing.PricingDescriptor.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * repeated SaleDescriptor discounts = 1;
- * @return {!Array.<!proto.opencannabis.structs.pricing.SaleDescriptor>}
- */
-proto.opencannabis.structs.pricing.ProductPricing.prototype.getDiscountsList = function() {
-  return /** @type{!Array.<!proto.opencannabis.structs.pricing.SaleDescriptor>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.structs.pricing.SaleDescriptor, 1));
-};
-
-
-/** @param {!Array.<!proto.opencannabis.structs.pricing.SaleDescriptor>} value */
-proto.opencannabis.structs.pricing.ProductPricing.prototype.setDiscountsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
-};
-
-
-/**
- * @param {!proto.opencannabis.structs.pricing.SaleDescriptor=} opt_value
- * @param {number=} opt_index
- * @return {!proto.opencannabis.structs.pricing.SaleDescriptor}
- */
-proto.opencannabis.structs.pricing.ProductPricing.prototype.addDiscounts = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.opencannabis.structs.pricing.SaleDescriptor, opt_index);
-};
-
-
-proto.opencannabis.structs.pricing.ProductPricing.prototype.clearDiscountsList = function() {
-  this.setDiscountsList([]);
-};
-
-
-/**
- * repeated PricingDescriptor manifest = 2;
- * @return {!Array.<!proto.opencannabis.structs.pricing.PricingDescriptor>}
- */
-proto.opencannabis.structs.pricing.ProductPricing.prototype.getManifestList = function() {
-  return /** @type{!Array.<!proto.opencannabis.structs.pricing.PricingDescriptor>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.structs.pricing.PricingDescriptor, 2));
-};
-
-
-/** @param {!Array.<!proto.opencannabis.structs.pricing.PricingDescriptor>} value */
-proto.opencannabis.structs.pricing.ProductPricing.prototype.setManifestList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 2, value);
-};
-
-
-/**
- * @param {!proto.opencannabis.structs.pricing.PricingDescriptor=} opt_value
- * @param {number=} opt_index
- * @return {!proto.opencannabis.structs.pricing.PricingDescriptor}
- */
-proto.opencannabis.structs.pricing.ProductPricing.prototype.addManifest = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.opencannabis.structs.pricing.PricingDescriptor, opt_index);
-};
-
-
-proto.opencannabis.structs.pricing.ProductPricing.prototype.clearManifestList = function() {
-  this.setManifestList([]);
-};
-
-
-/**
- * @enum {number}
- */
-proto.opencannabis.structs.pricing.PricingType = {
-  UNIT: 0,
-  WEIGHTED: 1,
-  FREEBIE: 2
-};
-
-/**
- * @enum {number}
- */
-proto.opencannabis.structs.pricing.PricingWeightTier = {
-  OTHER: 0,
-  GRAM: 1,
-  HALFGRAM: 2,
-  QUARTERGRAM: 3,
-  DUB: 4,
-  EIGHTH: 5,
-  QUARTER: 6,
-  HALF: 7,
-  OUNCE: 8,
-  POUND: 9
+  EXCLUSIVE: 4,
+  IN_HOUSE: 5,
+  LAST_CHANCE: 6,
+  LIMITED_TIME: 7,
+  LOCAL: 8,
+  ON_SALE: 20
 };
 
 
@@ -27875,7 +28116,7 @@ proto.opencannabis.content.ProductContent.toObject = function(includeInstance, m
     mediaList: jspb.Message.toObjectList(msg.getMediaList(),
     proto.opencannabis.media.MediaItem.toObject, includeInstance),
     pricing: (f = msg.getPricing()) && proto.opencannabis.structs.pricing.ProductPricing.toObject(includeInstance, f),
-    testing: (f = msg.getTesting()) && proto.opencannabis.structs.labtesting.TestResults.toObject(includeInstance, f),
+    tests: (f = msg.getTests()) && proto.opencannabis.structs.labtesting.TestResults.toObject(includeInstance, f),
     flagsList: jspb.Message.getRepeatedField(msg, 9),
     ts: (f = msg.getTs()) && proto.opencannabis.content.ProductTimestamps.toObject(includeInstance, f)
   };
@@ -27952,7 +28193,7 @@ proto.opencannabis.content.ProductContent.deserializeBinaryFromReader = function
     case 8:
       var value = new proto.opencannabis.structs.labtesting.TestResults;
       reader.readMessage(value,proto.opencannabis.structs.labtesting.TestResults.deserializeBinaryFromReader);
-      msg.setTesting(value);
+      msg.setTests(value);
       break;
     case 9:
       var value = /** @type {!Array.<!proto.opencannabis.structs.ProductFlag>} */ (reader.readPackedEnum());
@@ -28048,7 +28289,7 @@ proto.opencannabis.content.ProductContent.serializeBinaryToWriter = function(mes
       proto.opencannabis.structs.pricing.ProductPricing.serializeBinaryToWriter
     );
   }
-  f = message.getTesting();
+  f = message.getTests();
   if (f != null) {
     writer.writeMessage(
       8,
@@ -28286,23 +28527,23 @@ proto.opencannabis.content.ProductContent.prototype.hasPricing = function() {
 
 
 /**
- * optional opencannabis.structs.labtesting.TestResults testing = 8;
+ * optional opencannabis.structs.labtesting.TestResults tests = 8;
  * @return {?proto.opencannabis.structs.labtesting.TestResults}
  */
-proto.opencannabis.content.ProductContent.prototype.getTesting = function() {
+proto.opencannabis.content.ProductContent.prototype.getTests = function() {
   return /** @type{?proto.opencannabis.structs.labtesting.TestResults} */ (
     jspb.Message.getWrapperField(this, proto.opencannabis.structs.labtesting.TestResults, 8));
 };
 
 
 /** @param {?proto.opencannabis.structs.labtesting.TestResults|undefined} value */
-proto.opencannabis.content.ProductContent.prototype.setTesting = function(value) {
+proto.opencannabis.content.ProductContent.prototype.setTests = function(value) {
   jspb.Message.setWrapperField(this, 8, value);
 };
 
 
-proto.opencannabis.content.ProductContent.prototype.clearTesting = function() {
-  this.setTesting(undefined);
+proto.opencannabis.content.ProductContent.prototype.clearTests = function() {
+  this.setTests(undefined);
 };
 
 
@@ -28310,7 +28551,7 @@ proto.opencannabis.content.ProductContent.prototype.clearTesting = function() {
  * Returns whether this field is set.
  * @return {!boolean}
  */
-proto.opencannabis.content.ProductContent.prototype.hasTesting = function() {
+proto.opencannabis.content.ProductContent.prototype.hasTests = function() {
   return jspb.Message.getField(this, 8) != null;
 };
 
@@ -60872,6 +61113,663 @@ proto.bloombox.schema.services.platform.v1.Healthcheck.Operation.prototype.hasRe
  * @extends {jspb.Message}
  * @constructor
  */
+proto.bloombox.schema.services.platform.v1.DomainResolve = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.DomainResolve, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.DomainResolve.displayName = 'proto.bloombox.schema.services.platform.v1.DomainResolve';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.DomainResolve.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.DomainResolve} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.DomainResolve}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.DomainResolve;
+  return proto.bloombox.schema.services.platform.v1.DomainResolve.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.DomainResolve} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.DomainResolve}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.DomainResolve.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.DomainResolve} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Request = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.DomainResolve.Request, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.DomainResolve.Request.displayName = 'proto.bloombox.schema.services.platform.v1.DomainResolve.Request';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Request.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.DomainResolve.Request.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.DomainResolve.Request} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Request.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    origin: jspb.Message.getFieldWithDefault(msg, 1, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.DomainResolve.Request}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Request.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.DomainResolve.Request;
+  return proto.bloombox.schema.services.platform.v1.DomainResolve.Request.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.DomainResolve.Request} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.DomainResolve.Request}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Request.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOrigin(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Request.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.DomainResolve.Request.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.DomainResolve.Request} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Request.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getOrigin();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string origin = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Request.prototype.getOrigin = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Request.prototype.setOrigin = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.DomainResolve.Response, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.DomainResolve.Response.displayName = 'proto.bloombox.schema.services.platform.v1.DomainResolve.Response';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.DomainResolve.Response.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.DomainResolve.Response} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    partner: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    location: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    apikey: jspb.Message.getFieldWithDefault(msg, 3, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.DomainResolve.Response}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.DomainResolve.Response;
+  return proto.bloombox.schema.services.platform.v1.DomainResolve.Response.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.DomainResolve.Response} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.DomainResolve.Response}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPartner(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLocation(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setApikey(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.DomainResolve.Response.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.DomainResolve.Response} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getPartner();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getLocation();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getApikey();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string partner = 1;
+ * @return {string}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response.prototype.getPartner = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response.prototype.setPartner = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string location = 2;
+ * @return {string}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response.prototype.getLocation = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response.prototype.setLocation = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string apikey = 3;
+ * @return {string}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response.prototype.getApikey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Response.prototype.setApikey = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.platform.v1.DomainResolve.Operation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.displayName = 'proto.bloombox.schema.services.platform.v1.DomainResolve.Operation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.platform.v1.DomainResolve.Operation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    request: (f = msg.getRequest()) && proto.bloombox.schema.services.platform.v1.DomainResolve.Request.toObject(includeInstance, f),
+    response: (f = msg.getResponse()) && proto.bloombox.schema.services.platform.v1.DomainResolve.Response.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.platform.v1.DomainResolve.Operation}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.platform.v1.DomainResolve.Operation;
+  return proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.platform.v1.DomainResolve.Operation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.platform.v1.DomainResolve.Operation}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.bloombox.schema.services.platform.v1.DomainResolve.Request;
+      reader.readMessage(value,proto.bloombox.schema.services.platform.v1.DomainResolve.Request.deserializeBinaryFromReader);
+      msg.setRequest(value);
+      break;
+    case 2:
+      var value = new proto.bloombox.schema.services.platform.v1.DomainResolve.Response;
+      reader.readMessage(value,proto.bloombox.schema.services.platform.v1.DomainResolve.Response.deserializeBinaryFromReader);
+      msg.setResponse(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.platform.v1.DomainResolve.Operation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRequest();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.bloombox.schema.services.platform.v1.DomainResolve.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getResponse();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.bloombox.schema.services.platform.v1.DomainResolve.Response.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional Request request = 1;
+ * @return {?proto.bloombox.schema.services.platform.v1.DomainResolve.Request}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.prototype.getRequest = function() {
+  return /** @type{?proto.bloombox.schema.services.platform.v1.DomainResolve.Request} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.platform.v1.DomainResolve.Request, 1));
+};
+
+
+/** @param {?proto.bloombox.schema.services.platform.v1.DomainResolve.Request|undefined} value */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.prototype.setRequest = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.prototype.clearRequest = function() {
+  this.setRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.prototype.hasRequest = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional Response response = 2;
+ * @return {?proto.bloombox.schema.services.platform.v1.DomainResolve.Response}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.prototype.getResponse = function() {
+  return /** @type{?proto.bloombox.schema.services.platform.v1.DomainResolve.Response} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.platform.v1.DomainResolve.Response, 2));
+};
+
+
+/** @param {?proto.bloombox.schema.services.platform.v1.DomainResolve.Response|undefined} value */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.prototype.setResponse = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.prototype.clearResponse = function() {
+  this.setResponse(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.platform.v1.DomainResolve.Operation.prototype.hasResponse = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.bloombox.schema.services.platform.v1.SearchReindex = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -62116,7 +63014,9 @@ proto.bloombox.schema.services.platform.v1.PlatformStats.Operation.prototype.has
  */
 proto.bloombox.schema.services.platform.v1.PlatformError = {
   NO_ERROR: 0,
-  SEARCH_NOT_AVAILABLE: 1
+  SEARCH_NOT_AVAILABLE: 1,
+  ORIGIN_INVALID: 2,
+  ORIGIN_NOT_FOUND: 3
 };
 
 
@@ -65777,6 +66677,758 @@ proto.bloombox.schema.services.shop.v1.CheckZipcode.Operation.prototype.hasRespo
  * @extends {jspb.Message}
  * @constructor
  */
+proto.bloombox.schema.services.shop.v1.ShareOrder = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.shop.v1.ShareOrder, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.shop.v1.ShareOrder.displayName = 'proto.bloombox.schema.services.shop.v1.ShareOrder';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.shop.v1.ShareOrder.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.shop.v1.ShareOrder} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.shop.v1.ShareOrder}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.shop.v1.ShareOrder;
+  return proto.bloombox.schema.services.shop.v1.ShareOrder.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.shop.v1.ShareOrder} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.shop.v1.ShareOrder}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.shop.v1.ShareOrder.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.shop.v1.ShareOrder} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.shop.v1.ShareOrder.Request, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.shop.v1.ShareOrder.Request.displayName = 'proto.bloombox.schema.services.shop.v1.ShareOrder.Request';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.shop.v1.ShareOrder.Request.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.shop.v1.ShareOrder.Request} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    emailAddress: (f = msg.getEmailAddress()) && proto.opencannabis.contact.EmailAddress.toObject(includeInstance, f),
+    phoneNumber: (f = msg.getPhoneNumber()) && proto.opencannabis.contact.PhoneNumber.toObject(includeInstance, f),
+    order: (f = msg.getOrder()) && proto.opencannabis.commerce.Order.toObject(includeInstance, f),
+    location: (f = msg.getLocation()) && proto.bloombox.schema.partner.PartnerLocationKey.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.shop.v1.ShareOrder.Request}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.shop.v1.ShareOrder.Request;
+  return proto.bloombox.schema.services.shop.v1.ShareOrder.Request.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.shop.v1.ShareOrder.Request} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.shop.v1.ShareOrder.Request}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.opencannabis.contact.EmailAddress;
+      reader.readMessage(value,proto.opencannabis.contact.EmailAddress.deserializeBinaryFromReader);
+      msg.setEmailAddress(value);
+      break;
+    case 2:
+      var value = new proto.opencannabis.contact.PhoneNumber;
+      reader.readMessage(value,proto.opencannabis.contact.PhoneNumber.deserializeBinaryFromReader);
+      msg.setPhoneNumber(value);
+      break;
+    case 3:
+      var value = new proto.opencannabis.commerce.Order;
+      reader.readMessage(value,proto.opencannabis.commerce.Order.deserializeBinaryFromReader);
+      msg.setOrder(value);
+      break;
+    case 4:
+      var value = new proto.bloombox.schema.partner.PartnerLocationKey;
+      reader.readMessage(value,proto.bloombox.schema.partner.PartnerLocationKey.deserializeBinaryFromReader);
+      msg.setLocation(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.shop.v1.ShareOrder.Request.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.shop.v1.ShareOrder.Request} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getEmailAddress();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.opencannabis.contact.EmailAddress.serializeBinaryToWriter
+    );
+  }
+  f = message.getPhoneNumber();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.opencannabis.contact.PhoneNumber.serializeBinaryToWriter
+    );
+  }
+  f = message.getOrder();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      proto.opencannabis.commerce.Order.serializeBinaryToWriter
+    );
+  }
+  f = message.getLocation();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      proto.bloombox.schema.partner.PartnerLocationKey.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional opencannabis.contact.EmailAddress email_address = 1;
+ * @return {?proto.opencannabis.contact.EmailAddress}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.getEmailAddress = function() {
+  return /** @type{?proto.opencannabis.contact.EmailAddress} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.contact.EmailAddress, 1));
+};
+
+
+/** @param {?proto.opencannabis.contact.EmailAddress|undefined} value */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.setEmailAddress = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.clearEmailAddress = function() {
+  this.setEmailAddress(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.hasEmailAddress = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional opencannabis.contact.PhoneNumber phone_number = 2;
+ * @return {?proto.opencannabis.contact.PhoneNumber}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.getPhoneNumber = function() {
+  return /** @type{?proto.opencannabis.contact.PhoneNumber} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.contact.PhoneNumber, 2));
+};
+
+
+/** @param {?proto.opencannabis.contact.PhoneNumber|undefined} value */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.setPhoneNumber = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.clearPhoneNumber = function() {
+  this.setPhoneNumber(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.hasPhoneNumber = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional opencannabis.commerce.Order order = 3;
+ * @return {?proto.opencannabis.commerce.Order}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.getOrder = function() {
+  return /** @type{?proto.opencannabis.commerce.Order} */ (
+    jspb.Message.getWrapperField(this, proto.opencannabis.commerce.Order, 3));
+};
+
+
+/** @param {?proto.opencannabis.commerce.Order|undefined} value */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.setOrder = function(value) {
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.clearOrder = function() {
+  this.setOrder(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.hasOrder = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional bloombox.schema.partner.PartnerLocationKey location = 4;
+ * @return {?proto.bloombox.schema.partner.PartnerLocationKey}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.getLocation = function() {
+  return /** @type{?proto.bloombox.schema.partner.PartnerLocationKey} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.partner.PartnerLocationKey, 4));
+};
+
+
+/** @param {?proto.bloombox.schema.partner.PartnerLocationKey|undefined} value */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.setLocation = function(value) {
+  jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.clearLocation = function() {
+  this.setLocation(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Request.prototype.hasLocation = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Response = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.shop.v1.ShareOrder.Response, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.shop.v1.ShareOrder.Response.displayName = 'proto.bloombox.schema.services.shop.v1.ShareOrder.Response';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Response.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.shop.v1.ShareOrder.Response.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.shop.v1.ShareOrder.Response} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Response.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    error: jspb.Message.getFieldWithDefault(msg, 1, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.shop.v1.ShareOrder.Response}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Response.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.shop.v1.ShareOrder.Response;
+  return proto.bloombox.schema.services.shop.v1.ShareOrder.Response.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.shop.v1.ShareOrder.Response} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.shop.v1.ShareOrder.Response}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Response.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.bloombox.schema.services.shop.v1.ShareError} */ (reader.readEnum());
+      msg.setError(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Response.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.shop.v1.ShareOrder.Response.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.shop.v1.ShareOrder.Response} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Response.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getError();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional ShareError error = 1;
+ * @return {!proto.bloombox.schema.services.shop.v1.ShareError}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Response.prototype.getError = function() {
+  return /** @type {!proto.bloombox.schema.services.shop.v1.ShareError} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.bloombox.schema.services.shop.v1.ShareError} value */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Response.prototype.setError = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.bloombox.schema.services.shop.v1.ShareOrder.Operation, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.displayName = 'proto.bloombox.schema.services.shop.v1.ShareOrder.Operation';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.prototype.toObject = function(opt_includeInstance) {
+  return proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.bloombox.schema.services.shop.v1.ShareOrder.Operation} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    request: (f = msg.getRequest()) && proto.bloombox.schema.services.shop.v1.ShareOrder.Request.toObject(includeInstance, f),
+    response: (f = msg.getResponse()) && proto.bloombox.schema.services.shop.v1.ShareOrder.Response.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.bloombox.schema.services.shop.v1.ShareOrder.Operation}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.bloombox.schema.services.shop.v1.ShareOrder.Operation;
+  return proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.bloombox.schema.services.shop.v1.ShareOrder.Operation} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.bloombox.schema.services.shop.v1.ShareOrder.Operation}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.bloombox.schema.services.shop.v1.ShareOrder.Request;
+      reader.readMessage(value,proto.bloombox.schema.services.shop.v1.ShareOrder.Request.deserializeBinaryFromReader);
+      msg.setRequest(value);
+      break;
+    case 2:
+      var value = new proto.bloombox.schema.services.shop.v1.ShareOrder.Response;
+      reader.readMessage(value,proto.bloombox.schema.services.shop.v1.ShareOrder.Response.deserializeBinaryFromReader);
+      msg.setResponse(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.bloombox.schema.services.shop.v1.ShareOrder.Operation} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRequest();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.bloombox.schema.services.shop.v1.ShareOrder.Request.serializeBinaryToWriter
+    );
+  }
+  f = message.getResponse();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.bloombox.schema.services.shop.v1.ShareOrder.Response.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional Request request = 1;
+ * @return {?proto.bloombox.schema.services.shop.v1.ShareOrder.Request}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.prototype.getRequest = function() {
+  return /** @type{?proto.bloombox.schema.services.shop.v1.ShareOrder.Request} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.shop.v1.ShareOrder.Request, 1));
+};
+
+
+/** @param {?proto.bloombox.schema.services.shop.v1.ShareOrder.Request|undefined} value */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.prototype.setRequest = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.prototype.clearRequest = function() {
+  this.setRequest(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.prototype.hasRequest = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional Response response = 2;
+ * @return {?proto.bloombox.schema.services.shop.v1.ShareOrder.Response}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.prototype.getResponse = function() {
+  return /** @type{?proto.bloombox.schema.services.shop.v1.ShareOrder.Response} */ (
+    jspb.Message.getWrapperField(this, proto.bloombox.schema.services.shop.v1.ShareOrder.Response, 2));
+};
+
+
+/** @param {?proto.bloombox.schema.services.shop.v1.ShareOrder.Response|undefined} value */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.prototype.setResponse = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.prototype.clearResponse = function() {
+  this.setResponse(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.bloombox.schema.services.shop.v1.ShareOrder.Operation.prototype.hasResponse = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.bloombox.schema.services.shop.v1.SubmitOrder = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -67228,6 +68880,13 @@ proto.bloombox.schema.services.shop.v1.EnrollmentError = {
   ACCOUNT_CONFLICT_EMAIL: 14,
   ACCOUNT_CONFLICT_PHONE: 15,
   INVALID_ENROLLMENT_PAYLOAD: 99
+};
+
+/**
+ * @enum {number}
+ */
+proto.bloombox.schema.services.shop.v1.ShareError = {
+  NO_SHARE_ERROR: 0
 };
 
 
@@ -81983,8 +83642,10 @@ proto.opencannabis.oauth.AuthorizationScope.prototype.toObject = function(opt_in
  */
 proto.opencannabis.oauth.AuthorizationScope.toObject = function(includeInstance, msg) {
   var f, obj = {
-    label: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    uri: jspb.Message.getFieldWithDefault(msg, 2, "")
+    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    label: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    uri: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    icon: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -82023,11 +83684,19 @@ proto.opencannabis.oauth.AuthorizationScope.deserializeBinaryFromReader = functi
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setLabel(value);
+      msg.setId(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
+      msg.setLabel(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
       msg.setUri(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setIcon(value);
       break;
     default:
       reader.skipField();
@@ -82058,17 +83727,31 @@ proto.opencannabis.oauth.AuthorizationScope.prototype.serializeBinary = function
  */
 proto.opencannabis.oauth.AuthorizationScope.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getLabel();
+  f = message.getId();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = message.getUri();
+  f = message.getLabel();
   if (f.length > 0) {
     writer.writeString(
       2,
+      f
+    );
+  }
+  f = message.getUri();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getIcon();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
       f
     );
   }
@@ -82076,32 +83759,62 @@ proto.opencannabis.oauth.AuthorizationScope.serializeBinaryToWriter = function(m
 
 
 /**
- * optional string label = 1;
+ * optional string id = 1;
  * @return {string}
  */
-proto.opencannabis.oauth.AuthorizationScope.prototype.getLabel = function() {
+proto.opencannabis.oauth.AuthorizationScope.prototype.getId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.opencannabis.oauth.AuthorizationScope.prototype.setLabel = function(value) {
+proto.opencannabis.oauth.AuthorizationScope.prototype.setId = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * optional string uri = 2;
+ * optional string label = 2;
  * @return {string}
  */
-proto.opencannabis.oauth.AuthorizationScope.prototype.getUri = function() {
+proto.opencannabis.oauth.AuthorizationScope.prototype.getLabel = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /** @param {string} value */
-proto.opencannabis.oauth.AuthorizationScope.prototype.setUri = function(value) {
+proto.opencannabis.oauth.AuthorizationScope.prototype.setLabel = function(value) {
   jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string uri = 3;
+ * @return {string}
+ */
+proto.opencannabis.oauth.AuthorizationScope.prototype.getUri = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.oauth.AuthorizationScope.prototype.setUri = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string icon = 4;
+ * @return {string}
+ */
+proto.opencannabis.oauth.AuthorizationScope.prototype.getIcon = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.opencannabis.oauth.AuthorizationScope.prototype.setIcon = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -82555,335 +84268,6 @@ proto.opencannabis.oauth.ClientSecret.prototype.getSecret = function() {
 /** @param {string} value */
 proto.opencannabis.oauth.ClientSecret.prototype.setSecret = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.opencannabis.structs.labtesting.BasicTestResults = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.opencannabis.structs.labtesting.BasicTestResults.repeatedFields_, null);
-};
-goog.inherits(proto.opencannabis.structs.labtesting.BasicTestResults, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.opencannabis.structs.labtesting.BasicTestResults.displayName = 'proto.opencannabis.structs.labtesting.BasicTestResults';
-}
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.repeatedFields_ = [2];
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.toObject = function(opt_includeInstance) {
-  return proto.opencannabis.structs.labtesting.BasicTestResults.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.opencannabis.structs.labtesting.BasicTestResults} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    available: jspb.Message.getFieldWithDefault(msg, 1, false),
-    mediaList: jspb.Message.toObjectList(msg.getMediaList(),
-    proto.opencannabis.structs.labtesting.TestMedia.toObject, includeInstance),
-    lastUpdated: (f = msg.getLastUpdated()) && proto.opencannabis.temporal.Instant.toObject(includeInstance, f),
-    cannabinoids: (f = msg.getCannabinoids()) && proto.opencannabis.structs.labtesting.Cannabinoids.toObject(includeInstance, f),
-    subjective: (f = msg.getSubjective()) && proto.opencannabis.structs.labtesting.Subjective.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.opencannabis.structs.labtesting.BasicTestResults}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.opencannabis.structs.labtesting.BasicTestResults;
-  return proto.opencannabis.structs.labtesting.BasicTestResults.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.opencannabis.structs.labtesting.BasicTestResults} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.opencannabis.structs.labtesting.BasicTestResults}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setAvailable(value);
-      break;
-    case 2:
-      var value = new proto.opencannabis.structs.labtesting.TestMedia;
-      reader.readMessage(value,proto.opencannabis.structs.labtesting.TestMedia.deserializeBinaryFromReader);
-      msg.addMedia(value);
-      break;
-    case 3:
-      var value = new proto.opencannabis.temporal.Instant;
-      reader.readMessage(value,proto.opencannabis.temporal.Instant.deserializeBinaryFromReader);
-      msg.setLastUpdated(value);
-      break;
-    case 20:
-      var value = new proto.opencannabis.structs.labtesting.Cannabinoids;
-      reader.readMessage(value,proto.opencannabis.structs.labtesting.Cannabinoids.deserializeBinaryFromReader);
-      msg.setCannabinoids(value);
-      break;
-    case 30:
-      var value = new proto.opencannabis.structs.labtesting.Subjective;
-      reader.readMessage(value,proto.opencannabis.structs.labtesting.Subjective.deserializeBinaryFromReader);
-      msg.setSubjective(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.opencannabis.structs.labtesting.BasicTestResults.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.opencannabis.structs.labtesting.BasicTestResults} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getAvailable();
-  if (f) {
-    writer.writeBool(
-      1,
-      f
-    );
-  }
-  f = message.getMediaList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      2,
-      f,
-      proto.opencannabis.structs.labtesting.TestMedia.serializeBinaryToWriter
-    );
-  }
-  f = message.getLastUpdated();
-  if (f != null) {
-    writer.writeMessage(
-      3,
-      f,
-      proto.opencannabis.temporal.Instant.serializeBinaryToWriter
-    );
-  }
-  f = message.getCannabinoids();
-  if (f != null) {
-    writer.writeMessage(
-      20,
-      f,
-      proto.opencannabis.structs.labtesting.Cannabinoids.serializeBinaryToWriter
-    );
-  }
-  f = message.getSubjective();
-  if (f != null) {
-    writer.writeMessage(
-      30,
-      f,
-      proto.opencannabis.structs.labtesting.Subjective.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional bool available = 1;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.getAvailable = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 1, false));
-};
-
-
-/** @param {boolean} value */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.setAvailable = function(value) {
-  jspb.Message.setProto3BooleanField(this, 1, value);
-};
-
-
-/**
- * repeated TestMedia media = 2;
- * @return {!Array.<!proto.opencannabis.structs.labtesting.TestMedia>}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.getMediaList = function() {
-  return /** @type{!Array.<!proto.opencannabis.structs.labtesting.TestMedia>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.opencannabis.structs.labtesting.TestMedia, 2));
-};
-
-
-/** @param {!Array.<!proto.opencannabis.structs.labtesting.TestMedia>} value */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.setMediaList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 2, value);
-};
-
-
-/**
- * @param {!proto.opencannabis.structs.labtesting.TestMedia=} opt_value
- * @param {number=} opt_index
- * @return {!proto.opencannabis.structs.labtesting.TestMedia}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.addMedia = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.opencannabis.structs.labtesting.TestMedia, opt_index);
-};
-
-
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.clearMediaList = function() {
-  this.setMediaList([]);
-};
-
-
-/**
- * optional opencannabis.temporal.Instant last_updated = 3;
- * @return {?proto.opencannabis.temporal.Instant}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.getLastUpdated = function() {
-  return /** @type{?proto.opencannabis.temporal.Instant} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.temporal.Instant, 3));
-};
-
-
-/** @param {?proto.opencannabis.temporal.Instant|undefined} value */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.setLastUpdated = function(value) {
-  jspb.Message.setWrapperField(this, 3, value);
-};
-
-
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.clearLastUpdated = function() {
-  this.setLastUpdated(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.hasLastUpdated = function() {
-  return jspb.Message.getField(this, 3) != null;
-};
-
-
-/**
- * optional Cannabinoids cannabinoids = 20;
- * @return {?proto.opencannabis.structs.labtesting.Cannabinoids}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.getCannabinoids = function() {
-  return /** @type{?proto.opencannabis.structs.labtesting.Cannabinoids} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.structs.labtesting.Cannabinoids, 20));
-};
-
-
-/** @param {?proto.opencannabis.structs.labtesting.Cannabinoids|undefined} value */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.setCannabinoids = function(value) {
-  jspb.Message.setWrapperField(this, 20, value);
-};
-
-
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.clearCannabinoids = function() {
-  this.setCannabinoids(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.hasCannabinoids = function() {
-  return jspb.Message.getField(this, 20) != null;
-};
-
-
-/**
- * optional Subjective subjective = 30;
- * @return {?proto.opencannabis.structs.labtesting.Subjective}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.getSubjective = function() {
-  return /** @type{?proto.opencannabis.structs.labtesting.Subjective} */ (
-    jspb.Message.getWrapperField(this, proto.opencannabis.structs.labtesting.Subjective, 30));
-};
-
-
-/** @param {?proto.opencannabis.structs.labtesting.Subjective|undefined} value */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.setSubjective = function(value) {
-  jspb.Message.setWrapperField(this, 30, value);
-};
-
-
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.clearSubjective = function() {
-  this.setSubjective(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {!boolean}
- */
-proto.opencannabis.structs.labtesting.BasicTestResults.prototype.hasSubjective = function() {
-  return jspb.Message.getField(this, 30) != null;
 };
 
 

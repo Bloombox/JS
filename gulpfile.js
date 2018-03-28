@@ -32,6 +32,8 @@ function closureBuilder(entrypoint) {
     },
     "closure": {
       "debug": false,
+
+      "warning_level": "QUIET",
       "dependency_mode": "STRICT",
       "entry_point": "goog:bloombox.setup",
       "output_manifest": "target/manifest-" + entrypoint + ".MF",
@@ -41,7 +43,6 @@ function closureBuilder(entrypoint) {
       "env": "BROWSER",
       "language_in": "ECMASCRIPT6",
       "language_out": "ECMASCRIPT5_STRICT",
-      "warning_level": "QUIET",
       "export_local_property_definitions": true,
       "generate_exports": true,
       "isolation_mode": "IIFE",
@@ -50,6 +51,9 @@ function closureBuilder(entrypoint) {
       "rewrite_polyfills": true,
       "D": "bloombox.DEBUG=false",
       "define": "bloombox.VERSION='" + version + "'",
+      "create_source_map": "target/js-" + entrypoint + ".map",
+      "output_module_dependencies": "target/deps-" + entrypoint + ".json",
+      "source_map_include_content": true,
       "hide_warnings_for": [
         "goog/json/json_perf",
         "goog/storage/mechanism",
@@ -67,6 +71,8 @@ function closureBuilder(entrypoint) {
     },
     "closure": {
       "debug": true,
+
+      "warning_level": "DEFAULT",
       "dependency_mode": "STRICT",
       "entry_point": "goog:bloombox.setup",
       "output_manifest": "target/manifest-" + entrypoint + ".MF",
@@ -77,7 +83,6 @@ function closureBuilder(entrypoint) {
       "env": "BROWSER",
       "language_in": "ECMASCRIPT6",
       "language_out": "ECMASCRIPT5_STRICT",
-      "warning_level": "DEFAULT",
       "export_local_property_definitions": true,
       "generate_exports": true,
       "isolation_mode": "IIFE",
@@ -86,6 +91,9 @@ function closureBuilder(entrypoint) {
       "rewrite_polyfills": true,
       "D": "bloombox.DEBUG",
       "define": "bloombox.VERSION='" + version + "'",
+      "create_source_map": "target/js-" + entrypoint + ".map",
+      "output_module_dependencies": "target/deps-" + entrypoint + ".json",
+      "source_map_include_content": true,
       "hide_warnings_for": [
         "goog/json/json_perf",
         "goog/storage/mechanism",
@@ -119,8 +127,7 @@ function closureBuilder(entrypoint) {
       extern('facebook_javascript_sdk.js'),
       extern('google_loader_api.js'),
       extern('google_tag_manager_api.js'),
-      extern('google_universal_analytics_api.js'),
-      extern('polymer-1.0.js')
+      extern('google_universal_analytics_api.js')
     ],
     'exclude_test': true,
     "deps": glob([
@@ -128,9 +135,9 @@ function closureBuilder(entrypoint) {
       "third_party/protobuf/js/**/*.js"
     ]),
     "options": config,
-    "out": buildRootDirectory + "/" + (entrypoint == "full" ? "" : (entrypoint + "-")) + version + ".min.js",
+    "out": buildRootDirectory + "/" + (entrypoint === 'full' ? "" : (entrypoint + "-")) + version + ".min.js",
     "license": "src/license.txt",
-    "out_source_map": buildRootDirectory + "/" + (entrypoint == "full" ? "" : (entrypoint + "-")) + version + ".map"
+    "out_source_map": buildRootDirectory + "/" + (entrypoint === 'full' ? "" : (entrypoint + "-")) + version + ".map"
   }, (function(errors, warnings, files, results) {
     if (errors) {
       reject();
