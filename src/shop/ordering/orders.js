@@ -1103,9 +1103,7 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
       'count': item.count || 1,
       'key': {
         'id': item.key.id,
-        'type': {
-          'kind': item.key.kind
-        }
+        'type': item.key.kind
       },
       'variant': item.variants.map(function(variant) {
         let baseVariant = {
