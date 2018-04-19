@@ -5,7 +5,7 @@
         "source": "client/**/*.js",
         "headers": [{
             "key": "Cache-Control",
-            "value": "public, max-age=31536000, no-transform, immutable"}]
+            "value": "public, max-age=31536000, no-transform, immutable, stale-while-revalidate=86400, stale-if-error=86400"}]
     }, {
       "source": "*.min.js",
       "headers": [{
@@ -14,19 +14,19 @@
     }],
     "redirects": [{
       "source" : "/latest.min.js",
-      "destination" : "/client/v1.0.4.min.js",
+      "destination" : "/client/v1.0.5.min.js",
       "type" : 302
     },{
       "source" : "/latest-debug.min.js",
-      "destination" : "/client/v1.0.4-debug.min.js",
+      "destination" : "/client/v1.0.5-debug.min.js",
       "type" : 302
     },{
       "source" : "/beta.min.js",
-      "destination" : "/client/v1.0.4.min.js",
+      "destination" : "/client/v1.0.5.min.js",
       "type" : 302
     },{
       "source" : "/beta-debug.min.js",
-      "destination" : "/client/v1.0.4-debug.min.js",
+      "destination" : "/client/v1.0.5-debug.min.js",
       "type" : 302
     }]
   }
