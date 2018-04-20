@@ -47,7 +47,7 @@ goog.require('goog.crypt.base64');
 bloombox.util.b64.encode = function(data, opt_dont_clean) {
   let encoded = goog.crypt.base64.encodeString(data, false);
   if (!opt_dont_clean) return encoded;
-  return encoded.replace(/=/g, '');
+  return encoded.replace(/=/g, '').replace('=', '');
 };
 
 
