@@ -9921,9 +9921,9 @@ sver-compat@^1.5.0:
     es6-iterator "^2.0.1"
     es6-symbol "^3.1.1"
 
-swagger-client@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.7.0.tgz#f5063be5612cea7beb1933c6c4271b742028a9f0"
+swagger-client@^3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.7.2.tgz#508e333b12a62d33050403c97f9226b9dcad2e68"
   dependencies:
     babel-runtime "^6.23.0"
     btoa "1.1.2"
@@ -9970,8 +9970,8 @@ swagger-tools@^0.10.1:
     z-schema "^3.15.4"
 
 swagger-ui@^3.13.4:
-  version "3.13.4"
-  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.13.4.tgz#a7cc1e3777e1f5729f75090a0423d4665f9b9030"
+  version "3.13.6"
+  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.13.6.tgz#c079668ffd798df0785cc85627c647c384dfecde"
   dependencies:
     "@braintree/sanitize-url" "^2.0.2"
     base64-js "^1.2.0"
@@ -10017,7 +10017,7 @@ swagger-ui@^3.13.4:
     scroll-to-element "^2.0.0"
     serialize-error "2.0.0"
     shallowequal "0.2.2"
-    swagger-client "^3.7.0"
+    swagger-client "^3.7.2"
     url-parse "^1.1.8"
     whatwg-fetch "0.11.1"
     worker-loader "^0.7.1"
