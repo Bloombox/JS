@@ -999,6 +999,9 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
                   } else if (typeof orderCreatedAt['timestamp'] === 'number') {
                     let orderTimestamp = orderCreatedAt['timestamp'];
                     instant.setTimestamp(orderTimestamp);
+                  } else if (typeof orderCreatedAt['timestamp'] === 'string') {
+                    let orderTimestamp = orderCreatedAt['timestamp'];
+                    instant.setTimestamp(parseInt(orderTimestamp));
                   } else {
                     bloombox.logging.warn(
                       'Unable to type-identify order createdAt.',
