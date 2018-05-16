@@ -14,19 +14,19 @@
     }],
     "redirects": [{
       "source" : "/latest.min.js",
-      "destination" : "/client/v1.0.8.min.js",
+      "destination" : "/client/v1.0.9.min.js",
       "type" : 302
     },{
       "source" : "/latest-debug.min.js",
-      "destination" : "/client/v1.0.8-debug.min.js",
+      "destination" : "/client/v1.0.9-debug.min.js",
       "type" : 302
     },{
       "source" : "/beta.min.js",
-      "destination" : "/client/v1.0.8.min.js",
+      "destination" : "/client/v1.0.9.min.js",
       "type" : 302
     },{
       "source" : "/beta-debug.min.js",
-      "destination" : "/client/v1.0.8-debug.min.js",
+      "destination" : "/client/v1.0.9-debug.min.js",
       "type" : 302
     }]
   }
