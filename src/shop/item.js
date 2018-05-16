@@ -237,7 +237,7 @@ bloombox.shop.Item.fromResponse = function(protob) {
         } else if (typeof rawKey['type'] === 'string' ||
                    typeof rawKey['type'] === 'number') {
           rawKeyType = bloombox.product.Key.inflateKind(
-            rawKey['type']['type']);
+            rawKey['type']);
         }
 
         // create our key
