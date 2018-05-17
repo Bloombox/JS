@@ -5,7 +5,7 @@
 Latest Version: `v1.0.9`
 
 This package provides support for Bloombox APIs in browser-oriented JavaScript. It's built using the Closure stack from
-Google, including Closure Compiler, Library, builder, and so on.
+Google, including Closure Compiler, Library, builder, and so on. Made with love by [Bloombox](https://bloombox.cloud) in Sacramento, CA.
 
 ### Using the code
 
