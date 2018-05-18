@@ -5,7 +5,7 @@
 Latest Version: `__VERSION__`
 
 This package provides support for Bloombox APIs in browser-oriented JavaScript. It's built using the Closure stack from
-Google, including Closure Compiler, Library, builder, and so on.
+Google, including Closure Compiler, Library, builder, and so on. Made with love by [Bloombox](https://bloombox.cloud) in Sacramento, CA.
 
 ### Using the code
 
@@ -80,6 +80,7 @@ Publishing the library (GCS CDN permissions required):
 
 ##### Licensing
 
-This library was made and is managed with <3 by Bloombox, a subsidiary of Momentum Ideas, Co., from Sacramento,
+This library was made and is managed with <3 by [Bloombox](https://bloombox.cloud), a subsidiary of Momentum Ideas, Co., from Sacramento,
 California. Bloombox JS is distributed under the Apache License v2, which is enclosed herein as `LICENSE.txt`. Third
 party license notices, including ones from MochiKit and Google, via the Closure Authors.
+
