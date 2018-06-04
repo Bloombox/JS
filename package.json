@@ -31,7 +31,7 @@
     "jshint": "^2.9.4",
     "jshint-stylish": "*",
     "mocha": "^5.1.1",
-    "npm": "^5.8.0",
+    "npm": "^6.1.0",
     "swagger-tools": "^0.10.1",
     "swagger-ui": "^3.13.4",
     "yargs": "^11.0.0"
