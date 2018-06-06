@@ -599,6 +599,10 @@
     normalize-path "^2.0.1"
     through2 "^2.0.3"
 
+"@kyleshockey/object-assign-deep@^0.4.0":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@kyleshockey/object-assign-deep/-/object-assign-deep-0.4.2.tgz#84900f0eefc372798f4751b5262830b8208922ec"
+
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
@@ -1590,6 +1594,13 @@ buffer@^5.0.2:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
 
+buffer@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.1.0.tgz#c913e43678c7cb7c8bd16afbcddb6c5505e8f9fe"
+  dependencies:
+    base64-js "^1.0.2"
+    ieee754 "^1.1.4"
+
 buffers@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/buffers/-/buffers-0.1.1.tgz#b24579c3bed4d6d396aeee6d9a8ae7f5482ab7bb"
@@ -1802,7 +1813,7 @@ chalk@^1.0.0, chalk@^1.1.0, chalk@^1.1.1, chalk@^1.1.3:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.0:
+chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.3.1.tgz#523fe2678aec7b04e8041909292fe8b17059b796"
   dependencies:
@@ -2679,7 +2690,11 @@ deep-equal@~0.2.1:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-0.2.2.tgz#84b745896f34c684e98f2ce0e42abaf43bba017d"
 
-deep-extend@0.4.1, deep-extend@^0.4.1, deep-extend@~0.4.0:
+deep-extend@0.5.1, deep-extend@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.5.1.tgz#b894a9dd90d3023fbf1c55a394fb858eb2066f1f"
+
+deep-extend@~0.4.0:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.4.1.tgz#efe4113d08085f4e6f9687759810f807469e2253"
 
@@ -2885,7 +2900,7 @@ domain-browser@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
 
-domelementtype@1, domelementtype@^1.3.0:
+domelementtype@1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-1.3.0.tgz#b17aed82e8ab59e52dd9c19b1756e0fc187204c2"
 
@@ -2893,13 +2908,17 @@ domelementtype@~1.1.1:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-1.1.3.tgz#bd28773e2642881aec51544924299c5cd822185b"
 
-domhandler@2.3, domhandler@^2.3.0:
+domhandler@2.3:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-2.3.0.tgz#2de59a0822d5027fabff6f032c2b25a2a8abe738"
   dependencies:
     domelementtype "1"
 
-domutils@1.5, domutils@^1.5.1:
+dompurify@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-1.0.4.tgz#b0655d07856c1ef76fd27ae18e8ab1174ed18819"
+
+domutils@1.5:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.5.1.tgz#dcd8488a26f563d61079e48c9f7b7e32373682cf"
   dependencies:
@@ -3070,7 +3089,7 @@ entities@1.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.0.0.tgz#b2987aa3821347fcde642b24fdfc9e4fb712bf26"
 
-entities@^1.1.1, "entities@~ 1.1.1", entities@~1.1.1:
+"entities@~ 1.1.1", entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
@@ -4768,17 +4787,6 @@ htmlparser2@3.8.x:
     entities "1.0"
     readable-stream "1.1"
 
-htmlparser2@^3.9.0:
-  version "3.9.2"
-  resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.9.2.tgz#1bdf87acca0f3f9e53fa4fcceb0f4b4cbb00b338"
-  dependencies:
-    domelementtype "^1.3.0"
-    domhandler "^2.3.0"
-    domutils "^1.5.1"
-    entities "^1.1.1"
-    inherits "^2.0.1"
-    readable-stream "^2.0.2"
-
 http-cache-semantics@3.8.1, http-cache-semantics@^3.8.0, http-cache-semantics@^3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/http-cache-semantics/-/http-cache-semantics-3.8.1.tgz#39b0e16add9b605bf0a9ef3d9daaf4843b4cacd2"
@@ -6277,7 +6285,7 @@ lodash.clonedeep@^2.4.1:
     lodash._baseclone "~2.4.1"
     lodash._basecreatecallback "~2.4.1"
 
-lodash.clonedeep@^4.3.2, lodash.clonedeep@^4.5.0, lodash.clonedeep@~4.5.0:
+lodash.clonedeep@^4.3.2, lodash.clonedeep@~4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
 
@@ -6290,10 +6298,6 @@ lodash.escape@^3.0.0:
   resolved "https://registry.yarnpkg.com/lodash.escape/-/lodash.escape-3.2.0.tgz#995ee0dc18c1b48cc92effae71a10aab5b487698"
   dependencies:
     lodash._root "^3.0.0"
-
-lodash.escaperegexp@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/lodash.escaperegexp/-/lodash.escaperegexp-4.1.2.tgz#64762c48618082518ac3df4ccf5d5886dae20347"
 
 lodash.foreach@~2.4.1:
   version "2.4.1"
@@ -6409,10 +6413,6 @@ lodash.memoize@~3.0.3:
 lodash.merge@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.0.tgz#69884ba144ac33fe699737a6086deffadd0f89c5"
-
-lodash.mergewith@^4.6.0:
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.1.tgz#639057e726c3afbdb3e7d42741caa8d6e4335927"
 
 lodash.noop@^3.0.1:
   version "3.0.1"
@@ -8099,14 +8099,6 @@ portfinder@^1.0.13, portfinder@^1.0.9:
     debug "^2.2.0"
     mkdirp "0.5.x"
 
-postcss@^6.0.14:
-  version "6.0.17"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.17.tgz#e259a051ca513f81e9afd0c21f7f82eda50c65c5"
-  dependencies:
-    chalk "^2.3.0"
-    source-map "^0.6.1"
-    supports-color "^5.1.0"
-
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -8354,6 +8346,10 @@ query-string@^6.1.0:
   dependencies:
     decode-uri-component "^0.2.0"
     strict-uri-encode "^2.0.0"
+
+querystring-browser@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/querystring-browser/-/querystring-browser-1.0.4.tgz#f2e35881840a819bc7b1bf597faf0979e6622dc6"
 
 querystring-es3@~0.2.0:
   version "0.2.1"
@@ -9211,19 +9207,6 @@ safe-buffer@^5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
 
-sanitize-html@^1.14.1:
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/sanitize-html/-/sanitize-html-1.17.0.tgz#5c95e57044604d4797367efd9152acaf5b087bb4"
-  dependencies:
-    chalk "^2.3.0"
-    htmlparser2 "^3.9.0"
-    lodash.clonedeep "^4.5.0"
-    lodash.escaperegexp "^4.1.2"
-    lodash.mergewith "^4.6.0"
-    postcss "^6.0.14"
-    srcset "^1.0.0"
-    xtend "^4.0.0"
-
 sauce-connect-launcher@^1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/sauce-connect-launcher/-/sauce-connect-launcher-1.2.3.tgz#d2f931ad7ae8fdabf1968a440e7b20417aca7f86"
@@ -9703,13 +9686,6 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
 
-srcset@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/srcset/-/srcset-1.0.0.tgz#a5669de12b42f3b1d5e83ed03c71046fc48f41ef"
-  dependencies:
-    array-uniq "^1.0.2"
-    number-is-nan "^1.0.0"
-
 sshpk@^1.7.0:
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/sshpk/-/sshpk-1.13.1.tgz#512df6da6287144316dc4c18fe1cf1d940739be3"
@@ -10008,7 +9984,7 @@ supports-color@^3.1.0, supports-color@^3.1.1:
   dependencies:
     has-flag "^1.0.0"
 
-supports-color@^5.1.0, supports-color@^5.2.0:
+supports-color@^5.2.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.3.0.tgz#5b24ac15db80fa927cf5227a4a33fd3c4c7676c0"
   dependencies:
@@ -10021,21 +9997,24 @@ sver-compat@^1.5.0:
     es6-iterator "^2.0.1"
     es6-symbol "^3.1.1"
 
-swagger-client@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.7.0.tgz#f5063be5612cea7beb1933c6c4271b742028a9f0"
+swagger-client@^3.8.5:
+  version "3.8.6"
+  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.8.6.tgz#4f1883844918c0d123802d5b4e1069fe34425254"
   dependencies:
+    "@kyleshockey/object-assign-deep" "^0.4.0"
     babel-runtime "^6.23.0"
     btoa "1.1.2"
+    buffer "^5.1.0"
     cookie "^0.3.1"
     cross-fetch "0.0.8"
-    deep-extend "^0.4.1"
+    deep-extend "^0.5.1"
     encode-3986 "^1.0.0"
     fast-json-patch "^2.0.6"
     isomorphic-form-data "0.0.1"
     js-yaml "^3.8.1"
     lodash "^4.16.2"
     qs "^6.3.0"
+    querystring-browser "^1.0.4"
     url "^0.11.0"
     utf8-bytes "0.0.1"
     utfstring "^2.0.0"
@@ -10070,8 +10049,8 @@ swagger-tools@^0.10.1:
     z-schema "^3.15.4"
 
 swagger-ui@^3.13.4:
-  version "3.13.4"
-  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.13.4.tgz#a7cc1e3777e1f5729f75090a0423d4665f9b9030"
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.17.0.tgz#7e89c54efd9dfb1d0dccd1350cd08cffad00d53a"
   dependencies:
     "@braintree/sanitize-url" "^2.0.2"
     base64-js "^1.2.0"
@@ -10080,7 +10059,8 @@ swagger-ui@^3.13.4:
     commonmark "^0.28.1"
     core-js "^2.5.1"
     css.escape "1.5.1"
-    deep-extend "0.4.1"
+    deep-extend "0.5.1"
+    dompurify "^1.0.4"
     expect "1.20.2"
     getbase "^2.8.2"
     ieee754 "^1.1.8"
@@ -10113,11 +10093,10 @@ swagger-ui@^3.13.4:
     redux-logger "*"
     remarkable "^1.7.1"
     reselect "2.5.3"
-    sanitize-html "^1.14.1"
     scroll-to-element "^2.0.0"
     serialize-error "2.0.0"
     shallowequal "0.2.2"
-    swagger-client "^3.7.0"
+    swagger-client "^3.8.5"
     url-parse "^1.1.8"
     whatwg-fetch "0.11.1"
     worker-loader "^0.7.1"
