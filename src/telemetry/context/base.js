@@ -50,9 +50,9 @@ goog.require('proto.bloombox.schema.analytics.context.DeviceLibrary');
 goog.require('proto.bloombox.schema.analytics.context.NativeDeviceContext');
 
 goog.require('proto.bloombox.schema.identity.UserKey');
+goog.require('proto.bloombox.schema.partner.LocationKey');
 goog.require('proto.bloombox.schema.partner.PartnerDeviceKey');
 goog.require('proto.bloombox.schema.partner.PartnerKey');
-goog.require('proto.bloombox.schema.partner.PartnerLocationKey');
 goog.require('proto.opencannabis.commerce.OrderKey');
 goog.require('proto.opencannabis.structs.VersionSpec');
 
@@ -170,7 +170,7 @@ bloombox.telemetry.Context = function(opt_collection,
   // make us a partner key
   let locationKey;
   if (opt_partner && opt_location) {
-    locationKey = new proto.bloombox.schema.partner.PartnerLocationKey();
+    locationKey = new proto.bloombox.schema.partner.LocationKey();
     locationKey.setCode(opt_location);
     locationKey.setPartner(partnerKey);
   } else if (opt_partner && opt_location) {
@@ -185,7 +185,7 @@ bloombox.telemetry.Context = function(opt_collection,
   /**
    * Location code.
    *
-   * @type {?proto.bloombox.schema.partner.PartnerLocationKey}
+   * @type {?proto.bloombox.schema.partner.LocationKey}
    * @public
    */
   this.location = locationKey;
