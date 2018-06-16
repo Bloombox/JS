@@ -10518,8 +10518,8 @@ swagger-tools@^0.10.1:
     z-schema "^3.15.4"
 
 swagger-ui@^3.13.4:
-  version "3.17.0"
-  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.17.0.tgz#7e89c54efd9dfb1d0dccd1350cd08cffad00d53a"
+  version "3.17.1"
+  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.17.1.tgz#5d7c317242b856f38eddcd5ff2c30ab4edb88e94"
   dependencies:
     "@braintree/sanitize-url" "^2.0.2"
     base64-js "^1.2.0"
