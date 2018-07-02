@@ -3837,8 +3837,8 @@ fined@^1.0.1:
     parse-filepath "^1.0.1"
 
 firebase-tools@^3.18.4:
-  version "3.18.5"
-  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-3.18.5.tgz#cb79ed1ca43b25e425810f38ab409e6c6853d56a"
+  version "3.19.2"
+  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-3.19.2.tgz#a8f42b7674ca5799f1f5b14ebb020f16e81e3eba"
   dependencies:
     JSONStream "^1.2.1"
     archiver "^2.1.1"
@@ -3864,13 +3864,13 @@ firebase-tools@^3.18.4:
     jsonwebtoken "^8.2.1"
     lodash "^4.6.1"
     minimatch "^3.0.4"
-    open "^0.0.5"
+    opn "^5.3.0"
     ora "0.2.3"
     portfinder "^1.0.13"
     progress "^2.0.0"
     request "^2.58.0"
     semver "^5.0.3"
-    superstatic "^5.0.1"
+    superstatic "^5.0.2"
     tar "^4.3.0"
     tmp "0.0.33"
     universal-analytics "^0.4.16"
@@ -5682,6 +5682,10 @@ is-windows@^0.2.0:
 is-windows@^1.0.0, is-windows@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/is-windows/-/is-windows-1.0.2.tgz#d1850eb9791ecd18e6182ce12a30f396634bb19d"
+
+is-wsl@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/is-wsl/-/is-wsl-1.1.0.tgz#1f16e4aa22b04d1336b66188a66af3c600c3a66d"
 
 is@^3.0.1, is@^3.2.0, is@^3.2.1:
   version "3.2.1"
@@ -7998,10 +8002,6 @@ onetime@^2.0.0:
   dependencies:
     mimic-fn "^1.0.0"
 
-open@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/open/-/open-0.0.5.tgz#42c3e18ec95466b6bf0dc42f3a2945c3f0cad8fc"
-
 opener@~1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.4.3.tgz#5c6da2c5d7e5831e8ffa3964950f8d6674ac90b8"
@@ -8012,6 +8012,12 @@ opn@4.0.2:
   dependencies:
     object-assign "^4.0.1"
     pinkie-promise "^2.0.0"
+
+opn@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/opn/-/opn-5.3.0.tgz#64871565c863875f052cfdf53d3e3cb5adb53b1c"
+  dependencies:
+    is-wsl "^1.1.0"
 
 optimist@^0.6.1:
   version "0.6.1"
@@ -10402,9 +10408,9 @@ superagent@^3.5.2, superagent@^3.6.3:
     qs "^6.5.1"
     readable-stream "^2.0.5"
 
-superstatic@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/superstatic/-/superstatic-5.0.1.tgz#f0a83942ad8e93c5c53a98341c4a3de229dff94e"
+superstatic@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/superstatic/-/superstatic-5.0.2.tgz#d7ce9329ee30daaa762b01d43b548d0b7306ba54"
   dependencies:
     as-array "^2.0.0"
     async "^1.5.2"
