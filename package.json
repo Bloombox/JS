@@ -1,6 +1,6 @@
 {
   "name": "@bloombox/js-client",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": "Apache-2.0",
   "private": false,
   "description": "JavaScript API client for Bloombox",
@@ -28,12 +28,12 @@
     "gulp-sourcemaps": "^2.6.4",
     "js-dossier": "^0.12.1",
     "jsdoc": "^3.5.5",
-    "jshint": "^2.9.4",
+    "jshint": "^2.9.6",
     "jshint-stylish": "*",
     "mocha": "^5.1.1",
-    "npm": "^6.1.0",
-    "swagger-tools": "^0.10.1",
-    "swagger-ui": "^3.13.4",
+    "npm": "^6.4.1",
+    "swagger-tools": "^0.10.4",
+    "swagger-ui": "^3.19.3",
     "yargs": "^11.0.0"
   },
   "devDependencies": {

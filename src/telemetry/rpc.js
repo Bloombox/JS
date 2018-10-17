@@ -39,9 +39,9 @@ goog.require('bloombox.telemetry.VERSION');
 
 goog.require('bloombox.util.HTTPMethod');
 
-goog.require('proto.bloombox.schema.services.telemetry.v1beta3.OperationStatus');
-goog.require('proto.bloombox.schema.services.telemetry.v1beta3.TelemetryError');
-goog.require('proto.bloombox.schema.services.telemetry.v1beta3.TelemetryResponse');
+goog.require('proto.bloombox.schema.services.telemetry.v1beta4.OperationStatus');
+goog.require('proto.bloombox.schema.services.telemetry.v1beta4.TelemetryError');
+goog.require('proto.bloombox.schema.services.telemetry.v1beta4.TelemetryResponse');
 
 goog.provide('bloombox.telemetry.OperationStatus');
 goog.provide('bloombox.telemetry.Routine');
@@ -96,23 +96,23 @@ bloombox.telemetry.Routine = {
 /**
  * Enumerates operation statuses that result from Telemetry API RPC calls.
  *
- * @enum {proto.bloombox.schema.services.telemetry.v1beta3.OperationStatus}
+ * @enum {proto.bloombox.schema.services.telemetry.v1beta4.OperationStatus}
  */
 bloombox.telemetry.OperationStatus = {
-  OK: proto.bloombox.schema.services.telemetry.v1beta3.OperationStatus.OK,
-  ERROR: proto.bloombox.schema.services.telemetry.v1beta3.OperationStatus.ERROR
+  OK: proto.bloombox.schema.services.telemetry.v1beta4.OperationStatus.OK,
+  ERROR: proto.bloombox.schema.services.telemetry.v1beta4.OperationStatus.ERROR
 };
 
 
 // private alias
 let _TelemetryError = (
-  proto.bloombox.schema.services.telemetry.v1beta3.TelemetryError);
+  proto.bloombox.schema.services.telemetry.v1beta4.TelemetryError);
 
 
 /**
  * Enumerates errors in the Telemetry API.
  *
- * @enum {proto.bloombox.schema.services.telemetry.v1beta3.TelemetryError}
+ * @enum {proto.bloombox.schema.services.telemetry.v1beta4.TelemetryError}
  */
 bloombox.telemetry.TelemetryError = {
   'UNKNOWN': _TelemetryError.UNKNOWN,

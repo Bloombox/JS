@@ -1,6 +1,6 @@
 {
   "name": "bloombox",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": "Apache-2.0",
   "private": false,
   "description": "JavaScript API client for Bloombox",
@@ -22,7 +22,7 @@
     "gulp-clone": "^1.0.0",
     "gulp-if": "^2.0.2",
     "gulp-ignore": "^2.0.2",
-    "gulp-jshint": "*",
+    "gulp-jshint": "^2.9.6",
     "gulp-load-plugins": "^1.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
@@ -31,9 +31,10 @@
     "jshint": "^2.9.4",
     "jshint-stylish": "*",
     "mocha": "^3.2.0",
-    "swagger-tools": "^0.10.1",
-    "swagger-ui": "^2.2.6",
-    "yargs": "^10.0.3"
+    "swagger-tools": "^0.10.4",
+    "swagger-ui": "^3.19.3",
+    "yargs": "^10.0.3",
+    "npm": "^6.1.0"
   },
   "devDependencies": {
     "jasmine-core": "^2.99.1",
