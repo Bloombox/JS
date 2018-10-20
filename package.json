@@ -14,7 +14,7 @@
     "closure-builder": "^2.2.39",
     "del": "^3.0.0",
     "eslint": "^4.19.1",
-    "eslint-config-google": "^0.9.1",
+    "eslint-config-google": "^0.11.0",
     "firebase-tools": "^5.1.1",
     "google-protobuf": "^3.4.0",
     "gulp": "gulpjs/gulp#4.0",
