@@ -10113,8 +10113,8 @@ swagger-tools@^0.10.4:
     z-schema "^3.15.4"
 
 swagger-ui@^3.19.3:
-  version "3.19.3"
-  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.19.3.tgz#245c57210c39bbd2f9ed55292fe1539f5b1ac3ea"
+  version "3.19.4"
+  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.19.4.tgz#20db829ad41078b3c64f2de58ca328e905858426"
   dependencies:
     "@braintree/sanitize-url" "^2.0.2"
     "@kyleshockey/js-yaml" "^1.0.1"
