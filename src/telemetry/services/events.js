@@ -33,8 +33,8 @@ goog.require('bloombox.telemetry.globalContext');
 
 goog.require('bloombox.util.Exportable');
 
-goog.require('proto.bloombox.schema.analytics.Context');
-goog.require('proto.bloombox.schema.analytics.generic.Event');
+goog.require('proto.bloombox.analytics.Context');
+goog.require('proto.bloombox.analytics.generic.Event');
 goog.require('proto.google.protobuf.Struct');
 goog.require('proto.opencannabis.temporal.Instant');
 
@@ -56,7 +56,7 @@ goog.provide('bloombox.telemetry.event');
  *        event occurred. If none is provided, a timestamp is taken upon event
  *        construction.
  * @constructor
- * @extends {bloombox.telemetry.BaseEvent<proto.bloombox.schema.analytics.generic.Event>}
+ * @extends {bloombox.telemetry.BaseEvent<proto.bloombox.analytics.generic.Event>}
  * @public
  */
 bloombox.telemetry.Event = function Event(collection,
@@ -120,7 +120,7 @@ bloombox.telemetry.Event.prototype.isInternalEvent_ = function() {
  * Additionally validate that partner and location codes are present for non-
  * internal event collections.
  *
- * @param {proto.bloombox.schema.analytics.Context} context Final context to
+ * @param {proto.bloombox.analytics.Context} context Final context to
  *        validate.
  * @throws {bloombox.telemetry.ContextException} If required context is missing
  *         or context values are invalid.
@@ -149,18 +149,18 @@ bloombox.telemetry.Event.prototype.validateContext = function(context) {
 
 /**
  * Export this generic event as a
- * `proto.bloombox.schema.analytics.generic.Event`, suitable for sending to the
+ * `proto.bloombox.analytics.generic.Event`, suitable for sending to the
  * telemetry service. This includes:
  * - Rendering the context with `renderContext`
  * - Rendering the payload with `renderPayload`
  * - Rendering the occurrence with `renderOccurrence`
  * - Filling out the proto and related sub-protos
  *
- * @return {proto.bloombox.schema.analytics.generic.Event} Prepared event.
+ * @return {proto.bloombox.analytics.generic.Event} Prepared event.
  */
 bloombox.telemetry.Event.prototype.export = function() {
   // create our protos
-  let event = new proto.bloombox.schema.analytics.generic.Event();
+  let event = new proto.bloombox.analytics.generic.Event();
   let occurrence = new proto.opencannabis.temporal.Instant();
 
   // render local values

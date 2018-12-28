@@ -51,15 +51,15 @@ goog.require('bloombox.shop.rpc.ShopRPC');
 goog.require('bloombox.telemetry.event');
 goog.require('bloombox.telemetry.notifyUserID');
 
-goog.require('proto.bloombox.schema.identity.EnrollmentSource');
-goog.require('proto.bloombox.schema.services.shop.v1.EnrollMember');
-goog.require('proto.bloombox.schema.services.shop.v1.EnrollmentError');
+goog.require('proto.bloombox.identity.EnrollmentSource');
+goog.require('proto.bloombox.services.shop.v1.EnrollMember');
+goog.require('proto.bloombox.services.shop.v1.EnrollmentError');
 
 
 /**
  * Callback function type definition for enroll RPCs.
  *
- * @typedef {function(boolean, ?proto.bloombox.schema.services.shop.v1.EnrollmentError, ?bloombox.shop.Customer)}
+ * @typedef {function(boolean, ?proto.bloombox.services.shop.v1.EnrollmentError, ?bloombox.shop.Customer)}
  */
 bloombox.shop.enroll.EnrollCallback;
 
@@ -279,7 +279,7 @@ bloombox.shop.enroll.Enrollment.prototype.enableDryRun = function() {
  *
  * @param {?string} key Key for the resulting user, if enrollment succeeded.
  * @param {?string} foreignId Foreign ID for the user, if enrollment succeeded.
- * @param {?proto.bloombox.schema.services.shop.v1.EnrollmentError=} opt_error
+ * @param {?proto.bloombox.services.shop.v1.EnrollmentError=} opt_error
  *        Error that was reported by the server, if any.
  * @param {?number=} opt_status Status reported by the server, if the enrollment
  *        was rejected.
@@ -416,7 +416,7 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
 
       bloombox.logging.log('Response received for enrollment RPC.', response);
       let inflated = (
-        new proto.bloombox.schema.services.shop.v1.EnrollMember.Response());
+        new proto.bloombox.services.shop.v1.EnrollMember.Response());
       if (response['error']) {
         // an error occurred
         inflated.setError(response['error']);
@@ -464,9 +464,9 @@ bloombox.shop.enroll.Enrollment.prototype.send = function(callback) {
 
     if (error_code) {
       let inflated = (
-        new proto.bloombox.schema.services.shop.v1.EnrollMember.Response());
+        new proto.bloombox.services.shop.v1.EnrollMember.Response());
       inflated.setError(
-        /** @type {proto.bloombox.schema.services.shop.v1.EnrollmentError} */
+        /** @type {proto.bloombox.services.shop.v1.EnrollmentError} */
         (error_code));
       callback(false, inflated.getError(), null);
     } else {

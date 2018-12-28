@@ -31,7 +31,7 @@ goog.require('bloombox.logging.log');
 
 goog.require('bloombox.util.Exportable');
 
-goog.require('proto.bloombox.schema.identity.ConsumerProfile');
+goog.require('proto.bloombox.identity.ConsumerProfile');
 
 goog.require('proto.opencannabis.commerce.Customer');
 goog.require('proto.opencannabis.contact.ContactInfo');

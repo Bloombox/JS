@@ -28,7 +28,7 @@ goog.provide('bloombox.identity.ID');
 goog.provide('bloombox.identity.IDException');
 goog.provide('bloombox.identity.IDType');
 
-goog.require('proto.bloombox.schema.identity.IDType');
+goog.require('proto.bloombox.identity.IDType');
 goog.require('proto.opencannabis.temporal.Date');
 
 
@@ -47,12 +47,12 @@ bloombox.identity.IDException = function IDException(message) {
 /**
  * Specifies supported types of government ID.
  *
- * @enum {proto.bloombox.schema.identity.IDType}
+ * @enum {proto.bloombox.identity.IDType}
  * @export
  */
 bloombox.identity.IDType = {
-  'USDL': proto.bloombox.schema.identity.IDType.USDL,
-  'PASSPORT': proto.bloombox.schema.identity.IDType.PASSPORT
+  'USDL': proto.bloombox.identity.IDType.USDL,
+  'PASSPORT': proto.bloombox.identity.IDType.PASSPORT
 };
 
 

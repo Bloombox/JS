@@ -34,8 +34,8 @@ goog.provide('bloombox.telemetry.resolveSessionID');
 goog.require('bloombox.telemetry.Context');
 goog.require('bloombox.util.generateUUID');
 
-goog.require('proto.bloombox.schema.analytics.context.ApplicationType');
-goog.require('proto.bloombox.schema.analytics.context.DeviceApplication');
+goog.require('proto.bloombox.analytics.context.ApplicationType');
+goog.require('proto.bloombox.analytics.context.DeviceApplication');
 
 goog.require('stackdriver.notifyFingerprint');
 
@@ -395,17 +395,17 @@ bloombox.telemetry.globalContext = function(opt_force_fresh) {
     // build app context
     let webContext = bloombox.telemetry.buildWebappContext();
     let appContext = (
-      new proto.bloombox.schema.analytics.context.DeviceApplication());
+      new proto.bloombox.analytics.context.DeviceApplication());
     appContext.setWeb(webContext);
 
     if (bloombox.INTERNAL) {
       // it's a bloombox app
       appContext.setType((
-        proto.bloombox.schema.analytics.context.ApplicationType.INTERNAL));
+        proto.bloombox.analytics.context.ApplicationType.INTERNAL));
     } else {
       // it's a partner-side app
       appContext.setType((
-        proto.bloombox.schema.analytics.context.ApplicationType.PARTNER));
+        proto.bloombox.analytics.context.ApplicationType.PARTNER));
     }
 
     let deviceId = /** @type {?string} */ (
