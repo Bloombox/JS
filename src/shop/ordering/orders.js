@@ -53,10 +53,10 @@ goog.require('bloombox.shop.rpc.ShopRPC');
 goog.require('bloombox.telemetry.event');
 goog.require('bloombox.telemetry.resolveSessionID');
 
-goog.require('proto.bloombox.schema.services.shop.v1.GetOrder.Response');
-goog.require('proto.bloombox.schema.services.shop.v1.OrderError');
-goog.require('proto.bloombox.schema.services.shop.v1.SubmitOrder.Request');
-goog.require('proto.bloombox.schema.services.shop.v1.SubmitOrder.Response');
+goog.require('proto.bloombox.services.shop.v1.GetOrder.Response');
+goog.require('proto.bloombox.services.shop.v1.OrderError');
+goog.require('proto.bloombox.services.shop.v1.SubmitOrder.Request');
+goog.require('proto.bloombox.services.shop.v1.SubmitOrder.Response');
 
 goog.require('proto.opencannabis.commerce.Item');
 goog.require('proto.opencannabis.commerce.Order');
@@ -82,7 +82,7 @@ bloombox.shop.OrderCallback;
 /**
  * Callback function for order retrieval.
  *
- * @typedef {function(?proto.bloombox.schema.services.shop.v1.OrderError,
+ * @typedef {function(?proto.bloombox.services.shop.v1.OrderError,
  *                    ?bloombox.shop.order.Order,
  *                    ?number=)}
  */
@@ -833,7 +833,7 @@ bloombox.shop.order.Order.prototype.update = function(callback) {
  *
  * @param {?string} orderId Resulting ID of the order, if submission to the shop
  *        service was completed successfully.
- * @param {proto.bloombox.schema.services.shop.v1.OrderError=} opt_error Error
+ * @param {proto.bloombox.services.shop.v1.OrderError=} opt_error Error
  *        that was encountered when submitting the order, if any.
  * @param {number=} opt_status Status that the RPC method got back from the
  *        server, if submission was not successful.
@@ -942,7 +942,7 @@ bloombox.shop.order.Order.retrieve = function(key, callback) {
 
         // decode the response
         let inflated = (
-          new proto.bloombox.schema.services.shop.v1.GetOrder.Response());
+          new proto.bloombox.services.shop.v1.GetOrder.Response());
         if (response['success'] === true || response['order']) {
           // extract and decode order
           inflated.setSuccess(true);
@@ -1198,14 +1198,14 @@ bloombox.shop.order.Order.prototype.send = function(callback) {
 
         // decode the response
         let inflated = (
-          new proto.bloombox.schema.services.shop.v1.SubmitOrder.Response());
+          new proto.bloombox.services.shop.v1.SubmitOrder.Response());
         if (response['error'])
           inflated.setError(response['error']);
         inflated.setOrderId(response['orderId']);
 
         if ((
           inflated.getError() === (
-            proto.bloombox.schema.services.shop.v1.OrderError.NO_ERROR)) &&
+            proto.bloombox.services.shop.v1.OrderError.NO_ERROR)) &&
             inflated.getOrderId()) {
           this.id = inflated.getOrderId();
           callback(/** @type {string} */ (inflated.getOrderId()), this, null);

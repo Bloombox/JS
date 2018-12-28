@@ -30,7 +30,7 @@ goog.require('bloombox.util.Exportable');
 goog.require('bloombox.util.Serializable');
 goog.require('bloombox.util.b64');
 
-goog.require('proto.bloombox.schema.analytics.context.Collection');
+goog.require('proto.bloombox.analytics.context.Collection');
 
 
 // - Event Collections - //
@@ -41,7 +41,7 @@ goog.require('proto.bloombox.schema.analytics.context.Collection');
  * @param {boolean=} opt_skipb64encode Whether to skip base64 encoding. Pass as
  *        truthy when the collection name is already base64 encoded.
  * @constructor
- * @implements {bloombox.util.Exportable<proto.bloombox.schema.analytics.context.Collection>}
+ * @implements {bloombox.util.Exportable<proto.bloombox.analytics.context.Collection>}
  * @implements {bloombox.util.Serializable}
  * @public
  */
@@ -71,10 +71,10 @@ bloombox.telemetry.Collection.named = function(name) {
 /**
  * Export this `Collection` as an `analytics.Collection` message.
  *
- * @return {proto.bloombox.schema.analytics.context.Collection} JS PB message.
+ * @return {proto.bloombox.analytics.context.Collection} JS PB message.
  */
 bloombox.telemetry.Collection.prototype.export = function() {
-  let collection = new proto.bloombox.schema.analytics.context.Collection();
+  let collection = new proto.bloombox.analytics.context.Collection();
   collection.setName(this.name);
   return collection;
 };

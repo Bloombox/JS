@@ -55,7 +55,7 @@ bloombox.telemetry.DEBUG = bloombox.DEBUG;
  * @const {string} Telemetry client version string.
  * @export
  */
-bloombox.telemetry.VERSION = 'v1beta4r1';
+bloombox.telemetry.VERSION = 'v1beta4r2';
 
 
 /**

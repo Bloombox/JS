@@ -39,15 +39,15 @@ goog.require('bloombox.telemetry.InternalCollection');
 goog.require('bloombox.telemetry.event');
 goog.require('bloombox.telemetry.notifyUserID');
 
-goog.require('proto.bloombox.schema.services.shop.v1.VerifyError');
-goog.require('proto.bloombox.schema.services.shop.v1.VerifyMember');
+goog.require('proto.bloombox.services.shop.v1.VerifyError');
+goog.require('proto.bloombox.services.shop.v1.VerifyMember');
 
 
 
 /**
  * Callback function type definition for verify RPCs.
  *
- * @typedef {function(boolean, ?proto.bloombox.schema.services.shop.v1.VerifyError, ?bloombox.shop.Customer)}
+ * @typedef {function(boolean, ?proto.bloombox.services.shop.v1.VerifyError, ?bloombox.shop.Customer)}
  */
 bloombox.shop.VerifyCallback;
 
@@ -111,7 +111,7 @@ bloombox.shop.verify = function(email,
 
       // decode the response
       let inflated = (
-        new proto.bloombox.schema.services.shop.v1.VerifyMember.Response());
+        new proto.bloombox.services.shop.v1.VerifyMember.Response());
       inflated.setVerified((response['verified'] === true) || false);
       if (response['error']) {
         inflated.setError(response['error']);

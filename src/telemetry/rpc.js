@@ -39,9 +39,9 @@ goog.require('bloombox.telemetry.VERSION');
 
 goog.require('bloombox.util.HTTPMethod');
 
-goog.require('proto.bloombox.schema.services.telemetry.v1beta4.OperationStatus');
-goog.require('proto.bloombox.schema.services.telemetry.v1beta4.TelemetryError');
-goog.require('proto.bloombox.schema.services.telemetry.v1beta4.TelemetryResponse');
+goog.require('proto.bloombox.services.telemetry.v1beta4.OperationStatus');
+goog.require('proto.bloombox.services.telemetry.v1beta4.TelemetryError');
+goog.require('proto.bloombox.services.telemetry.v1beta4.TelemetryResponse');
 
 goog.provide('bloombox.telemetry.OperationStatus');
 goog.provide('bloombox.telemetry.Routine');
@@ -96,23 +96,23 @@ bloombox.telemetry.Routine = {
 /**
  * Enumerates operation statuses that result from Telemetry API RPC calls.
  *
- * @enum {proto.bloombox.schema.services.telemetry.v1beta4.OperationStatus}
+ * @enum {proto.bloombox.services.telemetry.v1beta4.OperationStatus}
  */
 bloombox.telemetry.OperationStatus = {
-  OK: proto.bloombox.schema.services.telemetry.v1beta4.OperationStatus.OK,
-  ERROR: proto.bloombox.schema.services.telemetry.v1beta4.OperationStatus.ERROR
+  OK: proto.bloombox.services.telemetry.v1beta4.OperationStatus.OK,
+  ERROR: proto.bloombox.services.telemetry.v1beta4.OperationStatus.ERROR
 };
 
 
 // private alias
 let _TelemetryError = (
-  proto.bloombox.schema.services.telemetry.v1beta4.TelemetryError);
+  proto.bloombox.services.telemetry.v1beta4.TelemetryError);
 
 
 /**
  * Enumerates errors in the Telemetry API.
  *
- * @enum {proto.bloombox.schema.services.telemetry.v1beta4.TelemetryError}
+ * @enum {proto.bloombox.services.telemetry.v1beta4.TelemetryError}
  */
 bloombox.telemetry.TelemetryError = {
   'UNKNOWN': _TelemetryError.UNKNOWN,
@@ -132,7 +132,7 @@ bloombox.telemetry.TelemetryError = {
  * Render a URL endpoint for a given RPC type.
  *
  * @param {bloombox.telemetry.Routine} type RPC routine.
- * @param {proto.bloombox.schema.analytics.Context=} opt_context Contextual
+ * @param {proto.bloombox.analytics.Context=} opt_context Contextual
  *        information that may be needed to render the URL.
  * @return {string} Rendered URL endpoint.
  * @throws {bloombox.rpc.RPCException} If the subject renderer cannot be found.
@@ -154,7 +154,7 @@ bloombox.telemetry.renderEndpoint = function(type, opt_context) {
  *
  * @param {bloombox.telemetry.Routine} type RPC routine.
  * @param {string} apiKey API key to append to the URL.
- * @param {proto.bloombox.schema.analytics.Context=} opt_context Contextual
+ * @param {proto.bloombox.analytics.Context=} opt_context Contextual
  *        information that may be needed to render the URL.
  * @param {string=} opt_target Explicit URL target. Optional.
  * @return {string} Calculated endpoint URI.
@@ -188,7 +188,7 @@ bloombox.telemetry.endpoint = function(type, apiKey, opt_context, opt_target) {
  * @param {bloombox.telemetry.FailureCallback} failure Callback to dispatch if
  *        a failure happens.
  * @param {Object=} opt_payload Payload to use if we're POST-ing or PUT-ing.
- * @param {proto.bloombox.schema.analytics.Context=} opt_context Contextual
+ * @param {proto.bloombox.analytics.Context=} opt_context Contextual
  *        information to provide to the URL renderer.
  * @param {Object=} opt_headers Additional headers to add to the request.
  * @param {string=} opt_endpoint URL endpoint to send the RPC to.

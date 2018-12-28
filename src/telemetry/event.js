@@ -51,7 +51,7 @@ goog.require('bloombox.util.Exportable');
 goog.require('bloombox.util.generateUUID');
 goog.require('bloombox.util.proto.merge');
 
-goog.require('proto.bloombox.schema.analytics.Context');
+goog.require('proto.bloombox.analytics.Context');
 
 goog.provide('bloombox.telemetry.BaseEvent');
 goog.provide('bloombox.telemetry.FailureCallback');
@@ -175,9 +175,9 @@ bloombox.telemetry.TelemetryEvent.prototype.renderUUID = function() {};
  * with any event-specific context. The resulting object is used as the final
  * context when the event is sent shortly thereafter.
  *
- * @param {proto.bloombox.schema.analytics.Context} global Global context to
+ * @param {proto.bloombox.analytics.Context} global Global context to
  *        merge onto.
- * @return {proto.bloombox.schema.analytics.Context} Combined/rendered
+ * @return {proto.bloombox.analytics.Context} Combined/rendered
  *         event context.
  * @throws {bloombox.telemetry.ContextException} If required context is missing
  *         or context values are invalid.
@@ -518,15 +518,15 @@ bloombox.telemetry.BaseEvent.prototype.send = function() {
  * Default implementation. Render event context by returning any attached
  * payload object, or `null`, to indicate there is no payload.
  *
- * @param {proto.bloombox.schema.analytics.Context} global Global context.
- * @return {proto.bloombox.schema.analytics.Context} Combined/rendered event
+ * @param {proto.bloombox.analytics.Context} global Global context.
+ * @return {proto.bloombox.analytics.Context} Combined/rendered event
  *         context.
  * @throws {bloombox.telemetry.ContextException} If required context is missing
  *         or context values are invalid.
  * @public
  */
 bloombox.telemetry.BaseEvent.prototype.renderContext = function(global) {
-  let local = /** @type {proto.bloombox.schema.analytics.Context} */ (
+  let local = /** @type {proto.bloombox.analytics.Context} */ (
     this.context.export());
   let merged = bloombox.util.proto.merge(local, global);
   this.validateContext(merged);
@@ -537,7 +537,7 @@ bloombox.telemetry.BaseEvent.prototype.renderContext = function(global) {
 /**
  * Validate final event context before allowing it to return.
  *
- * @param {proto.bloombox.schema.analytics.Context} context Final context to
+ * @param {proto.bloombox.analytics.Context} context Final context to
  *        validate.
  * @throws {bloombox.telemetry.ContextException} If required context is missing
  *         or context values are invalid.
