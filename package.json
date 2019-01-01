@@ -15,7 +15,7 @@
     "del": "^3.0.0",
     "eslint": "^5.7.0",
     "eslint-config-google": "^0.11.0",
-    "firebase-tools": "^5.1.1",
+    "firebase-tools": "^6.2.2",
     "google-protobuf": "^3.4.0",
     "gulp": "v4.0.0",
     "gulp-cache": "^1.0.2",

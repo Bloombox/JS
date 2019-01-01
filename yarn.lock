@@ -3746,9 +3746,10 @@ fined@^1.0.1:
     object.pick "^1.2.0"
     parse-filepath "^1.0.1"
 
-firebase-tools@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-5.1.1.tgz#0e693c6197bdc4562fd3040d7bbb7e23b5dc415c"
+firebase-tools@^6.2.2:
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-6.2.2.tgz#06ef9b729e857e489d7a464df238c22bcddedc73"
+  integrity sha512-paknn5f3E4yzkxde0AY10ESpWdJi49waojHjePv42sHtGNyS2VQ34jI0kJTdJ+95daIV8lhd5I8pjHVk34M+lQ==
   dependencies:
     JSONStream "^1.2.1"
     archiver "^2.1.1"
