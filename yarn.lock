@@ -1494,9 +1494,10 @@ browserify-zlib@~0.2.0:
   dependencies:
     pako "~1.0.5"
 
-browserify@^16.2.2:
+browserify@^16.2.3:
   version "16.2.3"
   resolved "https://registry.yarnpkg.com/browserify/-/browserify-16.2.3.tgz#7ee6e654ba4f92bce6ab3599c3485b1cc7a0ad0b"
+  integrity sha512-zQt/Gd1+W+IY+h/xX2NYMW4orQWhqSwyV+xsblycTtpOuB27h1fZhhNQuipJ4t79ohw4P4mMem0jp/ZkISQtjQ==
   dependencies:
     JSONStream "^1.0.3"
     assert "^1.4.0"
@@ -2057,17 +2058,18 @@ cloneable-readable@^1.0.0:
     readable-stream "^2.3.5"
 
 closure-builder@^2.2.39:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/closure-builder/-/closure-builder-2.3.0.tgz#57cecbcdcee786ba39946f96f51bd7b72b0373c2"
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/closure-builder/-/closure-builder-2.3.4.tgz#78f3d65c368b57fe4dd7b9780096ca44b36ea5dd"
+  integrity sha512-rC7RKuQPZoMhDOMUQ7h+tfslfNAqEYrpZAeHw2tFD3v05LZhV2DPKVXATK+YnycVpI/846WuMDEHy5s3MHR0RA==
   dependencies:
-    browserify "^16.2.2"
+    browserify "^16.2.3"
     clean-css "^4.2.1"
     decompress "^4.2.0"
     dns-sync "^0.1.3"
-    follow-redirects "^1.5.8"
+    follow-redirects "^1.5.10"
     fs-extra "^6.0.1"
     glob "7.1.2"
-    google-closure-compiler "^20180805.0.0"
+    google-closure-compiler "^20181210.0.0"
     loglevel "^1.6.1"
     marked "^0.3.19"
     mkdirp "0.5.1"
@@ -2076,7 +2078,7 @@ closure-builder@^2.2.39:
     rimraf "^2.6.2"
     rollup "^0.58.2"
     touch "3.1.0"
-    validator "^10.7.1"
+    validator "^10.9.0"
 
 cmd-shim@^2.0.2, cmd-shim@~2.0.2:
   version "2.0.2"
@@ -3831,9 +3833,16 @@ flush-write-stream@^1.0.0, flush-write-stream@^1.0.2:
     inherits "^2.0.1"
     readable-stream "^2.0.4"
 
-follow-redirects@^1.0.0, follow-redirects@^1.3.0, follow-redirects@^1.5.8:
+follow-redirects@^1.0.0, follow-redirects@^1.3.0:
   version "1.5.9"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.9.tgz#c9ed9d748b814a39535716e531b9196a845d89c6"
+  dependencies:
+    debug "=3.1.0"
+
+follow-redirects@^1.5.10:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.6.0.tgz#d12452c031e8c67eb6637d861bfc7a8090167933"
+  integrity sha512-4Oh4eI3S9OueVV41AgJ1oLjpaJUhbJ7JDGOMhe0AFqoSejl5Q2nn3eGglAzRUKVKZE8jG5MNn66TjCJMAnpsWA==
   dependencies:
     debug "=3.1.0"
 
@@ -4331,25 +4340,40 @@ google-auto-auth@^0.7.2:
     google-auth-library "^0.10.0"
     request "^2.79.0"
 
-google-closure-compiler-linux@^20180805.0.0:
-  version "20180805.0.0"
-  resolved "https://registry.yarnpkg.com/google-closure-compiler-linux/-/google-closure-compiler-linux-20180805.0.0.tgz#f6e0a7dca90a61181a7dea6f5748305645d9a1b7"
+google-closure-compiler-java@^20181210.0.0:
+  version "20181210.0.0"
+  resolved "https://registry.yarnpkg.com/google-closure-compiler-java/-/google-closure-compiler-java-20181210.0.0.tgz#de0a948aa1951d535c7ee50a529ff6cba00d6832"
+  integrity sha512-FMGzY+vp25DePolYNyVcXz8UI2PV/I3AYU3nuFexmHcKn5XiBVy4CqK7em6NpVbZdDXJYUF3GUv5A0x0gLvbfw==
 
-google-closure-compiler-osx@^20180805.0.0:
-  version "20180805.0.0"
-  resolved "https://registry.yarnpkg.com/google-closure-compiler-osx/-/google-closure-compiler-osx-20180805.0.0.tgz#71bc29b8dcd4882742709af01466ca1958e229c0"
+google-closure-compiler-js@^20181210.0.0:
+  version "20181210.0.0"
+  resolved "https://registry.yarnpkg.com/google-closure-compiler-js/-/google-closure-compiler-js-20181210.0.0.tgz#806d7e4186828307074b6eb6392d529b40701795"
+  integrity sha512-gn+2hT4uQtYKD/jXJqGIXzPMln3/JD7R4caAKDPJm7adqqDvrCAw7qxAiK4Vz1rNec7hJXPXh9TeKQjzz03ZaQ==
 
-google-closure-compiler@^20180805.0.0:
-  version "20180805.0.0"
-  resolved "https://registry.yarnpkg.com/google-closure-compiler/-/google-closure-compiler-20180805.0.0.tgz#9e2a9d0794a2033b276ab13c807a3671a7d93dbf"
+google-closure-compiler-linux@^20181210.0.0:
+  version "20181210.0.0"
+  resolved "https://registry.yarnpkg.com/google-closure-compiler-linux/-/google-closure-compiler-linux-20181210.0.0.tgz#3bbb44049685b258a095f0d0e5f63a2c58d3d629"
+  integrity sha512-Gp+yp+Vb6QWEhtYkePKxkspRlzX5dx6L46zUoHGWW7Henuk3ACYoUXuaHLQQ+tF0lmi2QAmFXEkvdnKVDIxR+Q==
+
+google-closure-compiler-osx@^20181210.0.0:
+  version "20181210.0.0"
+  resolved "https://registry.yarnpkg.com/google-closure-compiler-osx/-/google-closure-compiler-osx-20181210.0.0.tgz#9f15e37f8abdad809b3e0dd889579e8397042f6c"
+  integrity sha512-SYUakmEpq8BorJU/O5CfrC+ABYjXR0rTvBd3Khwd1sml9B2aKEiHArdHC5SCmBRZd3ccUhp/XyrVO6PoxHKeZA==
+
+google-closure-compiler@^20181210.0.0:
+  version "20181210.0.0"
+  resolved "https://registry.yarnpkg.com/google-closure-compiler/-/google-closure-compiler-20181210.0.0.tgz#148bd30d5e33a83ab656fba8683d6a02063afda4"
+  integrity sha512-GCMLakdibnc+jpdNTvF3M/ET5i6I4zzxGKw67A4bQahxc0TPLXQdkVfhF3kwBSoPfK8xwgU5kA+KO0qvDZHKHw==
   dependencies:
     chalk "^1.0.0"
+    google-closure-compiler-java "^20181210.0.0"
+    google-closure-compiler-js "^20181210.0.0"
     minimist "^1.2.0"
     vinyl "^2.0.1"
     vinyl-sourcemaps-apply "^0.2.0"
   optionalDependencies:
-    google-closure-compiler-linux "^20180805.0.0"
-    google-closure-compiler-osx "^20180805.0.0"
+    google-closure-compiler-linux "^20181210.0.0"
+    google-closure-compiler-osx "^20181210.0.0"
 
 google-p12-pem@^0.1.0:
   version "0.1.2"
@@ -10456,9 +10480,14 @@ validate-npm-package-name@^3.0.0, validate-npm-package-name@~3.0.0:
   dependencies:
     builtins "^1.0.3"
 
-validator@^10.0.0, validator@^10.7.1:
+validator@^10.0.0:
   version "10.8.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-10.8.0.tgz#8acb15a5c39411cbc8ef2be0c98c2514da4410a7"
+
+validator@^10.9.0:
+  version "10.10.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-10.10.0.tgz#a69ac298149f063a44361cb52182edb52dab59a4"
+  integrity sha512-DyZyLJlMXM3CGdVaVHE/EDzCagMRoPI3mmGdxxNQbqkGqh56+M3d1i0ZAWd69En8U21DHbPTn12aOdhO+hfm5w==
 
 value-or-function@^3.0.0:
   version "3.0.0"
