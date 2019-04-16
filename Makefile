@@ -79,7 +79,7 @@ clean: clean-docs
 
 test:
 	@echo "Running testsuite..."
-	@karma start --browsers PhantomJS --single-run --no-auto-watch karma.conf.js
+	@karma start --browsers ChromeHeadless --single-run --no-auto-watch karma.conf.js
 
 test-dev:
 	@echo "Running testsuite (dev mode)..."
