@@ -17,7 +17,7 @@ module.exports = function(config) {
     files: [
       'node_modules/closure-builder/third_party/closure-library/closure/goog/base.js',
       {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js', included: false, served: true},
-      {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js', included: true, served: false},
+      // {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js', included: true, served: false},
       'tests/suites/**/*.js',
       'tests/init.js',
       'tests/sanity_tests.js',
@@ -30,7 +30,7 @@ module.exports = function(config) {
       // Target: Release
       'public/client.min.js',
       'tests/release_tests.js',
-      'tests/wasabi.js',
+      'tests/wasabi_prod.js',
 
       // Target: Sources
       'tests/init_sources.js',
@@ -85,7 +85,6 @@ module.exports = function(config) {
       'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js': ['closure-deps']
     },
 
-
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
@@ -131,10 +130,11 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
-     'Safari',
-     'Firefox',
-     'ChromeCanary'],
-
+     //'Safari',
+     //'Firefox',
+     //'ChromeCanary'],
+     'ChromeHeadless'
+    ],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
