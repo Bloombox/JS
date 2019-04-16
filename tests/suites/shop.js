@@ -12,14 +12,6 @@ function shopTestsuite() {
         });
       });
 
-      it('should support verifying a known-good zipcode', function() {
-        bloombox.shop.zipcheck('95126', function(zipcodeEligible) {
-          if (zipcodeEligible !== true) {
-            throw new Error('failed to properly validate known-good zipcode.');
-          }
-        });
-      });
-
       it('should reject verifying a known-bad zipcode', function() {
         bloombox.shop.zipcheck('12345', function(zipcodeEligible) {
           if (zipcodeEligible === true) {
