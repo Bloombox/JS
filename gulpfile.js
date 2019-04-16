@@ -132,7 +132,8 @@ function closureBuilder(entrypoint) {
     'exclude_test': true,
     "deps": glob([
       "third_party/schema/*.js",
-      "third_party/protobuf/js/**/*.js"
+      "third_party/protobuf/js/**/*.js",
+      "third_party/services/**/*.js"
     ]),
     "options": config,
     "out": buildRootDirectory + "/" + (entrypoint === 'full' ? "" : (entrypoint + "-")) + version + ".min.js",
