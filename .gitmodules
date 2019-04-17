@@ -5,3 +5,6 @@
 [submodule "closure"]
 	path = third_party/closure/compiler
 	url = https://github.com/google/closure-compiler
+[submodule "grpc-web"]
+	path = third_party/grpc-web
+	url = https://github.com/grpc/grpc-web.git
