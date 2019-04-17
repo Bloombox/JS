@@ -49,7 +49,7 @@ goog.provide('bloombox.menu.RetrieveOptions');
  * @public
  * @typedef {function(
  *    ?proto.bloombox.services.menu.v1beta1.GetMenu.Response,
- *    ?number)}
+ *    *)}
  */
 bloombox.menu.RetrieveCallback;
 
@@ -75,7 +75,7 @@ bloombox.menu.RetrieveConfig;
  * partner/location pair.
  *
  * @param {string} message Exception error message.
- * @param {number} err Error code or status code.
+ * @param {number=} err Error code or status code.
  * @constructor
  * @export
  */
@@ -94,7 +94,7 @@ bloombox.menu.RetrieveException = function RetrieveException(message, err) {
    * @export
    * @type {number}
    */
-  this.err = err;
+  this.err = err || -1;
 };
 
 
@@ -252,11 +252,12 @@ bloombox.menu.MenuAPI = (class MenuAPI {
    * menu catalog can be fetched via this method, according to the options
    * specified in the `options` parameter.
    *
-   * @param {bloombox.menu.RetrieveCallback} callback Function to dispatch once
-   *        data is available for the underlying menu catalog.
-   * @param {?bloombox.menu.RetrieveOptions} config Configuration options for
+   * @param {?bloombox.menu.RetrieveCallback=} callback Function to dispatch
+   *        once data is available for the underlying menu catalog.
+   * @param {?bloombox.menu.RetrieveOptions=} config Configuration options for
    *        this menu retrieval operation. See type docs for more info.
-   * @return {Promise} Promise attached to the underlying RPC call.
+   * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+   *         Promise attached to the underlying RPC call.
    */
   retrieve(callback, config) {}
 });

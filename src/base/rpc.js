@@ -32,6 +32,8 @@ goog.provide('bloombox.rpc.RPCException');
 
 goog.provide('bloombox.rpc.TRACE_HEADER');
 
+goog.provide('bloombox.rpc.metadata');
+
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.DEBUG_PROPERTY');
 goog.require('bloombox.VERSION');
@@ -82,7 +84,7 @@ bloombox.rpc.ACCEPT_HEADER_VALUE = 'application/json,*/*';
  * @const
  * @public
  */
-bloombox.rpc.API_KEY_HEADER = 'X-Bloom-Key';
+bloombox.rpc.API_KEY_HEADER = 'X-API-Key';
 
 
 /**
@@ -103,6 +105,27 @@ bloombox.rpc.DEBUG_HEADER = 'X-Bloom-Debug';
  * @public
  */
 bloombox.rpc.TRACE_HEADER = 'X-Bloom-Trace';
+
+
+/**
+ * Generate metadata for a v2 RPC request, via gRPC. This includes any debug or
+ * tracing information, and the API key active in the current scope.
+ *
+ * @param {bloombox.config.JSConfig} activeConfig Active SDK configuration.
+ * @param {?Object=} additional Extra configuration to merge in.
+ * @return {Object} Metadata object to use for the RPC request.
+ */
+bloombox.rpc.metadata = function(activeConfig, additional) {
+  // attach base agent header
+  let base = {
+    // 'x-api-agent': 'Bloombox RPC Client v2 (JS SDK)'
+  };
+
+  // attach API key header
+  if (activeConfig && activeConfig.key)
+    base[bloombox.rpc.API_KEY_HEADER] = activeConfig.key;
+  return Object.assign({}, base, additional);
+};
 
 
 // noinspection JSUnusedGlobalSymbols

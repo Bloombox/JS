@@ -82,6 +82,8 @@ bloombox.menu.MenuRetrieveException.prototype.getMessage = function() {
  * @param {bloombox.menu.MenuRetrieveCallback} callback Operation callback.
  * @throws {bloombox.menu.MenuRetrieveException} If partner/location isn't set,
  *         or some other client-side error occurs.
+ * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+ *         Promise attached to the underlying RPC call.
  */
 bloombox.menu.retrieveLegacy = function(callback) {
   // load partner and location codes
@@ -131,4 +133,5 @@ bloombox.menu.retrieveLegacy = function(callback) {
     // pass null to indicate an error
     callback(null, status || null);
   });
+  return null;
 };
