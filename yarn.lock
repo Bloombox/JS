@@ -5519,9 +5519,10 @@ join-path@^1.1.1:
     url-join "0.0.1"
     valid-url "^1"
 
-js-dossier@^0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/js-dossier/-/js-dossier-0.12.1.tgz#fcd662fcc00f80918cd2678354a3c209d86778a9"
+js-dossier@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/js-dossier/-/js-dossier-0.14.0.tgz#fd11dc50fb129550bf6b56b228aaa2e21511e9a4"
+  integrity sha512-92UIUBY78OcFuL7ZdSR/x5NcMjLGA7uxQSwlNjmrxc9FKVdp+XpDUQI9J6RLAla1kXc1P+UYkdOwqbaMu1ySPw==
 
 js-file-download@^0.4.1:
   version "0.4.4"

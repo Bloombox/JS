@@ -26,7 +26,7 @@
     "gulp-load-plugins": "^1.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sourcemaps": "^2.6.4",
-    "js-dossier": "^0.12.1",
+    "js-dossier": "^0.14.0",
     "jsdoc": "^3.5.5",
     "jshint": "^2.9.6",
     "jshint-stylish": "*",
