@@ -17,24 +17,15 @@
  */
 
 /**
- * Bloombox: Menu Client
+ * Bloombox: Menu Client v2
  *
- * @fileoverview Provides the Bloombox menu client.
+ * @fileoverview Provides an implementation of the Menu API.
  */
-
-/*global goog */
-
-goog.provide('bloombox.menu.DEBUG');
-goog.provide('bloombox.menu.MENU_API_ENDPOINT');
-goog.provide('bloombox.menu.MENU_API_VERSION');
-goog.provide('bloombox.menu.VERSION');
 
 goog.provide('bloombox.menu.v1beta1.DEBUG');
 goog.provide('bloombox.menu.v1beta1.VERSION');
 
-goog.require('bloombox.API_ENDPOINT');
-goog.require('bloombox.DEBUG');
-goog.require('bloombox.VERSION');
+goog.require('proto.bloombox.services.menu.v1beta1.MenuClient');
 
 
 
@@ -45,7 +36,7 @@ goog.require('bloombox.VERSION');
  *        debug features.
  * @public
  */
-bloombox.menu.DEBUG = true;
+bloombox.menu.v1beta1.DEBUG = true;
 
 
 /**
@@ -54,22 +45,4 @@ bloombox.menu.DEBUG = true;
  * @const {string} bloombox.menu.VERSION Menu client version string.
  * @export
  */
-bloombox.menu.VERSION = 'v1beta1';
-
-
-/**
- * Menu API endpoint prefix.
- *
- * @define {string} bloombox.menu.MENU_API_ENDPOINT Prefix for API interactions.
- * @public
- */
-bloombox.menu.MENU_API_ENDPOINT = bloombox.API_ENDPOINT;
-
-
-/**
- * Menu API version.
- *
- * @define {string} bloombox.menu.MENU_API_VERSION Version of the API to use.
- * @public
- */
-bloombox.menu.MENU_API_VERSION = 'v1beta1';
+bloombox.menu.v1beta1.VERSION = 'v1beta1r2';
