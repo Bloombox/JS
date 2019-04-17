@@ -65,7 +65,7 @@ bloombox.shop.Routine = {
 bloombox.shop.endpoint = function(endpoint) {
   // force service endpoint in debug mode
   let prefix = bloombox.DEBUG === true ?
-    'https://shop.api.bloombox.cloud' :
+    'https://rpc.bloombox.cloud' :
     bloombox.shop.SHOP_API_ENDPOINT;
 
   return [

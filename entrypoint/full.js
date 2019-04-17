@@ -104,9 +104,10 @@ bloombox.ERROR_REPORTER = null;
  * @param {string} apikey API key to use.
  * @param {function()} callback Callback to be dispatched when
  *        the JS API is ready.
+ * @param {?Object} extraConfig Extra configuration to apply.
  * @export
  */
-bloombox.setup = function(partner, location, apikey, callback) {
+bloombox.setup = function(partner, location, apikey, callback, extraConfig) {
   if (!partner || !location) {
     bloombox.logging.error('Partner or location code is not defined.');
     return;
@@ -114,7 +115,7 @@ bloombox.setup = function(partner, location, apikey, callback) {
 
   let config = bloombox.config.active();
   let merged = /** @type {bloombox.config.JSConfig} */ (
-    Object.assign({}, config, {
+    Object.assign({}, config, extraConfig || {}, {
       key: apikey,
       partner: partner,
       location: location
