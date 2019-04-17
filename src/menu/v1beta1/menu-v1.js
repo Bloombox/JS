@@ -25,10 +25,20 @@
 
 /*global goog */
 
+goog.require('bloombox.API_ENDPOINT');
 goog.require('bloombox.menu.MenuAPI');
 goog.require('bloombox.menu.RetrieveCallback');
+goog.require('bloombox.menu.RetrieveException');
 goog.require('bloombox.menu.RetrieveOptions');
 goog.require('bloombox.menu.retrieveLegacy');
+
+goog.require('bloombox.rpc.metadata');
+
+goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.Request');
+goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.Response');
+goog.require('proto.bloombox.services.menu.v1beta1.MenuPromiseClient');
+
+goog.require('proto.opencannabis.products.menu.section.Section');
 
 goog.provide('bloombox.menu.v1beta1.Service');
 
@@ -55,6 +65,19 @@ bloombox.menu.v1beta1.Service = (class MenuV1 {
      * @type {bloombox.config.JSConfig}
      */
     this.sdkConfig = sdkConfig;
+
+    /**
+     * Service client, which is responsible for mediating calls between the RPC
+     * server and the local RPC client.
+     *
+     * @private
+     * @type {proto.bloombox.services.menu.v1beta1.MenuPromiseClient}
+     */
+    this.client = (
+      new proto.bloombox.services.menu.v1beta1.MenuPromiseClient(
+        bloombox.API_ENDPOINT,
+        null,
+        {'format': 'binary'}));
   }
 
   // -- Service Info -- //
@@ -90,13 +113,62 @@ bloombox.menu.v1beta1.Service = (class MenuV1 {
    * specified in the `options` parameter.
    *
    * @export
-   * @param {bloombox.menu.RetrieveCallback} callback Function to dispatch once
+   * @param {?bloombox.menu.RetrieveCallback=} callback Function to dispatch once
    *        data is available for the underlying menu catalog.
-   * @param {bloombox.menu.RetrieveOptions} config Configuration options for
+   * @param {?bloombox.menu.RetrieveOptions=} options Configuration options for
    *        this menu retrieval operation. See type docs for more info.
-   * @return {Promise} Promise attached to the underlying RPC call.
+   * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+   *         Promise attached to the underlying RPC call.
    */
-  retrieve(callback, config) {
-    throw Error('not yet implemented');
+  retrieve(callback, options) {
+    const resolved = options || bloombox.menu.RetrieveOptions.defaults();
+    const request = new proto.bloombox.services.menu.v1beta1.GetMenu.Request();
+
+    // copy in options
+    if (resolved.full === true) request.setFull(true);
+    if (resolved.fresh === true) request.setFresh(true);
+    if (resolved.keysOnly === true) request.setKeysOnly(true);
+    if (resolved.snapshot) request.setSnapshot(
+      /** @type {string} */ (options.snapshot));
+    if (resolved.fingerprint) request.setFingerprint(
+      /** @type {string} */ (resolved.fingerprint));
+    if (resolved.section !==
+        proto.opencannabis.products.menu.section.Section.UNDEFINED)
+      request.setSection(resolved.section);
+
+    if (!this.sdkConfig.key ||
+      !this.sdkConfig.partner ||
+      !this.sdkConfig.location)
+      throw new bloombox.menu.RetrieveException('Must call `bloombox.setup`.');
+
+    // resolve scope
+    const scope = (
+      `partner/${this.sdkConfig.partner}/location/${this.sdkConfig.location}`);
+    request.setScope(scope);
+    const operation = (
+      this.client.retrieve(request, bloombox.rpc.metadata(this.sdkConfig)));
+
+    operation.catch((err) => {
+      if (callback) callback(null, err);
+    });
+
+    operation.then((resp) => {
+      if (callback) callback(resp, null);
+    });
+
+    return operation;
   }
 });
+
+// export response symbols
+goog.exportSymbol(
+  'proto.bloombox.services.menu.v1beta1.GetMenu.Response',
+  proto.bloombox.services.menu.v1beta1.GetMenu.Response);
+
+goog.exportSymbol(
+  'proto.bloombox.services.menu.v1beta1.GetMenu.Response.prototype.getCached',
+  proto.bloombox.services.menu.v1beta1.GetMenu.Response.prototype.getCached);
+
+goog.exportSymbol(
+  'proto.bloombox.services.menu.v1beta1.GetMenu.Response.prototype.getCatalog',
+  proto.bloombox.services.menu.v1beta1.GetMenu.Response.prototype.getCatalog);

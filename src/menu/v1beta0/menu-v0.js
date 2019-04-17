@@ -89,19 +89,20 @@ bloombox.menu.v1beta0.Service = (class MenuV0 {
    * specified in the `options` parameter.
    *
    * @export
-   * @param {bloombox.menu.RetrieveCallback} callback Function to dispatch once
-   *        data is available for the underlying menu catalog.
-   * @param {?bloombox.menu.RetrieveOptions} config Configuration options for
+   * @param {?bloombox.menu.RetrieveCallback=} callback Function to dispatch
+   *        once data is available for the underlying menu catalog.
+   * @param {?bloombox.menu.RetrieveOptions=} config Configuration options for
    *        this menu retrieval operation. See type docs for more info.
-   * @return {Promise} Promise attached to the underlying RPC call.
+   * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+   *         Promise attached to the underlying RPC call.
    */
   retrieve(callback, config) {
     // v0 interface doesn't support config
-    bloombox.menu.retrieveLegacy((catalog, err) => {
+    return bloombox.menu.retrieveLegacy((catalog, err) => {
       if (err) {
-        callback(null, err);
+        if (callback) callback(null, err);
       } else if (!catalog) {
-        callback(null, -1);
+        if (callback) callback(null, -1);
       } else {
         // we have a catalog: cast it and return
         let casted = (
