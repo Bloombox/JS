@@ -60,7 +60,7 @@ function doFailureTest() {
           '\' could not be verified.', 'color: red', err);
       }
     });
-  });
+  }, {'beta': true});
 }
 
 
@@ -86,7 +86,7 @@ function doVerifyTest() {
           '\' could not be verified.', 'color: red', err);
       }
     });
-  });
+  }, {'beta': true});
 }
 
 
@@ -95,7 +95,7 @@ function doVerifyTest() {
  */
 function doMenuTest(callback) {
   bloombox.setup(partnerCode, locationCode, apiKey, function() {
-    bloombox.menu.retrieve(function(menu, err) {
+    bloombox.menu.api().retrieve(function(menu, err) {
       if (err) {
         console.log(
           '%cThere was an error retrieving menu data: ',
@@ -110,7 +110,7 @@ function doMenuTest(callback) {
         menu);
       callback();
     });
-  });
+  }, {'beta': true});
 }
 
 
@@ -124,7 +124,7 @@ function doErrorTest() {
     }
     let op = stackdriver.protect(errorTest);
     op('hello, failure!');
-  });
+  }, {'beta': true});
 }
 
 
@@ -172,7 +172,7 @@ function doGetOrderTest() {
           'color: red');
       }
     });
-  });
+  }, {'beta': true});
 }
 
 
@@ -239,7 +239,7 @@ function doInfoTest(callback, nextCallback) {
         callback(nextCallback);
       });
     });
-  });
+  }, {'beta': true});
 }
 
 /**

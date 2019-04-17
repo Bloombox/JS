@@ -166,7 +166,7 @@ bloombox.telemetry.endpoint = function(type, apiKey, opt_context, opt_target) {
 
   // force service endpoint in debug mode
   let prefix = bloombox.DEBUG === true ?
-    'https://telemetry.api.bloombox.cloud' :
+    'https://rpc.bloombox.cloud' :
     bloombox.telemetry.TELEMETRY_API_ENDPOINT;
 
   return [[

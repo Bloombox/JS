@@ -29,9 +29,6 @@ goog.provide('bloombox.menu.MENU_API_ENDPOINT');
 goog.provide('bloombox.menu.MENU_API_VERSION');
 goog.provide('bloombox.menu.VERSION');
 
-goog.provide('bloombox.menu.v1beta1.DEBUG');
-goog.provide('bloombox.menu.v1beta1.VERSION');
-
 goog.require('bloombox.API_ENDPOINT');
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.VERSION');
@@ -45,7 +42,7 @@ goog.require('bloombox.VERSION');
  *        debug features.
  * @public
  */
-bloombox.menu.DEBUG = bloombox.menu.v1beta1.DEBUG;
+bloombox.menu.DEBUG = true;
 
 
 /**
@@ -54,7 +51,7 @@ bloombox.menu.DEBUG = bloombox.menu.v1beta1.DEBUG;
  * @const {string} bloombox.menu.VERSION Menu client version string.
  * @export
  */
-bloombox.menu.VERSION = bloombox.menu.v1beta1.VERSION;
+bloombox.menu.VERSION = 'v1beta1';
 
 
 /**

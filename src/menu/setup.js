@@ -30,15 +30,18 @@ goog.require('bloombox.config.active');
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
-// - Base
+// - Menu API
+goog.provide('bloombox.menu.api');
+
 goog.require('bloombox.menu.DEBUG');
 goog.require('bloombox.menu.MENU_API_ENDPOINT');
+goog.require('bloombox.menu.MenuAPI');
 goog.require('bloombox.menu.VERSION');
 
-// - Menu API
-goog.require('bloombox.menu.retrieve');
-
 goog.provide('bloombox.menu.setup');
+
+goog.require('bloombox.menu.v1beta0.Service');
+goog.require('bloombox.menu.v1beta1.Service');
 
 
 /**
@@ -49,10 +52,9 @@ goog.provide('bloombox.menu.setup');
  * @param {string} location Location code to use.
  * @param {string} apikey API key to use.
  * @param {function()} callback Callback dispatched when the Menu API is ready.
- * @param {string=} endpoint Override for endpoint. Uses default if unspecified.
  * @export
  */
-bloombox.menu.setup = function(partner, location, apikey, callback, endpoint) {
+bloombox.menu.setup = function(partner, location, apikey, callback) {
   if (!partner || !location) {
     bloombox.logging.error('Partner or location code is not defined.');
     return;
@@ -60,9 +62,7 @@ bloombox.menu.setup = function(partner, location, apikey, callback, endpoint) {
 
   let config = bloombox.config.active();
   let merged = /** @type {bloombox.config.JSConfig} */ (
-    Object.assign({}, config, {'endpoints':
-        Object.assign({}, config.endpoints || {}, {
-          menu: endpoint || bloombox.menu.MENU_API_ENDPOINT})}));
+    Object.assign({}, config));
 
   bloombox.config.configure(merged);
 
@@ -71,4 +71,24 @@ bloombox.menu.setup = function(partner, location, apikey, callback, endpoint) {
       'debug': bloombox.menu.DEBUG,
       'config': bloombox.config.active()});
   callback();
+};
+
+
+/**
+ * Return an instance of the Menu API, based on current browser agent support
+ * for underlying features. The resulting object, which is an instance complying
+ * with the interface `bloombox.menu.MenuAPI`, can be used to fetch catalog data
+ * or individual product data from Bloombox.
+ *
+ * @export
+ * @return {bloombox.menu.MenuAPI} Menu API service implementation instance.
+ */
+bloombox.menu.api = function() {
+  // for now, create v1beta0 adapter, always
+  let config = bloombox.config.active();
+  if (config.beta === true) {
+    // use the new beta gRPC engine
+    return new bloombox.menu.v1beta1.Service(config);
+  }
+  return new bloombox.menu.v1beta0.Service(config);
 };

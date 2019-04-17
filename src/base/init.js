@@ -56,7 +56,7 @@ bloombox.DEBUG_PROPERTY = '__debug__';
  * @define {string} VERSION Version for library.
  * @export
  */
-bloombox.VERSION = 'v1.0.5';
+bloombox.VERSION = 'v2.0.0b1';
 
 
 /**
@@ -75,4 +75,4 @@ bloombox.INTERNAL = false;
  * @define {string} API_ENDPOINT Global API endpoint.
  * @export
  */
-bloombox.API_ENDPOINT = 'https://api.bloombox.cloud';
+bloombox.API_ENDPOINT = 'https://rpc.bloombox.cloud';

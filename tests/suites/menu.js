@@ -4,7 +4,9 @@
 function menuTestsuite() {
   describe('menu: product catalog data', function() {
     it('should be able to retrieve a full menu', function() {
-      bloombox.menu.retrieve(function(menu, err) {
+      debugger;
+      bloombox.menu.api().retrieve(
+        bloombox.menu.RetrieveOptions.defaults(), function(menu, err) {
         if (err)
           throw new Error('unable to retrieve menu: ' + err.toString());
       });
@@ -13,9 +15,9 @@ function menuTestsuite() {
     it('should throw exceptions with accessible messages', function() {
       try {
         // noinspection ExceptionCaughtLocallyJS
-        throw new bloombox.menu.MenuRetrieveException('woops');
+        throw new bloombox.menu.RetrieveException('woops');
       } catch (e) {
-        if (!e.getMessage() || e.getMessage() !== 'woops')
+        if (!e.message || e.message !== 'woops')
           throw new Error('no exception message where expected');
       }
     });

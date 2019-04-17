@@ -25,7 +25,7 @@
 /*global goog */
 
 goog.provide('bloombox.menu.MenuRetrieveException');
-goog.provide('bloombox.menu.retrieve');
+goog.provide('bloombox.menu.retrieveLegacy');
 
 goog.require('bloombox.config.active');
 
@@ -33,7 +33,6 @@ goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.info');
 goog.require('bloombox.logging.log');
 goog.require('bloombox.logging.warn');
-
 goog.require('bloombox.menu.Routine');
 goog.require('bloombox.menu.rpc.MenuRPC');
 
@@ -83,9 +82,8 @@ bloombox.menu.MenuRetrieveException.prototype.getMessage = function() {
  * @param {bloombox.menu.MenuRetrieveCallback} callback Operation callback.
  * @throws {bloombox.menu.MenuRetrieveException} If partner/location isn't set,
  *         or some other client-side error occurs.
- * @export
  */
-bloombox.menu.retrieve = function(callback) {
+bloombox.menu.retrieveLegacy = function(callback) {
   // load partner and location codes
   let config = bloombox.config.active();
   let partnerCode = config.partner;

@@ -44,6 +44,7 @@ goog.require('bloombox.config.integration.SegmentConfig');
  *            partner: ?string,
  *            location: ?string,
  *            channel: ?string,
+ *            beta: ?boolean,
  *            integrations: bloombox.config.JSIntegrationConfig,
  *            endpoints: {
  *              shop: ?string,
@@ -100,6 +101,7 @@ bloombox.config.buildDefault = function() {
     partner: null,
     location: null,
     channel: null,
+    beta: false,
     endpoints: {
       shop: null,
       telemetry: null
