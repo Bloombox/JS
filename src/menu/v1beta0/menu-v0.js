@@ -56,27 +56,6 @@ bloombox.menu.v1beta0.Service = (class MenuV0 {
     this.sdkConfig = sdkConfig;
   }
 
-  // -- Service Info -- //
-  /**
-   * Return the name of this service, which is always `menu`. The name of the
-   * service allows invoking code to distinguish one service from another.
-   *
-   * @returns {string} Name of this service. Equal to "menu".
-   */
-  name() {
-    return 'menu';
-  }
-
-  /**
-   * Return the version of this service, which, for this implementation, is
-   * always equal to `v1beta0`.
-   *
-   * @returns {string} Version of this service. Equal to "menu".
-   */
-  version() {
-    return 'v1beta0';
-  }
-
   // -- Menu Retrieve -- //
   /**
    * Retrieve a full menu via Bloombox systems, using the legacy V1 JSON/REST
@@ -98,11 +77,9 @@ bloombox.menu.v1beta0.Service = (class MenuV0 {
    */
   retrieve(callback, config) {
     // v0 interface doesn't support config
-    return bloombox.menu.retrieveLegacy((catalog, err) => {
-      if (err) {
-        if (callback) callback(null, err);
-      } else if (!catalog) {
-        if (callback) callback(null, -1);
+    return bloombox.menu.retrieveLegacy(config, (catalog, err) => {
+      if (!catalog) {
+        if (callback) callback(null, err || -1);
       } else {
         // we have a catalog: cast it and return
         let casted = (

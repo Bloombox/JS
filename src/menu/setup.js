@@ -81,12 +81,13 @@ bloombox.menu.setup = function(partner, location, apikey, callback) {
  * or individual product data from Bloombox.
  *
  * @export
+ * @param {{beta: boolean}=} apiConfig API configuration.
  * @return {bloombox.menu.MenuAPI} Menu API service implementation instance.
  */
-bloombox.menu.api = function() {
+bloombox.menu.api = function(apiConfig) {
   // for now, create v1beta0 adapter, always
   let config = bloombox.config.active();
-  if (config.beta === true) {
+  if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
     // use the new beta gRPC engine
     return new bloombox.menu.v1beta1.Service(config);
   }

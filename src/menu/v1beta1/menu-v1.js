@@ -30,7 +30,6 @@ goog.require('bloombox.menu.MenuAPI');
 goog.require('bloombox.menu.RetrieveCallback');
 goog.require('bloombox.menu.RetrieveException');
 goog.require('bloombox.menu.RetrieveOptions');
-goog.require('bloombox.menu.retrieveLegacy');
 
 goog.require('bloombox.rpc.metadata');
 
@@ -81,27 +80,6 @@ goog.scope(function() {
           {'format': 'binary'}));
     }
 
-    // -- Service Info -- //
-    /**
-     * Return the name of this service, which is always `menu`. The name of the
-     * service allows invoking code to distinguish one service from another.
-     *
-     * @return {string} Name of this service. Equal to "menu".
-     */
-    name() {
-      return 'menu';
-    }
-
-    /**
-     * Return the version of this service, which, for this implementation, is
-     * always equal to `v1beta1`.
-     *
-     * @return {string} Version of this service. Equal to "menu".
-     */
-    version() {
-      return 'v1beta1';
-    }
-
     // -- Menu Retrieve -- //
     /**
      * Retrieve a full menu via Bloombox systems, using the legacy V1 JSON/REST
@@ -134,16 +112,11 @@ goog.scope(function() {
       if (resolved.fingerprint) request.setFingerprint(
         /** @type {string} */ (resolved.fingerprint));
       if (resolved.section !==
-        proto.opencannabis.products.menu.section.Section.UNDEFINED)
+        proto.opencannabis.products.menu.section.Section.UNSPECIFIED)
         request.setSection(resolved.section);
 
-      if (!this.sdkConfig.key ||
-        !this.sdkConfig.partner ||
-        !this.sdkConfig.location)
-        throw new bloombox.menu.RetrieveException('Must call `bloombox.setup`.');
-
       // resolve scope
-      const scope = (
+      const scope = options.scope ? options.scope : (
         `partner/${this.sdkConfig.partner}/location/${this.sdkConfig.location}`);
       request.setScope(scope);
       const operation = (

@@ -65,6 +65,7 @@ bloombox.menu.RetrieveCallback;
  *    fresh: boolean,
  *    snapshot: ?string,
  *    fingerprint: ?string,
+ *    scope: ?string,
  *    section: ?proto.opencannabis.products.menu.section.Section}}
  */
 bloombox.menu.RetrieveConfig;
@@ -105,8 +106,7 @@ bloombox.menu.RetrieveException = function RetrieveException(message, err) {
  * applying where properties are unspecified (defaults are merged in, without
  * overwriting, before options are used).
  *
- * Options for menu retrieval:
- *
+ * @export
  */
 bloombox.menu.RetrieveOptions = class RetrieveOptions {
   /**
@@ -115,14 +115,15 @@ bloombox.menu.RetrieveOptions = class RetrieveOptions {
    *
    * @param {boolean} full Fetch a 'full' catalog, including out-of-stock items.
    * @param {boolean} keysOnly Fetch keys only, without full product data.
-   * @param {?string} snapshot Snapshot-based filtering, if applicable.
+   * @param {?string} snap Snapshot-based filtering, if applicable.
    * @param {?string} fingerprint Bloom filter-based filtering, if applicable.
    * @param {proto.opencannabis.products.menu.section.Section} section Menu
    *        section to retrieve data for. If unset, all sections are fetched.
    * @param {boolean} fresh Request a forced-fresh response, which causes the
    *        server to skip caches when generating a response.
+   * @param {?string} scope Value to override partner scope with, if applicable.
    */
-  constructor(full, keysOnly, snapshot, fingerprint, section, fresh) {
+  constructor(full, keysOnly, snap, fingerprint, section, fresh, scope) {
     /**
      * Whether to fetch the 'full' menu catalog, which includes items that are
      * out of stock, or hidden from the menu for other reasons. This property
@@ -148,12 +149,12 @@ bloombox.menu.RetrieveOptions = class RetrieveOptions {
      * Specifies a snapshot of existing menu data, which the server may compare
      * with a given response payload. If the snapshot values match, the response
      * can be omitted with a '304 Not-Modified'-style response. Defaults to an
-     * unset value, which skips snapshot-based filering.
+     * unset value, which skips snapshot-based filtering.
      *
      * @public
      * @type {?string}
      */
-    this.snapshot = snapshot;
+    this.snapshot = snap;
 
     /**
      * Specifies a fingerprint representing an encoded Bloom filter, encoded in
@@ -186,13 +187,24 @@ bloombox.menu.RetrieveOptions = class RetrieveOptions {
      * @type {boolean}
      */
     this.fresh = fresh;
+
+    /**
+     * Optionally override the partnership scope for this menu retrieval task.
+     * This allows a specific partner or location value that is different from
+     * the library's global-default values. Expected to be in the full URL form
+     * of "partner/<x>/location/<y>".
+     *
+     * @public
+     * @type {?string}
+     */
+    this.scope = scope || null;
   }
 
   /**
    * Prepare a `RetrieveOptions` instance with default values for all config
    * options with specified defaults.
    *
-   * @public
+   * @export
    * @returns {bloombox.menu.RetrieveOptions} Default set of options.
    */
   static defaults() {
@@ -202,13 +214,15 @@ bloombox.menu.RetrieveOptions = class RetrieveOptions {
       null,  /* no default snapshot */
       null,  /* no default fingerprint */
       proto.opencannabis.products.menu.section.Section.UNSPECIFIED,
-      false  /* allow caching */);
+      false  /* allow caching */,
+      null  /* no scope override */);
   };
 
   /**
    * Generate a `RetrieveOptions` instance from a simple JavaScript record
    * object, which specifies config settings.
    *
+   * @export
    * @param {bloombox.menu.RetrieveConfig} record Config settings to inflate
    *        into a full settings object.
    * @returns {bloombox.menu.RetrieveOptions} Full settings object.
@@ -221,7 +235,26 @@ bloombox.menu.RetrieveOptions = class RetrieveOptions {
       record['fingerprint'] || null,
       record['section'] || (
         proto.opencannabis.products.menu.section.Section.UNSPECIFIED),
-      record['fresh'] || false);
+      record['fresh'] || false,
+      record['scope'] || null);
+  }
+
+  /**
+   * Returns a serialized object containing the properties specified in this
+   * retrieve options payload.
+   *
+   * @public
+   * @returns {bloombox.menu.RetrieveConfig} Object form of this config.
+   */
+  toObject() {
+    return {
+      'full': this.full,
+      'keysOnly': this.keysOnly,
+      'snapshot': this.snapshot,
+      'fingerprint': this.fingerprint,
+      'section': this.section,
+      'fresh': this.fresh,
+      'scope': this.scope};
   }
 };
 
