@@ -79,17 +79,28 @@ bloombox.menu.MenuRetrieveException.prototype.getMessage = function() {
 /**
  * Retrieve menu data for the current partner/location pair.
  *
+ * @public
+ * @param {?bloombox.menu.RetrieveOptions=} options Configuration options for
+ *        this menu retrieval operation. See type docs for more info.
  * @param {bloombox.menu.MenuRetrieveCallback} callback Operation callback.
  * @throws {bloombox.menu.MenuRetrieveException} If partner/location isn't set,
  *         or some other client-side error occurs.
  * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
  *         Promise attached to the underlying RPC call.
  */
-bloombox.menu.retrieveLegacy = function(callback) {
+bloombox.menu.retrieveLegacy = function(options, callback) {
   // load partner and location codes
   let config = bloombox.config.active();
   let partnerCode = config.partner;
   let locationCode = config.location;
+  if (options.scope) {
+    const scopeSplit = options.scope.split('/');
+    if (scopeSplit.length !== 4)
+      throw new bloombox.menu.MenuRetrieveException(
+        'Failed to parse override scope value.');
+    partnerCode = scopeSplit[1];
+    locationCode = scopeSplit[3];
+  }
 
   if (!partnerCode ||
     !(typeof partnerCode === 'string' && partnerCode.length > 1) ||
@@ -101,37 +112,41 @@ bloombox.menu.retrieveLegacy = function(callback) {
   bloombox.logging.info('Retrieving menu for \'' +
     partnerCode + ':' + locationCode + '\'...');
 
-  // stand up an RPC object
-  const rpc = new bloombox.menu.rpc.MenuRPC(
-    /** @type {bloombox.menu.Routine} */ (bloombox.menu.Routine.RETRIEVE),
-    'GET', [
-      'partners', partnerCode,
-      'locations', locationCode,
-      'global:retrieve'].join('/'));
+  return new Promise(function(resolve, reject) {
+    // stand up an RPC object
+    const rpc = new bloombox.menu.rpc.MenuRPC(
+      /** @type {bloombox.menu.Routine} */ (bloombox.menu.Routine.RETRIEVE),
+      'GET', [
+        'partners', partnerCode,
+        'locations', locationCode,
+        'global:retrieve'].join('/'));
 
-  let done = false;
-  rpc.send(function(response) {
-    if (done) return;
-    if (response !== null) {
-      done = true;
+    let done = false;
+    rpc.send(function(response) {
+      if (done) return;
+      if (response !== null) {
+        done = true;
 
-      bloombox.logging.log('Received response for menu data RPC.', response);
-      if (typeof response === 'object') {
-        // dispatch the callback
-        callback(response, null);
-      } else {
-        bloombox.logging.error(
-          'Received unrecognized response for menu data RPC.', response);
-        callback(null, null);
+        bloombox.logging.log('Received response for menu data RPC.', response);
+        if (typeof response === 'object') {
+          // dispatch the callback
+          if (callback) callback(response, null);
+          resolve(response);
+        } else {
+          bloombox.logging.error(
+            'Received unrecognized response for menu data RPC.', response);
+          if (callback) callback(null, null);
+          reject(response);
+        }
       }
-    }
-  }, function(status) {
-    bloombox.logging.error(
-      'An error occurred while querying menu data. Status code: \'' +
-      status + '\'.');
+    }, function(status) {
+      bloombox.logging.error(
+        'An error occurred while querying menu data. Status code: \'' +
+        status + '\'.');
 
-    // pass null to indicate an error
-    callback(null, status || null);
+      // pass null to indicate an error
+      if (callback) callback(null, status || null);
+      reject(status);
+    });
   });
-  return null;
 };

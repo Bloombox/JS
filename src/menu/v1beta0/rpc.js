@@ -33,7 +33,6 @@ goog.require('bloombox.menu.VERSION');
 
 goog.require('bloombox.rpc.RPC');
 
-goog.provide('bloombox.menu.MenuRPCException');
 goog.provide('bloombox.menu.Routine');
 goog.provide('bloombox.menu.endpoint');
 goog.provide('bloombox.menu.rpc.MenuRPC');
@@ -73,37 +72,14 @@ bloombox.menu.endpoint = function(endpoint) {
 
 
 /**
- * Exception object for the construction phase of a menu RPC. Usually thrown
- * when no API key is present, or `setup` is not called before RPC methods.
- *
- * @param {string} message Message for the error.
- * @constructor
- */
-bloombox.menu.MenuRPCException = function MenuRPCException(message) {
-  this.message = message;
-};
-
-
-// noinspection JSUnusedGlobalSymbols
-/**
- * Show this exception's message.
- *
- * @return {string} Message for this exception.
- */
-bloombox.menu.MenuRPCException.prototype.toString = function() {
-  return 'MenuRPCException: ' + this.message;
-};
-
-
-/**
  * Return a `MenuRPC` instance for a generic HTTP RPC call.
  *
  * @param {bloombox.menu.Routine} rpcMethod Method to generate an endpoint for.
  * @param {string} httpMethod HTTP method to use.
  * @param {string} endpoint URL endpoint to send the RPC to.
  * @param {Object=} payload Payload to use if we're POST-ing or PUT-ing.
- * @throws {bloombox.menu.MenuRPCException} If the provided values are invalid
- *         in some way.
+ * @throws {bloombox.rpc.RPCException} If the provided values are invalid in
+ *         some way.
  * @constructor
  * @struct
  */
@@ -112,17 +88,6 @@ bloombox.menu.rpc.MenuRPC = function MenuRPC(rpcMethod,
                                              endpoint,
                                              payload) {
   let targetEndpoint = bloombox.menu.endpoint(endpoint);
-
-  if (typeof httpMethod !== 'string')
-    throw new bloombox.menu.MenuRPCException(
-      'Invalid HTTP method: ' + httpMethod);
-  if (typeof endpoint !== 'string')
-    throw new bloombox.menu.MenuRPCException(
-      'Invalid RPC endpoint: ' + endpoint);
-  if (payload !== null && payload !== undefined && (
-      typeof payload !== 'object'))
-    throw new bloombox.menu.MenuRPCException(
-      'Cannot provide non-object type as payload: ' + payload);
 
   /**
    * Menu RPC routine we're calling.
