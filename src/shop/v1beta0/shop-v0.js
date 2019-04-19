@@ -25,12 +25,129 @@
 
 /*global goog */
 
+goog.require('bloombox.config.active');
+goog.require('bloombox.rpc.RPCException');
+goog.require('bloombox.logging.error');
+goog.require('bloombox.logging.info');
+goog.require('bloombox.logging.log');
+goog.require('bloombox.logging.warn');
+
 goog.require('bloombox.shop.InfoCallback');
+goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.ShopAPI');
 goog.require('bloombox.shop.ShopOptions');
-goog.require('bloombox.shop.infoLegacy');
+goog.require('bloombox.shop.rpc.ShopRPC');
+
+goog.require('proto.bloombox.partner.settings.ShopStatus');
+goog.require('proto.bloombox.services.shop.v1.ShopInfo.Response');
+
+goog.require('stackdriver.protect');
 
 goog.provide('bloombox.shop.v1beta0.Service');
+
+
+/**
+ * Specifies shop statuses.
+ *
+ * @enum {string}
+ */
+bloombox.shop.ShopStatus = {
+  OPEN: 'OPEN',
+  CLOSED: 'CLOSED',
+  PICKUP_ONLY: 'PICKUP_ONLY',
+  DELIVERY_ONLY: 'DELIVERY_ONLY'
+};
+
+
+/**
+ * Retrieve info for the current shop.
+ *
+ * @param {?bloombox.shop.InfoCallback=} callback Callback to dispatch.
+ * @param {?bloombox.shop.ShopOptions=} opts Options for the call.
+ * @throws {bloombox.rpc.RPCException} If partner/location isn't set.
+ */
+bloombox.shop.infoLegacy = function(callback, opts) {
+  // load partner and location codes
+  let config = bloombox.config.active();
+  let partnerCode = config.partner;
+  let locationCode = config.location;
+
+  if (opts && opts.scope) {
+    const pieces = opts.scope.split('/');
+    if (pieces.length !== 4)
+      throw new bloombox.rpc.RPCException('Invalid scope override value.');
+    partnerCode = pieces[1];
+    locationCode = pieces[3];
+  }
+
+  bloombox.logging.info('Retrieving shop info for \'' +
+    partnerCode + ':' + locationCode + '\'...');
+
+  // stand up an RPC object
+  const rpc = new bloombox.shop.rpc.ShopRPC(
+    /** @type {bloombox.shop.Routine} */ (bloombox.shop.Routine.SHOP_INFO),
+    'GET', [
+      'partners', partnerCode,
+      'locations', locationCode,
+      'shop', 'info'].join('/'));
+
+  let done = false;
+  rpc.send(function(response) {
+    if (done) return;
+    if (response !== null) {
+      done = true;
+
+      bloombox.logging.log('Received response for shop info RPC.', response);
+      if (typeof response === 'object') {
+        let status;
+
+        switch ((/** @type {bloombox.shop.ShopStatus} */ (
+          response['shopStatus'])) || bloombox.shop.ShopStatus.OPEN) {
+          case bloombox.shop.ShopStatus.CLOSED:
+            // entirely closed
+            status = proto.bloombox.partner.settings.ShopStatus.CLOSED;
+            break;
+
+          case bloombox.shop.ShopStatus.DELIVERY_ONLY:
+            // delivery only
+            status = proto.bloombox.partner.settings.ShopStatus.DELIVERY_ONLY;
+            break;
+
+          case bloombox.shop.ShopStatus.PICKUP_ONLY:
+            // pickup only
+            status = proto.bloombox.partner.settings.ShopStatus.PICKUP_ONLY;
+            break;
+
+          default:
+            // the shop is entirely open
+            status = proto.bloombox.partner.settings.ShopStatus.OPEN;
+        }
+
+        if (callback) {
+          const response = (
+            new proto.bloombox.services.shop.v1.ShopInfo.Response());
+          response.setShopStatus(status);
+
+          // dispatch the callback
+          callback(response, null);
+        }
+      } else {
+        bloombox.logging.error(
+          'Received unrecognized response payload for shop info.', response);
+        if (callback) {
+          callback(null, null);
+        }
+      }
+    }
+  }, function(status) {
+    bloombox.logging.error(
+      'An error occurred while querying shop info. Status code: \'' +
+      status + '\'.');
+
+    // pass null to indicate an error
+    callback(null, status);
+  });
+};
 
 
 /**
@@ -48,6 +165,7 @@ bloombox.shop.v1beta0.Service = (class ShopV0 {
    * @param {bloombox.config.JSConfig} sdkConfig JavaScript SDK config.
    */
   constructor(sdkConfig) {
+    // noinspection JSUnusedGlobalSymbols
     /**
      * Active JS SDK configuration.
      *
@@ -76,6 +194,16 @@ bloombox.shop.v1beta0.Service = (class ShopV0 {
    *         Promise attached to the underlying RPC call.
    */
   info(callback, config) {
-
+    return new Promise((resolve, reject) => {
+      bloombox.shop.infoLegacy((response, err) => {
+        if (err || !response) {
+          if (callback) callback(null, err || response);
+          reject(err || response);
+        } else {
+          if (callback) callback(response, null);
+          resolve(response);
+        }
+      }, config);
+    });
   }
 });

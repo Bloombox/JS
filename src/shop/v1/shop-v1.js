@@ -26,10 +26,14 @@
 /*global goog */
 
 goog.require('bloombox.API_ENDPOINT');
+goog.require('bloombox.rpc.RPCException');
 goog.require('bloombox.rpc.metadata');
 goog.require('bloombox.shop.InfoCallback');
 goog.require('bloombox.shop.ShopAPI');
 goog.require('bloombox.shop.ShopOptions');
+
+goog.require('proto.bloombox.partner.LocationKey');
+goog.require('proto.bloombox.partner.PartnerKey');
 
 goog.require('proto.bloombox.services.shop.v1.ShopInfo.Request');
 goog.require('proto.bloombox.services.shop.v1.ShopInfo.Response');
@@ -97,6 +101,46 @@ bloombox.shop.v1.Service = (class ShopV1 {
    *         Promise attached to the underlying RPC call.
    */
   info(callback, config) {
+    const resolved = config || bloombox.shop.ShopOptions.defaults();
+    const request = new proto.bloombox.services.shop.v1.ShopInfo.Request();
 
+    // apply resolved scope
+    let partnerCode;
+    let locationCode;
+    if (resolved.scope) {
+      const scopePieces = resolved.scope.split('/');
+      if (scopePieces.length !== 4)
+        throw new bloombox.rpc.RPCException('Invalid scope override.');
+      partnerCode = scopePieces[1];
+      locationCode = scopePieces[3];
+    } else {
+      const activeConfig = bloombox.config.active();
+      partnerCode = activeConfig.partner;
+      locationCode = activeConfig.location;
+    }
+
+    if (!partnerCode || !locationCode)
+      throw new bloombox.rpc.RPCException('Must call bloombox.setup.');
+
+    const partnerKey = new proto.bloombox.partner.PartnerKey();
+    partnerKey.setCode(partnerCode);
+
+    const locationKey = new proto.bloombox.partner.LocationKey();
+    locationKey.setPartner(partnerKey);
+    locationKey.setCode(locationCode);
+
+    // make and send request
+    request.setPartner(partnerKey);
+    request.setLocation(locationKey);
+    const promise = this.client.shopInfo(request,
+      bloombox.rpc.metadata(this.sdkConfig));
+
+    promise.catch((err) => {
+      if (callback) callback(null, err);
+    });
+    promise.then((response) => {
+      if (callback) callback(response, null);
+    });
+    return promise;
   }
 });
