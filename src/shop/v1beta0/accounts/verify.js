@@ -25,7 +25,7 @@
 /*global goog */
 
 goog.provide('bloombox.shop.order.VerifyException');
-goog.provide('bloombox.shop.verify');
+goog.provide('bloombox.shop.verifyLegacy');
 
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
@@ -73,8 +73,7 @@ bloombox.shop.order.VerifyException = function VerifyException(message) {
  * @throws {bloombox.shop.order.VerifyException} If email is invalid.
  * @export
  */
-bloombox.shop.verify = function(email,
-                                callback) {
+bloombox.shop.verifyLegacy = function(email, callback) {
   if (email === null || email === undefined || !email ||
       email.length < 5 ||
       (typeof email !== 'string'))

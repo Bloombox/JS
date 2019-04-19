@@ -78,37 +78,14 @@ bloombox.shop.endpoint = function(endpoint) {
 
 
 /**
- * Exception object for the construction phase of a shop RPC. Usually thrown
- * when no API key is present, or `setup` is not called before RPC methods.
- *
- * @param {string} message Message for the error.
- * @constructor
- */
-bloombox.shop.ShopRPCException = function ShopRPCException(message) {
-  this.message = message;
-};
-
-
-// noinspection JSUnusedGlobalSymbols
-/**
- * Show this exception's message.
- *
- * @return {string} Message for this exception.
- */
-bloombox.shop.ShopRPCException.prototype.toString = function() {
-  return 'ShopRPCException: ' + this.message;
-};
-
-
-/**
  * Return a `ShopRPC` instance for a generic HTTP RPC call.
  *
  * @param {bloombox.shop.Routine} rpcMethod Method to generate an endpoint for.
  * @param {string} httpMethod HTTP method to use.
  * @param {string} endpoint URL endpoint to send the RPC to.
  * @param {Object=} payload Payload to use if we're POST-ing or PUT-ing.
- * @throws {bloombox.shop.ShopRPCException} If the provided values are invalid
- *         in some way.
+ * @throws {bloombox.rpc.RPCException} If the provided values are invalid in
+ *         some way.
  * @constructor
  * @struct
  */
@@ -117,22 +94,6 @@ bloombox.shop.rpc.ShopRPC = function ShopRPC(rpcMethod,
                                              endpoint,
                                              payload) {
   let targetEndpoint = bloombox.shop.endpoint(endpoint);
-
-  if (typeof httpMethod !== 'string')
-    throw new bloombox.shop.ShopRPCException(
-      'Invalid HTTP method: ' + httpMethod);
-  let methodUppercased = httpMethod.toUpperCase();
-  if (methodUppercased !== 'GET' && methodUppercased !== 'POST') {
-    throw new bloombox.shop.ShopRPCException(
-      'Unrecognized HTTP method: ' + httpMethod);
-  }
-  if (typeof endpoint !== 'string')
-    throw new bloombox.shop.ShopRPCException(
-      'Invalid RPC endpoint: ' + endpoint);
-  if (payload !== null && payload !== undefined && (
-      typeof payload !== 'object'))
-    throw new bloombox.shop.ShopRPCException(
-      'Cannot provide non-object type as payload: ' + payload);
 
   /**
    * Shop RPC routine we're calling.

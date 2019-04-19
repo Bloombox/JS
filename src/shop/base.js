@@ -51,7 +51,7 @@ bloombox.shop.DEBUG = bloombox.DEBUG;
  * @const {string} bloombox.shop.VERSION Shop client version string.
  * @export
  */
-bloombox.shop.VERSION = 'v1r1';
+bloombox.shop.VERSION = 'v1r2';
 
 
 /**
