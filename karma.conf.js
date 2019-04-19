@@ -99,7 +99,6 @@ module.exports = function(config) {
       }
     },
 
-    // shut off browser logs
     client: {
       captureConsole: false
     },
