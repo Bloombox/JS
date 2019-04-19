@@ -4,6 +4,11 @@
     <inspection_tool class="ES6ModulesDependencies" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="GjsLint" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="JSCheckFunctionSignatures" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="SpellCheckingInspection" enabled="true" level="TYPO" enabled_by_default="true">
+      <option name="processCode" value="false" />
+      <option name="processLiterals" value="false" />
+      <option name="processComments" value="true" />
+    </inspection_tool>
     <inspection_tool class="ValidateRequireStatements" enabled="false" level="WARNING" enabled_by_default="false" />
   </profile>
 </component>
