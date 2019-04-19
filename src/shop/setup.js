@@ -36,12 +36,10 @@ goog.require('bloombox.shop.SHOP_API_ENDPOINT');
 goog.require('bloombox.shop.VERSION');
 
 // - Shop Library
-goog.require('bloombox.shop.enroll.Enrollment');
-goog.require('bloombox.shop.info');
-goog.require('bloombox.shop.order.Order');
-goog.require('bloombox.shop.verify');
-goog.require('bloombox.shop.zipcheck');
+goog.require('bloombox.shop.v1.Service');
+goog.require('bloombox.shop.v1beta0.Service');
 
+goog.provide('bloombox.shop.api');
 goog.provide('bloombox.shop.setup');
 
 
@@ -75,4 +73,24 @@ bloombox.shop.setup = function(partner, location, apikey, callback, endpoint) {
       'debug': bloombox.shop.DEBUG,
       'config': bloombox.config.active()});
   callback();
+};
+
+
+/**
+ * Resolve a service implementation for the Shop API, which provides information
+ * about the currently-configured partnership scope's shop, including status and
+ * contact info, ordering, and user verification.
+ *
+ * @export
+ * @param {{beta: boolean}=} apiConfig API options to pass. Optional.
+ * @return {bloombox.shop.ShopAPI} Shop API service implementation instance.
+ */
+bloombox.shop.api = function(apiConfig) {
+  // for now, create v1beta0 adapter, always
+  let config = bloombox.config.active();
+  if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
+    // use the new beta gRPC engine
+    return new bloombox.shop.v1.Service(config);
+  }
+  return new bloombox.shop.v1beta0.Service(config);
 };

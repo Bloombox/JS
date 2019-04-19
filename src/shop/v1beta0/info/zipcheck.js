@@ -26,7 +26,7 @@
 /*global goog */
 
 goog.provide('bloombox.shop.ZipcheckException');
-goog.provide('bloombox.shop.zipcheck');
+goog.provide('bloombox.shop.zipcheckLegacy');
 
 goog.require('bloombox.config.active');
 
@@ -89,7 +89,7 @@ bloombox.shop.ZipcheckException.prototype.getMessage = function() {
  * @throws {bloombox.shop.ZipcheckException} If the provided zipcode is invalid.
  * @export
  */
-bloombox.shop.zipcheck = function(zipcode, callback) {
+bloombox.shop.zipcheckLegacy = function(zipcode, callback) {
   // basic type checking
   if (!zipcode || !(typeof zipcode === 'string') ||
       !(zipcode.length === 5) || isNaN(parseInt(zipcode, 10)))
@@ -104,13 +104,6 @@ bloombox.shop.zipcheck = function(zipcode, callback) {
   let config = bloombox.config.active();
   let partnerCode = config.partner;
   let locationCode = config.location;
-
-  if (!partnerCode ||
-      !(typeof partnerCode === 'string' && partnerCode.length > 1) ||
-      !(typeof locationCode === 'string' && locationCode.length > 1))
-    throw new bloombox.shop.ZipcheckException(
-      'Partner and location must be set via `bloombox.shop.setup` before' +
-      ' conducting a zipcode eligibility check.');
 
   // it's a seemingly-valid zipcode, verify it with the server
   const rpc = new bloombox.shop.rpc.ShopRPC(

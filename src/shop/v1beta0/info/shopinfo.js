@@ -26,7 +26,7 @@
 
 goog.provide('bloombox.shop.ShopInfoException');
 goog.provide('bloombox.shop.ShopStatus');
-goog.provide('bloombox.shop.info');
+goog.provide('bloombox.shop.infoLegacy');
 
 goog.require('bloombox.config.active');
 
@@ -100,18 +100,11 @@ bloombox.shop.ShopInfoException.prototype.getMessage = function() {
  * @throws {bloombox.shop.ShopInfoException} If partner/location isn't set.
  * @export
  */
-bloombox.shop.info = function(callback) {
+bloombox.shop.infoLegacy = function(callback) {
   // load partner and location codes
   let config = bloombox.config.active();
   let partnerCode = config.partner;
   let locationCode = config.location;
-
-  if (!partnerCode ||
-      !(typeof partnerCode === 'string' && partnerCode.length > 1) ||
-      !(typeof locationCode === 'string' && locationCode.length > 1))
-    throw new bloombox.shop.ShopInfoException(
-      'Partner and location must be set via `bloombox.shop.setup` before' +
-        ' retrieving shop info.');
 
   bloombox.logging.info('Retrieving shop info for \'' +
       partnerCode + ':' + locationCode + '\'...');
