@@ -4,12 +4,10 @@
 function menuTestsuite() {
   describe('menu: product catalog data', function() {
     it('should be able to retrieve a full menu', function() {
-      debugger;
-      bloombox.menu.api().retrieve(
-        bloombox.menu.RetrieveOptions.defaults(), function(menu, err) {
+      bloombox.menu.api().retrieve(function(menu, err) {
         if (err)
           throw new Error('unable to retrieve menu: ' + err.toString());
-      });
+      }, bloombox.menu.RetrieveOptions.defaults());
     });
 
     it('should throw exceptions with accessible messages', function() {
