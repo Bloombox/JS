@@ -25,11 +25,25 @@ function basicTestsuite() {
           !bloombox.API_ENDPOINT)
         throw new Error('library API endpoint is missing or invalid');
     });
-  });
 
-  describe('config', function() {
-    it('should support retrieving active library config', function() {
-      bloombox.config.active();
+    describe('config', function() {
+      it('should support retrieving active library config', function() {
+        bloombox.config.active();
+      });
+    });
+
+    describe('logging', function() {
+      it('should support info() logging', function() {
+        bloombox.logging.info('Hello Info Test');
+      });
+
+      it('should support warn() logging', function() {
+        bloombox.logging.warn('this is a sample warning');
+      });
+
+      it('should support error() logging', function() {
+        bloombox.logging.error('this is a sample error log');
+      });
     });
   });
 }
