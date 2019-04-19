@@ -118,7 +118,7 @@ bloombox.rpc.TRACE_HEADER = 'X-Bloom-Trace';
 bloombox.rpc.metadata = function(activeConfig, additional) {
   // attach base agent header
   let base = {
-    // 'x-api-agent': 'Bloombox RPC Client v2 (JS SDK)'
+    'x-api-agent': 'Bloombox RPC Client v2 (JS SDK)'
   };
 
   // attach API key header

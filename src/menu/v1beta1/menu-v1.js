@@ -43,122 +43,125 @@ goog.require('proto.opencannabis.products.menu.section.Section');
 goog.provide('bloombox.menu.v1beta1.Service');
 
 
-/**
- * Defines an implementation of the Bloombox Menu API, which calls into modern
- * RPC dispatch via gRPC.
- *
- * @implements bloombox.menu.MenuAPI
- */
-bloombox.menu.v1beta1.Service = (class MenuV1 {
+goog.scope(function() {
   /**
-   * Construct a new instance of the `v1beta1` Menu API service. The instance is
-   * pre-configured with requisite top-level config and afterwards ready to make
-   * calls out to remote services.
+   * Defines an implementation of the Bloombox Menu API, which calls into modern
+   * RPC dispatch via gRPC.
    *
-   * @param {bloombox.config.JSConfig} sdkConfig JavaScript SDK config.
+   * @implements bloombox.menu.MenuAPI
    */
-  constructor(sdkConfig) {
+  bloombox.menu.v1beta1.Service = (class MenuV1 {
     /**
-     * Active JS SDK configuration.
+     * Construct a new instance of the `v1beta1` Menu API service. The instance is
+     * pre-configured with requisite top-level config and afterwards ready to make
+     * calls out to remote services.
      *
-     * @private
-     * @type {bloombox.config.JSConfig}
+     * @param {bloombox.config.JSConfig} sdkConfig JavaScript SDK config.
      */
-    this.sdkConfig = sdkConfig;
+    constructor(sdkConfig) {
+      /**
+       * Active JS SDK configuration.
+       *
+       * @private
+       * @type {bloombox.config.JSConfig}
+       */
+      this.sdkConfig = sdkConfig;
+
+      /**
+       * Service client, which is responsible for mediating calls between the RPC
+       * server and the local RPC client.
+       *
+       * @private
+       * @type {proto.bloombox.services.menu.v1beta1.MenuPromiseClient}
+       */
+      this.client = (
+        new proto.bloombox.services.menu.v1beta1.MenuPromiseClient(
+          bloombox.API_ENDPOINT,
+          null,
+          {'format': 'binary'}));
+    }
+
+    // -- Service Info -- //
+    /**
+     * Return the name of this service, which is always `menu`. The name of the
+     * service allows invoking code to distinguish one service from another.
+     *
+     * @return {string} Name of this service. Equal to "menu".
+     */
+    name() {
+      return 'menu';
+    }
 
     /**
-     * Service client, which is responsible for mediating calls between the RPC
-     * server and the local RPC client.
+     * Return the version of this service, which, for this implementation, is
+     * always equal to `v1beta1`.
      *
-     * @private
-     * @type {proto.bloombox.services.menu.v1beta1.MenuPromiseClient}
+     * @return {string} Version of this service. Equal to "menu".
      */
-    this.client = (
-      new proto.bloombox.services.menu.v1beta1.MenuPromiseClient(
-        bloombox.API_ENDPOINT,
-        null,
-        {'format': 'binary'}));
-  }
+    version() {
+      return 'v1beta1';
+    }
 
-  // -- Service Info -- //
-  /**
-   * Return the name of this service, which is always `menu`. The name of the
-   * service allows invoking code to distinguish one service from another.
-   *
-   * @return {string} Name of this service. Equal to "menu".
-   */
-  name() {
-    return 'menu';
-  }
+    // -- Menu Retrieve -- //
+    /**
+     * Retrieve a full menu via Bloombox systems, using the legacy V1 JSON/REST
+     * API interface, for a given retail location. Before this method is called,
+     * the user should setup their partnership information via the `setup` method,
+     * including their partner code, location code, and API key.
+     *
+     * Once `setup` calls back, indicating the library is ready for use, a full
+     * menu catalog can be fetched via this method, according to the options
+     * specified in the `options` parameter.
+     *
+     * @export
+     * @param {?bloombox.menu.RetrieveCallback=} callback Function to dispatch once
+     *        data is available for the underlying menu catalog.
+     * @param {?bloombox.menu.RetrieveOptions=} options Configuration options for
+     *        this menu retrieval operation. See type docs for more info.
+     * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+     *         Promise attached to the underlying RPC call.
+     */
+    retrieve(callback, options) {
+      const resolved = options || bloombox.menu.RetrieveOptions.defaults();
+      const request = new proto.bloombox.services.menu.v1beta1.GetMenu.Request();
 
-  /**
-   * Return the version of this service, which, for this implementation, is
-   * always equal to `v1beta1`.
-   *
-   * @return {string} Version of this service. Equal to "menu".
-   */
-  version() {
-    return 'v1beta1';
-  }
-
-  // -- Menu Retrieve -- //
-  /**
-   * Retrieve a full menu via Bloombox systems, using the legacy V1 JSON/REST
-   * API interface, for a given retail location. Before this method is called,
-   * the user should setup their partnership information via the `setup` method,
-   * including their partner code, location code, and API key.
-   *
-   * Once `setup` calls back, indicating the library is ready for use, a full
-   * menu catalog can be fetched via this method, according to the options
-   * specified in the `options` parameter.
-   *
-   * @export
-   * @param {?bloombox.menu.RetrieveCallback=} callback Function to dispatch once
-   *        data is available for the underlying menu catalog.
-   * @param {?bloombox.menu.RetrieveOptions=} options Configuration options for
-   *        this menu retrieval operation. See type docs for more info.
-   * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
-   *         Promise attached to the underlying RPC call.
-   */
-  retrieve(callback, options) {
-    const resolved = options || bloombox.menu.RetrieveOptions.defaults();
-    const request = new proto.bloombox.services.menu.v1beta1.GetMenu.Request();
-
-    // copy in options
-    if (resolved.full === true) request.setFull(true);
-    if (resolved.fresh === true) request.setFresh(true);
-    if (resolved.keysOnly === true) request.setKeysOnly(true);
-    if (resolved.snapshot) request.setSnapshot(
-      /** @type {string} */ (options.snapshot));
-    if (resolved.fingerprint) request.setFingerprint(
-      /** @type {string} */ (resolved.fingerprint));
-    if (resolved.section !==
+      // copy in options
+      if (resolved.full === true) request.setFull(true);
+      if (resolved.fresh === true) request.setFresh(true);
+      if (resolved.keysOnly === true) request.setKeysOnly(true);
+      if (resolved.snapshot) request.setSnapshot(
+        /** @type {string} */ (options.snapshot));
+      if (resolved.fingerprint) request.setFingerprint(
+        /** @type {string} */ (resolved.fingerprint));
+      if (resolved.section !==
         proto.opencannabis.products.menu.section.Section.UNDEFINED)
-      request.setSection(resolved.section);
+        request.setSection(resolved.section);
 
-    if (!this.sdkConfig.key ||
-      !this.sdkConfig.partner ||
-      !this.sdkConfig.location)
-      throw new bloombox.menu.RetrieveException('Must call `bloombox.setup`.');
+      if (!this.sdkConfig.key ||
+        !this.sdkConfig.partner ||
+        !this.sdkConfig.location)
+        throw new bloombox.menu.RetrieveException('Must call `bloombox.setup`.');
 
-    // resolve scope
-    const scope = (
-      `partner/${this.sdkConfig.partner}/location/${this.sdkConfig.location}`);
-    request.setScope(scope);
-    const operation = (
-      this.client.retrieve(request, bloombox.rpc.metadata(this.sdkConfig)));
+      // resolve scope
+      const scope = (
+        `partner/${this.sdkConfig.partner}/location/${this.sdkConfig.location}`);
+      request.setScope(scope);
+      const operation = (
+        this.client.retrieve(request, bloombox.rpc.metadata(this.sdkConfig)));
 
-    operation.catch((err) => {
-      if (callback) callback(null, err);
-    });
+      operation.catch((err) => {
+        if (callback) callback(null, err);
+      });
 
-    operation.then((resp) => {
-      if (callback) callback(resp, null);
-    });
+      operation.then((resp) => {
+        if (callback) callback(resp, null);
+      });
 
-    return operation;
-  }
+      return operation;
+    }
+  });
 });
+
 
 // export response symbols
 goog.exportSymbol(

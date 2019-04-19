@@ -132,9 +132,11 @@ bloombox.config.buildDefault = function() {
  * @public
  */
 bloombox.config.configure = function(config) {
-  if (Object.isFrozen && !Object.isFrozen(config))
-    Object.freeze(config);
-  bloombox.config._ACTIVE_CONFIG_ = config;
+  const merged = Object.assign({},
+    bloombox.config.buildDefault(), config);
+  if (Object.isFrozen) Object.freeze(merged);
+  bloombox.config._ACTIVE_CONFIG_ =
+    /** @type {bloombox.config.JSConfig} */ (merged);
 };
 
 
