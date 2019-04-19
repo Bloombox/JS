@@ -25,11 +25,107 @@
 
 /*global goog */
 
+goog.require('bloombox.config.active');
+
+goog.require('bloombox.logging.error');
+goog.require('bloombox.logging.info');
+goog.require('bloombox.logging.log');
+goog.require('bloombox.logging.warn');
+
 goog.require('bloombox.menu.MenuAPI');
 goog.require('bloombox.menu.RetrieveCallback');
 goog.require('bloombox.menu.RetrieveOptions');
+goog.require('bloombox.menu.Routine');
+goog.require('bloombox.menu.rpc.MenuRPC');
+
+goog.require('bloombox.rpc.RPCException');
 
 goog.provide('bloombox.menu.v1beta0.Service');
+
+
+// -- Structures -- //
+
+/**
+ * Callback function type declaration for menu data retrieval.
+ *
+ * @typedef {function(?Object, ?number)}
+ */
+bloombox.menu.MenuRetrieveCallback;
+
+
+/**
+ * Retrieve menu data for the current partner/location pair.
+ *
+ * @param {?bloombox.menu.RetrieveOptions=} options Configuration options for
+ *        this menu retrieval operation. See type docs for more info.
+ * @param {?bloombox.menu.MenuRetrieveCallback=} callback Operation callback.
+ * @throws {bloombox.rpc.RPCException} If partner/location isn't set, or some
+ *         other client-side error occurs.
+ * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+ *         Promise attached to the underlying RPC call.
+ */
+bloombox.menu.retrieveLegacy = function(options, callback) {
+  // load partner and location codes
+  let config = bloombox.config.active();
+  let partnerCode = config.partner;
+  let locationCode = config.location;
+  if (options.scope) {
+    const scopeSplit = options.scope.split('/');
+    if (scopeSplit.length !== 4)
+      throw new bloombox.rpc.RPCException(
+        'Failed to parse override scope value.');
+    partnerCode = scopeSplit[1];
+    locationCode = scopeSplit[3];
+  }
+
+  if (!partnerCode ||
+    !(typeof partnerCode === 'string' && partnerCode.length > 1) ||
+    !(typeof locationCode === 'string' && locationCode.length > 1))
+    throw new bloombox.rpc.RPCException(
+      'Partner and location must be set via `bloombox.menu.setup` before' +
+      ' retrieving menu data.');
+
+  bloombox.logging.info('Retrieving menu for \'' +
+    partnerCode + ':' + locationCode + '\'...');
+
+  return new Promise(function(resolve, reject) {
+    // stand up an RPC object
+    const rpc = new bloombox.menu.rpc.MenuRPC(
+      /** @type {bloombox.menu.Routine} */ (bloombox.menu.Routine.RETRIEVE),
+      'GET', [
+        'partners', partnerCode,
+        'locations', locationCode,
+        'global:retrieve'].join('/'));
+
+    let done = false;
+    rpc.send(function(response) {
+      if (done) return;
+      if (response !== null) {
+        done = true;
+
+        bloombox.logging.log('Received response for menu data RPC.', response);
+        if (typeof response === 'object') {
+          // dispatch the callback
+          if (callback) callback(response, null);
+          resolve(response);
+        } else {
+          bloombox.logging.error(
+            'Received unrecognized response for menu data RPC.', response);
+          if (callback) callback(null, null);
+          reject(response);
+        }
+      }
+    }, function(status) {
+      bloombox.logging.error(
+        'An error occurred while querying menu data. Status code: \'' +
+        status + '\'.');
+
+      // pass null to indicate an error
+      if (callback) callback(null, status || null);
+      reject(status);
+    });
+  });
+};
 
 
 /**
@@ -47,6 +143,7 @@ bloombox.menu.v1beta0.Service = (class MenuV0 {
    * @param {bloombox.config.JSConfig} sdkConfig JavaScript SDK config.
    */
   constructor(sdkConfig) {
+    // noinspection JSUnusedGlobalSymbols
     /**
      * Active JS SDK configuration.
      *
