@@ -35,29 +35,4 @@ goog.provide('bloombox.base.ServiceInterface');
  * @interface
  */
 bloombox.base.ServiceInterface = class ServiceInterface {
-  /**
-   * Defines the name of this service. A short string should be returned, which
-   * is unique among the full set of services, and can be used for dispatch.
-   *
-   * @public
-   * @returns {string} Name of this service.
-   */
-  name() {}
-
-  /**
-   * Defines the version of this service. Two services of the same name with
-   * different versions may be incompatible.
-   *
-   * @public
-   * @returns {string} Version for this service.
-   */
-  version() {}
-
-  /**
-   * Retrieve an instance of this service, pre-configured to work with remote
-   * RPC services via Bloombox Cloud.
-   *
-   * @returns {bloombox.base.ServiceInterface} Service definition.
-   */
-  static instance() {}
 };
