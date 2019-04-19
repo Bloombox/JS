@@ -39,15 +39,17 @@ goog.require('goog.crypt.base64');
  * `opt_dont_clean`.
  *
  * @param {string} data String to encode as base64.
- * @param {boolean=} opt_dont_clean Optionally, do not remove `=` from the
- *        output before returning. This flag prevents any modification of the
+ * @param {boolean=} opt_clean Optionally, remove `=` from the output before
+ *        returning. This flag prevents any modification of the
  *        underlying return value at all.
  * @return {string} Base64-encoded version of `data`.
  */
-bloombox.util.b64.encode = function(data, opt_dont_clean) {
-  let encoded = goog.crypt.base64.encodeString(data, false);
-  if (!opt_dont_clean) return encoded;
-  return encoded.replace(/=/g, '').replace('=', '');
+bloombox.util.b64.encode = function(data, opt_clean) {
+  let encoded = goog.crypt.base64.encodeString(data, opt_clean || false);
+  if (!opt_clean) return encoded;
+  return encoded
+    .replace(/=/g, '')
+    .replace('=', '');
 };
 
 
@@ -66,17 +68,12 @@ bloombox.util.b64.encode = function(data, opt_dont_clean) {
  * and can safely be left off all the time.
  *
  * @param {string} data Base64-encoded string to decode.
- * @param {boolean=} opt_dont_append Optionally, do not append anything to the
- *        end of the string to account for missing padding. This flag prevents
- *        any modification of the input value at all.
+ * @param {boolean=} opt_clean Optionally, indicate the output came from a clean
+ *        b64 string which may account for missing padding.
  * @return {string} String, after being decoded through Base64.
  */
-bloombox.util.b64.decode = function(data, opt_dont_append) {
-  const paddingMissing = (data.length % 4);
-  let target = !opt_dont_append ? (
-    (!data.endsWith('=') && (paddingMissing > 0) ?
-      `${data}${'='.repeat(paddingMissing)}` : data)) : data;
-  return goog.crypt.base64.decodeString(target, false);
+bloombox.util.b64.decode = function(data, opt_clean) {
+  return goog.crypt.base64.decodeString(data, opt_clean);
 };
 
 
