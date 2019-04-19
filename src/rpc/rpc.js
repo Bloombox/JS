@@ -160,20 +160,14 @@ bloombox.rpc.RPC = function RPC(httpMethod,
   let apiKey = config.key;
   let partner = config.partner;
   let location = config.location;
-  if (!apiKey || !(typeof apiKey === 'string'))
-    throw new bloombox.rpc.RPCException('API key could not be resolved.' +
-        ' Please call `setup` before any RPC methods.');
-  if (!partner || !(typeof partner === 'string'))
-    throw new bloombox.rpc.RPCException('Partner code could not be resolved.' +
-        ' Please call `setup` before any RPC methods.');
-  if (!location || !(typeof location === 'string'))
-    throw new bloombox.rpc.RPCException('Location code could not be resolved.' +
-        ' Please call `setup` before any RPC methods.');
   if ((typeof opt_payload !== 'object') &&
       opt_payload !== null &&
       opt_payload !== undefined)
     throw new bloombox.rpc.RPCException('Invalid payload for RPC: ' +
         opt_payload);
+  if (!apiKey || !partner || !location)
+    throw new bloombox.rpc.RPCException(
+      'Must call bloombox.setup before sending an RPC.');
 
   /**
    * HTTP method for this RPC.
@@ -414,21 +408,6 @@ bloombox.rpc.RPC.prototype.onload = function(success, error) {
  *         XHR has already send and `keep` is falsy.
  */
 bloombox.rpc.RPC.prototype.send = function(callback, error) {
-  if (this.xhr === null)
-    throw new bloombox.rpc.RPCException(
-      'Cannot re-send an already-sent RPC without \'keep\' mode active.');
-
-  // check API key
-  if (!this.apiKey)
-    throw new bloombox.rpc.RPCException(
-      'Failed to resolve API key before request.');
-  if (!this.partner)
-    throw new bloombox.rpc.RPCException(
-      'Partner was not set.');
-  if (!this.location)
-    throw new bloombox.rpc.RPCException(
-      'Location was not set.');
-
   // attach the on-load handler
   goog.events.listen(
     this.xhr,
