@@ -4,6 +4,3 @@
 [submodule "grpc-web"]
 	path = third_party/grpc-web
 	url = https://github.com/grpc/grpc-web.git
-[submodule "protobuf"]
-	path = protobuf
-	url = https://github.com/google/protocolbuffers.git
