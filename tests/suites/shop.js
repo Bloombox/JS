@@ -5,6 +5,33 @@ function genShopTestsuite(version) {
   const apiOpts = version === 'v0' ? {} : {'beta': true};
 
   describe('service: shop (' + version + ')', function() {
+    // method: `zipcheck`
+    describe('method: `zipcheck`', function() {
+      it('should reject verifying a known-bad zipcode', function() {
+        return new Promise(function(resolve, reject) {
+          bloombox.shop.api(apiOpts).zipcheck('12345', function(response, err) {
+            if (!err && response && response.getSupported() === true) {
+              reject(new Error('known-bad zipcode somehow worked.'));
+            } else {
+              resolve(response);
+            }
+          });
+        });
+      });
+
+      it('should verify a known-good zipcode', function() {
+        return new Promise(function(resolve, reject) {
+          bloombox.shop.api(apiOpts).zipcheck('94002', function(response, err) {
+            if (!err) {
+              resolve(response);
+            } else {
+              reject(new Error('known-good zipcode did not verify.'));
+            }
+          });
+        });
+      });
+    });
+
     // method: `info`
     describe('method: `info`', function() {
       it('should support retrieving shop info', function() {
@@ -18,18 +45,6 @@ function genShopTestsuite(version) {
           });
         });
       });
-
-      // it('should reject verifying a known-bad zipcode', function() {
-      //   return new Promise(function(resolve, reject) {
-      //     bloombox.shop.zipcheck('12345', function(zipcodeEligible) {
-      //       if (zipcodeEligible === true) {
-      //         reject(new Error('known-bad zipcode somehow worked.'));
-      //       } else {
-      //         resolve(zipcodeEligible);
-      //       }
-      //     });
-      //   });
-      // });
 
       // describe('members', function() {
       //   it('should support verifying a known-good account', function() {
