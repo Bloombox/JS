@@ -9,7 +9,7 @@ function genShopTestsuite(version) {
     describe('method: `zipcheck`', function() {
       it('should reject verifying a known-bad zipcode', function() {
         return new Promise(function(resolve, reject) {
-          bloombox.shop.api(apiOpts).zipcheck('12345', function(response, err) {
+          return bloombox.shop.api(apiOpts).zipcheck('12345', function(response, err) {
             if (!err && response && response.getSupported() === true) {
               reject(new Error('known-bad zipcode somehow worked.'));
             } else {
@@ -21,7 +21,7 @@ function genShopTestsuite(version) {
 
       it('should verify a known-good zipcode', function() {
         return new Promise(function(resolve, reject) {
-          bloombox.shop.api(apiOpts).zipcheck('94002', function(response, err) {
+          return bloombox.shop.api(apiOpts).zipcheck('94002', function(response, err) {
             if (!err) {
               resolve(response);
             } else {
@@ -36,7 +36,7 @@ function genShopTestsuite(version) {
     describe('method: `info`', function() {
       it('should support retrieving shop info', function() {
         return new Promise(function(resolve, reject) {
-          bloombox.shop.api(apiOpts).info(function(pickup, delivery, err) {
+          return bloombox.shop.api(apiOpts).info(function(pickup, delivery, err) {
             if (err) {
               reject(err);
             } else {
@@ -45,34 +45,6 @@ function genShopTestsuite(version) {
           });
         });
       });
-
-      // describe('members', function() {
-      //   it('should support verifying a known-good account', function() {
-      //     return new Promise(function(resolve, reject) {
-      //       bloombox.shop.verify('sam@bloombox.io', function(
-      //         verified, err, customer) {
-      //         if (verified !== true || err || !customer) {
-      //           reject(new Error('unable to verify known-good account'));
-      //         } else {
-      //           resolve({'verified': verified, 'customer': customer});
-      //         }
-      //       });
-      //     });
-      //   });
-      //
-      //   it('should reject verifying a known-bad account', function() {
-      //     return new Promise(function(resolve, reject) {
-      //       bloombox.shop.verify('does-not-exist@blabla.com', function(
-      //         verified, err, customer) {
-      //         if (verified === true || customer) {
-      //           reject(new Error('somehow able to verify known-bad account'));
-      //         } else {
-      //           resolve({'verified': verified, 'customer': customer});
-      //         }
-      //       });
-      //     });
-      //   });
-      // });
 
       // describe('orders', function() {
       //   it('should support retrieving an order by ID', function() {
@@ -102,6 +74,33 @@ function genShopTestsuite(version) {
       //     });
       //   });
       // });
+    });
+
+    // method: `members`
+    describe('method: `members`', function() {
+      it('should support verifying a known-good account', function() {
+        return new Promise(function(resolve, reject) {
+          return bloombox.shop.api(apiOpts).verify('sam@bloombox.io', function(response, err) {
+            if (err || !response || !response.getVerified()) {
+              reject(new Error('unable to verify known-good account'));
+            } else {
+              resolve({'response': response});
+            }
+          });
+        });
+      });
+
+      it('should reject verifying a known-bad account', function() {
+        return new Promise(function(resolve, reject) {
+          return bloombox.shop.api(apiOpts).verify('does-not-exist@blabla.com', function(response, err) {
+            if (err || !response || !response.getVerified()) {
+              resolve({'response': response});
+            } else {
+              reject(new Error('somehow able to verify known-bad account'));
+            }
+          });
+        });
+      });
     });
   });
 }
