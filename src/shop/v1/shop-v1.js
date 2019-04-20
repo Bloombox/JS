@@ -102,6 +102,8 @@ bloombox.shop.v1.Service = (class ShopV1 {
    *        in the scope of this single RPC operation.
    * @return {Promise<proto.bloombox.services.shop.v1.ShopInfo.Response>}
    *         Promise attached to the underlying RPC call.
+   * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
+   *         the underlying RPC, or during transmission.
    */
   info(callback, config) {
     const resolved = config || bloombox.shop.ShopOptions.defaults();
@@ -147,6 +149,8 @@ bloombox.shop.v1.Service = (class ShopV1 {
    *        in the scope of this single RPC operation.
    * @return {Promise<proto.bloombox.services.shop.v1.CheckZipcode.Response>}
    *         Promise attached to the underlying RPC call.
+   * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
+   *         the underlying RPC, or during transmission.
    */
   zipcheck(zipcode, callback, config) {
     const resolved = config || bloombox.shop.ShopOptions.defaults();
@@ -197,6 +201,8 @@ bloombox.shop.v1.Service = (class ShopV1 {
    *        in the scope of this single RPC operation.
    * @return {Promise<proto.bloombox.services.shop.v1.VerifyMember.Response>}
    *         Promise attached to the underlying RPC call.
+   * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
+   *         the underlying RPC, or during transmission.
    */
   verify(email, callback, config) {
     const resolved = config || bloombox.shop.ShopOptions.defaults();
