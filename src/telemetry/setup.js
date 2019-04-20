@@ -38,6 +38,7 @@ goog.require('bloombox.telemetry.VERSION');
 
 goog.require('bloombox.telemetry.didOptOut');
 goog.require('bloombox.telemetry.v1beta0.EventService');
+goog.require('bloombox.telemetry.v1beta4.EventService');
 
 goog.provide('bloombox.telemetry.boot');
 goog.provide('bloombox.telemetry.sendInitialEvents');
@@ -206,5 +207,8 @@ bloombox.telemetry.boot = function() {
  */
 bloombox.telemetry.events = function(apiOptions) {
   const cfg = bloombox.config.active();
+  if (cfg.beta || (apiOptions && apiOptions.beta)) {
+    return new bloombox.telemetry.v1beta4.EventService(cfg);
+  }
   return new bloombox.telemetry.v1beta0.EventService(cfg);
 };
