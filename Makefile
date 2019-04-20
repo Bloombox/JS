@@ -162,6 +162,14 @@ release: build dependencies
 	@cp -fv target/$(VERSION).min.js public/client.min.js
 	@cp -fv target/$(VERSION)-debug.min.js public/client-debug.min.js
 
+beta:
+	@echo "Building Bloombox JS (INTERNAL)..."
+	@gulp --release --beta $(GULP_FLAGS)
+	@cp -fv target/$(VERSION).min.js target/internal.min.js
+	@echo "Build complete."
+	@cp -fv target/$(VERSION).min.js public/client/$(VERSION)-beta.min.js
+	@cp -fv target/$(VERSION).min.js public/client-beta.min.js
+
 serve:
 	@echo "Starting test server..."
 	@cd $(TARGET) && python -m SimpleHTTPServer

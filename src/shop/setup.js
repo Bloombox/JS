@@ -30,12 +30,12 @@ goog.require('bloombox.config.active');
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
-// - Base
+goog.require('bloombox.rpc.FALLBACK');
+
 goog.require('bloombox.shop.DEBUG');
 goog.require('bloombox.shop.SHOP_API_ENDPOINT');
 goog.require('bloombox.shop.VERSION');
 
-// - Shop Library
 goog.require('bloombox.shop.v1.Service');
 goog.require('bloombox.shop.v1beta0.Service');
 
@@ -88,9 +88,13 @@ bloombox.shop.setup = function(partner, location, apikey, callback, endpoint) {
 bloombox.shop.api = function(apiConfig) {
   // for now, create v1beta0 adapter, always
   let config = bloombox.config.active();
-  if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
-    // use the new beta gRPC engine
+  if (bloombox.rpc.FALLBACK) {
+    if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
+      // use the new beta gRPC engine
+      return new bloombox.shop.v1.Service(config);
+    }
+    return new bloombox.shop.v1beta0.Service(config);
+  } else {
     return new bloombox.shop.v1.Service(config);
   }
-  return new bloombox.shop.v1beta0.Service(config);
 };

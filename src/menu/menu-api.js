@@ -34,9 +34,18 @@ goog.provide('bloombox.menu.RetrieveCallback');
 goog.provide('bloombox.menu.RetrieveConfig');
 goog.provide('bloombox.menu.RetrieveException');
 goog.provide('bloombox.menu.RetrieveOptions');
+goog.provide('bloombox.menu.Section');
 
 
 // -- Definitions/ Structures -- //
+/**
+ * Menu sections.
+ *
+ * @typedef {proto.opencannabis.products.menu.section.Section}
+ */
+bloombox.menu.Section;
+
+
 /**
  * Callback function type declaration for menu data retrieval. Once a full menu
  * has been retrieved by the underlying implementation, a callback can be
