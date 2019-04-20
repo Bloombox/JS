@@ -44,12 +44,19 @@ goog.provide('bloombox.telemetry.prepareQueuedEvent');
  * @param {bloombox.telemetry.rpc.TelemetryRPC} rpc RPC to fulfill.
  * @param {number} priority Priority for the request.
  * @param {string=} opt_uuid UUID to use. If not provided, it will be generated.
+ * @param {bloombox.telemetry.TelemetryOptions=} options Options specific to
+ *        this event invocation and underlying RPC. Optional.
  * @return {bloombox.telemetry.internals.QueuedEvent} Event, ready to send.
  * @public
  */
-bloombox.telemetry.prepareQueuedEvent = function(rpc, priority, opt_uuid) {
+bloombox.telemetry.prepareQueuedEvent = function(rpc,
+                                                 priority,
+                                                 opt_uuid,
+                                                 options) {
+  // prepare queued event
   let uuid = opt_uuid === undefined ? bloombox.util.generateUUID() : opt_uuid;
-  return new bloombox.telemetry.internals.QueuedEvent(uuid, rpc, priority);
+  return new bloombox.telemetry.internals.QueuedEvent(
+    uuid, rpc, priority, options);
 };
 
 
@@ -59,12 +66,18 @@ bloombox.telemetry.prepareQueuedEvent = function(rpc, priority, opt_uuid) {
  * @param {string} uuid UUID for this event.
  * @param {bloombox.telemetry.rpc.TelemetryRPC} rpc RPC object to enqueue.
  * @param {number} priority Priority for this event.
+ * @param {bloombox.telemetry.TelemetryOptions=} options Options specific to
+ *        this event invocation and underlying RPC. Optional.
+ * @param {?function(boolean, *)=} callback Callable to dispatch once the event
+ *        is either sent or aborted (manually or due to an error).
  * @constructor
  * @package
  */
 bloombox.telemetry.internals.QueuedEvent = function QueuedEvent(uuid,
                                                                 rpc,
-                                                                priority) {
+                                                                priority,
+                                                                options,
+                                                                callback) {
   /**
    * RPC that is enqueued-to-send.
    *
@@ -88,7 +101,38 @@ bloombox.telemetry.internals.QueuedEvent = function QueuedEvent(uuid,
    * @package
    */
   this.priority = priority;
+
+  /**
+   * Specifies operation-specific options, which will be applied once the RPC is
+   * reduced to an on-the-wire call to the server.
+   *
+   * @type {?bloombox.telemetry.TelemetryOptions}
+   * @package
+   */
+  this.options = options || null;
+
+  /**
+   * Callable to dispatch once the event transmission operation is complete, or
+   * has reached a terminal error state.
+   *
+   * @type {?function(boolean, *)}
+   */
+  this.callback = callback || null;
 };
+
+
+/**
+ * Set the callback to dispatch once a queued event has finished transmission,
+ * or reached a terminal error state of some kind. Either the response, with the
+ * transmission status, or the error, is provided, but never both, and always
+ * with the other set to `null`.
+ *
+ * @param {?function(boolean, *)} cbk Callback to dispatch.
+ */
+bloombox.telemetry.internals.QueuedEvent.prototype.setCallback = function(cbk) {
+  this.callback = cbk || null;
+};
+
 
 /**
  * Queue for event RPCs that are due to be sent to the Telemetry Service.
@@ -118,10 +162,14 @@ bloombox.telemetry.internals.EventQueue = function EventQueue() {
  *
  * @param {number} priority Priority value for this RPC.
  * @param {bloombox.telemetry.internals.QueuedEvent} ev Event to enqueue.
+ * @param {function(boolean, *)} callback Callable to dispatch once the event is
+ *        either sent or aborted (manually or due to an error).
  * @package
  */
 bloombox.telemetry.internals.EventQueue.prototype.enqueue = function(priority,
-                                                                     ev) {
+                                                                     ev,
+                                                                     callback) {
+  ev.setCallback(callback);
   this.queue.enqueue(priority, ev);
   this.count++;
 

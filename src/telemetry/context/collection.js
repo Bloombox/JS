@@ -43,7 +43,7 @@ goog.require('proto.bloombox.analytics.context.Collection');
  * @constructor
  * @implements {bloombox.util.Exportable<proto.bloombox.analytics.context.Collection>}
  * @implements {bloombox.util.Serializable}
- * @public
+ * @export
  */
 bloombox.telemetry.Collection = function Collection(name, opt_skipb64encode) {
   /**

@@ -51,6 +51,7 @@ goog.require('bloombox.telemetry.internals.stats.recordRPCSent');
 goog.require('bloombox.telemetry.internals.stats.recordRPCSuccess');
 
 goog.require('bloombox.util.debounced');
+goog.require('bloombox.util.generateUUID');
 
 goog.require('goog.net.XhrManager');
 
@@ -252,9 +253,10 @@ bloombox.telemetry.internals.flush = function(opt_all) {
   }
   let dequeued = bloombox.telemetry.internals.EVENT_QUEUE.dequeue((
     function(queuedEvent) {
-    // for each event that we de-queue,
-    bloombox.telemetry.internals._sendEvent(queuedEvent);
+      // for each event that we de-queue,
+      bloombox.telemetry.internals._sendEvent(queuedEvent);
       bloombox.telemetry.internals.stats.recordRPCSent();
+      if (queuedEvent.callback) queuedEvent.callback(true, null);
   }), amountToFetch || null);
 
   if ((stats.queued - dequeued) > 0) {
@@ -412,18 +414,32 @@ bloombox.telemetry.internals.tick = bloombox.util.debounced(
  * Enqueue an event to eventually be sent.
  *
  * @param {bloombox.telemetry.rpc.TelemetryRPC} rpc Event RPC to enqueue.
+ * @param {bloombox.telemetry.TelemetryOptions=} options Options specific to
+ *        this event invocation and underlying RPC. Optional.
+ * @return {Promise<?number>} Promise for event completion.
  * @public
  */
-bloombox.telemetry.enqueue = function(rpc) {
+bloombox.telemetry.enqueue = function(rpc, options) {
   let priority = (
     bloombox.telemetry.internals.RoutinePriority[rpc.rpcMethod]);
-  let ev = bloombox.telemetry.prepareQueuedEvent(rpc, priority);
+  let uuid = bloombox.util.generateUUID();
+  let ev = bloombox.telemetry.prepareQueuedEvent(rpc, priority, uuid, options);
 
-  // enqueue the event
-  bloombox.telemetry.internals.EVENT_QUEUE.enqueue(priority, ev);
+  return new Promise((resolve, reject) => {
+    // enqueue the event
+    bloombox.telemetry.internals.EVENT_QUEUE
+      .enqueue(priority, ev, (ok, err) => {
+      // if there was an error or it could not be submitted, reject
+      if (!ok || err) {
+        reject(err);
+      } else {
+        resolve(ok);
+      }
+    });
 
-  // trigger one tick
-  bloombox.telemetry.internals.tick();
+    // trigger one tick
+    bloombox.telemetry.internals.tick();
+  });
 };
 
 
