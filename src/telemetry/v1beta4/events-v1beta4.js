@@ -34,6 +34,7 @@ goog.require('bloombox.rpc.metadata');
 goog.require('bloombox.telemetry.EventTelemetryAPI');
 
 goog.require('proto.bloombox.analytics.Context');
+goog.require('proto.bloombox.analytics.Scope');
 goog.require('proto.bloombox.analytics.generic.Event');
 goog.require('proto.bloombox.services.telemetry.v1beta4.Event.Request');
 goog.require('proto.bloombox.services.telemetry.v1beta4.EventTelemetryPromiseClient');
@@ -161,14 +162,22 @@ bloombox.telemetry.v1beta4.EventService = (class EventServiceV1 {
       new proto.bloombox.services.telemetry.v1beta4.Event.Request());
     const ev = new proto.bloombox.analytics.generic.Event();
     const collectionSpec = collection.export();
+    const resolved = bloombox.rpc.context(options);
+
+    // setup partnership context
+    const scopeInfo = new proto.bloombox.analytics.Scope();
+    scopeInfo.setPartner(
+      `partner/${resolved.partner}/location/${resolved.location}`);
 
     // attach payload if specified
     if (payload)
       ev.setPayload(proto.google.protobuf.Struct.fromJavaScript(payload));
 
     // build context and attach
-    const globalContext = bloombox.telemetry.globalContext();
+    const globalContext = bloombox.telemetry.globalContext().export();
     const eventContext = new proto.bloombox.analytics.Context();
+    eventContext.setScope(scopeInfo);
+
     bloombox.util.proto.merge(globalContext, eventContext);
     eventContext.setCollection(collectionSpec);
     request.setContext(eventContext);
