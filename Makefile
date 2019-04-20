@@ -117,7 +117,7 @@ sources:
 sync-schema: submodules
 
 submodules:
-	@git submodule update --init --remote
+	@git submodule update --init
 
 protobuf/js/node_modules:
 	@echo "Initializing ProtobufJS dependencies..."
@@ -126,7 +126,7 @@ protobuf/js/node_modules:
 	@cd protobuf/js && PROTOC=$(PROTOC) gulp dist && PROTOC=$(PROTOC) gulp genproto_well_known_types_closure
 	@cd protobuf && rm -fv js/package.json js/package-lock.json && git checkout js/package.json
 
-$(SCHEMA)/languages/js: protobuf/js/node_modules
+$(SCHEMA)/languages/js:
 	@echo "Building schema..."
 	@$(MAKE) -C schema LANGUAGES=js TABLES=no
 	@rm -fr schema/languages/js/{browser,es6,closure,commonjs}
