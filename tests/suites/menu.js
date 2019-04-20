@@ -124,6 +124,6 @@ function menuTestsuite() {
     });
 
     genMenuTestsuite('v0');
-    genMenuTestsuite('v1');
+    genMenuTestsuite('v1beta1');
   });
 }
