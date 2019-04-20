@@ -33,5 +33,5 @@ function genTelemetryTestsuite(version) {
 
 function telemetryTestsuite() {
   genTelemetryTestsuite('v0');
-  // genTelemetryTestsuite('v1');
+  genTelemetryTestsuite('v1beta4');
 }
