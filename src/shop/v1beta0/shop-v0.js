@@ -213,11 +213,14 @@ if (bloombox.rpc.FALLBACK) {
       };
     }
 
+    const collection = bloombox.telemetry.Collection.named(
+      bloombox.telemetry.InternalCollection.VERIFICATION);
+
     // verification event
-    bloombox.telemetry.event(
-      bloombox.telemetry.InternalCollection.VERIFICATION,
+    bloombox.telemetry.events().event(
+      collection,
       {'action': 'verify',
-        'verification': verificationData}).send();
+       'verification': verificationData});
   }
 
 
@@ -402,7 +405,6 @@ if (bloombox.rpc.FALLBACK) {
    * @param {?bloombox.shop.ShopOptions=} opts Configuration options to apply in
    *        the scope of this single RPC operation.
    * @throws {bloombox.rpc.RPCException} If email is invalid.
-   * @export
    */
   bloombox.shop.verifyLegacy = function(email, callback, opts) {
     if (!email || email.length < 5 ||

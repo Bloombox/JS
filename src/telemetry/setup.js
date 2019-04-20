@@ -36,13 +36,13 @@ goog.require('bloombox.telemetry.InternalCollection');
 goog.require('bloombox.telemetry.TELEMETRY_API_ENDPOINT');
 goog.require('bloombox.telemetry.VERSION');
 
-goog.provide('bloombox.telemetry.boot');
 goog.require('bloombox.telemetry.didOptOut');
+goog.require('bloombox.telemetry.v1beta0.EventService');
+
+goog.provide('bloombox.telemetry.boot');
 goog.provide('bloombox.telemetry.sendInitialEvents');
 goog.provide('bloombox.telemetry.setup');
 goog.provide('bloombox.telemetry.setupPageTracking');
-
-goog.require('bloombox.telemetry.ping');
 
 
 /**
@@ -95,10 +95,11 @@ bloombox.telemetry.sendInitialEvents = function() {
     bloombox.logging.warn(
       'User opted-out of telemetry, skipping initial events.');
   } else {
+    const collection = bloombox.telemetry.Collection.named(
+      bloombox.telemetry.InternalCollection.LIBRARY);
     // user has not yet opted out
-    bloombox.telemetry.event(
-      bloombox.telemetry.InternalCollection.LIBRARY,
-      {'distribution': 'js-client'}).send();
+    bloombox.telemetry.events().event(collection,
+      {'distribution': 'js-client'});
   }
 };
 
@@ -133,8 +134,9 @@ bloombox.telemetry.urlDidChange_ = function() {
     bloombox.logging.log('URL changed, sending pageview.',
       {'location': bloombox.telemetry.lastURL_});
 
-    bloombox.telemetry.event(
-      bloombox.telemetry.InternalCollection.PAGEVIEW).send();
+    const collection = bloombox.telemetry.Collection.named(
+      bloombox.telemetry.InternalCollection.PAGEVIEW);
+    bloombox.telemetry.events().event(collection);
   }
 };
 
@@ -180,7 +182,7 @@ bloombox.telemetry.boot = function() {
   } else {
     // user has not yet opted out
     bloombox.logging.log('Sending initial telemetry ping...');
-    bloombox.telemetry.ping(function(latency) {
+    bloombox.telemetry.events().ping(function(latency) {
       // as soon as the ping comes through, send the initial events
       bloombox.logging.log('Telemetry service is online. Ping latency: ' +
                            '' + latency + 'ms.');
@@ -188,4 +190,21 @@ bloombox.telemetry.boot = function() {
       bloombox.telemetry.setupPageTracking();
     });
   }
+};
+
+
+/**
+ * Acquire an instance of the Event Telemetry API, depending on the current
+ * browser environment and library configuration settings.
+ *
+ * @param {?{beta: boolean}=} apiOptions API configuration options to specify,
+ *        which control how the service instance is instantiated. Pass 'beta' to
+ *        force use of next-gen transport dispatch code.
+ * @return {bloombox.telemetry.EventTelemetryAPI} Instance of the Bloombox Event
+ *         Telemetry API, which allows recording of arbitrary event data.
+ * @export
+ */
+bloombox.telemetry.events = function(apiOptions) {
+  const cfg = bloombox.config.active();
+  return new bloombox.telemetry.v1beta0.EventService(cfg);
 };

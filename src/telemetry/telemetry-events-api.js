@@ -29,6 +29,9 @@ goog.require('bloombox.base.ServiceInterface');
 goog.require('bloombox.rpc.ScopedOptions');
 goog.require('bloombox.telemetry.TelemetryConfig');
 goog.require('bloombox.telemetry.TelemetryOptions');
+
+goog.require('proto.google.protobuf.Empty');
+
 goog.provide('bloombox.telemetry.EventTelemetryAPI');
 
 
@@ -42,7 +45,9 @@ goog.provide('bloombox.telemetry.EventTelemetryAPI');
  * stamp from the ping response, or an error. Only one of these parameters is
  * passed per invocation.
  *
- * @typedef {function(number, *)}
+ * @typedef {function(
+ *     number,
+ *     *)}
  */
 bloombox.telemetry.PingCallback;
 
@@ -70,11 +75,18 @@ bloombox.telemetry.EventTelemetryAPI = (class EventTelemetry {
    * way of measuring latency between the client and event server, and also
    * generally makes sure the connection is established and hot.
    *
+   * The response callback accepts two parameters: the latency of a successful
+   * ping cycle, or, alternatively, the error encountered. Only one parameter is
+   * passed during a given callback invocation.
+   *
    * @param {?bloombox.telemetry.PingCallback=} callback Callback to dispatch
    *        once a ping response is received, or a terminal error occurs.
    * @param {?bloombox.telemetry.TelemetryOptions=} options Options or settings
    *        to specify for this ping invocation only. Optional. If no options
    *        are specified, sensible defaults are generated and used.
+   * @return {Promise<?number>} Promise attached to the underlying RPC call.
+   * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
+   *         the underlying RPC, or during transmission.
    */
   ping(callback, options) {}
 
@@ -88,15 +100,18 @@ bloombox.telemetry.EventTelemetryAPI = (class EventTelemetry {
    * code's control. Ingest timestamps and other values are auto-generated upon
    * event transmission, but the content of the event is essentially free-form.
    *
-   * @param {string} collection Event collection to append this event to.
-   * @param {number=} occurred Occurrence timestamp for this event, in ms.
+   * @param {bloombox.telemetry.Collection} collection Event collection to
+   *        append this event to. Users can prepare this object easily.
    * @param {Object=} payload Payload to send with the event.
+   * @param {number=} occurred Occurrence timestamp for this event, in ms.
    * @param {?bloombox.telemetry.TelemetryOptions=} options Config settings and
    *        options for the telemetry API to apply to this individual RPC.
    * @param {?bloombox.telemetry.EventCallback=} callback Function to dispatch
    *        once a result or terminal error state has been reached. Optional.
-   * @return {Promise<proto.bloombox.services.shop.v1.ShopInfo.Response>}
-   *         Promise attached to the underlying RPC call.
+   * @return {Promise<proto.google.protobuf.Empty>} Promise attached to the
+   *         underlying RPC call.
+   * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
+   *         the underlying RPC, or during transmission.
    */
-  event(collection, occurred, payload, callback, options) {}
+  event(collection, payload, occurred, callback, options) {}
 });
