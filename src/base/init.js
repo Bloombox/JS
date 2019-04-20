@@ -56,7 +56,7 @@ bloombox.DEBUG_PROPERTY = '__debug__';
  * @define {string} VERSION Version for library.
  * @export
  */
-bloombox.VERSION = 'v2.0.0b1';
+bloombox.VERSION = 'v2.0.0b2';
 
 
 /**
