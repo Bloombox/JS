@@ -15,43 +15,13 @@ basePreprocessors[closureDeps] = ['closure-deps'];
 
 module.exports = function(config) {
   config.set({
-
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
-
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine', 'closure', 'chai', 'mocha'],
 
-
-    // list of files / patterns to load in the browser
-    // files: [
-    //   'node_modules/closure-builder/third_party/closure-library/closure/goog/base.js',
-    //   {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js', included: false, served: true},
-    //   {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js', included: true, served: true},
-    //   'tests/suites/**/*.js',
-    //   'tests/init.js',
-    //   'tests/sanity_tests.js',
-    //
-    //   // Target: Sources
-    //   'tests/init_sources.js',
-    //   'tests/source_tests.js',
-    //   {pattern: 'third_party/schema/*.js', included: false},
-    //   {pattern: 'third_party/protobuf/js/map.js', included: false},
-    //   {pattern: 'third_party/protobuf/js/message.js', included: false},
-    //   {pattern: 'third_party/protobuf/js/google/protobuf/*.js', included: false},
-    //   {pattern: 'third_party/protobuf/js/binary/*.js', included: false},
-    //   {pattern: 'third_party/grpc-web/javascript/net/grpc/web/util/*.js', included: false},
-    //   {pattern: 'third_party/grpc-web/javascript/net/grpc/web/*.js', included: false},
-    //   {pattern: 'third_party/schema/services/**/*.js', included: false},
-    //   {pattern: 'src/**/*.js', included: false},
-    //   {pattern: 'entrypoint/full.js', included: false},
-    //
-    //   // Target: Debug
-    //   'tests/debug_tests.js',
-    //   'tests/wasabi.js'
-    // ],
     files: [
       // 1: closure base
       closureBase,
