@@ -191,6 +191,8 @@ bloombox.shop.ShopAPI = (class ShopAPI {
    *        in the scope of this single RPC operation.
    * @return {Promise<proto.bloombox.services.shop.v1.ShopInfo.Response>}
    *         Promise attached to the underlying RPC call.
+   * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
+   *         the underlying RPC, or during transmission.
    */
   info(callback, config) {}
 
@@ -207,6 +209,8 @@ bloombox.shop.ShopAPI = (class ShopAPI {
    *        in the scope of this single RPC operation.
    * @return {Promise<proto.bloombox.services.shop.v1.CheckZipcode.Response>}
    *         Promise attached to the underlying RPC call.
+   * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
+   *         the underlying RPC, or during transmission.
    */
   zipcheck(zipcode, callback, config) {}
 
@@ -225,6 +229,8 @@ bloombox.shop.ShopAPI = (class ShopAPI {
    *        in the scope of this single RPC operation.
    * @return {Promise<proto.bloombox.services.shop.v1.VerifyMember.Response>}
    *         Promise attached to the underlying RPC call.
+   * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
+   *         the underlying RPC, or during transmission.
    */
   verify(email, callback, config) {}
 });
