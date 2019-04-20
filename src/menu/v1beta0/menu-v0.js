@@ -25,8 +25,6 @@
 
 /*global goog */
 
-goog.require('bloombox.config.active');
-
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.info');
 goog.require('bloombox.logging.log');
@@ -66,24 +64,9 @@ bloombox.menu.MenuRetrieveCallback;
  */
 bloombox.menu.retrieveLegacy = function(options, callback) {
   // load partner and location codes
-  let config = bloombox.config.active();
-  let partnerCode = config.partner;
-  let locationCode = config.location;
-  if (options.scope) {
-    const scopeSplit = options.scope.split('/');
-    if (scopeSplit.length !== 4)
-      throw new bloombox.rpc.RPCException(
-        'Failed to parse override scope value.');
-    partnerCode = scopeSplit[1];
-    locationCode = scopeSplit[3];
-  }
-
-  if (!partnerCode ||
-    !(typeof partnerCode === 'string' && partnerCode.length > 1) ||
-    !(typeof locationCode === 'string' && locationCode.length > 1))
-    throw new bloombox.rpc.RPCException(
-      'Partner and location must be set via `bloombox.menu.setup` before' +
-      ' retrieving menu data.');
+  const scope = bloombox.rpc.context(options);
+  const partnerCode = scope.partner;
+  const locationCode = scope.location;
 
   bloombox.logging.info('Retrieving menu for \'' +
     partnerCode + ':' + locationCode + '\'...');

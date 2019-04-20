@@ -25,8 +25,6 @@
 
 /*global goog */
 
-goog.require('bloombox.config.active');
-
 goog.require('bloombox.rpc.RPCException');
 
 goog.require('bloombox.logging.error');

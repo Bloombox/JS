@@ -115,10 +115,13 @@ goog.scope(function() {
         proto.opencannabis.products.menu.section.Section.UNSPECIFIED)
         request.setSection(resolved.section);
 
+      const scope = bloombox.rpc.context(resolved);
+      const partnerCode = scope.partner;
+      const locationCode = scope.location;
+
       // resolve scope
-      const scope = options.scope ? options.scope : (
-        `partner/${this.sdkConfig.partner}/location/${this.sdkConfig.location}`);
-      request.setScope(scope);
+      const scopePath = `partner/${partnerCode}/location/${locationCode}`;
+      request.setScope(scopePath);
       const operation = (
         this.client.retrieve(request, bloombox.rpc.metadata(this.sdkConfig)));
 
