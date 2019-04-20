@@ -119,17 +119,9 @@ function sendVerifyTelemetry(customer, inflated, verified) {
  */
 bloombox.shop.infoLegacy = function(callback, opts) {
   // load partner and location codes
-  let config = bloombox.config.active();
-  let partnerCode = config.partner;
-  let locationCode = config.location;
-
-  if (opts && opts.scope) {
-    const pieces = opts.scope.split('/');
-    if (pieces.length !== 4)
-      throw new bloombox.rpc.RPCException('Invalid scope override value.');
-    partnerCode = pieces[1];
-    locationCode = pieces[3];
-  }
+  const scope = bloombox.rpc.context(opts);
+  const partnerCode = scope.partner;
+  const locationCode = scope.location;
 
   bloombox.logging.info('Retrieving shop info for \'' +
     partnerCode + ':' + locationCode + '\'...');
@@ -223,17 +215,9 @@ bloombox.shop.zipcheckLegacy = function(zipcode, callback, opts) {
     '\' for delivery eligibility...');
 
   // load partner and location codes
-  let config = bloombox.config.active();
-  let partnerCode = config.partner;
-  let locationCode = config.location;
-
-  if (opts && opts.scope) {
-    const splitScope = opts.scope.split('/');
-    if (splitScope.length !== 4)
-      throw new bloombox.rpc.RPCException('Invalid scope override.');
-    partnerCode = splitScope[1];
-    locationCode = splitScope[3];
-  }
+  const scope = bloombox.rpc.context(opts);
+  const partnerCode = scope.partner;
+  const locationCode = scope.location;
 
   // it's a seemingly-valid zipcode, verify it with the server
   const rpc = new bloombox.shop.rpc.ShopRPC(
@@ -316,22 +300,9 @@ bloombox.shop.verifyLegacy = function(email, callback, opts) {
     throw new bloombox.rpc.RPCException(
       'Email was found to be empty or invalid, cannot verify.');
 
-  let config = bloombox.config.active();
-  let partner = config.partner;
-  let location = config.location;
-
-  if (opts && opts.scope) {
-    const splitScope = opts.scope.split('/');
-    if (splitScope.length !== 4)
-      throw new bloombox.rpc.RPCException('Invalid scope override.');
-    partner = splitScope[1];
-    location = splitScope[3];
-  }
-
-  if (!partner || !location) {
-    bloombox.logging.error('Partner or location code is not defined.');
-    return;
-  }
+  const scope = bloombox.rpc.context(opts);
+  const partner = scope.partner;
+  const location = scope.location;
 
   const encodedEmail = btoa(email);
   const rpc = new bloombox.shop.rpc.ShopRPC(
