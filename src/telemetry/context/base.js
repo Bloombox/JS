@@ -173,10 +173,6 @@ bloombox.telemetry.Context = function(opt_collection,
     locationKey = new proto.bloombox.partner.LocationKey();
     locationKey.setCode(opt_location);
     locationKey.setPartner(partnerKey);
-  } else if (opt_partner && opt_location) {
-    // failure: must specify a partner to specify a location
-    throw new bloombox.telemetry.ContextException(
-      'Cannot provide location context without partner context.');
   } else {
     // no location-level context
     locationKey = null;
@@ -190,7 +186,7 @@ bloombox.telemetry.Context = function(opt_collection,
    */
   this.location = locationKey;
 
-  // device the device key, if any
+  // attach the device key, if any
   let deviceKey;
   if (opt_device && typeof opt_device === 'string') {
     deviceKey = new proto.bloombox.partner.PartnerDeviceKey();
