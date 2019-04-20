@@ -36,9 +36,11 @@ goog.require('bloombox.shop.InfoCallback');
 goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.ShopAPI');
 goog.require('bloombox.shop.ShopOptions');
+goog.require('bloombox.shop.ZipcheckCallback');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
 goog.require('proto.bloombox.partner.settings.ShopStatus');
+goog.require('proto.bloombox.services.shop.v1.CheckZipcode.Response');
 goog.require('proto.bloombox.services.shop.v1.ShopInfo.Response');
 
 goog.require('stackdriver.protect');
@@ -62,7 +64,7 @@ bloombox.shop.ShopStatus = {
 /**
  * Retrieve info for the current shop.
  *
- * @param {?bloombox.shop.InfoCallback=} callback Callback to dispatch.
+ * @param {bloombox.shop.InfoCallback} callback Callback to dispatch.
  * @param {?bloombox.shop.ShopOptions=} opts Options for the call.
  * @throws {bloombox.rpc.RPCException} If partner/location isn't set.
  */
@@ -151,6 +153,105 @@ bloombox.shop.infoLegacy = function(callback, opts) {
 
 
 /**
+ * Verify a zipcode for delivery eligibility.
+ *
+ * @param {string} zipcode Zipcode to verify. Do not include anything more than
+ *        the first 5 digits.
+ * @param {bloombox.shop.ZipcheckCallback} callback Callback to indicate zip
+ *        eligibility response information.
+ * @param {?bloombox.shop.ShopOptions=} opts Options for the call.
+ * @throws {bloombox.rpc.RPCException} If the provided zipcode is invalid.
+ */
+bloombox.shop.zipcheckLegacy = function(zipcode, callback, opts) {
+  // basic type checking
+  if (!zipcode || !(typeof zipcode === 'string') ||
+    !(zipcode.length === 5) || isNaN(parseInt(zipcode, 10)))
+  // invalid zipcode
+    throw new bloombox.rpc.RPCException(
+      'Zipcode was found to be invalid: ' + zipcode);
+
+  bloombox.logging.info('Verifying zipcode \'' + zipcode +
+    '\' for delivery eligibility...');
+
+  // load partner and location codes
+  let config = bloombox.config.active();
+  let partnerCode = config.partner;
+  let locationCode = config.location;
+
+  if (opts && opts.scope) {
+    const splitScope = opts.scope.split('/');
+    if (splitScope.length !== 4)
+      throw new bloombox.rpc.RPCException('Invalid scope override.');
+    partnerCode = splitScope[1];
+    locationCode = splitScope[3];
+  }
+
+  // it's a seemingly-valid zipcode, verify it with the server
+  const rpc = new bloombox.shop.rpc.ShopRPC(
+    /** @type {bloombox.shop.Routine} */ (bloombox.shop.Routine.CHECK_ZIP),
+    'GET', [
+      'partners', partnerCode,
+      'locations', locationCode,
+      'zipcheck', zipcode].join('/'));
+
+  let done = false;
+  rpc.send(function(response) {
+    if (done) return;
+
+    if (response !== null) {
+      done = true;
+
+      bloombox.logging.log('Received response for zipcheck RPC.', response);
+      if ((typeof response === 'object')) {
+        const payload = (
+          new proto.bloombox.services.shop.v1.CheckZipcode.Response());
+
+        // interrogate response for zipcode support status
+        let supported = response['supported'] === true;
+        payload.setSupported(supported);
+
+        let deliveryMinimum = /** @type {?number} */ (null);
+        if ('deliveryMinimum' in response) {
+          if (typeof response['deliveryMinimum'] === 'number') {
+            deliveryMinimum = /** @type {number} */ (
+              response['deliveryMinimum']);
+
+            bloombox.logging.log('Resolved delivery minimum: $' +
+              deliveryMinimum + '.');
+            payload.setDeliveryMinimum(deliveryMinimum);
+          } else if (response['deliveryMinimum'] === undefined ||
+            response['deliveryMinimum'] === null ||
+            response['deliveryMinimum'] === 0.0 ||
+            response['deliveryMinimum'] === 0) {
+            // there is no delivery minimum
+            deliveryMinimum = null;
+
+            bloombox.logging.log('No delivery minimum specified.');
+          } else {
+            bloombox.logging.warn('Unrecognized delivery minimum.',
+              response['deliveryMinimum']);
+          }
+        }
+        callback(payload, null);
+      } else {
+        bloombox.logging.error(
+          'Received unrecognized response payload for zipcheck.', response);
+        callback(null, null);
+      }
+    }
+  }, function(status) {
+    bloombox.logging.error(
+      'An error occurred while verifying a zipcode. Status code: \'' +
+      status + '\'.');
+
+    // pass null to indicate an error
+    callback(null, null);
+  });
+};
+
+
+
+/**
  * Defines an implementation of the Bloombox Shop API, which calls into legacy
  * systems via the `v1beta0` adapter.
  *
@@ -196,6 +297,34 @@ bloombox.shop.v1beta0.Service = (class ShopV0 {
   info(callback, config) {
     return new Promise((resolve, reject) => {
       bloombox.shop.infoLegacy((response, err) => {
+        if (err || !response) {
+          if (callback) callback(null, err || response);
+          reject(err || response);
+        } else {
+          if (callback) callback(response, null);
+          resolve(response);
+        }
+      }, config);
+    });
+  }
+
+  // -- API: Zip Check -- //
+  /**
+   * Validate a zipcode for delivery ordering eligibility, potentially including
+   * adherence to any set order minimum, either globally or for the zipcode in
+   * question specifically.
+   *
+   * @param {string} zipcode U.S. zipcode to check with the server.
+   * @param {?bloombox.shop.ZipcheckCallback=} callback Callback to dispatch
+   *        once a response, or terminal error, are available.
+   * @param {?bloombox.shop.ShopOptions=} config Configuration options to apply
+   *        in the scope of this single RPC operation.
+   * @return {Promise<proto.bloombox.services.shop.v1.CheckZipcode.Response>}
+   *         Promise attached to the underlying RPC call.
+   */
+  zipcheck(zipcode, callback, config) {
+    return new Promise((resolve, reject) => {
+      bloombox.shop.zipcheckLegacy(zipcode, (response, err) => {
         if (err || !response) {
           if (callback) callback(null, err || response);
           reject(err || response);

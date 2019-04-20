@@ -30,6 +30,7 @@ goog.provide('bloombox.shop.InfoCallback');
 goog.provide('bloombox.shop.ShopAPI');
 goog.provide('bloombox.shop.ShopConfig');
 goog.provide('bloombox.shop.ShopOptions');
+goog.provide('bloombox.shop.ZipcheckCallback');
 
 
 // -- Definitions/ Structures -- //
@@ -45,13 +46,10 @@ bloombox.shop.ShopConfig;
 
 
 /**
- * Callback function type declaration for menu data retrieval. Once a full menu
- * has been retrieved by the underlying implementation, a callback can be
- * dispatched with this signature, which provides the resulting catalog to
- * invoking code asynchronously.
+ * Callback function type declaration for shop info retrieval.
  *
- * The callback involves two parameters: the resulting menu, if applicable, and
- * the error code, if applicable. Only one value is provided (so, if a menu is
+ * The callback involves two parameters: the resulting shop info, if applicable,
+ * and the error code, if applicable. Only one value is provided (so, if info is
  * provided, there will be no error, and vice-versa).
  *
  * @public
@@ -60,6 +58,21 @@ bloombox.shop.ShopConfig;
  *    *)}
  */
 bloombox.shop.InfoCallback;
+
+
+/**
+ * Callback function type declaration for shop zipcode check responses.
+ *
+ * The callback involves two parameters: the resulting zipcheck response, if
+ * applicable, and the error code, if applicable. Only one value is provided
+ * (so, if info is provided, there will be no error, and vice-versa).
+ *
+ * @public
+ * @typedef {function(
+ *    ?proto.bloombox.services.shop.v1.CheckZipcode.Response,
+ *    *)}
+ */
+bloombox.shop.ZipcheckCallback;
 
 
 /**
@@ -169,4 +182,20 @@ bloombox.shop.ShopAPI = (class ShopAPI {
    *         Promise attached to the underlying RPC call.
    */
   info(callback, config) {}
+
+  // -- API: Zip Check -- //
+  /**
+   * Validate a zipcode for delivery ordering eligibility, potentially including
+   * adherence to any set order minimum, either globally or for the zipcode in
+   * question specifically.
+   *
+   * @param {string} zipcode U.S. zipcode to check with the server.
+   * @param {?bloombox.shop.ZipcheckCallback=} callback Callback to dispatch
+   *        once a response, or terminal error, are available.
+   * @param {?bloombox.shop.ShopOptions=} config Configuration options to apply
+   *        in the scope of this single RPC operation.
+   * @return {Promise<proto.bloombox.services.shop.v1.CheckZipcode.Response>}
+   *         Promise attached to the underlying RPC call.
+   */
+  zipcheck(zipcode, callback, config) {}
 });

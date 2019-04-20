@@ -35,6 +35,7 @@ goog.require('bloombox.shop.ShopOptions');
 goog.require('proto.bloombox.partner.LocationKey');
 goog.require('proto.bloombox.partner.PartnerKey');
 
+goog.require('proto.bloombox.services.shop.v1.CheckZipcode.Response');
 goog.require('proto.bloombox.services.shop.v1.ShopInfo.Request');
 goog.require('proto.bloombox.services.shop.v1.ShopInfo.Response');
 
@@ -140,6 +141,67 @@ bloombox.shop.v1.Service = (class ShopV1 {
     });
     promise.then((response) => {
       if (callback) callback(response, null);
+    });
+    return promise;
+  }
+
+  // -- API: Zip Check -- //
+  /**
+   * Validate a zipcode for delivery ordering eligibility, potentially including
+   * adherence to any set order minimum, either globally or for the zipcode in
+   * question specifically.
+   *
+   * @param {string} zipcode U.S. zipcode to check with the server.
+   * @param {?bloombox.shop.ZipcheckCallback=} callback Callback to dispatch
+   *        once a response, or terminal error, are available.
+   * @param {?bloombox.shop.ShopOptions=} config Configuration options to apply
+   *        in the scope of this single RPC operation.
+   * @return {Promise<proto.bloombox.services.shop.v1.CheckZipcode.Response>}
+   *         Promise attached to the underlying RPC call.
+   */
+  zipcheck(zipcode, callback, config) {
+    const resolved = config || bloombox.shop.ShopOptions.defaults();
+    const request = new proto.bloombox.services.shop.v1.CheckZipcode.Request();
+
+    // apply resolved scope
+    let partnerCode;
+    let locationCode;
+    if (resolved.scope) {
+      const scopePieces = resolved.scope.split('/');
+      if (scopePieces.length !== 4)
+        throw new bloombox.rpc.RPCException('Invalid scope override.');
+      partnerCode = scopePieces[1];
+      locationCode = scopePieces[3];
+    } else {
+      const activeConfig = bloombox.config.active();
+      partnerCode = activeConfig.partner;
+      locationCode = activeConfig.location;
+    }
+
+    if (!partnerCode || !locationCode)
+      throw new bloombox.rpc.RPCException('Must call bloombox.setup.');
+
+    const partnerKey = new proto.bloombox.partner.PartnerKey();
+    partnerKey.setCode(partnerCode);
+
+    const locationKey = new proto.bloombox.partner.LocationKey();
+    locationKey.setPartner(partnerKey);
+    locationKey.setCode(locationCode);
+
+    // make and send request
+    request.setLocation(locationKey);
+    request.setZipcode(zipcode);
+
+    // send the request
+    const promise = this.client.checkZipcode(request,
+      bloombox.rpc.metadata(this.sdkConfig));
+
+    promise.then((response) => {
+      if (callback) callback(response, null);
+    });
+
+    promise.catch((err) => {
+      if (callback) callback(null, err);
     });
     return promise;
   }
