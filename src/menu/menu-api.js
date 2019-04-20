@@ -25,6 +25,7 @@
 /*global goog */
 
 goog.require('bloombox.base.ServiceInterface');
+goog.require('bloombox.rpc.ScopedOptions');
 goog.require('proto.opencannabis.products.menu.section.Section');
 
 goog.provide('bloombox.menu.MenuAPI');
@@ -107,8 +108,10 @@ bloombox.menu.RetrieveException = function RetrieveException(message, err) {
  * overwriting, before options are used).
  *
  * @export
+ * @extends {bloombox.rpc.ScopedOptions}
  */
-bloombox.menu.RetrieveOptions = class RetrieveOptions {
+bloombox.menu.RetrieveOptions = (
+  class RetrieveOptions extends bloombox.rpc.ScopedOptions {
   /**
    * Build a menu retrieval options object from scratch, with the ability to
    * specify the full set of parameters.
@@ -124,6 +127,8 @@ bloombox.menu.RetrieveOptions = class RetrieveOptions {
    * @param {?string} scope Value to override partner scope with, if applicable.
    */
   constructor(full, keysOnly, snap, fingerprint, section, fresh, scope) {
+    super(scope);
+
     /**
      * Whether to fetch the 'full' menu catalog, which includes items that are
      * out of stock, or hidden from the menu for other reasons. This property
@@ -187,17 +192,6 @@ bloombox.menu.RetrieveOptions = class RetrieveOptions {
      * @type {boolean}
      */
     this.fresh = fresh;
-
-    /**
-     * Optionally override the partnership scope for this menu retrieval task.
-     * This allows a specific partner or location value that is different from
-     * the library's global-default values. Expected to be in the full URL form
-     * of "partner/<x>/location/<y>".
-     *
-     * @public
-     * @type {?string}
-     */
-    this.scope = scope || null;
   }
 
   /**
@@ -256,7 +250,7 @@ bloombox.menu.RetrieveOptions = class RetrieveOptions {
       'fresh': this.fresh,
       'scope': this.scope};
   }
-};
+});
 
 
 // -- API Surface -- //
