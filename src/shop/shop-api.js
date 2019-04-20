@@ -38,7 +38,7 @@ goog.provide('bloombox.shop.ZipcheckCallback');
 
 /**
  * Specifies a simple record type, which is inflatable into a full settings
- * object which specifies options for retrieving menus.
+ * object which specifies options for handling shop operations.
  *
  * @public
  * @typedef {{scope: ?string}}
@@ -150,6 +150,7 @@ bloombox.shop.ShopOptions = (
       'scope': this.scope};
   }
 });
+goog.inherits(bloombox.shop.ShopOptions, bloombox.rpc.ScopedOptions);
 
 
 // -- API Surface -- //
