@@ -23,17 +23,6 @@
 
 /*global goog */
 
-goog.provide('bloombox.rpc.ACCEPT_HEADER_VALUE');
-goog.provide('bloombox.rpc.API_KEY_HEADER');
-goog.provide('bloombox.rpc.DEBUG_HEADER');
-
-goog.provide('bloombox.rpc.RPC');
-goog.provide('bloombox.rpc.RPCException');
-
-goog.provide('bloombox.rpc.TRACE_HEADER');
-
-goog.provide('bloombox.rpc.metadata');
-
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.DEBUG_PROPERTY');
 goog.require('bloombox.VERSION');
@@ -47,6 +36,19 @@ goog.require('goog.events');
 goog.require('goog.net.XhrIo');
 
 goog.require('stackdriver.reportError');
+
+goog.provide('bloombox.rpc.ACCEPT_HEADER_VALUE');
+goog.provide('bloombox.rpc.API_KEY_HEADER');
+goog.provide('bloombox.rpc.DEBUG_HEADER');
+
+goog.provide('bloombox.rpc.RPC');
+goog.provide('bloombox.rpc.RPCException');
+
+goog.provide('bloombox.rpc.ScopedOptions');
+goog.provide('bloombox.rpc.TRACE_HEADER');
+
+goog.provide('bloombox.rpc.context');
+goog.provide('bloombox.rpc.metadata');
 
 
 /**
@@ -125,6 +127,76 @@ bloombox.rpc.metadata = function(activeConfig, additional) {
   if (activeConfig && activeConfig.key)
     base[bloombox.rpc.API_KEY_HEADER] = activeConfig.key;
   return Object.assign({}, base, additional);
+};
+
+
+/**
+ * Defines an interface that provides options, including a scope value, that may
+ * override the global scope value installed in library config.
+ */
+bloombox.rpc.ScopedOptions = (class ScopedOptions {
+  /**
+   * Describes properties attached to a scoped options object.
+   *
+   * @param {?string} scope Partnership scope to override this RPC with, if
+   *        applicable. If left unset, defaults to `null`.
+   */
+  constructor(scope) {
+    /**
+     * Partnership scope to use as an override for this RPC, if applicable.
+     * Defaults to null if left unset.
+     *
+     * @protected
+     * @type {?string}
+     */
+    this.scope = scope || null;
+  }
+
+  /**
+   * Return the set scope override, if any.
+   *
+   * @public
+   * @returns {?string}
+   */
+  getScope() {
+    return this.scope;
+  }
+});
+
+
+/**
+ * Resolve partnership context for a given RPC call. This involves merging
+ * whatever configuration might exist globally in the library with override
+ * values specified, if applicable.
+ *
+ * @param {?bloombox.rpc.ScopedOptions=} config Configuration options supporting
+ *        a scope override.
+ * @return {{partner: string, location: string}} Resolved partner and location.
+ * @throws {bloombox.rpc.RPCException} If the values cannot be resolved.
+ */
+bloombox.rpc.context = function(config) {
+  // apply resolved scope
+  let partnerCode;
+  let locationCode;
+  if (config && config.getScope()) {
+    const scopePieces = config.getScope().split('/');
+    if (scopePieces.length !== 4)
+      throw new bloombox.rpc.RPCException('Invalid scope override.');
+    partnerCode = scopePieces[1];
+    locationCode = scopePieces[3];
+  } else {
+    const activeConfig = bloombox.config.active();
+    partnerCode = activeConfig.partner;
+    locationCode = activeConfig.location;
+  }
+  if (!partnerCode || !locationCode)
+    throw new bloombox.rpc.RPCException(
+      'Failed to resolve scope. ' +
+      'Please run bloombox.setup before calling methods.');
+  return {
+    partner: partnerCode,
+    location: locationCode
+  };
 };
 
 

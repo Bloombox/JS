@@ -25,6 +25,7 @@
 /*global goog */
 
 goog.require('bloombox.base.ServiceInterface');
+goog.require('bloombox.rpc.ScopedOptions');
 
 goog.provide('bloombox.shop.InfoCallback');
 goog.provide('bloombox.shop.ShopAPI');
@@ -96,8 +97,10 @@ bloombox.shop.VerifyCallback;
  * configuration property.
  *
  * @export
+ * @extends {bloombox.rpc.ScopedOptions}
  */
-bloombox.shop.ShopOptions = class ShopOptions {
+bloombox.shop.ShopOptions = (
+  class ShopOptions extends bloombox.rpc.ScopedOptions {
   /**
    * Build a shop options object from scratch, with the ability to specify the
    * full set of configuration parameters/options.
@@ -105,15 +108,7 @@ bloombox.shop.ShopOptions = class ShopOptions {
    * @param {?string=} scope Partnership scope override for this RPC.
    */
   constructor(scope) {
-    /**
-     * Scope override for this Shop API RPC, if applicable. If this value is set
-     * and the underlying RPC requires a partnership scope, this value will take
-     * precedence over the library-global partnership scope.
-     *
-     * @public
-     * @type {?string}
-     */
-    this.scope = scope || null;
+    super(scope || null);
   }
 
   /**
@@ -154,7 +149,7 @@ bloombox.shop.ShopOptions = class ShopOptions {
     return {
       'scope': this.scope};
   }
-};
+});
 
 
 // -- API Surface -- //

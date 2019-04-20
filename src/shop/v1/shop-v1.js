@@ -27,6 +27,7 @@
 
 goog.require('bloombox.API_ENDPOINT');
 goog.require('bloombox.rpc.RPCException');
+goog.require('bloombox.rpc.context');
 goog.require('bloombox.rpc.metadata');
 goog.require('bloombox.shop.InfoCallback');
 goog.require('bloombox.shop.ShopAPI');
@@ -107,22 +108,9 @@ bloombox.shop.v1.Service = (class ShopV1 {
     const request = new proto.bloombox.services.shop.v1.ShopInfo.Request();
 
     // apply resolved scope
-    let partnerCode;
-    let locationCode;
-    if (resolved.scope) {
-      const scopePieces = resolved.scope.split('/');
-      if (scopePieces.length !== 4)
-        throw new bloombox.rpc.RPCException('Invalid scope override.');
-      partnerCode = scopePieces[1];
-      locationCode = scopePieces[3];
-    } else {
-      const activeConfig = bloombox.config.active();
-      partnerCode = activeConfig.partner;
-      locationCode = activeConfig.location;
-    }
-
-    if (!partnerCode || !locationCode)
-      throw new bloombox.rpc.RPCException('Must call bloombox.setup.');
+    const scope = bloombox.rpc.context(resolved);
+    const partnerCode = scope.partner;
+    const locationCode = scope.location;
 
     const partnerKey = new proto.bloombox.partner.PartnerKey();
     partnerKey.setCode(partnerCode);
@@ -165,22 +153,9 @@ bloombox.shop.v1.Service = (class ShopV1 {
     const request = new proto.bloombox.services.shop.v1.CheckZipcode.Request();
 
     // apply resolved scope
-    let partnerCode;
-    let locationCode;
-    if (resolved.scope) {
-      const scopePieces = resolved.scope.split('/');
-      if (scopePieces.length !== 4)
-        throw new bloombox.rpc.RPCException('Invalid scope override.');
-      partnerCode = scopePieces[1];
-      locationCode = scopePieces[3];
-    } else {
-      const activeConfig = bloombox.config.active();
-      partnerCode = activeConfig.partner;
-      locationCode = activeConfig.location;
-    }
-
-    if (!partnerCode || !locationCode)
-      throw new bloombox.rpc.RPCException('Must call bloombox.setup.');
+    const scope = bloombox.rpc.context(resolved);
+    const partnerCode = scope.partner;
+    const locationCode = scope.location;
 
     const partnerKey = new proto.bloombox.partner.PartnerKey();
     partnerKey.setCode(partnerCode);
@@ -226,24 +201,9 @@ bloombox.shop.v1.Service = (class ShopV1 {
   verify(email, callback, config) {
     const resolved = config || bloombox.shop.ShopOptions.defaults();
     const request = new proto.bloombox.services.shop.v1.VerifyMember.Request();
-
-    // apply resolved scope
-    let partnerCode;
-    let locationCode;
-    if (resolved.scope) {
-      const scopePieces = resolved.scope.split('/');
-      if (scopePieces.length !== 4)
-        throw new bloombox.rpc.RPCException('Invalid scope override.');
-      partnerCode = scopePieces[1];
-      locationCode = scopePieces[3];
-    } else {
-      const activeConfig = bloombox.config.active();
-      partnerCode = activeConfig.partner;
-      locationCode = activeConfig.location;
-    }
-
-    if (!partnerCode || !locationCode)
-      throw new bloombox.rpc.RPCException('Must call bloombox.setup.');
+    const scope = bloombox.rpc.context(resolved);
+    const partnerCode = scope.partner;
+    const locationCode = scope.location;
 
     const partnerKey = new proto.bloombox.partner.PartnerKey();
     partnerKey.setCode(partnerCode);
