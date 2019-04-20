@@ -76,6 +76,21 @@ bloombox.shop.ZipcheckCallback;
 
 
 /**
+ * Callback function type declaration for shop member verification responses.
+ *
+ * The callback involves two parameters: the resulting verify response, if
+ * applicable, and the error code, if applicable. Only one value is provided
+ * (so, if info is provided, there will be no error, and vice-versa).
+ *
+ * @public
+ * @typedef {function(
+ *    ?proto.bloombox.services.shop.v1.VerifyMember.Response,
+ *    *)}
+ */
+bloombox.shop.VerifyCallback;
+
+
+/**
  * Options object, which describes configuration values to override or set for a
  * given Shop API RPC. Each parameter specifiable here is documented inline as a
  * configuration property.
@@ -198,4 +213,22 @@ bloombox.shop.ShopAPI = (class ShopAPI {
    *         Promise attached to the underlying RPC call.
    */
   zipcheck(zipcode, callback, config) {}
+
+  // -- API: User Verification -- //
+  /**
+   * Verify a user's eligibility to order cannabis via the web shop, using their
+   * email address to find their account. This method guarantees that the user
+   * is registered, has a valid and un-expired government ID listed (according
+   * to the partner and location settings), and is in good standing with the
+   * retail partner.
+   *
+   * @param {string} email Email address to use to locate the user.
+   * @param {?bloombox.shop.VerifyCallback=} callback Function to dispatch once
+   *        a response or terminal error state is reached.
+   * @param {?bloombox.shop.ShopOptions=} config Configuration options to apply
+   *        in the scope of this single RPC operation.
+   * @return {Promise<proto.bloombox.services.shop.v1.VerifyMember.Response>}
+   *         Promise attached to the underlying RPC call.
+   */
+  verify(email, callback, config) {}
 });

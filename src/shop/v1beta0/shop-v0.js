@@ -26,12 +26,15 @@
 /*global goog */
 
 goog.require('bloombox.config.active');
+
 goog.require('bloombox.rpc.RPCException');
+
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.info');
 goog.require('bloombox.logging.log');
 goog.require('bloombox.logging.warn');
 
+goog.require('bloombox.shop.Customer');
 goog.require('bloombox.shop.InfoCallback');
 goog.require('bloombox.shop.Routine');
 goog.require('bloombox.shop.ShopAPI');
@@ -39,9 +42,15 @@ goog.require('bloombox.shop.ShopOptions');
 goog.require('bloombox.shop.ZipcheckCallback');
 goog.require('bloombox.shop.rpc.ShopRPC');
 
+goog.require('bloombox.telemetry.InternalCollection');
+goog.require('bloombox.telemetry.event');
+goog.require('bloombox.telemetry.notifyUserID');
+
 goog.require('proto.bloombox.partner.settings.ShopStatus');
 goog.require('proto.bloombox.services.shop.v1.CheckZipcode.Response');
 goog.require('proto.bloombox.services.shop.v1.ShopInfo.Response');
+goog.require('proto.bloombox.services.shop.v1.VerifyError');
+goog.require('proto.bloombox.services.shop.v1.VerifyMember');
 
 goog.require('stackdriver.protect');
 
@@ -59,6 +68,46 @@ bloombox.shop.ShopStatus = {
   PICKUP_ONLY: 'PICKUP_ONLY',
   DELIVERY_ONLY: 'DELIVERY_ONLY'
 };
+
+
+/**
+ * Send follow-up telemetry after verifying a user. This includes basic info
+ * about the user account, and the circumstances surrounding their verification,
+ * and the verification result.
+ *
+ * @protected
+ * @param {bloombox.shop.Customer} customer Customer resolved from the response.
+ * @param {proto.bloombox.services.shop.v1.VerifyMember.Response} inflated Proto
+ *        response object, inflated from RPC response.
+ * @param {boolean} verified Verification status of the user. If this flag is
+ *        true, the user is eligible to submit orders.
+ */
+function sendVerifyTelemetry(customer, inflated, verified) {
+  let userKey = customer.getUserKey();
+
+  // indicate verification status
+  let verificationData = {'allowed': inflated.getVerified()};
+
+  // if we succeeded, get the user's key and set it for analytics
+  if (verified) {
+    if (userKey && typeof userKey === 'string') {
+      bloombox.telemetry.notifyUserID(userKey);
+    } else {
+      bloombox.logging.info('Unable to resolve user key from decoded ' +
+        'customer.', {'customer': customer});
+    }
+    verificationData['customer'] = {
+      'foreignId': customer.getForeignId().trim(),
+      'userKey': customer.getUserKey()
+    };
+  }
+
+  // verification event
+  bloombox.telemetry.event(
+    bloombox.telemetry.InternalCollection.VERIFICATION,
+    {'action': 'verify',
+      'verification': verificationData}).send();
+}
 
 
 /**
@@ -252,6 +301,97 @@ bloombox.shop.zipcheckLegacy = function(zipcode, callback, opts) {
 
 
 /**
+ * Verify a user via Bloombox.
+ *
+ * @param {string} email Email address to verify.
+ * @param {bloombox.shop.VerifyCallback} callback Optional endpoint override.
+ * @param {?bloombox.shop.ShopOptions=} opts Configuration options to apply in
+ *        the scope of this single RPC operation.
+ * @throws {bloombox.rpc.RPCException} If email is invalid.
+ * @export
+ */
+bloombox.shop.verifyLegacy = function(email, callback, opts) {
+  if (!email || email.length < 5 ||
+    (typeof email !== 'string'))
+    throw new bloombox.rpc.RPCException(
+      'Email was found to be empty or invalid, cannot verify.');
+
+  let config = bloombox.config.active();
+  let partner = config.partner;
+  let location = config.location;
+
+  if (opts && opts.scope) {
+    const splitScope = opts.scope.split('/');
+    if (splitScope.length !== 4)
+      throw new bloombox.rpc.RPCException('Invalid scope override.');
+    partner = splitScope[1];
+    location = splitScope[3];
+  }
+
+  if (!partner || !location) {
+    bloombox.logging.error('Partner or location code is not defined.');
+    return;
+  }
+
+  const encodedEmail = btoa(email);
+  const rpc = new bloombox.shop.rpc.ShopRPC(
+    /** @type {bloombox.shop.Routine} */ (bloombox.shop.Routine.VERIFY),
+    'GET', [
+      'partners', partner,
+      'locations', location,
+      'members', encodedEmail, 'verify'].join('/'));
+
+  bloombox.logging.log('Verifying user...', {'email': email});
+
+  let done = false;
+
+  rpc.send(function(response) {
+    if (done) return;
+    if (response !== null) {
+      done = true;
+
+      bloombox.logging.log('Response received for verify RPC.', response);
+
+      // decode the response
+      let inflated = (
+        new proto.bloombox.services.shop.v1.VerifyMember.Response());
+      inflated.setVerified((response['verified'] === true) || false);
+      if (response['error']) {
+        inflated.setError(response['error']);
+      }
+
+      if (inflated) {
+        let customer = /** @type {?bloombox.shop.Customer} */ (
+          (response['verified'] === true) ? bloombox.shop.Customer.fromResponse(
+            /** @type {Object} */ (response)) : null);
+        let verified = response['verified'] === true;
+        if (verified) {
+          bloombox.logging.log('Loaded \'Customer\' record from response.',
+            customer);
+        } else {
+          bloombox.logging.log(
+            'Customer could not be verified at email address \'' +
+            email + '\'.');
+        }
+        callback(inflated, null);
+        sendVerifyTelemetry(customer, inflated, verified);
+      } else {
+        bloombox.logging.warn('Failed to inflate RPC.', response);
+      }
+    } else {
+      bloombox.logging.warn('Failed to inflate RPC.', response);
+    }
+  }, function(status) {
+    // we got an error
+    bloombox.logging.error(status ?
+      'Verification RPC failed with unexpected status: \'' + status + '\'.' :
+      'Verification RPC response failed to be decoded.');
+  });
+};
+
+
+
+/**
  * Defines an implementation of the Bloombox Shop API, which calls into legacy
  * systems via the `v1beta0` adapter.
  *
@@ -325,6 +465,36 @@ bloombox.shop.v1beta0.Service = (class ShopV0 {
   zipcheck(zipcode, callback, config) {
     return new Promise((resolve, reject) => {
       bloombox.shop.zipcheckLegacy(zipcode, (response, err) => {
+        if (err || !response) {
+          if (callback) callback(null, err || response);
+          reject(err || response);
+        } else {
+          if (callback) callback(response, null);
+          resolve(response);
+        }
+      }, config);
+    });
+  }
+
+  // -- API: User Verification -- //
+  /**
+   * Verify a user's eligibility to order cannabis via the web shop, using their
+   * email address to find their account. This method guarantees that the user
+   * is registered, has a valid and un-expired government ID listed (according
+   * to the partner and location settings), and is in good standing with the
+   * retail partner.
+   *
+   * @param {string} email Email address to use to locate the user.
+   * @param {?bloombox.shop.VerifyCallback=} callback Function to dispatch once
+   *        a response or terminal error state is reached.
+   * @param {?bloombox.shop.ShopOptions=} config Configuration options to apply
+   *        in the scope of this single RPC operation.
+   * @return {Promise<proto.bloombox.services.shop.v1.VerifyMember.Response>}
+   *         Promise attached to the underlying RPC call.
+   */
+  verify(email, callback, config) {
+    return new Promise((resolve, reject) => {
+      bloombox.shop.verifyLegacy(email, (response, err) => {
         if (err || !response) {
           if (callback) callback(null, err || response);
           reject(err || response);
