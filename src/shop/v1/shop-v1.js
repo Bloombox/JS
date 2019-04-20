@@ -47,6 +47,7 @@ goog.provide('bloombox.shop.v1.Service');
 
 
 
+// -- API Surface: Shop v1 -- //
 /**
  * Defines an implementation of the Bloombox Shop API, which uses gRPC to call
  * out to remote services provided by Bloombox Cloud. This adapter is based on
