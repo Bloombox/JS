@@ -219,7 +219,7 @@ bloombox.menu.RetrieveOptions = (
       proto.opencannabis.products.menu.section.Section.UNSPECIFIED,
       false  /* allow caching */,
       null  /* no scope override */);
-  };
+  }
 
   /**
    * Generate a `RetrieveOptions` instance from a simple JavaScript record
