@@ -30,18 +30,21 @@ goog.require('bloombox.config.active');
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
-// - Menu API
-goog.provide('bloombox.menu.api');
-
 goog.require('bloombox.menu.DEBUG');
-goog.require('bloombox.menu.MENU_API_ENDPOINT');
 goog.require('bloombox.menu.MenuAPI');
 goog.require('bloombox.menu.VERSION');
 
-goog.provide('bloombox.menu.setup');
-
-goog.require('bloombox.menu.v1beta0.Service');
 goog.require('bloombox.menu.v1beta1.Service');
+
+goog.require('bloombox.rpc.FALLBACK');
+
+if (bloombox.rpc.FALLBACK) {
+  goog.require('bloombox.menu.v1beta0.Service');
+}
+
+// - Menu API
+goog.provide('bloombox.menu.api');
+goog.provide('bloombox.menu.setup');
 
 
 /**
@@ -87,9 +90,13 @@ bloombox.menu.setup = function(partner, location, apikey, callback) {
 bloombox.menu.api = function(apiConfig) {
   // for now, create v1beta0 adapter, always
   let config = bloombox.config.active();
-  if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
-    // use the new beta gRPC engine
+  if (bloombox.rpc.FALLBACK) {
+    if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
+      // use the new beta gRPC engine
+      return new bloombox.menu.v1beta1.Service(config);
+    }
+    return new bloombox.menu.v1beta0.Service(config);
+  } else {
     return new bloombox.menu.v1beta1.Service(config);
   }
-  return new bloombox.menu.v1beta0.Service(config);
 };

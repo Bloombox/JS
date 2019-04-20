@@ -214,31 +214,6 @@ bloombox.shop.Customer.prototype.getEmailAddress = function() {
  * @public
  */
 bloombox.shop.Customer.fromResponse = function(proto) {
-  if (typeof proto !== 'object' || !proto)
-    throw new bloombox.shop.CustomerException(
-      'Failed to resolve customer for response.');
-  if (!('customer' in proto))
-    throw new bloombox.shop.CustomerException(
-      'Failed to resolve customer.');
-  if (!('foreignId' in proto['customer']))
-    throw new bloombox.shop.CustomerException(
-      'Failed to resolve foreign ID.');
-  if (!('person' in proto['customer']))
-    throw new bloombox.shop.CustomerException(
-      'Failed to resolve person.');
-  if (!('name' in proto['customer']['person']))
-    throw new bloombox.shop.CustomerException(
-      'Failed to resolve person\'s name.');
-  if (!('contact' in proto['customer']['person']))
-    throw new bloombox.shop.CustomerException(
-      'Failed to resolve contact info.');
-  if (!('email' in proto['customer']['person']['contact']))
-    throw new bloombox.shop.CustomerException(
-      'Failed to resolve email spec.');
-  if (!('address' in proto['customer']['person']['contact']['email']))
-    throw new bloombox.shop.CustomerException(
-      'Failed to resolve email address.');
-
   // decode user key, if present
   let userKey = /** @type {?string|undefined} */ (proto['customer']['userKey']);
 

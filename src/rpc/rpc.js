@@ -40,6 +40,7 @@ goog.require('stackdriver.reportError');
 goog.provide('bloombox.rpc.ACCEPT_HEADER_VALUE');
 goog.provide('bloombox.rpc.API_KEY_HEADER');
 goog.provide('bloombox.rpc.DEBUG_HEADER');
+goog.provide('bloombox.rpc.FALLBACK');
 
 goog.provide('bloombox.rpc.RPC');
 goog.provide('bloombox.rpc.RPCException');
@@ -49,6 +50,17 @@ goog.provide('bloombox.rpc.TRACE_HEADER');
 
 goog.provide('bloombox.rpc.context');
 goog.provide('bloombox.rpc.metadata');
+
+
+/**
+ * Whether to include fallback code to handle RPCs over RESTful interfaces,
+ * using JSON, or only include new gRPC-web-style RPC invocation.
+ *
+ * @define {boolean} FALLBACK Debug flag for global debugging.
+ *         features.
+ * @export
+ */
+bloombox.rpc.FALLBACK = true;
 
 
 /**
@@ -230,14 +242,7 @@ bloombox.rpc.RPC = function RPC(httpMethod,
                                 opt_keep) {
   let config = bloombox.config.active();
   let apiKey = config.key;
-  let partner = config.partner;
-  let location = config.location;
-  if ((typeof opt_payload !== 'object') &&
-      opt_payload !== null &&
-      opt_payload !== undefined)
-    throw new bloombox.rpc.RPCException('Invalid payload for RPC: ' +
-        opt_payload);
-  if (!apiKey || !partner || !location)
+  if (!apiKey)
     throw new bloombox.rpc.RPCException(
       'Must call bloombox.setup before sending an RPC.');
 
@@ -295,22 +300,6 @@ bloombox.rpc.RPC = function RPC(httpMethod,
    * @package
    */
   this.apiKey = apiKey;
-
-  /**
-   * Partner code.
-   *
-   * @type {string}
-   * @package
-   */
-  this.partner = partner;
-
-  /**
-   * Location code.
-   *
-   * @type {string}
-   * @package
-   */
-  this.location = location;
 
   /**
    * Flag to keep this RPC around for re-use. Defaults to `false`.
