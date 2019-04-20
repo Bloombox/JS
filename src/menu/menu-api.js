@@ -260,6 +260,7 @@ bloombox.menu.RetrieveOptions = (
       'scope': this.scope};
   }
 });
+goog.inherits(bloombox.menu.RetrieveOptions, bloombox.rpc.ScopedOptions);
 
 
 // -- API Surface -- //
