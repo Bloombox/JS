@@ -85,7 +85,5 @@ bloombox.telemetry.TelemetryEndpointRenderer;
  */
 bloombox.telemetry.TelemetryEndpoint = {
   'PING': () => 'ping',
-  'EVENT': (context) => `${context.getCollection().getName()}:event`,
-  'BATCH': (context) => 'events:batch',
-  'EXCEPTION': (context) => `${context.getCollection().getName()}:error`
+  'EVENT': (context) => `${context.getCollection().getName()}:event`
 };
