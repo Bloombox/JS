@@ -135,19 +135,102 @@ goog.scope(function() {
 
       return operation;
     }
+
+    // -- API: Product Retrieval -- //
+    /**
+     * Fetch an individual product record, addressed by its unique product key,
+     * which is comprised of the product's type, and the product's key ID (which
+     * is an opaque string value provisioned when the product is created).
+     *
+     * Once either product data or a terminal error state are encountered, the
+     * given callback, if provided, is dispatched, and the resulting promise is
+     * fulfilled. If a result is available, it is passed in as the first
+     * parameter of the callback, otherwise, an error is passed in as the second
+     * parameter. In no case are two values passed.
+     *
+     * @param {proto.bloombox.base.ProductKey} key Product key to fetch.
+     * @param {?bloombox.menu.ProductCallback=} callback Callback to dispatch
+     *        once either a result or terminal error state are reached.
+     * @param {?bloombox.menu.RetrieveOptions=} config Configuration options to
+     *        apply to this request.
+     * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+     *         Promise attached to the underlying RPC call.
+     * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
+     *         the underlying RPC, or during transmission.
+     */
+    product(key, callback, config) {
+      const resolved = options || bloombox.menu.RetrieveOptions.defaults();
+      const request = (
+        new proto.bloombox.services.menu.v1beta1.GetProduct.Request());
+
+      // copy in product key
+      request.setKey(key);
+
+      // resolve scope
+      const scope = bloombox.rpc.context(resolved);
+      request.setScope(`partner/${scope.partner}/location/${scope.location}`);
+
+      if (resolved.fresh === true) request.setFresh(true);
+      if (resolved.fingerprint) request.setFingerprint(resolved.fingerprint);
+      const operation = (
+        this.client.products(request, bloombox.rpc.metadata(this.sdkConfig)));
+
+      operation.catch((err) => {
+        if (callback) callback(null, err);
+      });
+
+      operation.then((response) => {
+        if (callback) callback(response, null);
+      });
+      return operation;
+    }
+
+    // -- API: Featured Products -- //
+    /**
+     * Retrieve featured products for a given menu section. "Featured" products
+     * are items with the "FEATURED" flag present in their product flags, as
+     * indicated by staff or external systems via the Bloombox Dashboard.
+     *
+     * @param {?proto.opencannabis.products.menu.section.Section} section Menu
+     *        section to fetch. If left unset, fetches across all sections.
+     * @param {?bloombox.menu.RetrieveCallback=} callback Callback to dispatch
+     *        once a dataset of products is available, or a terminal error is
+     *        reached. Optional.
+     * @param {?bloombox.menu.RetrieveOptions=} config Options, or configuration,
+     *        to apply in the scope of just this RPC operation. In some cases, a
+     *        given API method may not apply or use all options. If left unset, a
+     *        sensible set of default settings is generated and used.
+     * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+     *         Promise attached to the underlying RPC call.
+     * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
+     *         the underlying RPC, or during transmission.
+     */
+    featured(section, callback, config) {
+      const resolved = options || bloombox.menu.RetrieveOptions.defaults();
+      const request = (
+        new proto.bloombox.services.menu.v1beta1.GetFeatured.Request());
+
+      // resolve scope
+      const scope = bloombox.rpc.context(resolved);
+      request.setScope(`partner/${scope.partner}/location/${scope.location}`);
+
+      // copy in section, if specified
+      if (section) request.setSection(section);
+
+      // copy in options, if specified
+      if (resolved.keysOnly) request.setKeysOnly(true);
+
+      // fire it off
+      const operation = (
+        this.client.featured(request, bloombox.rpc.metadata(this.sdkConfig)));
+
+      operation.then((response) => {
+        if (callback) callback(response, null);
+      });
+      operation.catch((err) => {
+        if (callback) callback(null, err);
+      });
+      return operation;
+    }
   });
 });
-
-
-// export response symbols
-goog.exportSymbol(
-  'proto.bloombox.services.menu.v1beta1.GetMenu.Response',
-  proto.bloombox.services.menu.v1beta1.GetMenu.Response);
-
-goog.exportSymbol(
-  'proto.bloombox.services.menu.v1beta1.GetMenu.Response.prototype.getCached',
-  proto.bloombox.services.menu.v1beta1.GetMenu.Response.prototype.getCached);
-
-goog.exportSymbol(
-  'proto.bloombox.services.menu.v1beta1.GetMenu.Response.prototype.getCatalog',
-  proto.bloombox.services.menu.v1beta1.GetMenu.Response.prototype.getCatalog);
