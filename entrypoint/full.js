@@ -33,19 +33,18 @@ goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
 // Module: Menu
-goog.require('bloombox.menu.setup');
+goog.require('bloombox.menu.api');
 
 // Module: Shop
-goog.require('bloombox.shop.setup');
+goog.require('bloombox.shop.api');
 
 // Module: Telemetry
+goog.require('bloombox.telemetry.events');
 goog.require('bloombox.telemetry.optout');
-goog.require('bloombox.telemetry.setup');
 
 // Util: Error Reporting
 goog.require('stackdriver.ErrorReporter');
 goog.require('stackdriver.StackdriverConfig');
-goog.require('stackdriver.protect');
 goog.require('stackdriver.reportError');
 goog.require('stackdriver.setup');
 
@@ -84,7 +83,7 @@ bloombox.JS_PROJECT_ID = 'bloom-js';
  * @define {boolean} ERROR_REPORTING Error reporting.
  * @export
  */
-bloombox.ERROR_REPORTING = false;
+bloombox.ERROR_REPORTING = true;
 
 
 /**
@@ -139,6 +138,9 @@ bloombox.setup = function(partner, location, apikey, callback, extraConfig) {
       stackdriver.setup(bloombox.ERROR_REPORTER);
     } catch (e) {
       // skip error reporting if it cannot be setup
+      if (bloombox.DEBUG)
+        bloombox.logging.warn('Unable to initialize error reporting.',
+          e);
     }
   }
 
@@ -149,14 +151,8 @@ bloombox.setup = function(partner, location, apikey, callback, extraConfig) {
      'variant': bloombox.VARIANT});
 
   // setup telemetry first
-  bloombox.telemetry.setup(partner, location, apikey, function() {
+  bloombox.telemetry.setup(function() {
     // setup the menu
-    bloombox.menu.setup(partner, location, apikey, function() {
-      // setup the shop
-      bloombox.shop.setup(partner, location, apikey, function() {
-        // dispatch user callback
-        callback();
-      });
-    });
+    callback();
   });
 };

@@ -3,9 +3,7 @@
 
 function genShopTestsuite(version) {
   cachedShopService = null;
-  const apiOpts = version === 'v0' ?
-    {'cache': false} :
-    {'beta': true, 'cache': false};
+  const apiOpts = {'cache': false};
 
   describe('service: shop (' + version + ')', function() {
     // method: `zipcheck`
@@ -109,6 +107,5 @@ function genShopTestsuite(version) {
 }
 
 function shopTestsuite() {
-  genShopTestsuite('v0');
   genShopTestsuite('v1');
 }

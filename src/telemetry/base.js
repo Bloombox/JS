@@ -26,7 +26,10 @@
 
 goog.provide('bloombox.telemetry.BATCH_SIZE');
 goog.provide('bloombox.telemetry.DEBUG');
+goog.provide('bloombox.telemetry.InternalCollection');
 goog.provide('bloombox.telemetry.MAX_XHRs');
+goog.provide('bloombox.telemetry.OperationStatus');
+goog.provide('bloombox.telemetry.Routine');
 goog.provide('bloombox.telemetry.TELEMETRY_API_ENDPOINT');
 goog.provide('bloombox.telemetry.TELEMETRY_API_VERSION');
 goog.provide('bloombox.telemetry.VERSION');
@@ -118,3 +121,92 @@ bloombox.telemetry.TELEMETRY_API_ENDPOINT = bloombox.API_ENDPOINT;
  * @public
  */
 bloombox.telemetry.TELEMETRY_API_VERSION = 'v1beta4';
+
+
+/**
+ * Prefix to use for internal collection names.
+ *
+ * @const {string}
+ * @package
+ */
+bloombox.telemetry.InternalCollectionPrefix = '_bloom_';
+
+
+/**
+ * Separator to use for internal collection names.
+ *
+ * @const {string}
+ * @private
+ */
+bloombox.telemetry.InternalCollectionSeparator_ = ':';
+
+
+/**
+ * Version to use for internal collection names.
+ *
+ * @const {string}
+ * @private
+ */
+bloombox.telemetry.InternalCollectionVersion_ = 'v1beta4';
+
+
+/**
+ * Separator to use for internal collection names.
+ *
+ * @param {string} name Actual name to give the collection.
+ * @return {string} Constructed collection name.
+ */
+bloombox.telemetry.internalCollectionName = function(name) {
+  return [
+    bloombox.telemetry.InternalCollectionPrefix,
+    bloombox.telemetry.InternalCollectionVersion_,
+    name
+  ].join(bloombox.telemetry.InternalCollectionSeparator_);
+};
+
+
+/**
+ * Internal event collections used for various metrics and counters.
+ *
+ * @enum {string}
+ * @public
+ */
+bloombox.telemetry.InternalCollection = {
+  LIBRARY: bloombox.telemetry.internalCollectionName('library'),
+  PAGEVIEW: bloombox.telemetry.internalCollectionName('pageview'),
+  SERVICE: bloombox.telemetry.internalCollectionName('service'),
+  ORDERS: bloombox.telemetry.internalCollectionName('orders'),
+  ENROLLMENT: bloombox.telemetry.internalCollectionName('enrollment'),
+  VERIFICATION: bloombox.telemetry.internalCollectionName('verification')
+};
+
+
+/**
+ * Enumerates operation statuses that result from Telemetry API RPC calls.
+ *
+ * @enum {proto.bloombox.services.telemetry.v1beta4.OperationStatus}
+ */
+bloombox.telemetry.OperationStatus = {
+  OK: proto.bloombox.services.telemetry.v1beta4.OperationStatus.OK,
+  ERROR: proto.bloombox.services.telemetry.v1beta4.OperationStatus.ERROR
+};
+
+
+/**
+ * Enumerates methods in the Telemetry API.
+ *
+ * @enum {string}
+ */
+bloombox.telemetry.Routine = {
+  PING: 'PING',
+  EVENT: 'EVENT',
+  EXCEPTION: 'EXCEPTION',
+  SECTION_IMPRESSION: 'SECTION_IMPRESSION',
+  SECTION_VIEW: 'SECTION_VIEW',
+  SECTION_ACTION: 'SECTION_ACTION',
+  PRODUCT_IMPRESSION: 'PRODUCT_IMPRESSION',
+  PRODUCT_VIEW: 'PRODUCT_VIEW',
+  PRODUCT_ACTION: 'PRODUCT_ACTION',
+  USER_ACTION: 'USER_ACTION',
+  ORDER_ACTION: 'ORDER_ACTION'
+};

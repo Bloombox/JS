@@ -21,17 +21,5 @@ function rpcTestsuite() {
           'exception message should include its error');
       });
     });
-
-    describe('RPC object', function() {
-      it('should only accept objects as payloads', function() {
-        try {
-          new bloombox.rpc.RPC('GET', '/hello', 5, true, true);
-        } catch (err) {
-          // we good
-          assert(err.message.indexOf('Invalid payload') !== -1,
-            'should emit error describing invalid payload');
-        }
-      });
-    });
   });
 }

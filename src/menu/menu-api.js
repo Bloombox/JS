@@ -82,6 +82,23 @@ bloombox.menu.ProductCallback;
 
 
 /**
+ * Callback function type declaration for operations that produce lists of
+ * products marked as featured-for-promotion. This flag indicates the item is
+ * eligible to be elevated to more prominent displays, which on the web might be
+ * featured product areas in the section master UI.
+ *
+ * The callback's parameters are either-or in this sense: if a result is passed,
+ * the error is passed as `null`, and vice-versa.
+ *
+ * @public
+ * @typedef {function(
+ *    ?proto.bloombox.services.menu.v1beta1.GetFeatured.Response,
+ *    *)}
+ */
+bloombox.menu.FeaturedCallback;
+
+
+/**
  * Specifies a simple record type, which is inflatable into a full settings
  * object which specifies options for retrieving menus.
  *
@@ -333,7 +350,7 @@ bloombox.menu.MenuAPI = (class MenuAPI {
    *        either a result or terminal error state are reached. Optional.
    * @param {?bloombox.menu.RetrieveOptions=} config Configuration options to
    *        apply to this request.
-   * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+   * @return {Promise<proto.bloombox.services.menu.v1beta1.GetProduct.Response>}
    *         Promise attached to the underlying RPC call.
    * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
    *         the underlying RPC, or during transmission.
@@ -348,14 +365,14 @@ bloombox.menu.MenuAPI = (class MenuAPI {
    *
    * @param {?proto.opencannabis.products.menu.section.Section} section Menu
    *        section to fetch. If left unset, fetches across all sections.
-   * @param {?bloombox.menu.RetrieveCallback=} callback Callback to dispatch
+   * @param {?bloombox.menu.FeaturedCallback=} callback Callback to dispatch
    *        once a dataset of products is available, or a terminal error is
    *        reached. Optional.
    * @param {?bloombox.menu.RetrieveOptions=} config Options, or configuration,
    *        to apply in the scope of just this RPC operation. In some cases, a
    *        given API method may not apply or use all options. If left unset, a
    *        sensible set of default settings is generated and used.
-   * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+   * @return {Promise<proto.bloombox.services.menu.v1beta1.GetFeatured.Response>}
    *         Promise attached to the underlying RPC call.
    * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
    *         the underlying RPC, or during transmission.

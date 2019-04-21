@@ -32,6 +32,9 @@ goog.require('bloombox.rpc.context');
 goog.require('bloombox.rpc.metadata');
 
 goog.require('bloombox.telemetry.EventTelemetryAPI');
+goog.require('bloombox.telemetry.globalContext');
+
+goog.require('bloombox.util.generateUUID');
 
 goog.require('proto.bloombox.analytics.Context');
 goog.require('proto.bloombox.analytics.Scope');

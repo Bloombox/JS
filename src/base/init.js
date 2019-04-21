@@ -23,7 +23,6 @@
 
 /*global goog */
 
-goog.provide('bloombox.API_ENDPOINT');
 goog.provide('bloombox.DEBUG');
 goog.provide('bloombox.DEBUG_PROPERTY');
 goog.provide('bloombox.INTERNAL');
@@ -56,7 +55,7 @@ bloombox.DEBUG_PROPERTY = '__debug__';
  * @define {string} VERSION Version for library.
  * @export
  */
-bloombox.VERSION = 'v2.0.0b2';
+bloombox.VERSION = 'v2.1.0-rc1';
 
 
 /**
@@ -68,11 +67,3 @@ bloombox.VERSION = 'v2.0.0b2';
  */
 bloombox.INTERNAL = false;
 
-
-/**
- * Global API endpoint.
- *
- * @define {string} API_ENDPOINT Global API endpoint.
- * @export
- */
-bloombox.API_ENDPOINT = 'https://rpc.bloombox.cloud';

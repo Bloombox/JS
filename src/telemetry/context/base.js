@@ -94,8 +94,8 @@ bloombox.telemetry.ContextException = function ContextException(message) {
  * @param {?bloombox.menu.Section=} opt_section Menu section to specify for the
  *        hit. Generates a section-scoped commercial event under the hood.
  *        Optional.
- * @param {?bloombox.product.Key=} opt_item Item key to specify for the hit.
- *        Generates an item-scoped commercial event under the hood. Optional.
+ * @param {?proto.opencannabis.base.ProductKey=} opt_item Item key to specify
+ *        for the hit. Generates an item-scoped commercial event under the hood.
  * @param {?string=} opt_order Optional. Order key to apply to this context.
  * @param {?proto.bloombox.analytics.context.DeviceApplication=} opt_app
  *        Application context, generated or provided by the partner.
@@ -248,7 +248,7 @@ bloombox.telemetry.Context = function(opt_collection,
    *
    * @type {?proto.opencannabis.base.ProductKey}
    */
-  this.item = opt_item ? opt_item.export() : null;
+  this.item = opt_item || null;
 
   /**
    * Order key to attribute this event to. Defaults to `null`, indicating no

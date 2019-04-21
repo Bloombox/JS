@@ -25,7 +25,6 @@
 
 /*global goog */
 
-goog.require('bloombox.API_ENDPOINT');
 goog.require('bloombox.menu.MenuAPI');
 goog.require('bloombox.menu.RetrieveCallback');
 goog.require('bloombox.menu.RetrieveException');
@@ -77,7 +76,7 @@ goog.scope(function() {
        */
       this.client = (
         new proto.bloombox.services.menu.v1beta1.MenuPromiseClient(
-          bloombox.API_ENDPOINT,
+          sdkConfig.endpoint,
           null,
           {'format': 'binary'}));
     }
@@ -155,7 +154,7 @@ goog.scope(function() {
      *        once either a result or terminal error state are reached.
      * @param {?bloombox.menu.RetrieveOptions=} config Configuration options to
      *        apply to this request.
-     * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+     * @return {Promise<proto.bloombox.services.menu.v1beta1.GetProduct.Response>}
      *         Promise attached to the underlying RPC call.
      * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
      *         the underlying RPC, or during transmission.
@@ -195,14 +194,14 @@ goog.scope(function() {
      *
      * @param {?proto.opencannabis.products.menu.section.Section} section Menu
      *        section to fetch. If left unset, fetches across all sections.
-     * @param {?bloombox.menu.RetrieveCallback=} callback Callback to dispatch
+     * @param {?bloombox.menu.FeaturedCallback=} callback Callback to dispatch
      *        once a dataset of products is available, or a terminal error is
      *        reached. Optional.
      * @param {?bloombox.menu.RetrieveOptions=} config Options, or configuration,
      *        to apply in the scope of just this RPC operation. In some cases, a
      *        given API method may not apply or use all options. If left unset, a
      *        sensible set of default settings is generated and used.
-     * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+     * @return {Promise<proto.bloombox.services.menu.v1beta1.GetFeatured.Response>}
      *         Promise attached to the underlying RPC call.
      * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
      *         the underlying RPC, or during transmission.

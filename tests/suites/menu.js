@@ -2,9 +2,7 @@
 'use strict';
 
 function genMenuTestsuite(version) {
-  const apiOpts = version === 'v0' ?
-    {'cache': false} :
-    {'beta': true, 'cache': false};
+  const apiOpts = {'cache': false};
 
   describe('menu (' + version + ')', function() {
     describe('method: `retrieve`', function() {
@@ -15,8 +13,10 @@ function genMenuTestsuite(version) {
               reject(new Error('unable to retrieve menu: ' + err.toString()));
             else if (menu)
               resolve(menu);
+            expect(menu).not.toBeNull();
           }, bloombox.menu.RetrieveOptions.defaults());
           assert(promise, 'should get valid promise from menu fetch');
+          expect(promise).not.toBeNull();
         });
       });
 
@@ -25,6 +25,8 @@ function genMenuTestsuite(version) {
           // noinspection ExceptionCaughtLocallyJS
           throw new bloombox.menu.RetrieveException('hello');
         } catch (e) {
+          expect(e).not.toBeNull();
+          expect(e.message).not.toBeNull();
           assert(e, 'should get exception after RetrieveException');
           assert(e.message === 'hello',
             'should get correct message from RetrieveException');
@@ -177,7 +179,6 @@ function menuTestsuite() {
       });
     });
 
-    genMenuTestsuite('v0');
     genMenuTestsuite('v1beta1');
   });
 }

@@ -3,9 +3,7 @@
 
 function genTelemetryTestsuite(version) {
   cachedEventsService = null;
-  const apiOpts = version === 'v0' ?
-    {'cache': false} :
-    {'beta': true, 'cache': false};
+  const apiOpts = {'cache': false};
 
   describe('service: telemetry (' + version + ')', function() {
     describe('method: `ping`', function() {
@@ -35,6 +33,5 @@ function genTelemetryTestsuite(version) {
 }
 
 function telemetryTestsuite() {
-  genTelemetryTestsuite('v0');
   genTelemetryTestsuite('v1beta4');
 }

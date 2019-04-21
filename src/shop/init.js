@@ -30,18 +30,12 @@ goog.require('bloombox.config.active');
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
-goog.require('bloombox.rpc.FALLBACK');
-
 goog.require('bloombox.shop.DEBUG');
-goog.require('bloombox.shop.SHOP_API_ENDPOINT');
 goog.require('bloombox.shop.VERSION');
 
-goog.require('bloombox.shop.info');
 goog.require('bloombox.shop.v1.Service');
-goog.require('bloombox.shop.v1beta0.Service');
 
 goog.provide('bloombox.shop.api');
-goog.provide('bloombox.shop.setup');
 
 
 /**
@@ -52,39 +46,6 @@ goog.provide('bloombox.shop.setup');
  * @type {?bloombox.shop.ShopAPI}
  */
 let cachedShopService = null;
-
-
-/**
- * Setup the Bloombox Shop API. Provide your API key and an endpoint if you
- * would like to override the default (most users should not need to).
- *
- * @param {string} partner Partner code to use.
- * @param {string} location Location code to use.
- * @param {string} apikey API key to use.
- * @param {function()} callback Callback dispatched when the Shop API is ready.
- * @param {string=} endpoint Override for endpoint. Uses default if unspecified.
- * @export
- */
-bloombox.shop.setup = function(partner, location, apikey, callback, endpoint) {
-  if (!partner || !location) {
-    bloombox.logging.error('Partner or location code is not defined.');
-    return;
-  }
-
-  let config = bloombox.config.active();
-  let merged = /** @type {bloombox.config.JSConfig} */ (
-    Object.assign({}, config, {'endpoints':
-      Object.assign({}, config.endpoints || {}, {
-        shop: endpoint || bloombox.shop.SHOP_API_ENDPOINT})}));
-
-  bloombox.config.configure(merged);
-
-  bloombox.logging.log('Shop is ready for use.',
-    {'version': bloombox.shop.VERSION,
-      'debug': bloombox.shop.DEBUG,
-      'config': bloombox.config.active()});
-  callback();
-};
 
 
 /**
@@ -99,15 +60,7 @@ bloombox.shop.setup = function(partner, location, apikey, callback, endpoint) {
 bloombox.shop.api = function(apiConfig) {
   if (!cachedShopService || (apiConfig && apiConfig['cache'] === false)) {
     let config = bloombox.config.active();
-    if (bloombox.rpc.FALLBACK) {
-      if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
-        // use the new beta gRPC engine
-        cachedShopService = new bloombox.shop.v1.Service(config);
-      }
-      cachedShopService = new bloombox.shop.v1beta0.Service(config);
-    } else {
-      cachedShopService = new bloombox.shop.v1.Service(config);
-    }
+    cachedShopService = new bloombox.shop.v1.Service(config);
   }
   return /** @type {bloombox.shop.ShopAPI} */ (cachedShopService);
 };

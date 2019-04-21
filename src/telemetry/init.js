@@ -40,6 +40,7 @@ goog.require('bloombox.telemetry.didOptOut');
 goog.require('bloombox.telemetry.v1beta4.EventService');
 
 goog.provide('bloombox.telemetry.boot');
+goog.provide('bloombox.telemetry.events');
 goog.provide('bloombox.telemetry.sendInitialEvents');
 goog.provide('bloombox.telemetry.setup');
 goog.provide('bloombox.telemetry.setupPageTracking');
@@ -49,37 +50,15 @@ goog.provide('bloombox.telemetry.setupPageTracking');
  * Setup the Bloombox Telemetry API. Provide your API key and an endpoint if you
  * would like to override the default (most users should not need to).
  *
- * @param {string} partner Partner code to use.
- * @param {string} location Location code to use.
- * @param {string} apikey API key to use.
- * @param {function()} callback Callback dispatched when the Shop API is ready.
- * @param {string=} endpoint Override for endpoint. Uses default if unspecified.
+ * @param {function()} callback Callback dispatched when telemetry services are
+ *        ready for use.
  * @export
  */
-bloombox.telemetry.setup = function(partner,
-                                    location,
-                                    apikey,
-                                    callback,
-                                    endpoint) {
-  if (!partner || !location) {
-    bloombox.logging.error('Partner or location code is not defined.');
-    return;
-  }
-
-  let config = bloombox.config.active();
-  let merged = /** @type {bloombox.config.JSConfig} */ (
-    Object.assign({}, config, {'endpoints':
-      Object.assign({}, config.endpoints || {}, {
-        shop: endpoint || bloombox.telemetry.TELEMETRY_API_ENDPOINT})}));
-
-  bloombox.config.configure(merged);
-
-  bloombox.logging.log('Telemetry is ready for use.',
-    {'version': bloombox.telemetry.VERSION,
-      'debug': bloombox.telemetry.DEBUG,
-      'config': bloombox.config.active()});
+bloombox.telemetry.setup = function(callback) {
   callback();
-  bloombox.telemetry.boot();
+  setTimeout(function() {
+    bloombox.telemetry.boot();
+  }, 0);
 };
 
 

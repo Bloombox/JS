@@ -41,6 +41,7 @@ module.exports = function(config) {
       {pattern: 'third_party/schema/*.js', included: false},
 
       // 4: source files (watched and served)
+      'third_party/stackdriver/error-reporting.js',
       {pattern: 'src/**/*.js', included: false},
       'entrypoint/full.js',
 
