@@ -92,11 +92,11 @@ bloombox.shop.setup = function(partner, location, apikey, callback, endpoint) {
  * contact info, ordering, and user verification.
  *
  * @export
- * @param {{beta: boolean}=} apiConfig API options to pass. Optional.
+ * @param {{beta: boolean, cache: boolean}=} apiConfig API options to pass.
  * @return {bloombox.shop.ShopAPI} Shop API service implementation instance.
  */
 bloombox.shop.api = function(apiConfig) {
-  if (!cachedShopService) {
+  if (!cachedShopService || (apiConfig && apiConfig['cache'] === false)) {
     let config = bloombox.config.active();
     if (bloombox.rpc.FALLBACK) {
       if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
