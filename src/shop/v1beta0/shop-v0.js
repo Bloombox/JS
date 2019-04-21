@@ -58,11 +58,24 @@ goog.require('proto.bloombox.services.shop.v1.VerifyMember');
 goog.require('stackdriver.protect');
 
 goog.provide('bloombox.shop.Routine');
+goog.provide('bloombox.shop.info');
 goog.provide('bloombox.shop.rpc.ShopRPC');
 goog.provide('bloombox.shop.v1beta0.Service');
 
 
 if (bloombox.rpc.FALLBACK) {
+  // -- Stubs -- //
+  /**
+   * Stubbed info function.
+   *
+   * @param {*} cbk Some parameter.
+   * @return {null} Because we have to.
+   * @export
+   */
+  bloombox.shop.info = function(cbk) {
+    return null;
+  };
+
   // -- Structures -- //
 
   /**
