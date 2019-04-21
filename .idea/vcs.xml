@@ -4,5 +4,6 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/protobuf" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/schema" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/closure/compiler" vcs="Git" />
   </component>
 </project>
