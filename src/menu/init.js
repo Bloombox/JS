@@ -94,19 +94,20 @@ bloombox.menu.setup = function(partner, location, apikey, callback) {
  * or individual product data from Bloombox.
  *
  * @export
- * @param {{beta: boolean}=} apiConfig API configuration.
+ * @param {{beta: boolean, cache: boolean}=} apiConfig API configuration.
  * @return {bloombox.menu.MenuAPI} Menu API service implementation instance.
  */
 bloombox.menu.api = function(apiConfig) {
   // for now, create v1beta0 adapter, always
-  if (!cachedMenuService) {
+  if (!cachedMenuService || (apiConfig && apiConfig['cache'] === false)) {
     let config = bloombox.config.active();
     if (bloombox.rpc.FALLBACK) {
       if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
         // use the new beta gRPC engine
         cachedMenuService = new bloombox.menu.v1beta1.Service(config);
+      } else {
+        cachedMenuService = new bloombox.menu.v1beta0.Service(config);
       }
-      cachedMenuService = new bloombox.menu.v1beta0.Service(config);
     } else {
       cachedMenuService = new bloombox.menu.v1beta1.Service(config);
     }

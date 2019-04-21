@@ -148,7 +148,7 @@ goog.scope(function() {
      * parameter of the callback, otherwise, an error is passed in as the second
      * parameter. In no case are two values passed.
      *
-     * @param {proto.bloombox.base.ProductKey} key Product key to fetch.
+     * @param {proto.opencannabis.base.ProductKey} key Product key to fetch.
      * @param {?bloombox.menu.ProductCallback=} callback Callback to dispatch
      *        once either a result or terminal error state are reached.
      * @param {?bloombox.menu.RetrieveOptions=} config Configuration options to
@@ -159,7 +159,7 @@ goog.scope(function() {
      *         the underlying RPC, or during transmission.
      */
     product(key, callback, config) {
-      const resolved = options || bloombox.menu.RetrieveOptions.defaults();
+      const resolved = config || bloombox.menu.RetrieveOptions.defaults();
       const request = (
         new proto.bloombox.services.menu.v1beta1.GetProduct.Request());
 
@@ -206,7 +206,7 @@ goog.scope(function() {
      *         the underlying RPC, or during transmission.
      */
     featured(section, callback, config) {
-      const resolved = options || bloombox.menu.RetrieveOptions.defaults();
+      const resolved = config || bloombox.menu.RetrieveOptions.defaults();
       const request = (
         new proto.bloombox.services.menu.v1beta1.GetFeatured.Request());
 

@@ -2,8 +2,9 @@
 'use strict';
 
 function genMenuTestsuite(version) {
-  cachedMenuService = null;
-  const apiOpts = version === 'v0' ? {} : {'beta': true};
+  const apiOpts = version === 'v0' ?
+    {'cache': false} :
+    {'beta': true, 'cache': false};
 
   describe('menu (' + version + ')', function() {
     describe('method: `retrieve`', function() {
@@ -43,6 +44,58 @@ function genMenuTestsuite(version) {
         });
       });
     });
+
+    if (version !== 'v0') {
+      describe('method: `product`', function() {
+        it('should be able to grab a product by its key', function() {
+          const key = new proto.opencannabis.base.ProductKey();
+          key.setType(proto.opencannabis.base.ProductKind.FLOWERS);
+          key.setId('-LZk0OW6WEP9u6GSBIo2');
+
+          return bloombox.menu.api(apiOpts).product(key, (response, err) => {
+            expect(response).not.toBeNull();
+            expect(err).toBeNull();
+          });
+        });
+
+        it('should fail when given a key that does not exist', function() {
+          const key = new proto.opencannabis.base.ProductKey();
+          key.setType(proto.opencannabis.base.ProductKind.FLOWERS);
+          key.setId('i-do-not-exist');
+
+          return new Promise((resolve, reject) => {
+            bloombox.menu.api(apiOpts).product(key, (response, err) => {
+              expect(response).toBeNull();
+              expect(err).not.toBeNull();
+              if (!err || response) reject();
+              else resolve();
+            });
+          });
+        });
+      });
+
+      describe('method: `featured`', function() {
+        it('should be able to fetch featured products for a given section', function() {
+          const section = proto.opencannabis.products.menu.section.Section.FLOWERS;
+          return bloombox.menu.api(apiOpts).featured(section);
+        });
+
+        it('should be able to fetch featured products across sections', function() {
+          return bloombox.menu.api(apiOpts).featured();
+        });
+
+        it('should be able to fetch featured products in keys-only mode', function() {
+          return new Promise((resolve, reject) => {
+            const options = bloombox.menu.RetrieveOptions.fromObject({
+              'keysOnly': true});
+            return bloombox.menu.api(apiOpts).featured(null, (response, err) => {
+              if (response && !err) resolve(response);
+              else reject(err);
+            }, options);
+          });
+        });
+      });
+    }
   });
 }
 

@@ -207,15 +207,16 @@ bloombox.telemetry.boot = function() {
  * Acquire an instance of the Event Telemetry API, depending on the current
  * browser environment and library configuration settings.
  *
- * @param {?{beta: boolean}=} apiOptions API configuration options to specify,
- *        which control how the service instance is instantiated. Pass 'beta' to
- *        force use of next-gen transport dispatch code.
+ * @param {?{beta: boolean, cache: boolean}=} apiOptions API configuration
+ *        options to specify, which control how the service instance is
+ *        instantiated. Pass 'beta' to force use of next-gen transport dispatch
+ *        code, and 'cache' to control the service cache.
  * @return {bloombox.telemetry.EventTelemetryAPI} Instance of the Bloombox Event
  *         Telemetry API, which allows recording of arbitrary event data.
  * @export
  */
 bloombox.telemetry.events = function(apiOptions) {
-  if (!cachedEventsService) {
+  if (!cachedEventsService || (apiOptions && apiOptions['cache'] === false)) {
     const cfg = bloombox.config.active();
     if (cfg.beta || (apiOptions && apiOptions.beta)) {
       cachedEventsService = new bloombox.telemetry.v1beta4.EventService(cfg);

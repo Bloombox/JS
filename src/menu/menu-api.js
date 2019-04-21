@@ -329,7 +329,7 @@ bloombox.menu.MenuAPI = (class MenuAPI {
    * of the callback, otherwise, an error is passed in as the second parameter.
    * In no case are two values passed.
    *
-   * @param {proto.bloombox.base.ProductKey} key Product key to fetch.
+   * @param {proto.opencannabis.base.ProductKey} key Product key to fetch.
    * @param {?bloombox.menu.ProductCallback=} callback Callback to dispatch once
    *        either a result or terminal error state are reached. Optional.
    * @param {?bloombox.menu.RetrieveOptions=} config Configuration options to
