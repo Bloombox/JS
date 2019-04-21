@@ -110,4 +110,3 @@ bloombox.telemetry.TelemetryOptions = (
         'scope': this.scope};
     }
   });
-goog.inherits(bloombox.telemetry.TelemetryOptions, bloombox.rpc.ScopedOptions);

@@ -150,7 +150,6 @@ bloombox.shop.ShopOptions = (
       'scope': this.scope};
   }
 });
-goog.inherits(bloombox.shop.ShopOptions, bloombox.rpc.ScopedOptions);
 
 
 // -- API Surface -- //
