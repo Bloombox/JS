@@ -36,6 +36,7 @@ goog.require('bloombox.shop.DEBUG');
 goog.require('bloombox.shop.SHOP_API_ENDPOINT');
 goog.require('bloombox.shop.VERSION');
 
+goog.require('bloombox.shop.info');
 goog.require('bloombox.shop.v1.Service');
 goog.require('bloombox.shop.v1beta0.Service');
 
