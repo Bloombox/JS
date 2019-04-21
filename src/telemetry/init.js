@@ -124,6 +124,15 @@ bloombox.telemetry.URL_CHECK_TICK_MS_ = 1500;
 
 
 /**
+ * Cached service for telemetry events.
+ *
+ * @package
+ * @type {?bloombox.telemetry.EventTelemetryAPI}
+ */
+let cachedEventsService = null;
+
+
+/**
  * Send a telemetry event due to a URL/location change.
  *
  * @private
@@ -206,9 +215,13 @@ bloombox.telemetry.boot = function() {
  * @export
  */
 bloombox.telemetry.events = function(apiOptions) {
-  const cfg = bloombox.config.active();
-  if (cfg.beta || (apiOptions && apiOptions.beta)) {
-    return new bloombox.telemetry.v1beta4.EventService(cfg);
+  if (!cachedEventsService) {
+    const cfg = bloombox.config.active();
+    if (cfg.beta || (apiOptions && apiOptions.beta)) {
+      cachedEventsService = new bloombox.telemetry.v1beta4.EventService(cfg);
+    }
+    cachedEventsService = new bloombox.telemetry.v1beta0.EventService(cfg);
   }
-  return new bloombox.telemetry.v1beta0.EventService(cfg);
+  return /** @type {bloombox.telemetry.EventTelemetryAPI} */ (
+    cachedEventsService);
 };
