@@ -1,54 +1,60 @@
 // Karma configuration
 // Generated on Wed Feb 28 2018 15:01:42 GMT-0800 (PST)
 
+function closureLibrary(path) {
+  return 'node_modules/closure-builder/third_party/closure-library/closure/' + path;
+}
+
+const closureBase = closureLibrary('goog/base.js');
+const closureDeps = closureLibrary('goog/deps.js');
+
+let basePreprocessors = {};
+basePreprocessors[closureBase] = ['closure'];
+basePreprocessors[closureDeps] = ['closure-deps'];
+
+
 module.exports = function(config) {
   config.set({
-
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
-
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine', 'closure', 'chai', 'mocha'],
 
-
-    // list of files / patterns to load in the browser
     files: [
-      'node_modules/closure-builder/third_party/closure-library/closure/goog/base.js',
-      {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js', included: false, served: true},
-      // {pattern: 'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js', included: true, served: false},
-      'tests/suites/**/*.js',
-      'tests/init.js',
-      'tests/sanity_tests.js',
+      // 1: closure base
+      closureBase,
+      {pattern: closureDeps, included: false, served: false},
 
-      // Target: Debug
-      'target/debug.min.js',
-      'tests/debug_tests.js',
-      'tests/wasabi.js',
-
-      // Target: Release
-      'public/client.min.js',
-      'tests/release_tests.js',
-      'tests/wasabi_prod.js',
-
-      // Target: Sources
-      'tests/init_sources.js',
-      'tests/source_tests.js',
-      {pattern: 'third_party/schema/*.js', included: false},
+      // 2: protobuf JS, grpc web
       {pattern: 'third_party/protobuf/js/map.js', included: false},
       {pattern: 'third_party/protobuf/js/message.js', included: false},
       {pattern: 'third_party/protobuf/js/google/protobuf/*.js', included: false},
       {pattern: 'third_party/protobuf/js/binary/*.js', included: false},
-      {pattern: 'src/**/*.js', included: false},
-      {pattern: 'entrypoint/full.js', included: false}
-    ],
+      {pattern: closureLibrary('goog/**/*.js'), included: false, served: true},
+      {pattern: 'third_party/grpc-web/javascript/net/grpc/web/util/*.js', included: false},
+      {pattern: 'third_party/grpc-web/javascript/net/grpc/web/*.js', included: false},
+      {pattern: 'third_party/schema/services/**/*.js', included: false},
 
+      // 3: schema, services
+      {pattern: 'third_party/schema/*.js', included: false},
+
+      // 4: source files (watched and served)
+      {pattern: 'src/**/*.js', included: false},
+      'entrypoint/full.js',
+
+      // 5: test files
+      'tests/suites/*.js',
+      'tests/init.js',
+      'tests/sanity_tests.js',
+      'tests/init_sources.js',
+      'tests/source_tests.js'
+    ],
 
     // list of files / patterns to exclude
     exclude: [
     ],
-
 
     babelPreprocessor: {
       options: {
@@ -63,8 +69,6 @@ module.exports = function(config) {
       }
     },
 
-
-    // shut off browser logs
     client: {
       captureConsole: false
     },
@@ -72,17 +76,20 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'tests/suites/**/*.js': ['closure', 'babel', 'closure-iit'],
-      'tests/*.js': ['closure', 'babel', 'closure-iit'],
-      'third_party/schema/*.js': ['closure', 'babel'],
+      'tests/suites/**/*.js': ['closure', 'closure-iit'],
+      'tests/*.js': ['closure', 'closure-iit'],
+      'third_party/schema/*.js': ['closure'],
       'third_party/protobuf/js/binary/*.js': ['closure'],
       'third_party/protobuf/js/map.js': ['closure'],
       'third_party/protobuf/js/message.js': ['closure'],
       'third_party/protobuf/js/google/protobuf/*.js': ['closure'],
+      'third_party/schema/services/**/*.js': ['closure'],
+      'third_party/grpc-web/javascript/net/grpc/web/util/*.js': ['closure'],
+      'third_party/grpc-web/javascript/net/grpc/web/*.js': ['closure'],
+      'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js': ['closure-deps'],
       'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js': ['closure'],
-      'src/**/*.js': ['closure', 'babel', 'coverage'],
-      'entrypoint/full.js': ['closure', 'babel'],
-      'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js': ['closure-deps']
+      'src/**/*.js': ['closure', 'coverage'],
+      'entrypoint/full.js': ['closure']
     },
 
     // test results reporter to use
@@ -130,9 +137,12 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
+<<<<<<< HEAD
+=======
      //'Safari',
      //'Firefox',
      //'ChromeCanary'],
+>>>>>>> 41f3d69161178ea150f292ed17384b67f2d0645a
      'ChromeHeadless'
     ],
 

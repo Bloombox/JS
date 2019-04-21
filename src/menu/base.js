@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2018, Bloombox, LLC. All rights reserved.
+ * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
  * Source and object computer code contained herein is the private intellectual
  * property of Bloombox, a California Limited Liability Corporation. Use of this
@@ -29,6 +29,9 @@ goog.provide('bloombox.menu.MENU_API_ENDPOINT');
 goog.provide('bloombox.menu.MENU_API_VERSION');
 goog.provide('bloombox.menu.VERSION');
 
+goog.provide('bloombox.menu.v1beta1.DEBUG');
+goog.provide('bloombox.menu.v1beta1.VERSION');
+
 goog.require('bloombox.API_ENDPOINT');
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.VERSION');
@@ -42,7 +45,7 @@ goog.require('bloombox.VERSION');
  *        debug features.
  * @public
  */
-bloombox.menu.DEBUG = bloombox.DEBUG;
+bloombox.menu.DEBUG = true;
 
 
 /**
@@ -51,7 +54,7 @@ bloombox.menu.DEBUG = bloombox.DEBUG;
  * @const {string} bloombox.menu.VERSION Menu client version string.
  * @export
  */
-bloombox.menu.VERSION = 'v1beta1r1';
+bloombox.menu.VERSION = 'v1beta1';
 
 
 /**

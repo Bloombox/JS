@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2018, Bloombox, LLC.
+ * Copyright 2019, Momentum Ideas, Co.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ bloombox.DEBUG_PROPERTY = '__debug__';
  * @define {string} VERSION Version for library.
  * @export
  */
-bloombox.VERSION = 'v1.0.5';
+bloombox.VERSION = 'v2.0.0b2';
 
 
 /**
@@ -75,4 +75,4 @@ bloombox.INTERNAL = false;
  * @define {string} API_ENDPOINT Global API endpoint.
  * @export
  */
-bloombox.API_ENDPOINT = 'https://api.bloombox.cloud';
+bloombox.API_ENDPOINT = 'https://rpc.bloombox.cloud';

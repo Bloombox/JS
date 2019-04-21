@@ -3,7 +3,7 @@
 ## Bloombox: JS Client
 #
 
-VERSION ?= v2.0.0b1
+VERSION ?= v2.0.0b2
 TARGET ?= target
 VERBOSE ?= no
 RELEASE ?= no
@@ -117,7 +117,7 @@ sources:
 sync-schema: submodules
 
 submodules:
-	@git submodule update --init --remote
+	@git submodule update --init
 
 protobuf/js/node_modules:
 	@echo "Initializing ProtobufJS dependencies..."
@@ -126,7 +126,7 @@ protobuf/js/node_modules:
 	@cd protobuf/js && PROTOC=$(PROTOC) gulp dist && PROTOC=$(PROTOC) gulp genproto_well_known_types_closure
 	@cd protobuf && rm -fv js/package.json js/package-lock.json && git checkout js/package.json
 
-$(SCHEMA)/languages/js: protobuf/js/node_modules
+$(SCHEMA)/languages/js:
 	@echo "Building schema..."
 	@$(MAKE) -C schema LANGUAGES=js TABLES=no
 	@rm -fr schema/languages/js/{browser,es6,closure,commonjs}
@@ -161,6 +161,14 @@ release: build dependencies
 	@cp -fv target/$(VERSION)-debug.min.js public/client/
 	@cp -fv target/$(VERSION).min.js public/client.min.js
 	@cp -fv target/$(VERSION)-debug.min.js public/client-debug.min.js
+
+beta:
+	@echo "Building Bloombox JS (INTERNAL)..."
+	@gulp --release --beta $(GULP_FLAGS)
+	@cp -fv target/$(VERSION).min.js target/internal.min.js
+	@echo "Build complete."
+	@cp -fv target/$(VERSION).min.js public/client/$(VERSION)-beta.min.js
+	@cp -fv target/$(VERSION).min.js public/client-beta.min.js
 
 serve:
 	@echo "Starting test server..."

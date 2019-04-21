@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2018, Bloombox, LLC. All rights reserved.
+ * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
  * Source and object computer code contained herein is the private intellectual
  * property of Bloombox, a California Limited Liability Corporation. Use of this
@@ -43,7 +43,7 @@ goog.require('proto.bloombox.analytics.context.Collection');
  * @constructor
  * @implements {bloombox.util.Exportable<proto.bloombox.analytics.context.Collection>}
  * @implements {bloombox.util.Serializable}
- * @public
+ * @export
  */
 bloombox.telemetry.Collection = function Collection(name, opt_skipb64encode) {
   /**

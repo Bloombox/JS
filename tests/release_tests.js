@@ -1,4 +1,5 @@
 /* eslint-env mocha */
 'use strict';
 
-runTestsuite('release');
+runTestsuite('release', false);
+runTestsuite('release', true);

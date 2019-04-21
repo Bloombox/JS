@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2018, Bloombox, LLC. All rights reserved.
+ * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
  * Source and object computer code contained herein is the private intellectual
  * property of Bloombox, a California Limited Liability Corporation. Use of this
@@ -85,7 +85,5 @@ bloombox.telemetry.TelemetryEndpointRenderer;
  */
 bloombox.telemetry.TelemetryEndpoint = {
   'PING': () => 'ping',
-  'EVENT': (context) => `${context.getCollection().getName()}:event`,
-  'BATCH': (context) => 'events:batch',
-  'EXCEPTION': (context) => `${context.getCollection().getName()}:error`
+  'EVENT': (context) => `${context.getCollection().getName()}:event`
 };

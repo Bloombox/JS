@@ -31,6 +31,7 @@
     "jsdoc": "^3.5.5",
     "jshint": "^2.10.2",
     "jshint-stylish": "*",
+    "karma-closure": "https://github.com/nckh/karma-closure",
     "mocha": "^5.1.1",
     "swagger-tools": "^0.10.4",
     "swagger-ui": "^3.22.1",
@@ -47,7 +48,6 @@
     "karma-browserstack-launcher": "^1.3.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
-    "karma-closure": "^0.1.3",
     "karma-coverage": "^1.1.1",
     "karma-firefox-launcher": "^1.1.0",
     "karma-ie-launcher": "^1.0.0",
@@ -58,7 +58,6 @@
     "karma-opera-launcher": "^1.0.0",
     "karma-safari-launcher": "^1.0.0",
     "karma-sauce-launcher": "^2.0.2",
-    "karma-phantomjs-launcher": "^1.0.4",
     "minami": "^1.2.3"
   }
 }
