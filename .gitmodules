@@ -1,7 +1,6 @@
-[submodule "protobuf"]
-	path = protobuf
-	url = https://github.com/google/protobuf.git
-	tag = v3.5.1
 [submodule "closure"]
 	path = third_party/closure/compiler
 	url = https://github.com/google/closure-compiler
+[submodule "grpc-web"]
+	path = third_party/grpc-web
+	url = https://github.com/grpc/grpc-web.git

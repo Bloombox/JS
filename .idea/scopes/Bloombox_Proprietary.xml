@@ -1,3 +1,3 @@
 <component name="DependencyValidationManager">
-  <scope name="Bloombox Proprietary" pattern="src:shop.accounts..*||src:shop.info..*||src:shop..*||src:shop.ordering..*||src:telemetry.internals..*||src:telemetry.services..*||src:telemetry..*" />
+  <scope name="Bloombox Proprietary" pattern="src:shop.accounts..*||src:shop.info..*||src:shop..*||src:shop.ordering..*||src:telemetry.internals..*||src:telemetry.services..*||src:telemetry..*||src:menu..*" />
 </component>

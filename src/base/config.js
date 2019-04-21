@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2018, Bloombox, LLC.
+ * Copyright 2019, Momentum Ideas, Co.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@ goog.require('bloombox.config.integration.SegmentConfig');
  *            partner: ?string,
  *            location: ?string,
  *            channel: ?string,
+ *            beta: ?boolean,
  *            integrations: bloombox.config.JSIntegrationConfig,
  *            endpoints: {
  *              shop: ?string,
@@ -100,6 +101,7 @@ bloombox.config.buildDefault = function() {
     partner: null,
     location: null,
     channel: null,
+    beta: false,
     endpoints: {
       shop: null,
       telemetry: null
@@ -130,9 +132,11 @@ bloombox.config.buildDefault = function() {
  * @public
  */
 bloombox.config.configure = function(config) {
-  if (Object.isFrozen && !Object.isFrozen(config))
-    Object.freeze(config);
-  bloombox.config._ACTIVE_CONFIG_ = config;
+  const merged = Object.assign({},
+    bloombox.config.buildDefault(), config);
+  if (Object.isFrozen) Object.freeze(merged);
+  bloombox.config._ACTIVE_CONFIG_ =
+    /** @type {bloombox.config.JSConfig} */ (merged);
 };
 
 

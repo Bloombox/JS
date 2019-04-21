@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2018, Bloombox, LLC. All rights reserved.
+ * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
  * Source and object computer code contained herein is the private intellectual
  * property of Bloombox, a California Limited Liability Corporation. Use of this
@@ -51,7 +51,7 @@ bloombox.shop.DEBUG = bloombox.DEBUG;
  * @const {string} bloombox.shop.VERSION Shop client version string.
  * @export
  */
-bloombox.shop.VERSION = 'v1r1';
+bloombox.shop.VERSION = 'v1r2';
 
 
 /**
