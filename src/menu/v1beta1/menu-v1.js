@@ -33,8 +33,10 @@ goog.require('bloombox.menu.RetrieveOptions');
 
 goog.require('bloombox.rpc.metadata');
 
+goog.require('proto.bloombox.services.menu.v1beta1.GetFeatured.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.Response');
+goog.require('proto.bloombox.services.menu.v1beta1.GetProduct.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.MenuPromiseClient');
 
 goog.require('proto.opencannabis.products.menu.section.Section');
