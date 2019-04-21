@@ -14,11 +14,11 @@
     }],
     "redirects": [{
       "source" : "/latest.min.js",
-      "destination" : "/client/v2.0.0-rc1.min.js",
+      "destination" : "/client/v2.0.0-rc2.min.js",
       "type" : 302
     },{
       "source" : "/latest-debug.min.js",
-      "destination" : "/client/v2.0.0-rc1-debug.min.js",
+      "destination" : "/client/v2.0.0-rc2-debug.min.js",
       "type" : 302
     },{
       "source" : "/beta.min.js",
