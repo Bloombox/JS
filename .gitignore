@@ -7,3 +7,4 @@ docs/
 *.swp
 .DS_Store
 JS.iws
+.firebase/
