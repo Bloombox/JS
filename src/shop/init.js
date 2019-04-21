@@ -50,7 +50,7 @@ goog.provide('bloombox.shop.setup');
  * @nocollapse
  * @type {?bloombox.shop.ShopAPI}
  */
-let cachedService = null;
+let cachedShopService = null;
 
 
 /**
@@ -96,17 +96,17 @@ bloombox.shop.setup = function(partner, location, apikey, callback, endpoint) {
  * @return {bloombox.shop.ShopAPI} Shop API service implementation instance.
  */
 bloombox.shop.api = function(apiConfig) {
-  if (!cachedService) {
+  if (!cachedShopService) {
     let config = bloombox.config.active();
     if (bloombox.rpc.FALLBACK) {
       if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
         // use the new beta gRPC engine
-        cachedService = new bloombox.shop.v1.Service(config);
+        cachedShopService = new bloombox.shop.v1.Service(config);
       }
-      cachedService = new bloombox.shop.v1beta0.Service(config);
+      cachedShopService = new bloombox.shop.v1beta0.Service(config);
     } else {
-      cachedService = new bloombox.shop.v1.Service(config);
+      cachedShopService = new bloombox.shop.v1.Service(config);
     }
   }
-  return /** @type {bloombox.shop.ShopAPI} */ (cachedService);
+  return /** @type {bloombox.shop.ShopAPI} */ (cachedShopService);
 };

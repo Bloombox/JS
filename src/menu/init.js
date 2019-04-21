@@ -54,7 +54,7 @@ goog.provide('bloombox.menu.setup');
  * @nocollapse
  * @type {?bloombox.menu.MenuAPI}
  */
-let cachedService = null;
+let cachedMenuService = null;
 
 
 /**
@@ -99,17 +99,17 @@ bloombox.menu.setup = function(partner, location, apikey, callback) {
  */
 bloombox.menu.api = function(apiConfig) {
   // for now, create v1beta0 adapter, always
-  if (!cachedService) {
+  if (!cachedMenuService) {
     let config = bloombox.config.active();
     if (bloombox.rpc.FALLBACK) {
       if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
         // use the new beta gRPC engine
-        cachedService = new bloombox.menu.v1beta1.Service(config);
+        cachedMenuService = new bloombox.menu.v1beta1.Service(config);
       }
-      cachedService = new bloombox.menu.v1beta0.Service(config);
+      cachedMenuService = new bloombox.menu.v1beta0.Service(config);
     } else {
-      cachedService = new bloombox.menu.v1beta1.Service(config);
+      cachedMenuService = new bloombox.menu.v1beta1.Service(config);
     }
   }
-  return /** @type {bloombox.menu.MenuAPI} */ (cachedService);
+  return /** @type {bloombox.menu.MenuAPI} */ (cachedMenuService);
 };
