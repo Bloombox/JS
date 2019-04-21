@@ -48,6 +48,16 @@ goog.provide('bloombox.menu.setup');
 
 
 /**
+ * Cached copy of the current Menu API implementation object.
+ *
+ * @package
+ * @nocollapse
+ * @type {?bloombox.menu.MenuAPI}
+ */
+let cachedService = null;
+
+
+/**
  * Setup the Bloombox Menu API. Provide your API key and an endpoint if you
  * would like to override the default (most users should not need to).
  *
@@ -89,14 +99,17 @@ bloombox.menu.setup = function(partner, location, apikey, callback) {
  */
 bloombox.menu.api = function(apiConfig) {
   // for now, create v1beta0 adapter, always
-  let config = bloombox.config.active();
-  if (bloombox.rpc.FALLBACK) {
-    if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
-      // use the new beta gRPC engine
-      return new bloombox.menu.v1beta1.Service(config);
+  if (!cachedService) {
+    let config = bloombox.config.active();
+    if (bloombox.rpc.FALLBACK) {
+      if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
+        // use the new beta gRPC engine
+        cachedService = new bloombox.menu.v1beta1.Service(config);
+      }
+      cachedService = new bloombox.menu.v1beta0.Service(config);
+    } else {
+      cachedService = new bloombox.menu.v1beta1.Service(config);
     }
-    return new bloombox.menu.v1beta0.Service(config);
-  } else {
-    return new bloombox.menu.v1beta1.Service(config);
   }
+  return /** @type {bloombox.menu.MenuAPI} */ (cachedService);
 };

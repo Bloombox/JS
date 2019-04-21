@@ -44,6 +44,16 @@ goog.provide('bloombox.shop.setup');
 
 
 /**
+ * Cached copy of the current Menu API implementation object.
+ *
+ * @package
+ * @nocollapse
+ * @type {?bloombox.shop.ShopAPI}
+ */
+let cachedService = null;
+
+
+/**
  * Setup the Bloombox Shop API. Provide your API key and an endpoint if you
  * would like to override the default (most users should not need to).
  *
@@ -86,15 +96,17 @@ bloombox.shop.setup = function(partner, location, apikey, callback, endpoint) {
  * @return {bloombox.shop.ShopAPI} Shop API service implementation instance.
  */
 bloombox.shop.api = function(apiConfig) {
-  // for now, create v1beta0 adapter, always
-  let config = bloombox.config.active();
-  if (bloombox.rpc.FALLBACK) {
-    if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
-      // use the new beta gRPC engine
-      return new bloombox.shop.v1.Service(config);
+  if (!cachedService) {
+    let config = bloombox.config.active();
+    if (bloombox.rpc.FALLBACK) {
+      if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
+        // use the new beta gRPC engine
+        cachedService = new bloombox.shop.v1.Service(config);
+      }
+      cachedService = new bloombox.shop.v1beta0.Service(config);
+    } else {
+      cachedService = new bloombox.shop.v1.Service(config);
     }
-    return new bloombox.shop.v1beta0.Service(config);
-  } else {
-    return new bloombox.shop.v1.Service(config);
   }
+  return /** @type {bloombox.shop.ShopAPI} */ (cachedService);
 };
