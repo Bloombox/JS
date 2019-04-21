@@ -2,6 +2,7 @@
 'use strict';
 
 function genShopTestsuite(version) {
+  cachedShopService = null;
   const apiOpts = version === 'v0' ? {} : {'beta': true};
 
   describe('service: shop (' + version + ')', function() {

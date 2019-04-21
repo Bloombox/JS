@@ -2,6 +2,7 @@
 'use strict';
 
 function genMenuTestsuite(version) {
+  cachedMenuService = null;
   const apiOpts = version === 'v0' ? {} : {'beta': true};
 
   describe('menu (' + version + ')', function() {

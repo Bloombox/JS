@@ -2,6 +2,7 @@
 'use strict';
 
 function genTelemetryTestsuite(version) {
+  cachedEventsService = null;
   const apiOpts = version === 'v0' ? {} : {'beta': true};
 
   describe('service: telemetry (' + version + ')', function() {
