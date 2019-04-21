@@ -174,11 +174,8 @@ bloombox.telemetry.v1beta4.EventService = (class EventServiceV1 {
       ev.setPayload(proto.google.protobuf.Struct.fromJavaScript(payload));
 
     // build context and attach
-    const globalContext = bloombox.telemetry.globalContext().export();
-    const eventContext = new proto.bloombox.analytics.Context();
+    const eventContext = bloombox.telemetry.globalContext().export();
     eventContext.setScope(scopeInfo);
-
-    bloombox.util.proto.merge(globalContext, eventContext);
     eventContext.setCollection(collectionSpec);
     request.setContext(eventContext);
 
