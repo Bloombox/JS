@@ -53,7 +53,7 @@ function utilTestsuite() {
         throw new bloombox.rpc.RPCException(
           'Testing exception error reporting.');
       } catch (err) {
-        stackdriver.reportError(stackdriver.errorize(err));
+        stackdriver.reportError(err);
       }
     });
 
@@ -61,7 +61,7 @@ function utilTestsuite() {
       stackdriver.protect(function() {
         throw new bloombox.rpc.RPCException(
           'Testing protected function error reporting.');
-      });
+      })();
     });
   });
 }

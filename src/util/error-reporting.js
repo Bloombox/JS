@@ -31,7 +31,6 @@ goog.require('bloombox.logging.log');
 goog.provide('stackdriver.ErrorReporter');
 goog.provide('stackdriver.StackdriverConfig');
 
-goog.provide('stackdriver.errorize');
 goog.provide('stackdriver.notifyFingerprint');
 goog.provide('stackdriver.protect');
 goog.provide('stackdriver.reportError');
@@ -320,41 +319,6 @@ stackdriver.reportError = function(err, opt_op) {
 
 
 /**
- * Enable an application-level exception as a recordable error.
- *
- * @param {function(new:Object, string, string=, number=)} ctor Constructor.
- * @return {function(string, string=, number=)} Error-ized constructor.
- */
-stackdriver.errorize = function(ctor) {
-  bloombox.logging.log('Errorizing exception: \'' +
-    ctor.name + '\'...');
-  /**
-   * @type {function(string, string=, number=)}
-   */
-  let wrapped = (function(message, fileName, lineNumber) {
-    let err = new Error(message, fileName, lineNumber);
-    let instance = new ctor(message, fileName, lineNumber);
-    Object.setPrototypeOf(err, Object.getPrototypeOf(instance));
-    err.cause = instance;
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(err, ctor);
-    }
-    return err;
-  });
-  wrapped.prototype = Object.create(Error.prototype, {
-    constructor: {
-      value: Error,
-      enumerable: false,
-      writable: false,
-      configurable: true
-    }
-  });
-  Object.setPrototypeOf(wrapped, Error);
-  return wrapped;
-};
-
-
-/**
  * Set the unique device fingerprint for error reporting.
  *
  * @param {string} fingerprint Fingerprint.
@@ -380,11 +344,8 @@ stackdriver.protect = function(operation) {
       // execute with given args
       return op.bind(arguments[0]).apply(Array.from(arguments).slice(1));
     } catch (err) {
-      if (bloombox.DEBUG) {
-        debugger;
-      }
       // handle with error reporting, then rethrow
-      stackdriver.reportError(stackdriver.errorize(err), op);
+      stackdriver.reportError(err, op);
       bloombox.logging.error(err);
     }
   });
