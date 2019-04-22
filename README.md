@@ -29,13 +29,22 @@ or you can use the CDN, which is the simplest and usually the most performant wa
 
 #### Debug mode
 
-If you are having trouble getting things working correctly, you can use the debug copy, by prepending `-debug` before
+If you are having trouble getting things working correctly, you can use the debug copy, by affixing `-debug` before
 the `.min` in the script URL:
 ```html
   <script type="text/javascript" src="https://js.bloombox.cloud/latest-debug.min.js"></script>
 ```
 
 Then, you'll see debug logs in your console that describe what's going on.
+
+
+#### Beta mode
+
+If you want to test against the latest library features while they are still in staging, you can also try the `-beta`
+variant of the library, placed just before the `.min` in the script URL, like `-debug`:
+```html
+<script type="text/javascript" src="https://js.bloombox.cloud/latest-beta.min.js"></script>
+```
 
 
 #### Version-pinned URL
