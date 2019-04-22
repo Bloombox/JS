@@ -36,4 +36,32 @@ function utilTestsuite() {
       expect(websafe).toEqual(websafe2);
     });
   });
+
+  describe('error reporting utilities', function() {
+    it('should set itself up on the window', function() {
+      expect(window['StackTrace']).not.toBeNull();
+    });
+
+    it('should be able to report an error', function() {
+      const err = new Error('Testing basic error reporting.');
+      stackdriver.reportError(err);
+    });
+
+    it('should be able to error-ize an exception', function() {
+      try {
+        // noinspection ExceptionCaughtLocallyJS
+        throw new bloombox.rpc.RPCException(
+          'Testing exception error reporting.');
+      } catch (err) {
+        stackdriver.reportError(stackdriver.errorize(err));
+      }
+    });
+
+    it('should be able to protect a function', function() {
+      stackdriver.protect(function() {
+        throw new bloombox.rpc.RPCException(
+          'Testing protected function error reporting.');
+      });
+    });
+  });
 }
