@@ -61,15 +61,6 @@ stackdriver.StackdriverConfig;
  * @constructor
  */
 stackdriver.ErrorReporter = function ErrorReporter(config) {
-  if ((!config.key && !config.targetUrl) ||
-      (!config.projectId && !config.targetUrl))
-    throw new Error('Cannot initialize: Missing required configuration.');
-
-  // noinspection JSUnresolvedVariable
-  if (typeof window['StackTrace'] === 'undefined') {
-    throw new Error('Unable to load Stackdriver.');
-  }
-
   /**
    * API key to use.
    *

@@ -134,6 +134,15 @@ bloombox.setup = function(partner, location, apikey, callback, extraConfig) {
 
   if (bloombox.ERROR_REPORTING) {
     try {
+      // noinspection JSUnresolvedVariable
+      if ((!errorReporting.key && !errorReporting.targetUrl) ||
+          (!errorReporting.projectId && !errorReporting.targetUrl))
+        // noinspection ExceptionCaughtLocallyJS
+        throw new Error('Cannot initialize: Missing required configuration.');
+
+      if (typeof window['StackTrace'] === 'undefined')
+        // noinspection ExceptionCaughtLocallyJS
+        throw new Error('Unable to load Stackdriver.');
       bloombox.ERROR_REPORTER = new stackdriver.ErrorReporter(errorReporting);
       stackdriver.setup(bloombox.ERROR_REPORTER);
     } catch (e) {
