@@ -32,7 +32,7 @@
     "jshint": "^2.10.2",
     "jshint-stylish": "*",
     "karma-closure": "https://github.com/nckh/karma-closure",
-    "mocha": "^5.1.1",
+    "mocha": "^6.1.4",
     "swagger-tools": "^0.10.4",
     "swagger-ui": "^3.22.1",
     "yargs": "^12.0.0"
