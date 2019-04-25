@@ -213,7 +213,7 @@ goog.scope(function() {
 
       // resolve scope
       const scope = bloombox.rpc.context(resolved);
-      request.setScope(`partner/${scope.partner}/location/${scope.location}`);
+      request.setScope(`partners/${scope.partner}/locations/${scope.location}`);
 
       // copy in section, if specified
       if (section) request.setSection(section);
