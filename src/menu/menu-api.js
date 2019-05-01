@@ -25,6 +25,7 @@
 /*global goog */
 
 goog.require('bloombox.base.ServiceInterface');
+goog.require('bloombox.menu.ObservableMenu');
 goog.require('bloombox.rpc.ScopedOptions');
 goog.require('proto.opencannabis.products.menu.section.Section');
 
@@ -378,4 +379,29 @@ bloombox.menu.MenuAPI = (class MenuAPI {
    *         the underlying RPC, or during transmission.
    */
   featured(section, callback, config) {}
+
+  // -- API: Menu Stream -- //
+  /**
+   * Establish a stream over which we can receive menu change updates. Initially
+   * a full menu payload is sent, to sync the client with the server's state,
+   * and subsequently, delta updates are relayed as they occur in underlying
+   * menu catalog storage.
+   *
+   * Depending on the settings passed in `config`, the delta payload will
+   * reference a changed/added/deleted product by key, or enclose the full
+   * product payload. Each time, an updated menu fingerprint is sent back.
+   *
+   * @param {?proto.opencannabis.products.menu.Menu=} localMenu Local-side
+   *        menu to compare with the server. Fingerprint config setting is
+   *        required if a local menu is provided, for comparison server-side.
+   * @param {?bloombox.menu.RetrieveOptions=} config Options, or configuration,
+   *        to apply in the scope of just this RPC operation. In some cases, a
+   *        given API method may not apply or use all options. If left unset, a
+   *        sensible set of default settings is generated and used.
+   * @return {bloombox.menu.ObservableMenu} Observable menu object, which wraps
+   *        a promise for the initial menu, and provides methods for subscribing
+   *        to menu data changes (which are dispatched after being applied to
+   *        any active local DB/caching engine).
+   */
+  stream(localMenu, config) {}
 });

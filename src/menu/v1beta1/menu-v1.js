@@ -26,21 +26,59 @@
 /*global goog */
 
 goog.require('bloombox.menu.MenuAPI');
+goog.require('bloombox.menu.ObservableMenu');
 goog.require('bloombox.menu.RetrieveCallback');
 goog.require('bloombox.menu.RetrieveException');
 goog.require('bloombox.menu.RetrieveOptions');
 
 goog.require('bloombox.rpc.metadata');
 
+goog.require('grpc.web.ClientReadableStream');
+
 goog.require('proto.bloombox.services.menu.v1beta1.GetFeatured.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.Response');
+goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.StreamEvent');
 goog.require('proto.bloombox.services.menu.v1beta1.GetProduct.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.MenuPromiseClient');
 
 goog.require('proto.opencannabis.products.menu.section.Section');
 
 goog.provide('bloombox.menu.v1beta1.Service');
+
+
+/**
+ * Prepare a menu retrieve request, by taking the rendered/collapsed request
+ * configuration and generating a `GetMenu.Request` object.
+ *
+ * @param {?bloombox.menu.RetrieveOptions=} config Rendered settings for this
+ *        request, produced from override and global config.
+ * @return {!proto.bloombox.services.menu.v1beta1.GetMenu.Request} Prepared
+ *         request object to retrieve or stream a menu.
+ */
+function prepRetrieveRequest(config) {
+  const resolved = config || bloombox.menu.RetrieveOptions.defaults();
+  const request = new proto.bloombox.services.menu.v1beta1.GetMenu.Request();
+
+  // copy in options
+  if (resolved.full === true) request.setFull(true);
+  if (resolved.fresh === true) request.setFresh(true);
+  if (resolved.keysOnly === true) request.setKeysOnly(true);
+  if (resolved.snapshot) request.setSnapshot(
+    /** @type {string} */ (resolved.snapshot));
+  if (resolved.fingerprint) request.setFingerprint(
+    /** @type {string} */ (resolved.fingerprint));
+  if (resolved.section !==
+    proto.opencannabis.products.menu.section.Section.UNSPECIFIED)
+    request.setSection(resolved.section);
+
+  const scope = bloombox.rpc.context(resolved);
+  const partnerCode = scope.partner;
+  const locationCode = scope.location;
+  const scopePath = `partner/${partnerCode}/location/${locationCode}`;
+  request.setScope(scopePath);
+  return request;
+}
 
 
 goog.scope(function() {
@@ -78,7 +116,7 @@ goog.scope(function() {
         new proto.bloombox.services.menu.v1beta1.MenuPromiseClient(
           sdkConfig.endpoint,
           null,
-          {'format': 'binary'}));
+          {'format': 'text'}));
     }
 
     // -- Menu Retrieve -- //
@@ -102,30 +140,10 @@ goog.scope(function() {
      */
     retrieve(callback, options) {
       const resolved = options || bloombox.menu.RetrieveOptions.defaults();
-      const request = new proto.bloombox.services.menu.v1beta1.GetMenu.Request();
+      const request = prepRetrieveRequest(resolved);
 
-      // copy in options
-      if (resolved.full === true) request.setFull(true);
-      if (resolved.fresh === true) request.setFresh(true);
-      if (resolved.keysOnly === true) request.setKeysOnly(true);
-      if (resolved.snapshot) request.setSnapshot(
-        /** @type {string} */ (options.snapshot));
-      if (resolved.fingerprint) request.setFingerprint(
-        /** @type {string} */ (resolved.fingerprint));
-      if (resolved.section !==
-        proto.opencannabis.products.menu.section.Section.UNSPECIFIED)
-        request.setSection(resolved.section);
-
-      const scope = bloombox.rpc.context(resolved);
-      const partnerCode = scope.partner;
-      const locationCode = scope.location;
-
-      // resolve scope
-      const scopePath = `partner/${partnerCode}/location/${locationCode}`;
-      request.setScope(scopePath);
       const operation = (
         this.client.retrieve(request, bloombox.rpc.metadata(this.sdkConfig)));
-
       operation.catch((err) => {
         if (callback) callback(null, err);
       });
@@ -133,8 +151,41 @@ goog.scope(function() {
       operation.then((resp) => {
         if (callback) callback(resp, null);
       });
-
       return operation;
+    }
+
+    // -- API: Menu Stream -- //
+    /**
+     * Establish a stream over which we can receive menu change updates. Initially
+     * a full menu payload is sent, to sync the client with the server's state,
+     * and subsequently, delta updates are relayed as they occur in underlying
+     * menu catalog storage.
+     *
+     * Depending on the settings passed in `config`, the delta payload will
+     * reference a changed/added/deleted product by key, or enclose the full
+     * product payload. Each time, an updated menu fingerprint is sent back.
+     *
+     * @param {?proto.opencannabis.products.menu.Menu=} localMenu Local-side
+     *        menu to compare with the server. Fingerprint config setting is
+     *        required if a local menu is provided, for comparison server-side.
+     * @param {?bloombox.menu.RetrieveOptions=} config Options, or configuration,
+     *        to apply in the scope of just this RPC operation. In some cases, a
+     *        given API method may not apply or use all options. If left unset, a
+     *        sensible set of default settings is generated and used.
+     * @return {bloombox.menu.ObservableMenu} Observable menu object, which wraps
+     *        a promise for the initial menu, and provides methods for subscribing
+     *        to menu data changes (which are dispatched after being applied to
+     *        any active local DB/caching engine).
+     */
+    stream(localMenu, config) {
+      const resolved = config || bloombox.menu.RetrieveOptions.defaults();
+      const request = prepRetrieveRequest(resolved);
+      const operation = (
+        this.client.live(request, bloombox.rpc.metadata(this.sdkConfig)));
+
+      // setup the observable menu and return
+      return new bloombox.menu.ObservableMenu(
+        operation, resolved.fingerprint, localMenu);
     }
 
     // -- API: Product Retrieval -- //
