@@ -291,6 +291,7 @@ stackdriver.setup = function(reporter) {
  *
  * @param {Error|String} err Error to report.
  * @param {function(?)=} opt_op Operation the error happened in.
+ * @return {boolean} Whether the error was reported.
  * @public
  */
 stackdriver.reportError = function(err, opt_op) {
@@ -299,6 +300,7 @@ stackdriver.reportError = function(err, opt_op) {
     // uh oh
     bloombox.logging.error('Unable to report error: not ' +
       'initialized.', err);
+    return false;
   } else {
     // report the error
     bloombox.logging.error('Reporting error encountered in' +
@@ -306,6 +308,7 @@ stackdriver.reportError = function(err, opt_op) {
             ' anonymous function.'), err);
     _REPORTER.report(err);
   }
+  return true;
 };
 
 
