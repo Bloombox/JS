@@ -44,7 +44,8 @@ function utilTestsuite() {
 
     it('should be able to report an error', function() {
       const err = new Error('Testing basic error reporting.');
-      stackdriver.reportError(err);
+      const result = stackdriver.reportError(err);
+      expect(result).toBe(true);
     });
 
     it('should be able to error-ize an exception', function() {
@@ -53,15 +54,23 @@ function utilTestsuite() {
         throw new bloombox.rpc.RPCException(
           'Testing exception error reporting.');
       } catch (err) {
-        stackdriver.reportError(err);
+        const result = stackdriver.reportError(err);
+        expect(result).toBe(true);
       }
     });
 
     it('should be able to protect a function', function() {
-      stackdriver.protect(function() {
-        throw new bloombox.rpc.RPCException(
-          'Testing protected function error reporting.');
-      })();
+      let caught = false;
+      try {
+        caught = false;
+        stackdriver.protect(function() {
+          throw new bloombox.rpc.RPCException(
+            'Testing protected function error reporting.');
+        })();
+      } catch {
+        caught = true;
+      }
+      expect(caught).not.toBe(true);
     });
   });
 }

@@ -9,6 +9,7 @@ function rpcTestsuite() {
         let exc = new bloombox.rpc.RPCException('hello');
         assert(exc.message === 'hello',
           'exception message should match given value');
+        expect(exc.message).toBe('hello');
       });
 
       it('should format with its message', function() {
@@ -19,6 +20,9 @@ function rpcTestsuite() {
           'exception message should specify it is an RPC error');
         assert(exc.toString().indexOf('hello') !== -1,
           'exception message should include its error');
+        expect(exc.message).toBe('hello');
+        expect(exc.toString().indexOf('RPCException')).not.toBe(-1);
+        expect(exc.toString().indexOf('hello')).not.toBe(-1);
       });
     });
   });

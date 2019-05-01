@@ -10,6 +10,7 @@ function genTelemetryTestsuite(version) {
       it('should be able to complete a ping', function() {
         return new Promise((resolve, reject) => {
           return bloombox.telemetry.events(apiOpts).ping((latency) => {
+            expect(latency).toBeGreaterThan(-1);
               if (latency > -1) {
                 resolve(latency);
               } else {
@@ -25,8 +26,10 @@ function genTelemetryTestsuite(version) {
         const collection = bloombox.telemetry.Collection
           .named('testsuite');
 
-        return bloombox.telemetry.events(apiOpts)
+        const promise = bloombox.telemetry.events(apiOpts)
           .event(collection, {'test': 'data', 'goes': 'here'});
+        expect(promise).not.toBeNull();
+        return promise;
       });
     });
   });

@@ -112,6 +112,9 @@ function menuTestsuite() {
           'default value for menu retrieve `keysOnly` should be false');
         assert(defaults.fresh === false,
           'default value for menu retrieve `fresh` should be false');
+        expect(defaults.full).toBe(false);
+        expect(defaults.keysOnly).toBe(false);
+        expect(defaults.fresh).toBe(false);
       });
 
       it('should be able to inflate from an object', function() {
@@ -130,34 +133,50 @@ function menuTestsuite() {
 
         assert(defaults.full === false,
           'default value for menu retrieve `full` should be false');
+        expect(defaults.full).toBe(false);
         assert(options.full === true,
           'options should allow override of `full` flag');
+        expect(options.full).toBe(true);
         assert(defaults.keysOnly === false,
           'default value for menu retrieve `keysOnly` should be false');
+        expect(defaults.keysOnly).toBe(false);
         assert(options.keysOnly === true,
           'options should allow override of `keysOnly` flag');
+        expect(options.keysOnly).toBe(true);
         assert(defaults.fresh === false,
           'default value for menu retrieve `fresh` should be false');
+        expect(defaults.fresh).toBe(false);
         assert(options.fresh === true,
           'options should allow override of `fresh` flag');
+        expect(options.fresh).toBe(true);
         assert(!defaults.snapshot,
           'default value for menu retrieve `snapshot` should be null');
+        expect(defaults.snapshot).toBeNull();
         assert(options.snapshot === 'abc123',
           'options should allow override of `snapshot` value');
+        expect(options.snapshot).toBe('abc123');
         assert(!defaults.fingerprint,
           'default value for menu retrieve `fingerprint` should be null');
+        expect(defaults.fingerprint).toBeNull();
         assert(options.fingerprint === 'abc124',
           'options should allow override of `fingerprint` value');
+        expect(options.fingerprint).toBe('abc124');
         assert((defaults.section ===
           proto.opencannabis.products.menu.section.Section.UNSPECIFIED),
           'default value for menu retrieve `section` should be UNSPECIFIED');
+        expect(defaults.section).toBe(
+          proto.opencannabis.products.menu.section.Section.UNSPECIFIED);
         assert((options.section ===
           proto.opencannabis.products.menu.section.Section.FLOWERS),
           'options should allow override of `section` value');
+        expect(options.section).toBe(
+          proto.opencannabis.products.menu.section.Section.FLOWERS);
         assert(!defaults.scope,
           'default value for menu retrieve `scope` should be null');
+        expect(defaults.scope).toBeNull();
         assert(options.scope === 'partner/sample/location/sample',
           'options should allow override of `scope` value');
+        expect(options.scope).toBe('partner/sample/location/sample');
       });
 
       it('should be able to convert into an object', function() {
@@ -170,12 +189,16 @@ function menuTestsuite() {
           'options should allow override of `full` flag');
         assert(options.keysOnly === true,
           'options should allow override of `keysOnly` flag');
+        expect(options.full).toBe(true);
+        expect(options.keysOnly).toBe(true);
 
         const serialized = options.toObject();
         assert(serialized.full === true,
           'serialized options should allow override of `full` flag');
         assert(serialized.keysOnly === true,
           'serialized options should allow override of `keysOnly` flag');
+        expect(serialized.full).toBe(true);
+        expect(serialized.keysOnly).toBe(true);
       });
     });
 

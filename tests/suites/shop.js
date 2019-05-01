@@ -11,6 +11,8 @@ function genShopTestsuite(version) {
       it('should reject verifying a known-bad zipcode', function() {
         return new Promise(function(resolve, reject) {
           return bloombox.shop.api(apiOpts).zipcheck('12345', function(response, err) {
+            expect(!err || response && response.getSupported() === false)
+              .toBe(true);
             if (!err && response && response.getSupported() === true) {
               reject(new Error('known-bad zipcode somehow worked.'));
             } else {
@@ -23,6 +25,7 @@ function genShopTestsuite(version) {
       it('should verify a known-good zipcode', function() {
         return new Promise(function(resolve, reject) {
           return bloombox.shop.api(apiOpts).zipcheck('94002', function(response, err) {
+            expect(err).toBeNull();
             if (!err) {
               resolve(response);
             } else {
@@ -38,6 +41,7 @@ function genShopTestsuite(version) {
       it('should support retrieving shop info', function() {
         return new Promise(function(resolve, reject) {
           return bloombox.shop.api(apiOpts).info(function(pickup, delivery, err) {
+            expect(!err).toBe(true);
             if (err) {
               reject(err);
             } else {
@@ -82,6 +86,8 @@ function genShopTestsuite(version) {
       it('should support verifying a known-good account', function() {
         return new Promise(function(resolve, reject) {
           return bloombox.shop.api(apiOpts).verify('sam@bloombox.io', function(response, err) {
+            expect(response).not.toBeNull();
+            expect(!err).toBe(true);
             if (err || !response || !response.getVerified()) {
               reject(new Error('unable to verify known-good account'));
             } else {
@@ -94,6 +100,7 @@ function genShopTestsuite(version) {
       it('should reject verifying a known-bad account', function() {
         return new Promise(function(resolve, reject) {
           return bloombox.shop.api(apiOpts).verify('does-not-exist@blabla.com', function(response, err) {
+            expect(err || !response || !response.getVerified()).toBe(true);
             if (err || !response || !response.getVerified()) {
               resolve({'response': response});
             } else {
