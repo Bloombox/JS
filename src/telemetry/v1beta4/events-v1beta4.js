@@ -26,6 +26,7 @@
 /*global goog */
 
 goog.require('bloombox.API_ENDPOINT');
+goog.require('bloombox.SERVICE_MODE');
 
 goog.require('bloombox.rpc.RPCException');
 goog.require('bloombox.rpc.context');
@@ -86,7 +87,7 @@ bloombox.telemetry.v1beta4.EventService = (class EventServiceV1 {
       new proto.bloombox.services.telemetry.v1beta4.EventTelemetryPromiseClient(
         bloombox.API_ENDPOINT,
         null,
-        {'format': 'binary'}));
+        {'format': bloombox.SERVICE_MODE}));
   }
 
   // -- API: Ping -- //

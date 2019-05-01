@@ -26,6 +26,7 @@
 /*global goog */
 
 goog.require('bloombox.API_ENDPOINT');
+goog.require('bloombox.SERVICE_MODE');
 goog.require('bloombox.rpc.RPCException');
 goog.require('bloombox.rpc.context');
 goog.require('bloombox.rpc.metadata');
@@ -83,7 +84,7 @@ bloombox.shop.v1.Service = (class ShopV1 {
       new proto.bloombox.services.shop.v1.ShopPromiseClient(
         bloombox.API_ENDPOINT,
         null,
-        {'format': 'binary'}));
+        {'format': bloombox.SERVICE_MODE}));
   }
 
   // -- API: Shop Info -- //

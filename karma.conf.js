@@ -12,6 +12,8 @@ let basePreprocessors = {};
 basePreprocessors[closureBase] = ['closure'];
 basePreprocessors[closureDeps] = ['closure-deps'];
 
+const serviceMode = 'text';  // 'text' or 'binary'
+
 
 module.exports = function(config) {
   config.set({

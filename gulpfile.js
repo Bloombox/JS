@@ -15,6 +15,8 @@ if (typeof version !== 'string')
 
 const permutations = ['full'];
 
+const serviceMode = 'binary';  // 'text' or 'binary'
+
 
 /**
  * Generate a new closure build routine.
@@ -47,7 +49,7 @@ function closureBuilder(entrypoint) {
       'assume_function_wrapper': true,
       'process_closure_primitives': true,
       'rewrite_polyfills': true,
-      'D': ['bloombox.DEBUG=false', 'goog.global.CLOSURE_CSS_NAME_MAPPING'],
+      'D': ['bloombox.DEBUG=false', `bloombox.SERVICE_MODE='${serviceMode}'`],
       'define': 'bloombox.VERSION=\'' + version + '\'',
       'create_source_map': 'target/js-' + entrypoint + '.map',
       'output_module_dependencies': 'target/deps-' + entrypoint + '.json',
@@ -84,7 +86,7 @@ function closureBuilder(entrypoint) {
       'assume_function_wrapper': true,
       'process_closure_primitives': true,
       'rewrite_polyfills': true,
-      'D': ['bloombox.DEBUG=false', 'goog.global.CLOSURE_CSS_NAME_MAPPING'],
+      'D': ['bloombox.DEBUG=false', `bloombox.SERVICE_MODE='${serviceMode}'`],
       'define': 'bloombox.VERSION=\'' + version + '\'',
       'create_source_map': 'target/js-' + entrypoint + '.map',
       'output_module_dependencies': 'target/deps-' + entrypoint + '.json',
@@ -122,7 +124,7 @@ function closureBuilder(entrypoint) {
       'assume_function_wrapper': true,
       'process_closure_primitives': true,
       'rewrite_polyfills': true,
-      'D': ['bloombox.DEBUG', 'goog.global.CLOSURE_CSS_NAME_MAPPING'],
+      'D': ['bloombox.DEBUG', `bloombox.SERVICE_MODE='${serviceMode}'`],
       'define': 'bloombox.VERSION=\'' + version + '\'',
       'create_source_map': 'target/js-' + entrypoint + '.map',
       'output_module_dependencies': 'target/deps-' + entrypoint + '.json',
@@ -165,7 +167,7 @@ function closureBuilder(entrypoint) {
     'exclude_test': true,
     'deps': glob([
       'third_party/schema/*.js',
-      'third_party/schema/services/**/*.js',
+      `third_party/schema/services/**/*.${serviceMode}.grpc.js`,
       'third_party/protobuf/js/**/*.js',
       'third_party/grpc-web/javascript/**/*.js'
     ]),

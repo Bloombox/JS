@@ -25,6 +25,7 @@
 
 /*global goog */
 
+goog.require('bloombox.SERVICE_MODE');
 goog.require('bloombox.menu.MenuAPI');
 goog.require('bloombox.menu.ObservableMenu');
 goog.require('bloombox.menu.RetrieveCallback');
@@ -116,7 +117,7 @@ goog.scope(function() {
         new proto.bloombox.services.menu.v1beta1.MenuPromiseClient(
           sdkConfig.endpoint,
           null,
-          {'format': 'text'}));
+          {'format': bloombox.SERVICE_MODE}));
     }
 
     // -- Menu Retrieve -- //
