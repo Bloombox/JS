@@ -38,6 +38,28 @@ let telemetryEventClick = 'clickEvent';
 
 
 // test logic
+function doStreamTest() {
+  bloombox.setup(partnerCode, locationCode, apiKey, function() {
+    let baseMenu = null;
+    let basePrint = null;
+    let localMatch = null;
+    let lastEventReceived = null;
+
+    bloombox.menu.api().stream().onReady((menu, fingerprint, local) => {
+      baseMenu = menu;
+      basePrint = fingerprint;
+      localMatch = local;
+      debugger;
+
+    }, (streamEvent) => {
+      lastEventReceived = streamEvent;
+      debugger;
+
+    })
+  });
+}
+
+
 /**
  * Run a test where a user that doesn't exist tries to verify.
  */
@@ -467,9 +489,16 @@ function getOrder() {
   doGetOrderTest();
 }
 
+function stream() {
+  doStreamTest();
+}
+
 console.log("Call the following to run a full test: full()");
 console.log("Call the following to run a verify test: verify()");
 console.log("Call the following to run a limited test: simple()");
 console.log("Call the following to run a telemetry test: telemetry()");
 console.log("Call the following to run a menu test: menu()");
+console.log("Call the following to stream menu changes: stream()");
 console.log("Call the following to retrieve an order: getOrder()");
+
+stream();
