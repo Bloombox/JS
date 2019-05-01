@@ -29,6 +29,9 @@ goog.provide('bloombox.setup');
 goog.require('bloombox.DEBUG');
 goog.require('bloombox.VERSION');
 
+goog.require('bloombox.db.ENABLE');
+goog.require('bloombox.db.setup');
+
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
 
@@ -159,9 +162,19 @@ bloombox.setup = function(partner, location, apikey, callback, extraConfig) {
      'config': merged,
      'variant': bloombox.VARIANT});
 
-  // setup telemetry first
-  bloombox.telemetry.setup(function() {
-    // setup the menu
-    callback();
-  });
+  function initTelemetry() {
+    // setup telemetry first
+    bloombox.telemetry.setup(function() {
+      // setup the menu
+      callback();
+    });
+  }
+
+  if (bloombox.db.ENABLE) {
+    bloombox.db.setup(partner, location, apikey, function() {
+      initTelemetry();
+    });
+  } else {
+    initTelemetry();
+  }
 };
