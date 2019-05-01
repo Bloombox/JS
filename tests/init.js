@@ -18,8 +18,3 @@ function runTestsuite(name) {
     });
   });
 }
-
-function sourcesOnly(func) {
-  if (window['COMPILED'] !== true)
-    func();
-}
