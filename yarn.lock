@@ -5982,9 +5982,9 @@ karma-chrome-launcher@^2.2.0:
     fs-access "^1.0.0"
     which "^1.2.1"
 
-"karma-closure@https://github.com/nckh/karma-closure":
-  version "0.1.2"
-  resolved "https://github.com/nckh/karma-closure#fd17d24157b8876e1db6d4c7bd34626e8f37a60a"
+"karma-closure@https://github.com/sgammon/karma-closure.git":
+  version "0.1.4"
+  resolved "https://github.com/sgammon/karma-closure.git#0a5b978c92dd3c21b5f2ebe7135893f3c190b537"
 
 karma-coverage@^1.1.1:
   version "1.1.2"
