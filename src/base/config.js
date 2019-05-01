@@ -41,6 +41,7 @@ goog.require('bloombox.VERSION');
  *            location: ?string,
  *            channel: ?string,
  *            beta: ?boolean,
+ *            caching: ?boolean,
  *            endpoint: string}}
  */
 bloombox.config.JSConfig;
@@ -68,6 +69,7 @@ bloombox.config.buildDefault = function() {
     location: null,
     channel: null,
     beta: false,
+    caching: true,
     endpoint: bloombox.API_ENDPOINT
   };
 };
