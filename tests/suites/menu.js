@@ -43,6 +43,7 @@ function genMenuTestsuite(version) {
           }, bloombox.menu.RetrieveOptions.fromObject(
             {'scope': 'partner/sample/location/sample'}));
           assert(promise, 'should get valid promise from menu fetch');
+          expect(promise).not.toBeNull();
         });
       });
     });
@@ -79,24 +80,74 @@ function genMenuTestsuite(version) {
       describe('method: `featured`', function() {
         it('should be able to fetch featured products for a given section', function() {
           const section = proto.opencannabis.products.menu.section.Section.FLOWERS;
-          return bloombox.menu.api(apiOpts).featured(section);
+          const promise = bloombox.menu.api(apiOpts).featured(section);
+          expect(promise).not.toBeNull();
+          return promise;
         });
 
         it('should be able to fetch featured products across sections', function() {
-          return bloombox.menu.api(apiOpts).featured();
+          const promise = bloombox.menu.api(apiOpts).featured();
+          expect(promise).not.toBeNull();
+          return promise;
         });
 
         it('should be able to fetch featured products in keys-only mode', function() {
           return new Promise((resolve, reject) => {
             const options = bloombox.menu.RetrieveOptions.fromObject({
               'keysOnly': true});
-            return bloombox.menu.api(apiOpts).featured(null, (response, err) => {
+            const promise = bloombox.menu.api(apiOpts).featured(null, (response, err) => {
               if (response && !err) resolve(response);
               else reject(err);
             }, options);
+            expect(promise).not.toBeNull();
+            return promise;
           });
         });
       });
+
+      // describe('method: `stream`', function() {
+      //   let readyCallbackRan = false;
+      //   let baseMenu = null;
+      //   let basePrint = null;
+      //   let localMatch = null;
+      //   let observable = null;
+      //
+      //   beforeEach(function(done) {
+      //     observable = bloombox.menu.api(apiOpts).stream().onReady((menu, fingerprint, local) => {
+      //       baseMenu = menu;
+      //       basePrint = fingerprint;
+      //       localMatch = local;
+      //       readyCallbackRan = true;
+      //       done();
+      //
+      //     }, (streamEvent) => {
+      //       expect(baseMenu).not.toBeNull();
+      //       expect(basePrint).not.toBeNull();
+      //       expect(localMatch).toBe(false);
+      //       expect(streamEvent).not.toBeNull();
+      //
+      //       // test the response
+      //       expect(streamEvent.hasCatalog()).toBe(false);
+      //       expect(streamEvent.hasDelta()).toBe(true);
+      //       expect(streamEvent.hasModified()).toBe(true);
+      //
+      //       // test new fingerprint
+      //       expect(streamEvent.getFingerprint()).not.toBe(basePrint);
+      //
+      //       // test the delta
+      //       const delta = streamEvent.getDelta();
+      //       expect(delta.getCount()).toBeGreaterThan(0);
+      //     });
+      //   });
+      //
+      //   it('should be able to establish and handle a live menu stream', function() {
+      //     expect(readyCallbackRan).toBe(true);
+      //     expect(observable).not.toBeNull();
+      //     expect(baseMenu).not.toBeNull();
+      //     expect(basePrint).not.toBeNull();
+      //     expect(localMatch).toBe(false);
+      //   });
+      // });
     }
   });
 }
