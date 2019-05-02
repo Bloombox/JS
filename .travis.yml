@@ -4,6 +4,7 @@ env:
   - CODACY_PROJECT_TOKEN=61032013369f42c2883a039c33987e2c
   - CODECOV_TOKEN=aab0a4ce-97e1-4949-99fb-ce016cdb20a6
 language: node_js
+dist: xenial
 node_js:
 - '10'
 cache:
