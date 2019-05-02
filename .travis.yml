@@ -16,9 +16,6 @@ before_script:
 - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
 - curl -L https://github.com/codacy/codacy-coverage-reporter/releases/download/2.0.2/codacy-coverage-reporter-2.0.2-assembly.jar > ./codacy-coverage-reporter.jar
 - chmod +x ./cc-test-reporter
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- sleep 3
 - yarn
 - ./cc-test-reporter before-build
 script:
