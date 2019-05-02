@@ -136,9 +136,7 @@ stackdriver.ErrorReporter = function ErrorReporter(config) {
  * @param {Error|String} errObj Error object or message string to report.
  */
 stackdriver.ErrorReporter.prototype.report = function(errObj) {
-  if (this.disabled || !errObj) {
-    return;
-  }
+  if (this.disabled || !errObj) return;
 
   let payload = {};
   payload['serviceContext'] = this.serviceContext;
@@ -158,15 +156,13 @@ stackdriver.ErrorReporter.prototype.report = function(errObj) {
     let errorMessageInfo = null;
     let errorName = null;
     if (errorMessage) {
+      errorMessageInfo = errorMessage;
+      errorName = 'InternalError';
+
       if (errorType) {
         errorMessageInfo = errorMessage;
         errorName = errorType.replace(/\$\$/g, '').replace(/\$/g, '.');
-        if (errorName[0] === '.') {
-          errorName = errorName.slice(1);
-        }
-      } else {
-        errorMessageInfo = errorMessage;
-        errorName = 'InternalError';
+        if (errorName[0] === '.') errorName = errorName.slice(1);
       }
     }
 
@@ -182,18 +178,6 @@ stackdriver.ErrorReporter.prototype.report = function(errObj) {
     }
   }
 
-  if (typeof err === 'string' || err instanceof String) {
-    // Transform the message in an error, use try/catch to make sure the
-    // stacktrace is populated.
-    try {
-      // noinspection ExceptionCaughtLocallyJS
-      throw new Error(err);
-    } catch (e) {
-      err = e;
-    }
-    // the first frame when using report() is always this library
-    firstFrameIndex = 2;
-  }
   let that = this;
   // This will use source maps and normalize the stack frames
   window['StackTrace']['fromError'](err).then(function(stack) {
@@ -296,12 +280,7 @@ stackdriver.setup = function(reporter) {
  */
 stackdriver.reportError = function(err, opt_op) {
   let op = opt_op ? opt_op.name : null;
-  if (_REPORTER === null) {
-    // uh oh
-    bloombox.logging.error('Unable to report error: not ' +
-      'initialized.', err);
-    return false;
-  } else {
+  if (_REPORTER) {
     // report the error
     bloombox.logging.error('Reporting error encountered in' +
       (op ? ' protected function \'' + op + '\'.' :

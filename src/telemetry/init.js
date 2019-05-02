@@ -69,11 +69,7 @@ bloombox.telemetry.setup = function(callback) {
  * @package
  */
 bloombox.telemetry.sendInitialEvents = function() {
-  if (bloombox.telemetry.didOptOut()) {
-    // user opted out of telemetry
-    bloombox.logging.warn(
-      'User opted-out of telemetry, skipping initial events.');
-  } else {
+  if (!bloombox.telemetry.didOptOut()) {
     const collection = bloombox.telemetry.Collection.named(
       bloombox.telemetry.InternalCollection.LIBRARY);
     // user has not yet opted out
@@ -135,10 +131,9 @@ bloombox.telemetry.urlDidChange_ = function() {
  * @private
  */
 bloombox.telemetry.checkURL_ = function() {
-  if (window.location.href !== bloombox.telemetry.lastURL_) {
+  if (window.location.href !== bloombox.telemetry.lastURL_)
     // update it
     bloombox.telemetry.urlDidChange_();
-  }
 
   // repeat the check in URL_CHECK_TICK_MS milliseconds
   setTimeout(bloombox.telemetry.checkURL_,
@@ -163,11 +158,7 @@ bloombox.telemetry.setupPageTracking = function() {
  * @public
  */
 bloombox.telemetry.boot = function() {
-  if (bloombox.telemetry.didOptOut()) {
-    // user opted out of telemetry
-    bloombox.logging.warn(
-      'User opted-out of telemetry, skipping initial ping.');
-  } else {
+  if (!bloombox.telemetry.didOptOut()) {
     // user has not yet opted out
     bloombox.logging.log('Sending initial telemetry ping...');
     bloombox.telemetry.events().ping(function(latency) {

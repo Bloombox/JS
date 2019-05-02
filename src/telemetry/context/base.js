@@ -78,6 +78,37 @@ bloombox.telemetry.ContextException = function ContextException(message) {
 
 
 /**
+ * Resolve a name for a given menu section.
+ *
+ * @param {proto.opencannabis.products.menu.section.Section} idx Menu section to
+ *        resolve a name for.
+ * @return {?string} Name, if one can be resolved, or `null` instead.
+ * @package
+ */
+bloombox.telemetry._resolveSectionName = function(idx) {
+  switch (idx) {
+    case proto.opencannabis.products.menu.section.Section.FLOWERS:
+      return 'FLOWERS';
+    case proto.opencannabis.products.menu.section.Section.EXTRACTS:
+      return 'EXTRACTS';
+    case proto.opencannabis.products.menu.section.Section.EDIBLES:
+      return 'EDIBLES';
+    case proto.opencannabis.products.menu.section.Section.CARTRIDGES:
+      return 'CARTRIDGES';
+    case proto.opencannabis.products.menu.section.Section.APOTHECARY:
+      return 'APOTHECARY';
+    case proto.opencannabis.products.menu.section.Section.PREROLLS:
+      return 'PREROLLS';
+    case proto.opencannabis.products.menu.section.Section.PLANTS:
+      return 'PLANTS';
+    case proto.opencannabis.products.menu.section.Section.MERCHANDISE:
+      return 'MERCHANDISE';
+  }
+  return null;
+};
+
+
+/**
  * Gathered event context.
  *
  * @param {?bloombox.telemetry.Collection=} opt_collection Collection to file
@@ -159,23 +190,18 @@ bloombox.telemetry.Context = function(opt_collection,
   this.session = opt_session || null;
 
   // make us a partner key
-  let partnerKey;
+  let partnerKey = null;
   if (opt_partner) {
     partnerKey = new proto.bloombox.partner.PartnerKey();
     partnerKey.setCode(opt_partner);
-  } else {
-    partnerKey = null;
   }
 
   // make us a partner key
-  let locationKey;
+  let locationKey = null;
   if (opt_partner && opt_location) {
     locationKey = new proto.bloombox.partner.LocationKey();
     locationKey.setCode(opt_location);
     locationKey.setPartner(partnerKey);
-  } else {
-    // no location-level context
-    locationKey = null;
   }
 
   /**
@@ -187,13 +213,11 @@ bloombox.telemetry.Context = function(opt_collection,
   this.location = locationKey;
 
   // attach the device key, if any
-  let deviceKey;
+  let deviceKey = null;
   if (opt_device && typeof opt_device === 'string') {
     deviceKey = new proto.bloombox.partner.PartnerDeviceKey();
     deviceKey.setUuid(/** @type {string} */ (opt_device));
     deviceKey.setLocation(locationKey);
-  } else {
-    deviceKey = null;
   }
 
   /**
@@ -206,13 +230,11 @@ bloombox.telemetry.Context = function(opt_collection,
   this.device = deviceKey;
 
   // decode the user key, if any
-  let user;
+  let user = null;
   if (opt_user) {
     let userKey = new proto.bloombox.identity.UserKey();
     userKey.setUid(opt_user);
     user = userKey;
-  } else {
-    user = null;
   }
 
   /**
@@ -225,13 +247,11 @@ bloombox.telemetry.Context = function(opt_collection,
   this.user = user;
 
   // decode the order key, if any
-  let order;
+  let order = null;
   if (opt_order) {
     let orderKey = new proto.opencannabis.commerce.OrderKey();
     orderKey.setId(opt_order);
     order = orderKey;
-  } else {
-    order = null;
   }
 
   /**
@@ -300,14 +320,14 @@ bloombox.telemetry.Context.resolveVersion = function(protob) {
  * @return {Object} Serialized native context.
  */
 bloombox.telemetry.Context.serializeNativeContext = function(protob) {
-  return {
+  return protob ? {
     'type': protob.getType(),
     'role': protob.getRole(),
-    'os': {
+    'os': protob.getOs() ? {
       'type': protob.getOs().getType(),
       'version': (
         bloombox.telemetry.Context.resolveVersion(protob.getOs().getVersion()))
-    },
+    } : {},
     'screen': {
       'screen': {
         'width': protob.getScreen().getScreen().getWidth(),
@@ -320,7 +340,7 @@ bloombox.telemetry.Context.serializeNativeContext = function(protob) {
       'density': protob.getScreen().getDensity(),
       'orientation': protob.getScreen().getOrientation()
     }
-  };
+  } : {};
 };
 
 
@@ -333,7 +353,7 @@ bloombox.telemetry.Context.serializeNativeContext = function(protob) {
  * @return {Object} Serialized browser context.
  */
 bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
-  return {
+  return protob ? {
     'browserType': protob.getBrowserType(),
     'version': bloombox.telemetry.Context.resolveVersion(protob.getVersion()),
     'language': protob.getLanguage(),
@@ -341,7 +361,7 @@ bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
     'touchpoints': protob.getTouchpoints(),
     'hardwareConcurrency': protob.getHardwareConcurrency(),
     'colorDepth': protob.getColorDepth()
-  };
+  } : {};
 };
 
 
@@ -445,6 +465,7 @@ bloombox.telemetry.Context.serializeProto = function(context) {
  */
 bloombox.telemetry.Context.prototype.serialize = function() {
   let baseContext = {};
+  baseContext['scope'] = {};
 
   // add collection, if present
   if (this.collection)
@@ -467,6 +488,9 @@ bloombox.telemetry.Context.prototype.serialize = function() {
   // consider partner context, etc
   let partnerScope = /** @type {?string} */ (null);
 
+  if (this.partner) {
+    partnerScope = this.location.getPartner().getCode();
+  }
   if (this.location) {
     if (this.device) {
       partnerScope = [
@@ -477,10 +501,6 @@ bloombox.telemetry.Context.prototype.serialize = function() {
       partnerScope = [
         this.location.getPartner().getCode(),
         this.device.getUuid()].join('/');
-    }
-  } else {
-    if (this.partner) {
-      partnerScope = this.location.getPartner().getCode();
     }
   }
   if (partnerScope)
@@ -498,8 +518,6 @@ bloombox.telemetry.Context.prototype.serialize = function() {
   }
 
   if (this.section !== null) {
-    if (!baseContext['scope'])
-      baseContext['scope'] = {};
     let commercialScope = (
       'section/' + this.section.toString());
     if (this.item !== null) {
@@ -551,6 +569,21 @@ bloombox.telemetry.Context.prototype.export = function() {
     } else {
       // partner -> location context
       scope.setPartner(basePartnerScope);
+    }
+    if (this.order) {
+      const orderId = this.order.getId();
+      scope.setOrder(orderId);
+    }
+    if (this.section != null) {
+      const resolvedName = bloombox.telemetry._resolveSectionName(this.section);
+      const baseCommercialScope = 'section/' + resolvedName;
+      if (this.item) {
+        const itemId = this.item.getId();
+        const fullCommercialScope = baseCommercialScope + '/product/' + itemId;
+        scope.setCommercial(fullCommercialScope);
+      } else {
+        scope.setCommercial(baseCommercialScope);
+      }
     }
     context.setScope(scope);
   }

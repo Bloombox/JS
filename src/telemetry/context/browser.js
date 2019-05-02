@@ -58,10 +58,7 @@ bloombox.telemetry.buildBrowserContext = function() {
   let browserVersion = goog.userAgent.VERSION;
   let browserType = (
     proto.bloombox.analytics.context.BrowserType.BROWSER_UNKNOWN);
-  if (goog.userAgent.product.CHROME)
-    browserType = (
-      proto.bloombox.analytics.context.BrowserType.CHROME);
-  else if (goog.userAgent.product.SAFARI)
+  if (goog.userAgent.product.SAFARI)
     browserType = (
       proto.bloombox.analytics.context.BrowserType.SAFARI);
   else if (goog.userAgent.product.FIREFOX)
@@ -73,6 +70,9 @@ bloombox.telemetry.buildBrowserContext = function() {
   else if (goog.userAgent.EDGE_OR_IE)
     browserType = (
       proto.bloombox.analytics.context.BrowserType.IE_OR_EDGE);
+  else if (goog.userAgent.product.CHROME)
+    browserType = (
+      proto.bloombox.analytics.context.BrowserType.CHROME);
   context.setBrowserType(browserType);
 
   // browser version mount
