@@ -20,10 +20,9 @@ before_script:
 - ./cc-test-reporter before-build
 script:
 - make
-- make serve &
 - karma start karma.conf.js --single-run
 after_script:
-- ./cc-test-reporter after-build -d --exit-code $TRAVIS_TEST_RESULT --coverage-input-type cobertura --prefix /home/travis/build/Bloombox/JS
-- java -cp codacy-coverage-reporter.jar com.codacy.CodacyCoverageReporter --language Javascript -r target/coverage/cobertura.xml --prefix /home/travis/build/Bloombox/JS
+- ./cc-test-reporter after-build -d --exit-code $TRAVIS_TEST_RESULT --coverage-input-type cobertura --prefix /home/travis/build/Bloombox/JS/src
+- java -cp codacy-coverage-reporter.jar com.codacy.CodacyCoverageReporter --language Javascript -r /home/travis/build/Bloombox/JS/target/coverage/cobertura.xml --prefix /home/travis/build/Bloombox/JS/src
 - codecov
 
