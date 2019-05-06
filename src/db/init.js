@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co.
  *
@@ -26,6 +25,7 @@
 goog.require('bloombox.logging.info');
 goog.require('bloombox.logging.warn');
 
+goog.require('goog.async.Deferred');
 goog.require('goog.db');
 goog.require('goog.db.IndexedDb');
 goog.require('goog.db.Transaction');
@@ -33,7 +33,9 @@ goog.require('goog.db.Transaction');
 goog.provide('bloombox.db.DEBUG');
 goog.provide('bloombox.db.DEFAULT_STORE');
 goog.provide('bloombox.db.ENABLE');
+goog.provide('bloombox.db.MENU_STORE');
 goog.provide('bloombox.db.VERSION');
+goog.provide('bloombox.db.acquire');
 goog.provide('bloombox.db.setup');
 
 
@@ -75,6 +77,16 @@ bloombox.db.DEFAULT_STORE = goog.define('bloombox.db.DEFAULT_STORE', 'bws');
 
 
 /**
+ * Store name, in local storage (IndexedDB), for catalog menu data caching and
+ * browser-based indexing.
+ *
+ * @define {string} bloombox.db.DEFAULT_STORE Name of the DB.
+ * @const
+ */
+bloombox.db.MENU_STORE = goog.define('bloombox.db.MENU_STORE', 'bwm');
+
+
+/**
  * Whether the DB engine has been initialized yet or not.
  *
  * @type {boolean}
@@ -96,9 +108,21 @@ bloombox.db._initializing = false;
  * Whether the DB engine failed to init.
  *
  * @type {boolean}
+ * @package
  * @nocollapse
  */
 bloombox.db._broken = false;
+
+
+/**
+ * Stores a referenece to the active IndexedDB storage layer, if one could be
+ * resolved when storage was setup.
+ *
+ * @type {?goog.db.IndexedDb}
+ * @package
+ * @nocollapse
+ */
+bloombox.db._store = null;
 
 
 // -- Callbacks -- //
@@ -113,6 +137,7 @@ const databaseUpgradeNeeded = function(ev, db) {
   bloombox.logging.info('Initializing frontend database...',
     {'name': bloombox.db.DEFAULT_STORE, 'version': bloombox.db.VERSION});
   db.createObjectStore(bloombox.db.DEFAULT_STORE);
+  db.createObjectStore(bloombox.db.MENU_STORE);
 };
 
 /**
@@ -153,6 +178,35 @@ const databaseInitCallback = function(callback) {
 
 // -- Setup -- //
 /**
+ * Acquire an instance of the active DB layer, which is usually implemented on
+ * top of IndexedDB.
+ *
+ * @param {function(?goog.db.IndexedDb): ?goog.async.Deferred} callback Function
+ *        to dispatch once the database instance has been acquired. If one
+ *        cannot be resolved, `null` is passed instead.
+ * @param {string=} opt_partner Partner code for the active account.
+ * @param {string=} opt_location Location code for the active account.
+ * @param {string=} opt_key Active API key for the library.
+ * @return {?goog.async.Deferred} Asynchronous operation to store menu.
+ */
+bloombox.db.acquire = function(callback, opt_partner, opt_location, opt_key) {
+  if (bloombox.db.ENABLE) {
+    const config = bloombox.config.active();
+    const partner = opt_partner || config.partner;
+    const location = opt_location || config.location;
+    const apikey = opt_key || config.key;
+
+    if (partner && location && apikey) {
+      return bloombox.db.setup(partner, location, apikey, function () {
+        return callback(bloombox.db._store);
+      });
+    }
+  }
+  return callback(null);
+};
+
+
+/**
  * Setup frontend database storage, via IndexedDB. Usable for caching records
  * locally, like menus and menu changes, account changes, and more. Provides an
  * interface that supports object/key-value-style storage.
@@ -160,7 +214,9 @@ const databaseInitCallback = function(callback) {
  * @param {string} partner Partner code for the active account.
  * @param {string} location Location code for the active account.
  * @param {string} apikey Active API key for the library.
- * @param {function()} callback Function to dispatch once setup is complete.
+ * @param {function(): ?goog.async.Deferred} callback Function to dispatch once
+ *        setup is complete. Returns a deferred task, if any.
+ * @return {?goog.async.Deferred} Asynchronous operation to store menu.
  */
 bloombox.db.setup = function(partner, location, apikey, callback) {
   if (bloombox.db.ENABLE) {
@@ -168,11 +224,14 @@ bloombox.db.setup = function(partner, location, apikey, callback) {
       bloombox.db._initializing = true;
 
       // we are enabled. initialize the DB.
-      goog.db.openDatabase(
+      const op = goog.db.openDatabase(
         bloombox.db.DEFAULT_STORE,
         bloombox.db.VERSION,
         databaseUpgradeNeeded,
-        databaseBlocked).addCallback(databaseInitCallback((db) => {
+        databaseBlocked);
+
+      op.addCallback(databaseInitCallback((db) => {
+        bloombox.db._store = db;
         bloombox.db._initializing = false;
         bloombox.db._initialized = true;
         bloombox.db._broken = !db;
@@ -181,5 +240,5 @@ bloombox.db.setup = function(partner, location, apikey, callback) {
       }));
     }
   }
-  callback();
+  return callback();
 };

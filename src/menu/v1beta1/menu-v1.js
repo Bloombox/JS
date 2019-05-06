@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
@@ -26,14 +25,21 @@
 /*global goog */
 
 goog.require('bloombox.SERVICE_MODE');
+
+goog.require('bloombox.db.MENU_STORE');
+goog.require('bloombox.db.acquire');
+
 goog.require('bloombox.menu.MenuAPI');
 goog.require('bloombox.menu.ObservableMenu');
 goog.require('bloombox.menu.RetrieveCallback');
 goog.require('bloombox.menu.RetrieveException');
 goog.require('bloombox.menu.RetrieveOptions');
+goog.require('bloombox.menu.processMenu');
 
 goog.require('bloombox.rpc.metadata');
 
+goog.require('goog.pubsub.TopicId');
+goog.require('goog.pubsub.TypedPubSub');
 goog.require('grpc.web.ClientReadableStream');
 
 goog.require('proto.bloombox.services.menu.v1beta1.GetFeatured.Request');
@@ -83,6 +89,27 @@ function prepRetrieveRequest(config) {
 
 
 goog.scope(function() {
+  /**
+   * Menu publish/subscribe feed. Receives emitted events for each product and
+   * section that changes, as they change.
+   *
+   * @type {goog.pubsub.TypedPubSub}
+   * @package
+   */
+  bloombox.menu.feed = new goog.pubsub.TypedPubSub(true);
+
+  /**
+   * Enumerates menu pub/sub feed topics that other library code can subscribe
+   * to. This includes a topic for menu product changes, section changes, and
+   * featured products.
+   *
+   * @enum {goog.pubsub.TopicId}
+   */
+  bloombox.menu.FeedTopic = {
+    PRODUCTS: new goog.pubsub.TopicId('bb.products'),
+    SECTION: new goog.pubsub.TopicId('bb.section')
+  };
+
   /**
    * Defines an implementation of the Bloombox Menu API, which calls into modern
    * RPC dispatch via gRPC.
@@ -150,7 +177,25 @@ goog.scope(function() {
       });
 
       operation.then((resp) => {
-        if (callback) callback(resp, null);
+        if (callback) {
+          if (resp.hasCatalog()) {
+            const deferred = bloombox.menu.processMenu(resp.getCatalog());
+            if (deferred) {
+              deferred.addCallback(() => {
+                callback(resp, null);
+              });
+              deferred.addErrback((err) => {
+                bloombox.logging.error('Error persisting menu locally.',
+                  {'err': err});
+                callback(resp, null);
+              });
+            } else {
+              callback(resp, null);
+            }
+          } else {
+            callback(null, null);
+          }
+        }
       });
       return operation;
     }

@@ -33,7 +33,7 @@ function genMenuTestsuite(version) {
         }
       });
 
-      it('should not provide a menu for an non-existent scope', function() {
+      it('should not provide a menu for a non-existent scope', function() {
         return new Promise(function(resolve, reject) {
           let promise = bloombox.menu.api(apiOpts).retrieve(function(menu, err) {
             if (err)

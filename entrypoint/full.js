@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2017, Bloombox, LLC.
  *
@@ -173,6 +172,7 @@ bloombox.setup = function(partner, location, apikey, callback, extraConfig) {
   if (bloombox.db.ENABLE) {
     bloombox.db.setup(partner, location, apikey, function() {
       initTelemetry();
+      return null;
     });
   } else {
     initTelemetry();

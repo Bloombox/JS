@@ -85,6 +85,7 @@ function runTestsuite(name) {
     describe('library: ' + name, function() {
       basicTestsuite();
       utilTestsuite();
+      dbTestsuite();
       rpcTestsuite();
       shopTestsuite();
       menuTestsuite();
