@@ -227,6 +227,7 @@ goog.scope(function() {
       root.put(menuFingerprint, 'catalog.fingerprint');
       root.put(menuVersion, 'catalog.version');
       root.put(ts, 'catalog.lastModified');
+      bloombox.menu.lastSeenFingerprint = menuFingerprint;
       return txn.wait();
     });
   }
