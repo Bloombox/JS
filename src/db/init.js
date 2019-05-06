@@ -22,7 +22,7 @@
 
 /*global goog */
 
-goog.require('bloombox.logging.info');
+goog.require('bloombox.logging.log');
 goog.require('bloombox.logging.warn');
 
 goog.require('goog.async.Deferred');
@@ -134,7 +134,7 @@ bloombox.db._store = null;
  * @param {!goog.db.IndexedDb} db Reference to the current frontend database.
  */
 const databaseUpgradeNeeded = function(ev, db) {
-  bloombox.logging.info('Initializing frontend database...',
+  bloombox.logging.log('Initializing frontend database...',
     {'name': bloombox.db.DEFAULT_STORE, 'version': bloombox.db.VERSION});
   db.createObjectStore(bloombox.db.DEFAULT_STORE);
   db.createObjectStore(bloombox.db.MENU_STORE);
@@ -236,7 +236,7 @@ bloombox.db.setup = function(partner, location, apikey, callback) {
         bloombox.db._initialized = true;
         bloombox.db._broken = !db;
         if (db)
-          bloombox.logging.info('Local DB engine is ready.', db);
+          bloombox.logging.log('Local DB engine is ready.', db);
       }));
     }
   }

@@ -181,7 +181,7 @@ goog.scope(function() {
     if (!menu.hasPayload()) return null;
 
     const sectioned = menu.getPayload();
-    bloombox.logging.info('Processing/indexing menu catalog...',
+    bloombox.logging.log('Processing/indexing menu catalog...',
       {'catalog': sectioned, 'count': sectioned.getCount()});
 
     if (sectioned.getCount() < 1) return null;

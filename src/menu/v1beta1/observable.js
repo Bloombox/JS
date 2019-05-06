@@ -26,7 +26,7 @@
 /*global goog */
 
 goog.require('bloombox.logging.error');
-goog.require('bloombox.logging.info');
+goog.require('bloombox.logging.log');
 goog.require('bloombox.logging.warn');
 goog.require('grpc.web.StatusCode');
 goog.require('jspb.Message');
@@ -310,14 +310,14 @@ goog.scope(function() {
         if (reset)
           setTimeout(function() {
             // log, check, and re-set if needed
-            bloombox.logging.info('Re-checking live menu stream...');
+            bloombox.logging.log('Re-checking live menu stream...');
             this.check(proceed, reject, true);
           }, 30 * 1000);
       }
     },
 
     process: function() {
-      bloombox.logging.info('Establishing live menu session...');
+      bloombox.logging.log('Establishing live menu session...');
 
       this.stream.on('data', function(responsePayload) {
         const response = (
@@ -326,14 +326,14 @@ goog.scope(function() {
 
         if (!this.initialMenuReady) {
           // we are processing an initial payload
-          bloombox.logging.info(
+          bloombox.logging.log(
             'Processing initial menu stream notification...',
             {'response': response});
 
           const newFingerprint = response.getFingerprint();
           if (newFingerprint && newFingerprint === this.fingerprint) {
             // fingerprints match: we can use the local menu.
-            bloombox.logging.info(
+            bloombox.logging.log(
               'Server indicates local menu is sufficient as a base.');
             if (this.baseMenuReady)
               this.baseMenuReady(this.baseMenu, this.fingerprint, true);
@@ -352,7 +352,7 @@ goog.scope(function() {
             } else {
               // we have a catalog to use as the base menu.
               const newBaseMenu = response.getCatalog();
-              bloombox.logging.info(
+              bloombox.logging.log(
                 'Received base catalog from server. Updating fingerprint...',
                 {'catalog': newBaseMenu, 'fingerprint': response.getFingerprint()});
 
@@ -367,7 +367,7 @@ goog.scope(function() {
 
         } else {
           // we are processing an update payload
-          bloombox.logging.info(
+          bloombox.logging.log(
             'Processing menu stream update...',
             {'event': response, 'fingerprint': response.getFingerprint()});
 
@@ -387,7 +387,7 @@ goog.scope(function() {
         const statusMetadata = /** @type {(!Object<string, string>|undefined)} */ (
           statusPayload.metadata);
 
-        bloombox.logging.info('Live menu stream updated status.',
+        bloombox.logging.log('Live menu stream updated status.',
           {'code': statusCode,
            'details': statusDetails,
            'metadata': statusMetadata});
@@ -407,7 +407,7 @@ goog.scope(function() {
 
       this.stream.on('end', function() {
         // stream end signal
-        bloombox.logging.info('Menu event stream closed.');
+        bloombox.logging.log('Menu event stream closed.');
         if (this.endCallback) this.endCallback();
       });
       return this;
