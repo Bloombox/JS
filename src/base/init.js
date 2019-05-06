@@ -36,7 +36,7 @@ goog.provide('bloombox.VERSION');
  *         features.
  * @export
  */
-bloombox.DEBUG = goog.define('bloombox.DEBUG', true);
+bloombox.DEBUG = goog.define('bloombox.DEBUG', goog.DEBUG);
 
 
 /**

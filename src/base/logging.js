@@ -37,7 +37,7 @@ goog.require('bloombox.DEBUG');
  * @public
  */
 bloombox.logging.log = function(var_args) {
-  if (bloombox.DEBUG)
+  if (bloombox.DEBUG === true)
     console.log.apply(console, ['[Bloombox]'].concat(Array.from(arguments)));
 };
 
@@ -49,7 +49,7 @@ bloombox.logging.log = function(var_args) {
  * @public
  */
 bloombox.logging.info = function(var_args) {
-  if (bloombox.DEBUG)
+  if (bloombox.DEBUG === true)
     console.info.apply(console, ['[Bloombox]'].concat(Array.from(arguments)));
 };
 
