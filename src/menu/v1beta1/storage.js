@@ -103,10 +103,6 @@ goog.scope(function() {
    * @param {number} ts Timestamp to use for writes.
    */
   function processSection(section, products, store, ts) {
-    if (section === proto.opencannabis.products.menu.section.Section.UNSPECIFIED ||
-        !products || products.length < 1)
-      return;
-
     products.map((item) => {
       processProduct(item, store, ts);
     });
@@ -130,58 +126,55 @@ goog.scope(function() {
    * @return {?goog.async.Deferred} Asynchronous operation to store menu.
    */
   bloombox.menu.processMenu = function(menu) {
-    if (menu.hasPayload()) {
-      const sectioned = menu.getPayload();
-      bloombox.logging.info('Processing/indexing menu catalog...',
-        {'catalog': sectioned, 'count': sectioned.getCount()});
+    if (!menu.hasPayload()) return null;
 
-      if (sectioned.getCount() > 0) {
-        const sections = sectioned.getPayloadList();
+    const sectioned = menu.getPayload();
+    bloombox.logging.info('Processing/indexing menu catalog...',
+      {'catalog': sectioned, 'count': sectioned.getCount()});
 
-        return bloombox.db.acquire((db) => {
-          if (db) {
-            const txn = db.createTransaction(
-              [bloombox.db.MENU_STORE, bloombox.db.DEFAULT_STORE],
-              goog.db.Transaction.TransactionMode.READ_WRITE);
+    if (sectioned.getCount() < 1) return null;
 
-            const store = txn.objectStore(bloombox.db.MENU_STORE);
-            const root = txn.objectStore(bloombox.db.DEFAULT_STORE);
-            const ts = +(new Date());
+    const sections = sectioned.getPayloadList();
 
-            sections.map((payload) => {
-              let section = /**
-               @type {proto.opencannabis.products.menu.SectionData} */ (payload);
-              if (section.getCount() > 0) {
-                const productList = section.getProductList();
-                const sectionSpec = section.getSection();
+    return bloombox.db.acquire((db) => {
+      if (db === null) return null;
+      const txn = db.createTransaction(
+        [bloombox.db.MENU_STORE, bloombox.db.DEFAULT_STORE],
+        goog.db.Transaction.TransactionMode.READ_WRITE);
 
-                // @TODO(sgammon) support for custom sections
-                if (sectionSpec.hasSection()) {
-                  processSection(
-                    sectionSpec.getSection(), productList, store, ts);
-                }
-              }
-            });
+      const store = txn.objectStore(bloombox.db.MENU_STORE);
+      const root = txn.objectStore(bloombox.db.DEFAULT_STORE);
+      const ts = +(new Date());
 
-            const menuFingerprint = menu
-              .getMetadata()
-              .getSettings()
-              .getFingerprint()
-              .getHex();
+      sections.map((payload) => {
+        let section = /**
+         @type {proto.opencannabis.products.menu.SectionData} */ (payload);
+        if (section.getCount() > 0) {
+          const productList = section.getProductList();
+          const sectionSpec = section.getSection();
 
-            const menuVersion = menu
-              .getMetadata()
-              .getVersion();
-
-            root.put(menuFingerprint, 'catalog.fingerprint');
-            root.put(menuVersion, 'catalog.version');
-            root.put(ts, 'catalog.lastModified');
-            return txn.wait();
+          // @TODO(sgammon) support for custom sections
+          if (sectionSpec.hasSection()) {
+            processSection(
+              sectionSpec.getSection(), productList, store, ts);
           }
-          return null;
-        });
-      }
-    }
-    return null;
+        }
+      });
+
+      const menuFingerprint = menu
+        .getMetadata()
+        .getSettings()
+        .getFingerprint()
+        .getHex();
+
+      const menuVersion = menu
+        .getMetadata()
+        .getVersion();
+
+      root.put(menuFingerprint, 'catalog.fingerprint');
+      root.put(menuVersion, 'catalog.version');
+      root.put(ts, 'catalog.lastModified');
+      return txn.wait();
+    });
   }
 });
