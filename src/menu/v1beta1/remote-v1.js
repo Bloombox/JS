@@ -51,7 +51,7 @@ goog.require('proto.bloombox.services.menu.v1beta1.MenuPromiseClient');
 
 goog.require('proto.opencannabis.products.menu.section.Section');
 
-goog.provide('bloombox.menu.v1beta1.Service');
+goog.provide('bloombox.menu.v1beta1.RemoteService');
 
 
 /**
@@ -95,7 +95,7 @@ goog.scope(function() {
    *
    * @implements bloombox.menu.MenuAPI
    */
-  bloombox.menu.v1beta1.Service = (class MenuV1 {
+  bloombox.menu.v1beta1.RemoteService = (class MenuV1 {
     /**
      * Construct a new instance of the `v1beta1` Menu API service. The instance is
      * pre-configured with requisite top-level config and afterwards ready to make
@@ -128,9 +128,9 @@ goog.scope(function() {
 
     // -- Menu Retrieve -- //
     /**
-     * Retrieve a full menu via Bloombox systems, using the legacy V1 JSON/REST
-     * API interface, for a given retail location. Before this method is called,
-     * the user should setup their partnership information via the `setup` method,
+     * Retrieve a full menu via Bloombox systems, using the new binary gRPC API
+     * interface, for a given retail location. Before this method is called, the
+     * user should setup their partnership information via the `setup` method,
      * including their partner code, location code, and API key.
      *
      * Once `setup` calls back, indicating the library is ready for use, a full

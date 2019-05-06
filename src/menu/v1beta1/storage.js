@@ -28,7 +28,6 @@ goog.require('bloombox.DEBUG');
 goog.require('bloombox.db.MENU_STORE');
 goog.require('bloombox.db.acquire');
 
-goog.require('goog.collections.sets');
 goog.require('goog.db');
 
 goog.require('goog.pubsub.TopicId');

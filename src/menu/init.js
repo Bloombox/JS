@@ -33,7 +33,8 @@ goog.require('bloombox.menu.DEBUG');
 goog.require('bloombox.menu.MenuAPI');
 goog.require('bloombox.menu.VERSION');
 
-goog.require('bloombox.menu.v1beta1.Service');
+goog.require('bloombox.menu.v1beta1.LocalService');
+goog.require('bloombox.menu.v1beta1.RemoteService');
 
 // - Menu API
 goog.provide('bloombox.menu.api');
@@ -63,7 +64,9 @@ bloombox.menu.api = function(apiConfig) {
   // for now, create v1beta0 adapter, always
   if (!cachedMenuService || (apiConfig && apiConfig['cache'] === false)) {
     let config = bloombox.config.active();
-    cachedMenuService = new bloombox.menu.v1beta1.Service(config);
+    let remoteMenuService = new bloombox.menu.v1beta1.RemoteService(config);
+    cachedMenuService = new bloombox.menu.v1beta1.LocalService(
+      remoteMenuService);
   }
   return /** @type {bloombox.menu.MenuAPI} */ (cachedMenuService);
 };
