@@ -90,27 +90,6 @@ function prepRetrieveRequest(config) {
 
 goog.scope(function() {
   /**
-   * Menu publish/subscribe feed. Receives emitted events for each product and
-   * section that changes, as they change.
-   *
-   * @type {goog.pubsub.TypedPubSub}
-   * @package
-   */
-  bloombox.menu.feed = new goog.pubsub.TypedPubSub(true);
-
-  /**
-   * Enumerates menu pub/sub feed topics that other library code can subscribe
-   * to. This includes a topic for menu product changes, section changes, and
-   * featured products.
-   *
-   * @enum {goog.pubsub.TopicId}
-   */
-  bloombox.menu.FeedTopic = {
-    PRODUCTS: new goog.pubsub.TopicId('bb.products'),
-    SECTION: new goog.pubsub.TopicId('bb.section')
-  };
-
-  /**
    * Defines an implementation of the Bloombox Menu API, which calls into modern
    * RPC dispatch via gRPC.
    *
