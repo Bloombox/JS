@@ -23,7 +23,19 @@ const serviceMode = 'binary';  // 'text' or 'binary'
  */
 function closureBuilder(entrypoint) {
   const isRelease = argv.buildtype === 'RELEASE' || argv.release;
+  const isInternal = argv.privacy === 'INTERNAL';
   const isBeta = argv.buildtype === 'BETA' || argv.beta;
+  const standardDefines = [
+    `bloombox.SERVICE_MODE='${serviceMode}'`,
+    'jspb.Message.SERIALIZE_EMPTY_TRAILING_FIELDS=false',
+    'goog.net.XmlHttp.ASSUME_NATIVE_XHR=true',
+    'goog.dom.animationFrame.polyfill.ENABLED=false',
+    'goog.ASSUME_NATIVE_PROMISE=true',
+    'goog.json.USE_NATIVE_JSON=true',
+    'goog.net.tmpnetwork.TEST_URL=\'//www.google.com/images/cleardot.gif\'',
+    'goog.TRUSTED_SITE=' + (isInternal ? 'true' : 'false'),
+    'goog.dom.classlist.ALWAYS_USE_DOM_TOKEN_LIST=true',
+  ];
   const config = isRelease ? {
     /** -- Release Config -- **/
     'soy': {
@@ -49,11 +61,15 @@ function closureBuilder(entrypoint) {
       'assume_function_wrapper': true,
       'process_closure_primitives': true,
       'rewrite_polyfills': true,
-      'D': ['bloombox.DEBUG=false', `bloombox.SERVICE_MODE='${serviceMode}'`],
+      'D': [
+        'goog.DEBUG=false',
+        'bloombox.DEBUG=false',
+        'goog.log.ENABLED=false'
+      ] + standardDefines,
       'define': 'bloombox.VERSION=\'' + version + '\'',
-      'create_source_map': 'target/js-' + entrypoint + '.map',
+      // 'create_source_map': 'target/js-' + entrypoint + '.map',
+      // 'source_map_include_content': true,
       'output_module_dependencies': 'target/deps-' + entrypoint + '.json',
-      'source_map_include_content': true,
       'hide_warnings_for': [
         'goog/json/json_perf',
         'goog/storage/mechanism',
@@ -86,11 +102,15 @@ function closureBuilder(entrypoint) {
       'assume_function_wrapper': true,
       'process_closure_primitives': true,
       'rewrite_polyfills': true,
-      'D': ['bloombox.DEBUG=false', `bloombox.SERVICE_MODE='${serviceMode}'`],
+      'D': [
+        'goog.DEBUG=false',
+        'bloombox.DEBUG=false',
+        'goog.log.ENABLED=false'
+      ] + standardDefines,
       'define': 'bloombox.VERSION=\'' + version + '\'',
-      'create_source_map': 'target/js-' + entrypoint + '.map',
       'output_module_dependencies': 'target/deps-' + entrypoint + '.json',
-      'source_map_include_content': true,
+      // 'create_source_map': 'target/js-' + entrypoint + '.map',
+      // 'source_map_include_content': true,
       'hide_warnings_for': [
         'goog/json/json_perf',
         'goog/storage/mechanism',
@@ -124,7 +144,11 @@ function closureBuilder(entrypoint) {
       'assume_function_wrapper': true,
       'process_closure_primitives': true,
       'rewrite_polyfills': true,
-      'D': ['bloombox.DEBUG', `bloombox.SERVICE_MODE='${serviceMode}'`],
+      'D': [
+        'goog.DEBUG=true',
+        'bloombox.DEBUG=true',
+        'goog.log.ENABLED=true'
+      ] + standardDefines,
       'define': 'bloombox.VERSION=\'' + version + '\'',
       'create_source_map': 'target/js-' + entrypoint + '.map',
       'output_module_dependencies': 'target/deps-' + entrypoint + '.json',
