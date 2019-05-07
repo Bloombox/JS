@@ -198,21 +198,6 @@ goog.scope(function() {
       const root = txn.objectStore(bloombox.db.DEFAULT_STORE);
       const ts = +(new Date());
 
-      sections.map((payload) => {
-        let section = /**
-         @type {proto.opencannabis.products.menu.SectionData} */ (payload);
-        if (section.getCount() > 0) {
-          const productList = section.getProductList();
-          const sectionSpec = section.getSection();
-
-          // @TODO(sgammon) support for custom sections
-          if (sectionSpec.hasSection()) {
-            processSection(
-              sectionSpec.getSection(), productList, store, ts);
-          }
-        }
-      });
-
       const menuFingerprint = menu
         .getMetadata()
         .getSettings()
@@ -223,10 +208,32 @@ goog.scope(function() {
         .getMetadata()
         .getVersion();
 
-      root.put(menuFingerprint, 'catalog.fingerprint');
-      root.put(menuVersion, 'catalog.version');
-      root.put(ts, 'catalog.lastModified');
-      bloombox.menu.lastSeenFingerprint = menuFingerprint;
+      if (bloombox.menu.lastSeenFingerprint === menuFingerprint) {
+        // fingerprints match.
+        return txn.wait();
+      } else {
+        // fingerprints don't match. update it.
+        sections.map((payload) => {
+          let section = /**
+           @type {proto.opencannabis.products.menu.SectionData} */ (payload);
+          if (section.getCount() > 0) {
+            const productList = section.getProductList();
+            const sectionSpec = section.getSection();
+
+            // @TODO(sgammon) support for custom sections
+            if (sectionSpec.hasSection()) {
+              processSection(
+                sectionSpec.getSection(), productList, store, ts);
+            }
+          }
+        });
+
+        // update fingerprint in local storage and in memory
+        root.put(menuFingerprint, 'catalog.fingerprint');
+        root.put(menuVersion, 'catalog.version');
+        root.put(ts, 'catalog.lastModified');
+        bloombox.menu.lastSeenFingerprint = menuFingerprint;
+      }
       return txn.wait();
     });
   }

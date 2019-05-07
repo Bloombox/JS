@@ -61,14 +61,12 @@ function closureBuilder(entrypoint) {
       'assume_function_wrapper': true,
       'process_closure_primitives': true,
       'rewrite_polyfills': true,
+      'debug': false,
       'D': [
-        'goog.DEBUG=false',
         'bloombox.DEBUG=false',
         'goog.log.ENABLED=false'
-      ] + standardDefines,
+      ].concat(standardDefines),
       'define': 'bloombox.VERSION=\'' + version + '\'',
-      // 'create_source_map': 'target/js-' + entrypoint + '.map',
-      // 'source_map_include_content': true,
       'output_module_dependencies': 'target/deps-' + entrypoint + '.json',
       'hide_warnings_for': [
         'goog/json/json_perf',
@@ -102,15 +100,13 @@ function closureBuilder(entrypoint) {
       'assume_function_wrapper': true,
       'process_closure_primitives': true,
       'rewrite_polyfills': true,
+      'debug': false,
       'D': [
-        'goog.DEBUG=false',
         'bloombox.DEBUG=false',
         'goog.log.ENABLED=false'
-      ] + standardDefines,
+      ].concat(standardDefines),
       'define': 'bloombox.VERSION=\'' + version + '\'',
       'output_module_dependencies': 'target/deps-' + entrypoint + '.json',
-      // 'create_source_map': 'target/js-' + entrypoint + '.map',
-      // 'source_map_include_content': true,
       'hide_warnings_for': [
         'goog/json/json_perf',
         'goog/storage/mechanism',
@@ -144,11 +140,11 @@ function closureBuilder(entrypoint) {
       'assume_function_wrapper': true,
       'process_closure_primitives': true,
       'rewrite_polyfills': true,
+      'debug': true,
       'D': [
-        'goog.DEBUG=true',
         'bloombox.DEBUG=true',
         'goog.log.ENABLED=true'
-      ] + standardDefines,
+      ].concat(standardDefines),
       'define': 'bloombox.VERSION=\'' + version + '\'',
       'create_source_map': 'target/js-' + entrypoint + '.map',
       'output_module_dependencies': 'target/deps-' + entrypoint + '.json',
