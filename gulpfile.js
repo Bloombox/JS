@@ -15,7 +15,7 @@ if (typeof version !== 'string')
 
 const permutations = ['full'];
 
-const serviceMode = 'binary';  // 'text' or 'binary'
+const serviceMode = 'text';  // 'text' or 'binary'
 
 
 /**
