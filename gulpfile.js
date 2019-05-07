@@ -29,12 +29,12 @@ function closureBuilder(entrypoint) {
     `bloombox.SERVICE_MODE='${serviceMode}'`,
     'jspb.Message.SERIALIZE_EMPTY_TRAILING_FIELDS=false',
     'goog.net.XmlHttp.ASSUME_NATIVE_XHR=true',
-    'goog.dom.animationFrame.polyfill.ENABLED=false',
+    // 'goog.dom.animationFrame.polyfill.ENABLED=false',
     'goog.ASSUME_NATIVE_PROMISE=true',
     'goog.json.USE_NATIVE_JSON=true',
-    'goog.net.tmpnetwork.TEST_URL=\'//www.google.com/images/cleardot.gif\'',
+    // 'goog.net.tmpnetwork.TEST_URL=\'//www.google.com/images/cleardot.gif\'',
     'goog.TRUSTED_SITE=' + (isInternal ? 'true' : 'false'),
-    'goog.dom.classlist.ALWAYS_USE_DOM_TOKEN_LIST=true',
+    // 'goog.dom.classlist.ALWAYS_USE_DOM_TOKEN_LIST=true',
   ];
   const config = isRelease ? {
     /** -- Release Config -- **/
