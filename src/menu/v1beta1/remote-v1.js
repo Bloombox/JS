@@ -47,6 +47,7 @@ goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.Response');
 goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.StreamEvent');
 goog.require('proto.bloombox.services.menu.v1beta1.GetProduct.Request');
+goog.require('proto.bloombox.services.menu.v1beta1.MenuStreamClient');
 goog.require('proto.bloombox.services.menu.v1beta1.MenuPromiseClient');
 
 goog.require('proto.opencannabis.products.menu.section.Section');
@@ -124,6 +125,18 @@ goog.scope(function() {
           sdkConfig.endpoint,
           null,
           {'format': bloombox.SERVICE_MODE}));
+
+      /**
+       * Service client, which is responsible for managing live streaming of menu
+       * updates from the server, as underlying menu data changes.
+       *
+       * @type {proto.bloombox.services.menu.v1beta1.MenuStreamClient}
+       */
+      this.liveStream = (
+        new proto.bloombox.services.menu.v1beta1.MenuStreamClient(
+          sdkConfig.endpoint,
+          null,
+          {'format': 'text'}));  // @TODO binary for streaming
     }
 
     // -- Menu Retrieve -- //
@@ -206,7 +219,7 @@ goog.scope(function() {
       const resolved = config || bloombox.menu.RetrieveOptions.defaults();
       const request = prepRetrieveRequest(resolved);
       const operation = (
-        this.client.live(request, bloombox.rpc.metadata(this.sdkConfig)));
+        this.liveStream.live(request, bloombox.rpc.metadata(this.sdkConfig)));
 
       // setup the observable menu and return
       return new bloombox.menu.ObservableMenu(
