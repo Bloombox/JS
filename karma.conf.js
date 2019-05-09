@@ -14,7 +14,7 @@ let basePreprocessors = {};
 basePreprocessors[closureBase] = ['closure'];
 basePreprocessors[closureDeps] = ['closure-deps'];
 
-const serviceMode = 'text';  // 'text' or 'binary'
+const serviceMode = 'binary';  // 'text' or 'binary'
 
 
 module.exports = function(config) {
@@ -41,6 +41,7 @@ module.exports = function(config) {
       {pattern: 'third_party/grpc-web/javascript/net/grpc/web/util/*.js', included: false},
       {pattern: 'third_party/grpc-web/javascript/net/grpc/web/*.js', included: false},
       {pattern: `third_party/schema/services/**/*.${serviceMode}.grpc.js`, included: false},
+      {pattern: `third_party/schema/services/**/*.stream.grpc.js`, included: false},
 
       // 3: schema, services
       {pattern: 'third_party/schema/*.js', included: false},

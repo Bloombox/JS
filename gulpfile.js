@@ -15,7 +15,7 @@ if (typeof version !== 'string')
 
 const permutations = ['full'];
 
-const serviceMode = 'text';  // 'text' or 'binary'
+const serviceMode = 'binary';  // 'text' or 'binary'
 
 
 /**
@@ -188,6 +188,7 @@ function closureBuilder(entrypoint) {
     'deps': glob([
       'third_party/schema/*.js',
       `third_party/schema/services/**/*.${serviceMode}.grpc.js`,
+      `third_party/schema/services/**/*.stream.grpc.js`,
       'third_party/protobuf/js/**/*.js',
       'third_party/grpc-web/javascript/**/*.js'
     ]),
