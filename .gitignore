@@ -8,3 +8,8 @@ docs/
 .DS_Store
 JS.iws
 .firebase/
+bazel-JS
+bazel-bin
+bazel-genfiles
+bazel-out
+bazel-testlogs

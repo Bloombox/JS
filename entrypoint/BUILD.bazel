@@ -1,0 +1,20 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
+
+closure_js_library(
+    name = "sdk-full",
+    srcs = ["full.js"],
+    deps = [
+        "//src/base:init",
+        "//src/base:logging",
+        "//src/db:db",
+        "//src/menu:menu",
+        "//src/shop:shop",
+        "//src/telemetry:telemetry",
+        "//src/util:error-reporting"],
+    convention = "GOOGLE",
+    suppress = [
+        "JSC_EXTRA_REQUIRE_WARNING",
+        "JSC_UNKNOWN_EXPR_TYPE"])

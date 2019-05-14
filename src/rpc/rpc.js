@@ -22,19 +22,7 @@
 
 /*global goog */
 
-goog.require('bloombox.DEBUG');
-goog.require('bloombox.DEBUG_PROPERTY');
-goog.require('bloombox.VERSION');
 goog.require('bloombox.config.active');
-
-goog.require('bloombox.logging.error');
-goog.require('bloombox.logging.log');
-goog.require('bloombox.logging.warn');
-
-goog.require('goog.events');
-goog.require('goog.net.XhrIo');
-
-goog.require('stackdriver.reportError');
 
 goog.provide('bloombox.rpc.ACCEPT_HEADER_VALUE');
 goog.provide('bloombox.rpc.API_KEY_HEADER');
@@ -144,6 +132,7 @@ bloombox.rpc.ScopedOptions = (class ScopedOptions {
      * Partnership scope to use as an override for this RPC, if applicable.
      * Defaults to null if left unset.
      *
+     * @const
      * @protected
      * @type {?string}
      */
@@ -202,6 +191,7 @@ bloombox.rpc.context = function(config) {
 /**
  * Show this exception's message.
  *
+ * @override
  * @return {string} Message for this exception.
  */
 bloombox.rpc.RPCException.prototype.toString = function() {

@@ -25,7 +25,13 @@
 /*global goog */
 
 goog.require('bloombox.storage.resolve');
+
 goog.require('bloombox.telemetry.Context');
+
+goog.require('bloombox.telemetry.buildBrowserContext');
+goog.require('bloombox.telemetry.buildNativeContext');
+goog.require('bloombox.telemetry.buildWebappContext');
+
 goog.require('bloombox.util.generateUUID');
 
 goog.require('proto.bloombox.analytics.context.ApplicationType');
@@ -187,6 +193,7 @@ bloombox.telemetry.GlobalStateException = function GlobalStateException(msg) {
 /**
  * Format the exception according to its message.
  *
+ * @override
  * @return {string} Message value.
  */
 bloombox.telemetry.GlobalStateException.prototype.toString = function() {

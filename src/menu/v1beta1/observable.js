@@ -27,9 +27,7 @@
 
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
-goog.require('bloombox.logging.warn');
 goog.require('grpc.web.StatusCode');
-goog.require('jspb.Message');
 goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.StreamEvent');
 
 goog.provide('bloombox.menu.ObservableMenu');
@@ -207,6 +205,7 @@ goog.scope(function() {
        * to the stream timeout. Stored as a timestamp indicating when the
        * observable menu was created.
        *
+       * @const
        * @private
        * @type {number}
        */

@@ -1,0 +1,39 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("//defs:lib.bzl", closure_js_library="js_library")
+
+
+closure_js_library(
+    name = "base64",
+    srcs = ["base64.js"],
+    deps = ["@io_bazel_rules_closure//closure/library/crypt:base64"])
+
+closure_js_library(
+    name = "serializable",
+    srcs = ["serializable.js"])
+
+closure_js_library(
+    name = "exportable",
+    srcs = ["exportable.js"])
+
+closure_js_library(
+    name = "uuid",
+    srcs = ["uuid.js"])
+
+closure_js_library(
+    name = "error-reporting",
+    srcs = ["error-reporting.js"],
+    deps = [
+        "//src/base:init",
+        "//src/base:logging"],
+    suppress = ["JSC_STRICT_INEXISTENT_PROPERTY"])
+
+
+closure_js_library(
+    name = "util",
+    exports = [
+        ":base64",
+        ":serializable",
+        ":uuid",
+        ":error-reporting"])

@@ -1,0 +1,38 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("//defs:lib.bzl", closure_js_library="js_library")
+
+
+closure_js_library(
+    name = "base",
+    srcs = ["base.js"],
+    deps = [
+        "//src/base:init",
+        "//src/base:config"])
+
+closure_js_library(
+    name = "init",
+    srcs = ["init.js"],
+    deps = [
+        ":base",
+        ":shop-api",
+        "//src/base:config",
+        "//src/shop/v1:shop-v1"])
+
+closure_js_library(
+    name = "shop-api",
+    srcs = ["shop-api.js"],
+    deps = [
+        "//third_party:schema-js",
+        "//src/base:service",
+        "//src/rpc:rpc"])
+
+
+closure_js_library(
+    name = "shop",
+    exports = [
+        ":base",
+        ":shop-api",
+        ":init",
+        "//src/shop/v1:v1"])

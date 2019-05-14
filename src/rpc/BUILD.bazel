@@ -1,0 +1,10 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("//defs:lib.bzl", closure_js_library="js_library")
+
+
+closure_js_library(
+    name = "rpc",
+    srcs = ["rpc.js"],
+    deps = ["//src/base:config"])

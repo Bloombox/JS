@@ -25,13 +25,6 @@
 /*global goog */
 
 goog.require('bloombox.config.active');
-
-goog.require('bloombox.logging.error');
-goog.require('bloombox.logging.log');
-
-goog.require('bloombox.shop.DEBUG');
-goog.require('bloombox.shop.VERSION');
-
 goog.require('bloombox.shop.v1.Service');
 
 goog.provide('bloombox.shop.api');

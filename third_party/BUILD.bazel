@@ -1,0 +1,68 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
+
+
+GRPC_SUPPRESSIONS = [
+  "JSC_REQUIRES_NOT_SORTED",
+  "JSC_MISSING_RETURN_JSDOC",
+  "JSC_UNUSED_PRIVATE_PROPERTY",
+  "JSC_EXTRA_REQUIRE_WARNING"]
+
+closure_js_library(
+    name = "schema-js",
+    srcs = glob(["schema/schema-*.js"]),
+    convention = "GOOGLE",
+    deps = [
+        "//third_party/protobuf/js/google/protobuf:Any-protojs",
+        "//third_party/protobuf/js/google/protobuf:Struct-protojs",
+        "//third_party/protobuf/js/google/protobuf:FieldMask-protojs",
+        "@io_bazel_rules_closure//closure/protobuf:jspb"],
+    suppress = [
+        "JSC_PREFER_BACKTICKS_TO_AT_SIGN_CODE",
+        "JSC_DUPLICATE_ENUM_VALUE",
+        "JSC_IMPLICITLY_NULLABLE_JSDOC"])
+
+closure_js_library(
+    name = "menu-service",
+    convention = "GOOGLE",
+    srcs = [
+        "schema/services/menu/v1beta1/menu-v1beta4.binary.grpc.js",
+        "schema/services/menu/v1beta1/menu-v1beta4.stream.grpc.js"],
+    deps = [
+        ":schema-js",
+        "//third_party/protobuf/js/google/protobuf:Empty-protojs",
+        "@com_google_grpc_web//javascript/net/grpc/web:error",
+        "@com_google_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
+        "@com_google_grpc_web//javascript/net/grpc/web:abstractclientbase",
+        "@com_google_grpc_web//javascript/net/grpc/web:clientreadablestream"],
+    suppress = GRPC_SUPPRESSIONS)
+
+closure_js_library(
+    name = "shop-service",
+    convention = "GOOGLE",
+    srcs = ["schema/services/shop/v1/shop-v1.binary.grpc.js"],
+    deps = [
+        ":schema-js",
+        "@com_google_grpc_web//javascript/net/grpc/web:error",
+        "@com_google_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
+        "@com_google_grpc_web//javascript/net/grpc/web:abstractclientbase",
+        "@com_google_grpc_web//javascript/net/grpc/web:clientreadablestream"],
+    suppress = GRPC_SUPPRESSIONS)
+
+closure_js_library(
+    name = "telemetry-service",
+    convention = "GOOGLE",
+    srcs = [
+        "schema/services/telemetry/v1beta4/events-v1beta4.binary.grpc.js",
+        "schema/services/telemetry/v1beta4/commercial-events-v1beta4.binary.grpc.js"],
+    deps = [
+        ":schema-js",
+        "@com_google_grpc_web//javascript/net/grpc/web:error",
+        "@com_google_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
+        "@com_google_grpc_web//javascript/net/grpc/web:abstractclientbase",
+        "@com_google_grpc_web//javascript/net/grpc/web:clientreadablestream",
+        "@io_bazel_rules_closure//closure/protobuf:jspb",
+        "//third_party/protobuf/js/google/protobuf:Empty-protojs"],
+    suppress = GRPC_SUPPRESSIONS)

@@ -26,9 +26,6 @@ goog.provide('bloombox.config.active');
 goog.provide('bloombox.config.buildDefault');
 goog.provide('bloombox.config.configure');
 
-goog.require('bloombox.DEBUG');
-goog.require('bloombox.VERSION');
-
 
 /**
  * Specifies the structure of Bloombox JS's global configuration object.

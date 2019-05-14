@@ -1,0 +1,27 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("//defs:lib.bzl", closure_js_library="js_library")
+
+closure_js_library(
+    name = "init",
+    srcs = ["init.js"],
+    deps = [
+        "//src/base:logging",
+        "@io_bazel_rules_closure//closure/library/db:db",
+        "@io_bazel_rules_closure//closure/library/db:indexeddb",
+        "@io_bazel_rules_closure//third_party/closure/library/mochikit/async:deferred"])
+
+closure_js_library(
+    name = "storage",
+    srcs = ["storage.js"],
+    deps = [
+        "@io_bazel_rules_closure//closure/library/storage/mechanism:iterablemechanism",
+        "@io_bazel_rules_closure//closure/library/storage/mechanism:mechanismfactory"])
+
+
+closure_js_library(
+    name = "db",
+    exports = [
+        ":init",
+        ":storage"])
