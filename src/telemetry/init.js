@@ -26,14 +26,10 @@
 
 goog.require('bloombox.config.active');
 
-goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
-goog.require('bloombox.logging.warn');
 
-goog.require('bloombox.telemetry.DEBUG');
+goog.require('bloombox.telemetry.Collection');
 goog.require('bloombox.telemetry.InternalCollection');
-goog.require('bloombox.telemetry.TELEMETRY_API_ENDPOINT');
-goog.require('bloombox.telemetry.VERSION');
 
 goog.require('bloombox.telemetry.didOptOut');
 goog.require('bloombox.telemetry.v1beta4.EventService');

@@ -26,30 +26,20 @@
 
 goog.require('bloombox.SERVICE_MODE');
 
-goog.require('bloombox.db.MENU_STORE');
-goog.require('bloombox.db.acquire');
-
 goog.require('bloombox.menu.MenuAPI');
 goog.require('bloombox.menu.ObservableMenu');
 goog.require('bloombox.menu.RetrieveCallback');
-goog.require('bloombox.menu.RetrieveException');
 goog.require('bloombox.menu.RetrieveOptions');
 goog.require('bloombox.menu.processMenu');
 
 goog.require('bloombox.rpc.metadata');
 
-goog.require('goog.pubsub.TopicId');
-goog.require('goog.pubsub.TypedPubSub');
-goog.require('grpc.web.ClientReadableStream');
-
 goog.require('proto.bloombox.services.menu.v1beta1.GetFeatured.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.Response');
-goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.StreamEvent');
 goog.require('proto.bloombox.services.menu.v1beta1.GetProduct.Request');
-goog.require('proto.bloombox.services.menu.v1beta1.MenuStreamClient');
 goog.require('proto.bloombox.services.menu.v1beta1.MenuPromiseClient');
-
+goog.require('proto.bloombox.services.menu.v1beta1.MenuStreamClient');
 goog.require('proto.opencannabis.products.menu.section.Section');
 
 goog.provide('bloombox.menu.v1beta1.RemoteService');
@@ -108,6 +98,7 @@ goog.scope(function() {
       /**
        * Active JS SDK configuration.
        *
+       * @const
        * @private
        * @type {bloombox.config.JSConfig}
        */
@@ -117,6 +108,7 @@ goog.scope(function() {
        * Service client, which is responsible for mediating calls between the RPC
        * server and the local RPC client.
        *
+       * @const
        * @private
        * @type {proto.bloombox.services.menu.v1beta1.MenuPromiseClient}
        */
@@ -130,6 +122,7 @@ goog.scope(function() {
        * Service client, which is responsible for managing live streaming of menu
        * updates from the server, as underlying menu data changes.
        *
+       * @const
        * @type {proto.bloombox.services.menu.v1beta1.MenuStreamClient}
        */
       this.liveStream = (
@@ -151,6 +144,7 @@ goog.scope(function() {
      * specified in the `options` parameter.
      *
      * @export
+     * @override
      * @param {?bloombox.menu.RetrieveCallback=} callback Function to dispatch once
      *        data is available for the underlying menu catalog.
      * @param {?bloombox.menu.RetrieveOptions=} options Configuration options for
@@ -203,6 +197,8 @@ goog.scope(function() {
      * reference a changed/added/deleted product by key, or enclose the full
      * product payload. Each time, an updated menu fingerprint is sent back.
      *
+     * @export
+     * @override
      * @param {?proto.opencannabis.products.menu.Menu=} localMenu Local-side
      *        menu to compare with the server. Fingerprint config setting is
      *        required if a local menu is provided, for comparison server-side.
@@ -238,6 +234,8 @@ goog.scope(function() {
      * parameter of the callback, otherwise, an error is passed in as the second
      * parameter. In no case are two values passed.
      *
+     * @export
+     * @override
      * @param {proto.opencannabis.base.ProductKey} key Product key to fetch.
      * @param {?bloombox.menu.ProductCallback=} callback Callback to dispatch
      *        once either a result or terminal error state are reached.
@@ -281,6 +279,8 @@ goog.scope(function() {
      * are items with the "FEATURED" flag present in their product flags, as
      * indicated by staff or external systems via the Bloombox Dashboard.
      *
+     * @export
+     * @override
      * @param {?proto.opencannabis.products.menu.section.Section} section Menu
      *        section to fetch. If left unset, fetches across all sections.
      * @param {?bloombox.menu.FeaturedCallback=} callback Callback to dispatch

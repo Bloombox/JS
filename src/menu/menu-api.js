@@ -128,18 +128,18 @@ bloombox.menu.RetrieveException = function RetrieveException(message, err) {
   /**
    * Exception message.
    *
-   * @export
+   * @public
    * @type {string}
    */
-  this.message = message;
+  this['message'] = message;
 
   /**
    * Exception or status code.
    *
-   * @export
+   * @public
    * @type {number}
    */
-  this.err = err || -1;
+  this['err'] = err || -1;
 };
 
 

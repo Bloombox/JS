@@ -1,0 +1,64 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("//defs:lib.bzl", closure_js_library="js_library")
+
+
+closure_js_library(
+    name = "base",
+    srcs = ["base.js"],
+    deps = ["//src/base:init", "//src/base:config"])
+
+closure_js_library(
+    name = "optout",
+    srcs = ["optout.js"],
+    deps = ["//src/base:logging"])
+
+closure_js_library(
+    name = "telemetry-common",
+    srcs = ["telemetry-common.js"],
+    deps = ["//src/rpc:rpc"])
+
+closure_js_library(
+    name = "telemetry-events-api",
+    srcs = ["telemetry-events-api.js"],
+    deps = [
+        ":telemetry-common",
+        "//src/base:service",
+        "//src/rpc:rpc",
+        "//third_party/protobuf/js/google/protobuf:Empty-protojs"])
+
+closure_js_library(
+    name = "telemetry-commercial-api",
+    srcs = ["telemetry-commercial-api.js"],
+    deps = [
+        ":telemetry-common",
+        "//src/base:service",
+        "//src/rpc:rpc"])
+
+closure_js_library(
+    name = "init",
+    srcs = ["init.js"],
+    deps = [
+        ":base",
+        ":optout",
+        ":telemetry-common",
+        ":telemetry-events-api",
+        ":telemetry-commercial-api",
+        "//src/base:config",
+        "//src/base:logging",
+        "//src/rpc:rpc",
+        "//src/telemetry/context:collection",
+        "//src/telemetry/v1beta4:v1beta4"])
+
+
+closure_js_library(
+    name = "telemetry",
+    exports = [
+        ":base",
+        ":optout",
+        ":telemetry-common",
+        ":telemetry-events-api",
+        ":telemetry-commercial-api",
+        ":init",
+        "//src/telemetry/context:context"])

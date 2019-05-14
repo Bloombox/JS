@@ -22,7 +22,6 @@
 
 /*global goog */
 
-goog.provide('bloombox.VARIANT');
 goog.provide('bloombox.setup');
 
 goog.require('bloombox.DEBUG');
@@ -49,16 +48,6 @@ goog.require('stackdriver.ErrorReporter');
 goog.require('stackdriver.StackdriverConfig');
 goog.require('stackdriver.reportError');
 goog.require('stackdriver.setup');
-
-
-
-/**
- * Global library variant.
- *
- * @define {string} VARIANT Global variant string.
- * @export
- */
-bloombox.VARIANT = 'full';
 
 
 /**
@@ -149,9 +138,10 @@ bloombox.setup = function(partner, location, apikey, callback, extraConfig) {
       stackdriver.setup(bloombox.ERROR_REPORTER);
     } catch (e) {
       // skip error reporting if it cannot be setup
+      const err = /** @type {!Error|*} */ (e);
       if (bloombox.DEBUG)
         bloombox.logging.warn('Unable to initialize error reporting.',
-          e);
+          err);
     }
   }
 

@@ -1,0 +1,43 @@
+
+package(default_visibility = ["//visibility:public"])
+
+licenses(["notice"])
+
+load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
+
+
+closure_js_library(
+    name = "Any-protojs",
+    srcs = ["any.js"],
+    convention = "GOOGLE",
+    deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
+    suppress = [
+        "JSC_IMPLICITLY_NULLABLE_JSDOC",
+        "JSC_UNKNOWN_EXPR_TYPE"])
+
+closure_js_library(
+    name = "Struct-protojs",
+    srcs = ["struct.js"],
+    convention = "GOOGLE",
+    deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
+    suppress = [
+        "JSC_PREFER_BACKTICKS_TO_AT_SIGN_CODE",
+        "JSC_IMPLICITLY_NULLABLE_JSDOC",
+        "JSC_NULLABLE_RETURN_WITH_NAME",
+        "JSC_UNKNOWN_EXPR_TYPE"])
+
+closure_js_library(
+    name = "FieldMask-protojs",
+    srcs = ["field_mask.js"],
+    convention = "GOOGLE",
+    deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
+    suppress = [
+        "JSC_IMPLICITLY_NULLABLE_JSDOC"])
+
+closure_js_library(
+    name = "Empty-protojs",
+    srcs = ["empty.js"],
+    convention = "GOOGLE",
+    deps = ["@io_bazel_rules_closure//closure/protobuf:jspb"],
+    suppress = [
+        "JSC_IMPLICITLY_NULLABLE_JSDOC"])

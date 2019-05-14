@@ -75,6 +75,7 @@ goog.scope(function() {
      * specified in the `options` parameter.
      *
      * @export
+     * @override
      * @param {?bloombox.menu.RetrieveCallback=} callback Function to dispatch once
      *        data is available for the underlying menu catalog.
      * @param {?bloombox.menu.RetrieveOptions=} options Configuration options for
@@ -107,6 +108,8 @@ goog.scope(function() {
      * reference a changed/added/deleted product by key, or enclose the full
      * product payload. Each time, an updated menu fingerprint is sent back.
      *
+     * @export
+     * @override
      * @param {?proto.opencannabis.products.menu.Menu=} localMenu Local-side
      *        menu to compare with the server. Fingerprint config setting is
      *        required if a local menu is provided, for comparison server-side.
@@ -135,6 +138,8 @@ goog.scope(function() {
      * parameter of the callback, otherwise, an error is passed in as the second
      * parameter. In no case are two values passed.
      *
+     * @export
+     * @override
      * @param {proto.opencannabis.base.ProductKey} key Product key to fetch.
      * @param {?bloombox.menu.ProductCallback=} callback Callback to dispatch
      *        once either a result or terminal error state are reached.
@@ -217,6 +222,8 @@ goog.scope(function() {
      * are items with the "FEATURED" flag present in their product flags, as
      * indicated by staff or external systems via the Bloombox Dashboard.
      *
+     * @export
+     * @override
      * @param {?proto.opencannabis.products.menu.section.Section} section Menu
      *        section to fetch. If left unset, fetches across all sections.
      * @param {?bloombox.menu.FeaturedCallback=} callback Callback to dispatch

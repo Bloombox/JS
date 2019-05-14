@@ -1,0 +1,58 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("//defs:lib.bzl", closure_js_library="js_library")
+
+
+closure_js_library(
+    name = "storage",
+    srcs = ["storage.js"],
+    deps = [
+        "//src/base:init",
+        "//src/db:init",
+        "//third_party:schema-js",
+        "@io_bazel_rules_closure//closure/library/db:db",
+        "@io_bazel_rules_closure//closure/library/pubsub:topicid",
+        "@io_bazel_rules_closure//closure/library/pubsub:typedpubsub"])
+
+closure_js_library(
+    name = "observable",
+    srcs = ["observable.js"],
+    deps = [
+        "//src/base:logging",
+        "//third_party:schema-js",
+        "@com_google_grpc_web//javascript/net/grpc/web:statuscode",
+        "@io_bazel_rules_closure//closure/library/db:db",
+        "@io_bazel_rules_closure//closure/library/pubsub:topicid",
+        "@io_bazel_rules_closure//closure/library/pubsub:typedpubsub"])
+
+closure_js_library(
+    name = "local-v1",
+    srcs = ["local-v1.js"],
+    deps = [
+        "//src/db:init",
+        "//src/util:base64",
+        "//src/menu:menu-api",
+        "//third_party:schema-js"])
+
+closure_js_library(
+    name = "remote-v1",
+    srcs = ["remote-v1.js"],
+    deps = [
+        ":storage",
+        ":observable",
+        "//src/base:init",
+        "//src/rpc:rpc",
+        "//src/menu:menu-api",
+        "//src/util:base64",
+        "//third_party:schema-js",
+        "//third_party:menu-service"])
+
+
+closure_js_library(
+    name = "v1beta1",
+    exports = [
+        ":storage",
+        ":observable",
+        ":local-v1",
+        ":remote-v1"])

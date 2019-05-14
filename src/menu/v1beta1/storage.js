@@ -236,5 +236,5 @@ goog.scope(function() {
       }
       return txn.wait();
     });
-  }
+  };
 });

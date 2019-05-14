@@ -26,6 +26,7 @@ goog.provide('bloombox.DEBUG');
 goog.provide('bloombox.DEBUG_PROPERTY');
 goog.provide('bloombox.INTERNAL');
 goog.provide('bloombox.SERVICE_MODE');
+goog.provide('bloombox.VARIANT');
 goog.provide('bloombox.VERSION');
 
 
@@ -64,6 +65,15 @@ bloombox.DEBUG_PROPERTY = goog.define('bloombox.DEBUG_PROPERTY', '__debug__');
  * @export
  */
 bloombox.VERSION = goog.define('bloombox.VERSION', 'v2.1.0-rc1');
+
+
+/**
+ * Global library variant.
+ *
+ * @define {string} bloombox.VARIANT Global variant string.
+ * @export
+ */
+bloombox.VARIANT = goog.define('bloombox.VARIANT', 'full');
 
 
 /**

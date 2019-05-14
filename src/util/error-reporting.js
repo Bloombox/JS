@@ -22,10 +22,8 @@
 
 /*global goog */
 
-goog.require('bloombox.DEBUG');
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.info');
-goog.require('bloombox.logging.log');
 
 goog.provide('stackdriver.ErrorReporter');
 goog.provide('stackdriver.StackdriverConfig');
@@ -132,7 +130,7 @@ stackdriver.ErrorReporter = function ErrorReporter(config) {
 /**
  * Report an error to the Stackdriver Error Reporting API
  *
- * @param {Error|String} errObj Error object or message string to report.
+ * @param {Error|string} errObj Error object or message string to report.
  */
 stackdriver.ErrorReporter.prototype.report = function(errObj) {
   if (this.disabled || !errObj) return;
@@ -272,7 +270,7 @@ stackdriver.setup = function(reporter) {
 /**
  * Report an error to the library-global error reporter.
  *
- * @param {Error|String} err Error to report.
+ * @param {Error|string} err Error to report.
  * @param {function(?)=} opt_op Operation the error happened in.
  * @return {boolean} Whether the error was reported.
  * @public

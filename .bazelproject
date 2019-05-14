@@ -1,0 +1,9 @@
+directories:
+  content
+  entrypoint
+  src
+
+targets:
+  //...
+  -//node_modules/...
+

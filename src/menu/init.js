@@ -26,13 +26,7 @@
 
 goog.require('bloombox.config.active');
 
-goog.require('bloombox.logging.error');
-goog.require('bloombox.logging.log');
-
-goog.require('bloombox.menu.DEBUG');
 goog.require('bloombox.menu.MenuAPI');
-goog.require('bloombox.menu.VERSION');
-
 goog.require('bloombox.menu.v1beta1.LocalService');
 goog.require('bloombox.menu.v1beta1.RemoteService');
 

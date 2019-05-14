@@ -1,0 +1,70 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("//defs:lib.bzl", closure_js_library="js_library")
+
+
+closure_js_library(
+    name = "base",
+    srcs = ["base.js"],
+    deps = [
+        ":collection",
+        "//src/base:init",
+        "//src/menu:menu-api",
+        "//src/util:exportable",
+        "//src/util:serializable",
+        "//third_party:schema-js"])
+
+closure_js_library(
+    name = "browser",
+    srcs = ["browser.js"],
+    deps = [
+        "@io_bazel_rules_closure//closure/library/userAgent:all_js",
+        "@io_bazel_rules_closure//closure/library/labs/userAgent:device",
+        "//third_party:schema-js"])
+
+closure_js_library(
+    name = "collection",
+    srcs = ["collection.js"],
+    deps = [
+        "//src/util:exportable",
+        "//src/util:serializable",
+        "//src/util:base64",
+        "//third_party:schema-js"])
+
+closure_js_library(
+    name = "native",
+    srcs = ["native.js"],
+    deps = [
+        "@io_bazel_rules_closure//closure/library/userAgent:all_js",
+        "@io_bazel_rules_closure//closure/library/labs/userAgent:device",
+        "//third_party:schema-js"])
+
+closure_js_library(
+    name = "webapp",
+    srcs = ["webapp.js"],
+    deps = ["//third_party:schema-js"])
+
+closure_js_library(
+    name = "state",
+    srcs = ["state.js"],
+    deps = [
+        ":browser",
+        ":native",
+        ":webapp",
+        "//src/db:storage",
+        "//src/telemetry/context:base",
+        "//src/util:uuid",
+        "//src/util:error-reporting",
+        "//third_party:schema-js"])
+
+
+closure_js_library(
+    name = "context",
+    exports = [
+        ":base",
+        ":browser",
+        ":collection",
+        ":native",
+        ":webapp",
+        ":state"])

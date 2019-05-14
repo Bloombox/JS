@@ -24,18 +24,12 @@
 
 /*global goog */
 
-goog.require('bloombox.INTERNAL');
+goog.require('bloombox.VARIANT');
 goog.require('bloombox.VERSION');
-goog.require('bloombox.config.active');
-
-goog.require('bloombox.logging.log');
 
 goog.require('bloombox.menu.Section');
 
 goog.require('bloombox.telemetry.Collection');
-goog.require('bloombox.telemetry.buildBrowserContext');
-goog.require('bloombox.telemetry.buildNativeContext');
-goog.require('bloombox.telemetry.buildWebappContext');
 
 goog.require('bloombox.util.Exportable');
 goog.require('bloombox.util.Serializable');
@@ -459,6 +453,7 @@ bloombox.telemetry.Context.serializeProto = function(context) {
  * Render this context object into a JSON-serializable structure suitable for
  * use over-the-wire.
  *
+ * @override
  * @return {Object}
  * @public
  */
@@ -487,9 +482,6 @@ bloombox.telemetry.Context.prototype.serialize = function() {
   // consider partner context, etc
   let partnerScope = /** @type {?string} */ (null);
 
-  if (this.partner) {
-    partnerScope = this.location.getPartner().getCode();
-  }
   if (this.location) {
     if (this.device) {
       partnerScope = [
@@ -540,6 +532,7 @@ bloombox.telemetry.Context.prototype.serialize = function() {
 /**
  * Export the current analytics context as a protobuf message.
  *
+ * @override
  * @return {proto.bloombox.analytics.Context}
  * @public
  */
@@ -598,15 +591,12 @@ bloombox.telemetry.Context.prototype.export = function() {
     context.setApp(appContext);
   }
 
-// detect library type and version
-  let libraryVersion = bloombox.VERSION;
-  let libraryVariant = bloombox.VARIANT;
-
+  // detect library type and version
   let libObj = new proto.bloombox.analytics.context.DeviceLibrary();
   let libVersionObj = new proto.opencannabis.structs.VersionSpec();
-  libVersionObj.setName(libraryVersion);
+  libVersionObj.setName(bloombox.VERSION);
   libObj.setVersion(libVersionObj);
-  libObj.setVariant(libraryVariant);
+  libObj.setVariant(bloombox.VARIANT);
   libObj.setClient((
     proto.bloombox.analytics.context.APIClient.JAVA_SCRIPT));
   context.setLibrary(libObj);

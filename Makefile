@@ -106,7 +106,7 @@ node_modules/:
 	@echo "Installing Node modules..."
 	@yarn
 
-dependencies: node_modules/ submodules sources third_party/idom/dist
+dependencies: node_modules/ submodules sources
 
 sources:
 	@echo "Rendering source templates..."
@@ -120,8 +120,8 @@ submodules:
 	@git submodule update --init
 
 third_party/idom/dist:
-	@echo "Building Incremental DOM..."
-	@cd third_party/idom && yarn && gulp js-closure
+	#@echo "Building Incremental DOM..."
+	#@cd third_party/idom && yarn && gulp js-closure
 	@echo "iDOM is ready."
 
 protobuf/js/node_modules:
