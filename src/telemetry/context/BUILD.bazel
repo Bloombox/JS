@@ -19,7 +19,7 @@ closure_js_library(
     name = "browser",
     srcs = ["browser.js"],
     deps = [
-        "@io_bazel_rules_closure//closure/library/userAgent:all_js",
+        "@io_bazel_rules_closure//closure/library/useragent:all_js",
         "@io_bazel_rules_closure//closure/library/labs/useragent:device",
         "//third_party:schema-js"])
 
@@ -36,7 +36,7 @@ closure_js_library(
     name = "native",
     srcs = ["native.js"],
     deps = [
-        "@io_bazel_rules_closure//closure/library/userAgent:all_js",
+        "@io_bazel_rules_closure//closure/library/useragent:all_js",
         "@io_bazel_rules_closure//closure/library/labs/useragent:device",
         "//third_party:schema-js"])
 
