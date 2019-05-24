@@ -17,6 +17,16 @@ closure_proto_library(
     deps = [
         "@io_bloombox_schema//:Schema"])
 
+closure_proto_library(
+    name = "OpenCannabis-proto",
+    deps = [
+        "@io_bloombox_schema//:OpenCannabis"])
+
+closure_proto_library(
+    name = "Services-proto",
+    deps = [
+        "@io_bloombox_schema//:Services"])
+
 closure_js_library(
     name = "schema-js",
     srcs = glob(["schema/schema-*.js"]),
