@@ -1,7 +1,9 @@
 
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_library")
+load("@io_bazel_rules_closure//closure:defs.bzl",
+    "closure_js_library",
+    "closure_proto_library")
 
 
 GRPC_SUPPRESSIONS = [
@@ -9,6 +11,11 @@ GRPC_SUPPRESSIONS = [
   "JSC_MISSING_RETURN_JSDOC",
   "JSC_UNUSED_PRIVATE_PROPERTY",
   "JSC_EXTRA_REQUIRE_WARNING"]
+
+closure_proto_library(
+    name = "schema-proto",
+    deps = [
+        "@io_bloombox_schema//:Schema"])
 
 closure_js_library(
     name = "schema-js",
