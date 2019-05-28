@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
@@ -26,20 +25,22 @@
 /*global goog */
 
 goog.require('bloombox.API_ENDPOINT');
+goog.require('bloombox.SERVICE_MODE');
 
 goog.require('bloombox.rpc.RPCException');
 goog.require('bloombox.rpc.context');
 goog.require('bloombox.rpc.metadata');
 
 goog.require('bloombox.telemetry.EventTelemetryAPI');
+goog.require('bloombox.telemetry.globalContext');
 
-goog.require('proto.bloombox.analytics.Context');
+goog.require('bloombox.util.generateUUID');
+
 goog.require('proto.bloombox.analytics.Scope');
 goog.require('proto.bloombox.analytics.generic.Event');
 goog.require('proto.bloombox.services.telemetry.v1beta4.Event.Request');
 goog.require('proto.bloombox.services.telemetry.v1beta4.EventTelemetryPromiseClient');
 goog.require('proto.bloombox.services.telemetry.v1beta4.TelemetryPing.Request');
-goog.require('proto.bloombox.services.telemetry.v1beta4.TelemetryPing.Response');
 goog.require('proto.opencannabis.temporal.Instant');
 
 goog.provide('bloombox.telemetry.v1beta4.EventService');
@@ -69,6 +70,7 @@ bloombox.telemetry.v1beta4.EventService = (class EventServiceV1 {
     /**
      * Active JS SDK configuration.
      *
+     * @const
      * @private
      * @type {bloombox.config.JSConfig}
      */
@@ -83,7 +85,7 @@ bloombox.telemetry.v1beta4.EventService = (class EventServiceV1 {
       new proto.bloombox.services.telemetry.v1beta4.EventTelemetryPromiseClient(
         bloombox.API_ENDPOINT,
         null,
-        {'format': 'binary'}));
+        {'format': bloombox.SERVICE_MODE}));
   }
 
   // -- API: Ping -- //
@@ -97,6 +99,7 @@ bloombox.telemetry.v1beta4.EventService = (class EventServiceV1 {
    * ping cycle, or, alternatively, the error encountered. Only one parameter is
    * passed during a given callback invocation.
    *
+   * @override
    * @param {?bloombox.telemetry.PingCallback=} callback Callback to dispatch
    *        once a ping response is received, or a terminal error occurs.
    * @param {?bloombox.telemetry.TelemetryOptions=} options Options or settings
@@ -144,14 +147,15 @@ bloombox.telemetry.v1beta4.EventService = (class EventServiceV1 {
    * code's control. Ingest timestamps and other values are auto-generated upon
    * event transmission, but the content of the event is essentially free-form.
    *
+   * @override
    * @param {bloombox.telemetry.Collection} collection Event collection to
    *        append this event to. Users can prepare this object easily.
    * @param {Object=} payload Payload to send with the event.
    * @param {number=} occurred Occurrence timestamp for this event, in ms.
-   * @param {?bloombox.telemetry.TelemetryOptions=} options Config settings and
-   *        options for the telemetry API to apply to this individual RPC.
    * @param {?bloombox.telemetry.EventCallback=} callback Function to dispatch
    *        once a result or terminal error state has been reached. Optional.
+   * @param {?bloombox.telemetry.TelemetryOptions=} options Config settings and
+   *        options for the telemetry API to apply to this individual RPC.
    * @return {Promise<proto.google.protobuf.Empty>} Promise attached to the
    *         underlying RPC call.
    * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send

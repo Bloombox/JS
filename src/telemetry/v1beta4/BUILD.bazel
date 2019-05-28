@@ -1,0 +1,26 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("//defs:lib.bzl", closure_js_library="js_library")
+
+
+closure_js_library(
+    name = "events-v1beta4",
+    srcs = ["events-v1beta4.js"],
+    deps = [
+        "//src/base:init",
+        "//src/base:config",
+        "//src/rpc:rpc",
+        "//src/telemetry:telemetry-events-api",
+        "//src/telemetry/context:state",
+        "//src/util:uuid",
+        "//third_party:schema-js",
+        "//third_party:telemetry-service",
+        "@com_google_grpc_web//javascript/net/grpc/web:clientreadablestream",
+        "@io_bazel_rules_closure//closure/library/pubsub:topicid",
+        "@io_bazel_rules_closure//closure/library/pubsub:typedpubsub"])
+
+
+closure_js_library(
+    name = "v1beta4",
+    exports = [":events-v1beta4"])

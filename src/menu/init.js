@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
@@ -27,24 +26,12 @@
 
 goog.require('bloombox.config.active');
 
-goog.require('bloombox.logging.error');
-goog.require('bloombox.logging.log');
-
-goog.require('bloombox.menu.DEBUG');
 goog.require('bloombox.menu.MenuAPI');
-goog.require('bloombox.menu.VERSION');
-
-goog.require('bloombox.menu.v1beta1.Service');
-
-goog.require('bloombox.rpc.FALLBACK');
-
-if (bloombox.rpc.FALLBACK) {
-  goog.require('bloombox.menu.v1beta0.Service');
-}
+goog.require('bloombox.menu.v1beta1.LocalService');
+goog.require('bloombox.menu.v1beta1.RemoteService');
 
 // - Menu API
 goog.provide('bloombox.menu.api');
-goog.provide('bloombox.menu.setup');
 
 
 /**
@@ -55,36 +42,6 @@ goog.provide('bloombox.menu.setup');
  * @type {?bloombox.menu.MenuAPI}
  */
 let cachedMenuService = null;
-
-
-/**
- * Setup the Bloombox Menu API. Provide your API key and an endpoint if you
- * would like to override the default (most users should not need to).
- *
- * @param {string} partner Partner code to use.
- * @param {string} location Location code to use.
- * @param {string} apikey API key to use.
- * @param {function()} callback Callback dispatched when the Menu API is ready.
- * @export
- */
-bloombox.menu.setup = function(partner, location, apikey, callback) {
-  if (!partner || !location) {
-    bloombox.logging.error('Partner or location code is not defined.');
-    return;
-  }
-
-  let config = bloombox.config.active();
-  let merged = /** @type {bloombox.config.JSConfig} */ (
-    Object.assign({}, config));
-
-  bloombox.config.configure(merged);
-
-  bloombox.logging.log('Menu is ready for use.',
-    {'version': bloombox.menu.VERSION,
-      'debug': bloombox.menu.DEBUG,
-      'config': bloombox.config.active()});
-  callback();
-};
 
 
 /**
@@ -101,16 +58,9 @@ bloombox.menu.api = function(apiConfig) {
   // for now, create v1beta0 adapter, always
   if (!cachedMenuService || (apiConfig && apiConfig['cache'] === false)) {
     let config = bloombox.config.active();
-    if (bloombox.rpc.FALLBACK) {
-      if (config.beta === true || (apiConfig && apiConfig['beta'] === true)) {
-        // use the new beta gRPC engine
-        cachedMenuService = new bloombox.menu.v1beta1.Service(config);
-      } else {
-        cachedMenuService = new bloombox.menu.v1beta0.Service(config);
-      }
-    } else {
-      cachedMenuService = new bloombox.menu.v1beta1.Service(config);
-    }
+    let remoteMenuService = new bloombox.menu.v1beta1.RemoteService(config);
+    cachedMenuService = new bloombox.menu.v1beta1.LocalService(
+      remoteMenuService);
   }
   return /** @type {bloombox.menu.MenuAPI} */ (cachedMenuService);
 };

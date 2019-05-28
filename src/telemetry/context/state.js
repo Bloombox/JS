@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
@@ -25,19 +24,26 @@
 
 /*global goog */
 
-goog.provide('bloombox.telemetry.GlobalStateException');
-goog.provide('bloombox.telemetry.globalContext');
-goog.provide('bloombox.telemetry.notifyUserID');
-goog.provide('bloombox.telemetry.resolveFingerprint');
-goog.provide('bloombox.telemetry.resolveSessionID');
+goog.require('bloombox.storage.resolve');
 
 goog.require('bloombox.telemetry.Context');
+
+goog.require('bloombox.telemetry.buildBrowserContext');
+goog.require('bloombox.telemetry.buildNativeContext');
+goog.require('bloombox.telemetry.buildWebappContext');
+
 goog.require('bloombox.util.generateUUID');
 
 goog.require('proto.bloombox.analytics.context.ApplicationType');
 goog.require('proto.bloombox.analytics.context.DeviceApplication');
 
 goog.require('stackdriver.notifyFingerprint');
+
+goog.provide('bloombox.telemetry.GlobalStateException');
+goog.provide('bloombox.telemetry.globalContext');
+goog.provide('bloombox.telemetry.notifyUserID');
+goog.provide('bloombox.telemetry.resolveFingerprint');
+goog.provide('bloombox.telemetry.resolveSessionID');
 
 
 // - Global Context - //
@@ -94,6 +100,16 @@ bloombox.telemetry.USER_ID = null;
 
 
 /**
+ * Defines the version of the frontend data engine, to allow for easy cache
+ * busting and version management of associated data.
+ *
+ * @type {string}
+ * @const
+ */
+bloombox.telemetry.FRONTEND_DATA_VERSION = 'v2';
+
+
+/**
  * Enumerates kinds of global state the system supports.
  *
  * @enum {number}
@@ -125,11 +141,34 @@ bloombox.telemetry.GlobalStateTypeMap = {
  * @enum {string}
  */
 bloombox.telemetry.GlobalState = {
-  FINGERPRINT: 'bb:v1:t.df',
-  SESSION_ID: 'bb:v1:t.sid',
-  ORDER_ID: 'bb:v1:t.oid',
-  USER_ID: 'bb:v1:t.uid'
+  FINGERPRINT: 't.df',
+  SESSION_ID: 't.sid',
+  ORDER_ID: 't.oid',
+  USER_ID: 't.uid'
 };
+
+
+/**
+ * Resolves a session-level storage engine for use by the telemetry logic layer.
+ * Which implementation is used depends on the browser and its support.
+ *
+ * @type {goog.storage.mechanism.IterableMechanism}
+ * @package
+ */
+bloombox.telemetry._sessionStorage = bloombox.storage
+  .resolve('bb:' + bloombox.telemetry.FRONTEND_DATA_VERSION,
+    true);
+
+
+/**
+ * Resolves a local-level storage engine, which persists across individual site
+ * sessions. Which implementation is used depends on the browser.
+ *
+ * @type {goog.storage.mechanism.IterableMechanism}
+ * @package
+ */
+bloombox.telemetry._localStorage = bloombox.storage
+  .resolve('bb:' + bloombox.telemetry.FRONTEND_DATA_VERSION);
 
 
 /**
@@ -154,6 +193,7 @@ bloombox.telemetry.GlobalStateException = function GlobalStateException(msg) {
 /**
  * Format the exception according to its message.
  *
+ * @override
  * @return {string} Message value.
  */
 bloombox.telemetry.GlobalStateException.prototype.toString = function() {
@@ -255,17 +295,19 @@ bloombox.telemetry._setGlobalState = function(item, value) {
   switch (stateType) {
     case bloombox.telemetry.GlobalStateType.PERSISTED:
       if (toStore !== null) {
-        window.localStorage.setItem(item, /** @type {string} */ (toStore));
+        bloombox.telemetry._localStorage
+          .set(item, /** @type {string} */ (toStore));
       } else {
-        window.localStorage.removeItem(item);
+        bloombox.telemetry._localStorage.remove(item);
       }
       break;
 
     case bloombox.telemetry.GlobalStateType.SESSION:
       if (toStore !== null) {
-        window.sessionStorage.setItem(item, /** @type {string} */ (toStore));
+        bloombox.telemetry._sessionStorage
+          .set(item, /** @type {string} */ (toStore));
       } else {
-        window.sessionStorage.removeItem(item);
+        bloombox.telemetry._sessionStorage.remove(item);
       }
       break;
   }

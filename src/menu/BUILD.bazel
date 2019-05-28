@@ -1,0 +1,40 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("//defs:lib.bzl", closure_js_library="js_library")
+
+
+closure_js_library(
+    name = "base",
+    srcs = ["base.js"],
+    deps = [
+        "//src/base:init",
+        "//src/base:config"])
+
+closure_js_library(
+    name = "init",
+    srcs = ["init.js"],
+    deps = [
+        ":base",
+        ":menu-api",
+        "//src/base:config",
+        "//src/menu/v1beta1:local-v1",
+        "//src/menu/v1beta1:remote-v1"])
+
+closure_js_library(
+    name = "menu-api",
+    srcs = ["menu-api.js"],
+    deps = [
+        "//third_party:schema-js",
+        "//src/base:service",
+        "//src/rpc:rpc",
+        "//src/menu/v1beta1:observable"])
+
+
+closure_js_library(
+    name = "menu",
+    exports = [
+        ":base",
+        ":menu-api",
+        ":init",
+        "//src/menu/v1beta1:v1beta1"])

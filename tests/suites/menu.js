@@ -2,9 +2,7 @@
 'use strict';
 
 function genMenuTestsuite(version) {
-  const apiOpts = version === 'v0' ?
-    {'cache': false} :
-    {'beta': true, 'cache': false};
+  const apiOpts = {'cache': false};
 
   describe('menu (' + version + ')', function() {
     describe('method: `retrieve`', function() {
@@ -15,23 +13,59 @@ function genMenuTestsuite(version) {
               reject(new Error('unable to retrieve menu: ' + err.toString()));
             else if (menu)
               resolve(menu);
+            expect(menu).not.toBeNull();
           }, bloombox.menu.RetrieveOptions.defaults());
           assert(promise, 'should get valid promise from menu fetch');
+          expect(promise).not.toBeNull();
         });
       });
+
+      // it('should support local caching', function() {
+      //   return new Promise(function(resolve, reject) {
+      //     bloombox.menu.lastSeenFingerprint = null;  // reset state
+      //     let promise = bloombox.menu.api(apiOpts).retrieve(function(menu, err) {
+      //       expect(menu).not.toBeNull();
+      //     });
+      //     assert(promise, 'should get valid promise from initial menu fetch');
+      //     expect(promise).not.toBeNull();
+      //
+      //     promise.then(function() {
+      //       // after initial promise: fetch again
+      //       assert(bloombox.menu.lastSeenFingerprint != null,
+      //         'fingerprint should not be null after fetch');
+      //       expect(bloombox.menu.lastSeenFingerprint).not.toBeNull();
+      //       let fingerprint = bloombox.menu.lastSeenFingerprint;
+      //
+      //       return bloombox.menu.api(apiOpts).retrieve(function(menu2, err) {
+      //         if (err)
+      //           reject(new Error('unable to retrieve second menu: ' + err.toString()));
+      //         else if (menu2) {
+      //           expect(menu2).not.toBeNull();
+      //
+      //           // fingerprint should remain unchanged in between calls
+      //           let fingerprint2 = bloombox.menu.lastSeenFingerprint;
+      //           expect(fingerprint).toBe(fingerprint2);
+      //           resolve(menu2);
+      //         }
+      //       });
+      //     });
+      //   });
+      // });
 
       it('should throw exceptions with accessible messages', function() {
         try {
           // noinspection ExceptionCaughtLocallyJS
           throw new bloombox.menu.RetrieveException('hello');
         } catch (e) {
+          expect(e).not.toBeNull();
+          expect(e.message).not.toBeNull();
           assert(e, 'should get exception after RetrieveException');
           assert(e.message === 'hello',
             'should get correct message from RetrieveException');
         }
       });
 
-      it('should not provide a menu for an non-existent scope', function() {
+      it('should not provide a menu for a non-existent scope', function() {
         return new Promise(function(resolve, reject) {
           let promise = bloombox.menu.api(apiOpts).retrieve(function(menu, err) {
             if (err)
@@ -41,6 +75,7 @@ function genMenuTestsuite(version) {
           }, bloombox.menu.RetrieveOptions.fromObject(
             {'scope': 'partner/sample/location/sample'}));
           assert(promise, 'should get valid promise from menu fetch');
+          expect(promise).not.toBeNull();
         });
       });
     });
@@ -77,24 +112,74 @@ function genMenuTestsuite(version) {
       describe('method: `featured`', function() {
         it('should be able to fetch featured products for a given section', function() {
           const section = proto.opencannabis.products.menu.section.Section.FLOWERS;
-          return bloombox.menu.api(apiOpts).featured(section);
+          const promise = bloombox.menu.api(apiOpts).featured(section);
+          expect(promise).not.toBeNull();
+          return promise;
         });
 
         it('should be able to fetch featured products across sections', function() {
-          return bloombox.menu.api(apiOpts).featured();
+          const promise = bloombox.menu.api(apiOpts).featured();
+          expect(promise).not.toBeNull();
+          return promise;
         });
 
         it('should be able to fetch featured products in keys-only mode', function() {
           return new Promise((resolve, reject) => {
             const options = bloombox.menu.RetrieveOptions.fromObject({
               'keysOnly': true});
-            return bloombox.menu.api(apiOpts).featured(null, (response, err) => {
+            const promise = bloombox.menu.api(apiOpts).featured(null, (response, err) => {
               if (response && !err) resolve(response);
               else reject(err);
             }, options);
+            expect(promise).not.toBeNull();
+            return promise;
           });
         });
       });
+
+      // describe('method: `stream`', function() {
+      //   let readyCallbackRan = false;
+      //   let baseMenu = null;
+      //   let basePrint = null;
+      //   let localMatch = null;
+      //   let observable = null;
+      //
+      //   beforeEach(function(done) {
+      //     observable = bloombox.menu.api(apiOpts).stream().onReady((menu, fingerprint, local) => {
+      //       baseMenu = menu;
+      //       basePrint = fingerprint;
+      //       localMatch = local;
+      //       readyCallbackRan = true;
+      //       done();
+      //
+      //     }, (streamEvent) => {
+      //       expect(baseMenu).not.toBeNull();
+      //       expect(basePrint).not.toBeNull();
+      //       expect(localMatch).toBe(false);
+      //       expect(streamEvent).not.toBeNull();
+      //
+      //       // test the response
+      //       expect(streamEvent.hasCatalog()).toBe(false);
+      //       expect(streamEvent.hasDelta()).toBe(true);
+      //       expect(streamEvent.hasModified()).toBe(true);
+      //
+      //       // test new fingerprint
+      //       expect(streamEvent.getFingerprint()).not.toBe(basePrint);
+      //
+      //       // test the delta
+      //       const delta = streamEvent.getDelta();
+      //       expect(delta.getCount()).toBeGreaterThan(0);
+      //     });
+      //   });
+      //
+      //   it('should be able to establish and handle a live menu stream', function() {
+      //     expect(readyCallbackRan).toBe(true);
+      //     expect(observable).not.toBeNull();
+      //     expect(baseMenu).not.toBeNull();
+      //     expect(basePrint).not.toBeNull();
+      //     expect(localMatch).toBe(false);
+      //   });
+      // });
     }
   });
 }
@@ -110,6 +195,9 @@ function menuTestsuite() {
           'default value for menu retrieve `keysOnly` should be false');
         assert(defaults.fresh === false,
           'default value for menu retrieve `fresh` should be false');
+        expect(defaults.full).toBe(false);
+        expect(defaults.keysOnly).toBe(false);
+        expect(defaults.fresh).toBe(false);
       });
 
       it('should be able to inflate from an object', function() {
@@ -128,34 +216,50 @@ function menuTestsuite() {
 
         assert(defaults.full === false,
           'default value for menu retrieve `full` should be false');
+        expect(defaults.full).toBe(false);
         assert(options.full === true,
           'options should allow override of `full` flag');
+        expect(options.full).toBe(true);
         assert(defaults.keysOnly === false,
           'default value for menu retrieve `keysOnly` should be false');
+        expect(defaults.keysOnly).toBe(false);
         assert(options.keysOnly === true,
           'options should allow override of `keysOnly` flag');
+        expect(options.keysOnly).toBe(true);
         assert(defaults.fresh === false,
           'default value for menu retrieve `fresh` should be false');
+        expect(defaults.fresh).toBe(false);
         assert(options.fresh === true,
           'options should allow override of `fresh` flag');
+        expect(options.fresh).toBe(true);
         assert(!defaults.snapshot,
           'default value for menu retrieve `snapshot` should be null');
+        expect(defaults.snapshot).toBeNull();
         assert(options.snapshot === 'abc123',
           'options should allow override of `snapshot` value');
+        expect(options.snapshot).toBe('abc123');
         assert(!defaults.fingerprint,
           'default value for menu retrieve `fingerprint` should be null');
+        expect(defaults.fingerprint).toBeNull();
         assert(options.fingerprint === 'abc124',
           'options should allow override of `fingerprint` value');
+        expect(options.fingerprint).toBe('abc124');
         assert((defaults.section ===
           proto.opencannabis.products.menu.section.Section.UNSPECIFIED),
           'default value for menu retrieve `section` should be UNSPECIFIED');
+        expect(defaults.section).toBe(
+          proto.opencannabis.products.menu.section.Section.UNSPECIFIED);
         assert((options.section ===
           proto.opencannabis.products.menu.section.Section.FLOWERS),
           'options should allow override of `section` value');
+        expect(options.section).toBe(
+          proto.opencannabis.products.menu.section.Section.FLOWERS);
         assert(!defaults.scope,
           'default value for menu retrieve `scope` should be null');
+        expect(defaults.scope).toBeNull();
         assert(options.scope === 'partner/sample/location/sample',
           'options should allow override of `scope` value');
+        expect(options.scope).toBe('partner/sample/location/sample');
       });
 
       it('should be able to convert into an object', function() {
@@ -168,16 +272,19 @@ function menuTestsuite() {
           'options should allow override of `full` flag');
         assert(options.keysOnly === true,
           'options should allow override of `keysOnly` flag');
+        expect(options.full).toBe(true);
+        expect(options.keysOnly).toBe(true);
 
         const serialized = options.toObject();
         assert(serialized.full === true,
           'serialized options should allow override of `full` flag');
         assert(serialized.keysOnly === true,
           'serialized options should allow override of `keysOnly` flag');
+        expect(serialized.full).toBe(true);
+        expect(serialized.keysOnly).toBe(true);
       });
     });
 
-    genMenuTestsuite('v0');
     genMenuTestsuite('v1beta1');
   });
 }

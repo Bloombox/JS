@@ -2,9 +2,11 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bazel-JS" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/protobuf" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/schema" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/closure/compiler" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/grpc-web" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/idom" vcs="Git" />
   </component>
 </project>

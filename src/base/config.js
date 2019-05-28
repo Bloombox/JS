@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co.
  *
@@ -22,17 +21,10 @@
  */
 
 /*global goog */
-
+goog.provide('bloombox.API_ENDPOINT');
 goog.provide('bloombox.config.active');
 goog.provide('bloombox.config.buildDefault');
 goog.provide('bloombox.config.configure');
-
-goog.require('bloombox.DEBUG');
-goog.require('bloombox.VERSION');
-
-goog.require('bloombox.config.integration.GoogleAnalyticsConfig');
-goog.require('bloombox.config.integration.KeenIOConfig');
-goog.require('bloombox.config.integration.SegmentConfig');
 
 
 /**
@@ -45,48 +37,19 @@ goog.require('bloombox.config.integration.SegmentConfig');
  *            location: ?string,
  *            channel: ?string,
  *            beta: ?boolean,
- *            integrations: bloombox.config.JSIntegrationConfig,
- *            endpoints: {
- *              shop: ?string,
- *              telemetry: ?string}}}
+ *            caching: ?boolean,
+ *            endpoint: string}}
  */
 bloombox.config.JSConfig;
 
 
 /**
- * Specifies the structure of configuration related to integrations that plug
- * into the JS client. As of this writing, that includes Google Analytics, Keen
- * IO, and Segment.
+ * Global API endpoint.
  *
- * @public
- * @nocollapse
- * @typedef {{google: {
- *             analytics: bloombox.config.integration.GoogleAnalyticsConfig},
- *             segment: bloombox.config.integration.SegmentConfig,
- *             keen: bloombox.config.integration.KeenIOConfig}}
+ * @define {string} API_ENDPOINT Global API endpoint.
+ * @export
  */
-bloombox.config.JSIntegrationConfig;
-
-
-/**
- * @typedef {bloombox.config.integration.GoogleAnalyticsConfig}
- * @package
- */
-let GoogleAnalyticsConfig;
-
-
-/**
- * @typedef {bloombox.config.integration.SegmentConfig}
- * @package
- */
-let SegmentConfig;
-
-
-/**
- * @typedef {bloombox.config.integration.KeenIOConfig}
- * @package
- */
-let KeenIOConfig;
+bloombox.API_ENDPOINT = 'https://rpc.bloombox.cloud';
 
 
 /**
@@ -102,25 +65,8 @@ bloombox.config.buildDefault = function() {
     location: null,
     channel: null,
     beta: false,
-    endpoints: {
-      shop: null,
-      telemetry: null
-    },
-    integrations: {
-      google: {
-        analytics: /** @type {GoogleAnalyticsConfig} */ ({
-          enabled: false,
-          trackingId: null
-        })
-      },
-      segment: /** @type {SegmentConfig} */ ({
-        writeKey: null
-      }),
-      keen: /** @type {KeenIOConfig} */ ({
-        projectId: null,
-        writeKey: null
-      })
-    }
+    caching: true,
+    endpoint: bloombox.API_ENDPOINT
   };
 };
 

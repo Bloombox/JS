@@ -31,7 +31,7 @@
     "jsdoc": "^3.5.5",
     "jshint": "^2.10.2",
     "jshint-stylish": "*",
-    "karma-closure": "https://github.com/nckh/karma-closure",
+    "karma-closure": "https://github.com/sgammon/karma-closure.git",
     "mocha": "^6.1.4",
     "swagger-tools": "^0.10.4",
     "swagger-ui": "^3.22.1",

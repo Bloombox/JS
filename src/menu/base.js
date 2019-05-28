@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
@@ -24,18 +23,27 @@
 
 /*global goog */
 
+goog.require('bloombox.API_ENDPOINT');
+goog.require('bloombox.DEBUG');
+goog.require('bloombox.VERSION');
+
 goog.provide('bloombox.menu.DEBUG');
 goog.provide('bloombox.menu.MENU_API_ENDPOINT');
 goog.provide('bloombox.menu.MENU_API_VERSION');
 goog.provide('bloombox.menu.VERSION');
 
+goog.provide('bloombox.menu.lastSeenFingerprint');
 goog.provide('bloombox.menu.v1beta1.DEBUG');
 goog.provide('bloombox.menu.v1beta1.VERSION');
 
-goog.require('bloombox.API_ENDPOINT');
-goog.require('bloombox.DEBUG');
-goog.require('bloombox.VERSION');
 
+/**
+ * Last seen menu fingerprint.
+ *
+ * @type {?string}
+ * @public
+ */
+bloombox.menu.lastSeenFingerprint = null;
 
 
 /**
@@ -45,7 +53,7 @@ goog.require('bloombox.VERSION');
  *        debug features.
  * @public
  */
-bloombox.menu.DEBUG = true;
+bloombox.menu.DEBUG = bloombox.DEBUG;
 
 
 /**

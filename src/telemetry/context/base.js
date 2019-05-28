@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
@@ -25,18 +24,12 @@
 
 /*global goog */
 
-goog.require('bloombox.INTERNAL');
+goog.require('bloombox.VARIANT');
 goog.require('bloombox.VERSION');
-goog.require('bloombox.config.active');
-
-goog.require('bloombox.logging.log');
 
 goog.require('bloombox.menu.Section');
 
 goog.require('bloombox.telemetry.Collection');
-goog.require('bloombox.telemetry.buildBrowserContext');
-goog.require('bloombox.telemetry.buildNativeContext');
-goog.require('bloombox.telemetry.buildWebappContext');
 
 goog.require('bloombox.util.Exportable');
 goog.require('bloombox.util.Serializable');
@@ -78,6 +71,37 @@ bloombox.telemetry.ContextException = function ContextException(message) {
 
 
 /**
+ * Resolve a name for a given menu section.
+ *
+ * @param {proto.opencannabis.products.menu.section.Section} idx Menu section to
+ *        resolve a name for.
+ * @return {?string} Name, if one can be resolved, or `null` instead.
+ * @package
+ */
+bloombox.telemetry._resolveSectionName = function(idx) {
+  switch (idx) {
+    case proto.opencannabis.products.menu.section.Section.FLOWERS:
+      return 'FLOWERS';
+    case proto.opencannabis.products.menu.section.Section.EXTRACTS:
+      return 'EXTRACTS';
+    case proto.opencannabis.products.menu.section.Section.EDIBLES:
+      return 'EDIBLES';
+    case proto.opencannabis.products.menu.section.Section.CARTRIDGES:
+      return 'CARTRIDGES';
+    case proto.opencannabis.products.menu.section.Section.APOTHECARY:
+      return 'APOTHECARY';
+    case proto.opencannabis.products.menu.section.Section.PREROLLS:
+      return 'PREROLLS';
+    case proto.opencannabis.products.menu.section.Section.PLANTS:
+      return 'PLANTS';
+    case proto.opencannabis.products.menu.section.Section.MERCHANDISE:
+      return 'MERCHANDISE';
+  }
+  return null;
+};
+
+
+/**
  * Gathered event context.
  *
  * @param {?bloombox.telemetry.Collection=} opt_collection Collection to file
@@ -94,8 +118,8 @@ bloombox.telemetry.ContextException = function ContextException(message) {
  * @param {?bloombox.menu.Section=} opt_section Menu section to specify for the
  *        hit. Generates a section-scoped commercial event under the hood.
  *        Optional.
- * @param {?bloombox.product.Key=} opt_item Item key to specify for the hit.
- *        Generates an item-scoped commercial event under the hood. Optional.
+ * @param {?proto.opencannabis.base.ProductKey=} opt_item Item key to specify
+ *        for the hit. Generates an item-scoped commercial event under the hood.
  * @param {?string=} opt_order Optional. Order key to apply to this context.
  * @param {?proto.bloombox.analytics.context.DeviceApplication=} opt_app
  *        Application context, generated or provided by the partner.
@@ -159,23 +183,18 @@ bloombox.telemetry.Context = function(opt_collection,
   this.session = opt_session || null;
 
   // make us a partner key
-  let partnerKey;
+  let partnerKey = null;
   if (opt_partner) {
     partnerKey = new proto.bloombox.partner.PartnerKey();
     partnerKey.setCode(opt_partner);
-  } else {
-    partnerKey = null;
   }
 
   // make us a partner key
-  let locationKey;
+  let locationKey = null;
   if (opt_partner && opt_location) {
     locationKey = new proto.bloombox.partner.LocationKey();
     locationKey.setCode(opt_location);
     locationKey.setPartner(partnerKey);
-  } else {
-    // no location-level context
-    locationKey = null;
   }
 
   /**
@@ -187,13 +206,11 @@ bloombox.telemetry.Context = function(opt_collection,
   this.location = locationKey;
 
   // attach the device key, if any
-  let deviceKey;
+  let deviceKey = null;
   if (opt_device && typeof opt_device === 'string') {
     deviceKey = new proto.bloombox.partner.PartnerDeviceKey();
     deviceKey.setUuid(/** @type {string} */ (opt_device));
     deviceKey.setLocation(locationKey);
-  } else {
-    deviceKey = null;
   }
 
   /**
@@ -206,13 +223,11 @@ bloombox.telemetry.Context = function(opt_collection,
   this.device = deviceKey;
 
   // decode the user key, if any
-  let user;
+  let user = null;
   if (opt_user) {
     let userKey = new proto.bloombox.identity.UserKey();
     userKey.setUid(opt_user);
     user = userKey;
-  } else {
-    user = null;
   }
 
   /**
@@ -225,13 +240,11 @@ bloombox.telemetry.Context = function(opt_collection,
   this.user = user;
 
   // decode the order key, if any
-  let order;
+  let order = null;
   if (opt_order) {
     let orderKey = new proto.opencannabis.commerce.OrderKey();
     orderKey.setId(opt_order);
     order = orderKey;
-  } else {
-    order = null;
   }
 
   /**
@@ -248,7 +261,7 @@ bloombox.telemetry.Context = function(opt_collection,
    *
    * @type {?proto.opencannabis.base.ProductKey}
    */
-  this.item = opt_item ? opt_item.export() : null;
+  this.item = opt_item || null;
 
   /**
    * Order key to attribute this event to. Defaults to `null`, indicating no
@@ -300,14 +313,14 @@ bloombox.telemetry.Context.resolveVersion = function(protob) {
  * @return {Object} Serialized native context.
  */
 bloombox.telemetry.Context.serializeNativeContext = function(protob) {
-  return {
+  return protob ? {
     'type': protob.getType(),
     'role': protob.getRole(),
-    'os': {
+    'os': protob.getOs() ? {
       'type': protob.getOs().getType(),
       'version': (
         bloombox.telemetry.Context.resolveVersion(protob.getOs().getVersion()))
-    },
+    } : {},
     'screen': {
       'screen': {
         'width': protob.getScreen().getScreen().getWidth(),
@@ -320,7 +333,7 @@ bloombox.telemetry.Context.serializeNativeContext = function(protob) {
       'density': protob.getScreen().getDensity(),
       'orientation': protob.getScreen().getOrientation()
     }
-  };
+  } : {};
 };
 
 
@@ -333,7 +346,7 @@ bloombox.telemetry.Context.serializeNativeContext = function(protob) {
  * @return {Object} Serialized browser context.
  */
 bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
-  return {
+  return protob ? {
     'browserType': protob.getBrowserType(),
     'version': bloombox.telemetry.Context.resolveVersion(protob.getVersion()),
     'language': protob.getLanguage(),
@@ -341,7 +354,7 @@ bloombox.telemetry.Context.serializeBrowserContext = function(protob) {
     'touchpoints': protob.getTouchpoints(),
     'hardwareConcurrency': protob.getHardwareConcurrency(),
     'colorDepth': protob.getColorDepth()
-  };
+  } : {};
 };
 
 
@@ -440,11 +453,13 @@ bloombox.telemetry.Context.serializeProto = function(context) {
  * Render this context object into a JSON-serializable structure suitable for
  * use over-the-wire.
  *
+ * @override
  * @return {Object}
  * @public
  */
 bloombox.telemetry.Context.prototype.serialize = function() {
   let baseContext = {};
+  baseContext['scope'] = {};
 
   // add collection, if present
   if (this.collection)
@@ -478,10 +493,6 @@ bloombox.telemetry.Context.prototype.serialize = function() {
         this.location.getPartner().getCode(),
         this.device.getUuid()].join('/');
     }
-  } else {
-    if (this.partner) {
-      partnerScope = this.location.getPartner().getCode();
-    }
   }
   if (partnerScope)
     baseContext['scope'] = {
@@ -498,8 +509,6 @@ bloombox.telemetry.Context.prototype.serialize = function() {
   }
 
   if (this.section !== null) {
-    if (!baseContext['scope'])
-      baseContext['scope'] = {};
     let commercialScope = (
       'section/' + this.section.toString());
     if (this.item !== null) {
@@ -523,6 +532,7 @@ bloombox.telemetry.Context.prototype.serialize = function() {
 /**
  * Export the current analytics context as a protobuf message.
  *
+ * @override
  * @return {proto.bloombox.analytics.Context}
  * @public
  */
@@ -552,6 +562,21 @@ bloombox.telemetry.Context.prototype.export = function() {
       // partner -> location context
       scope.setPartner(basePartnerScope);
     }
+    if (this.order) {
+      const orderId = this.order.getId();
+      scope.setOrder(orderId);
+    }
+    if (this.section != null) {
+      const resolvedName = bloombox.telemetry._resolveSectionName(this.section);
+      const baseCommercialScope = 'section/' + resolvedName;
+      if (this.item) {
+        const itemId = this.item.getId();
+        const fullCommercialScope = baseCommercialScope + '/product/' + itemId;
+        scope.setCommercial(fullCommercialScope);
+      } else {
+        scope.setCommercial(baseCommercialScope);
+      }
+    }
     context.setScope(scope);
   }
 
@@ -566,15 +591,12 @@ bloombox.telemetry.Context.prototype.export = function() {
     context.setApp(appContext);
   }
 
-// detect library type and version
-  let libraryVersion = bloombox.VERSION;
-  let libraryVariant = bloombox.VARIANT;
-
+  // detect library type and version
   let libObj = new proto.bloombox.analytics.context.DeviceLibrary();
   let libVersionObj = new proto.opencannabis.structs.VersionSpec();
-  libVersionObj.setName(libraryVersion);
+  libVersionObj.setName(bloombox.VERSION);
   libObj.setVersion(libVersionObj);
-  libObj.setVariant(libraryVariant);
+  libObj.setVariant(bloombox.VARIANT);
   libObj.setClient((
     proto.bloombox.analytics.context.APIClient.JAVA_SCRIPT));
   context.setLibrary(libObj);

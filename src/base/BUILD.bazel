@@ -1,0 +1,31 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("//defs:lib.bzl", closure_js_library="js_library")
+
+
+closure_js_library(
+    name = "init",
+    srcs = ["init.js"])
+
+closure_js_library(
+    name = "config",
+    srcs = ["config.js"])
+
+closure_js_library(
+    name = "logging",
+    srcs = ["logging.js"],
+    deps = [":init"])
+
+closure_js_library(
+    name = "service",
+    srcs = ["service.js"])
+
+
+closure_js_library(
+    name = "base",
+    exports = [
+        ":init",
+        ":config",
+        ":logging",
+        ":service"])

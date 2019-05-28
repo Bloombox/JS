@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
@@ -25,6 +24,7 @@
 /*global goog */
 
 goog.require('bloombox.base.ServiceInterface');
+goog.require('bloombox.menu.ObservableMenu');
 goog.require('bloombox.rpc.ScopedOptions');
 goog.require('proto.opencannabis.products.menu.section.Section');
 
@@ -82,6 +82,23 @@ bloombox.menu.ProductCallback;
 
 
 /**
+ * Callback function type declaration for operations that produce lists of
+ * products marked as featured-for-promotion. This flag indicates the item is
+ * eligible to be elevated to more prominent displays, which on the web might be
+ * featured product areas in the section master UI.
+ *
+ * The callback's parameters are either-or in this sense: if a result is passed,
+ * the error is passed as `null`, and vice-versa.
+ *
+ * @public
+ * @typedef {function(
+ *    ?proto.bloombox.services.menu.v1beta1.GetFeatured.Response,
+ *    *)}
+ */
+bloombox.menu.FeaturedCallback;
+
+
+/**
  * Specifies a simple record type, which is inflatable into a full settings
  * object which specifies options for retrieving menus.
  *
@@ -111,18 +128,18 @@ bloombox.menu.RetrieveException = function RetrieveException(message, err) {
   /**
    * Exception message.
    *
-   * @export
+   * @public
    * @type {string}
    */
-  this.message = message;
+  this['message'] = message;
 
   /**
    * Exception or status code.
    *
-   * @export
+   * @public
    * @type {number}
    */
-  this.err = err || -1;
+  this['err'] = err || -1;
 };
 
 
@@ -333,7 +350,7 @@ bloombox.menu.MenuAPI = (class MenuAPI {
    *        either a result or terminal error state are reached. Optional.
    * @param {?bloombox.menu.RetrieveOptions=} config Configuration options to
    *        apply to this request.
-   * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+   * @return {Promise<proto.bloombox.services.menu.v1beta1.GetProduct.Response>}
    *         Promise attached to the underlying RPC call.
    * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
    *         the underlying RPC, or during transmission.
@@ -348,17 +365,42 @@ bloombox.menu.MenuAPI = (class MenuAPI {
    *
    * @param {?proto.opencannabis.products.menu.section.Section} section Menu
    *        section to fetch. If left unset, fetches across all sections.
-   * @param {?bloombox.menu.RetrieveCallback=} callback Callback to dispatch
+   * @param {?bloombox.menu.FeaturedCallback=} callback Callback to dispatch
    *        once a dataset of products is available, or a terminal error is
    *        reached. Optional.
    * @param {?bloombox.menu.RetrieveOptions=} config Options, or configuration,
    *        to apply in the scope of just this RPC operation. In some cases, a
    *        given API method may not apply or use all options. If left unset, a
    *        sensible set of default settings is generated and used.
-   * @return {Promise<proto.bloombox.services.menu.v1beta1.GetMenu.Response>}
+   * @return {Promise<proto.bloombox.services.menu.v1beta1.GetFeatured.Response>}
    *         Promise attached to the underlying RPC call.
    * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send
    *         the underlying RPC, or during transmission.
    */
   featured(section, callback, config) {}
+
+  // -- API: Menu Stream -- //
+  /**
+   * Establish a stream over which we can receive menu change updates. Initially
+   * a full menu payload is sent, to sync the client with the server's state,
+   * and subsequently, delta updates are relayed as they occur in underlying
+   * menu catalog storage.
+   *
+   * Depending on the settings passed in `config`, the delta payload will
+   * reference a changed/added/deleted product by key, or enclose the full
+   * product payload. Each time, an updated menu fingerprint is sent back.
+   *
+   * @param {?proto.opencannabis.products.menu.Menu=} localMenu Local-side
+   *        menu to compare with the server. Fingerprint config setting is
+   *        required if a local menu is provided, for comparison server-side.
+   * @param {?bloombox.menu.RetrieveOptions=} config Options, or configuration,
+   *        to apply in the scope of just this RPC operation. In some cases, a
+   *        given API method may not apply or use all options. If left unset, a
+   *        sensible set of default settings is generated and used.
+   * @return {bloombox.menu.ObservableMenu} Observable menu object, which wraps
+   *        a promise for the initial menu, and provides methods for subscribing
+   *        to menu data changes (which are dispatched after being applied to
+   *        any active local DB/caching engine).
+   */
+  stream(localMenu, config) {}
 });

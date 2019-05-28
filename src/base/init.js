@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co.
  *
@@ -23,56 +22,65 @@
 
 /*global goog */
 
-goog.provide('bloombox.API_ENDPOINT');
 goog.provide('bloombox.DEBUG');
 goog.provide('bloombox.DEBUG_PROPERTY');
 goog.provide('bloombox.INTERNAL');
+goog.provide('bloombox.SERVICE_MODE');
+goog.provide('bloombox.VARIANT');
 goog.provide('bloombox.VERSION');
 
 
 /**
  * Global debug flag.
  *
- * @define {boolean} DEBUG Debug flag for global debugging.
+ * @define {boolean} bloombox.DEBUG Debug flag for global debugging.
  *         features.
  * @export
  */
-bloombox.DEBUG = true;
+bloombox.DEBUG = goog.define('bloombox.DEBUG', goog.DEBUG);
+
+
+/**
+ * Service mode. One of 'binary' or 'text'.
+ *
+ * @define {string} bloombox.SERVICE_MODE Mode for services: text or binary.
+ */
+bloombox.SERVICE_MODE = goog.define('bloombox.SERVICE_MODE', 'binary');
 
 
 /**
  * Property to look for global debug status on the window.
  *
- * @define {string} DEBUG_PROPERTY Property to examine on the window for global
- *         debug status opt-in.
+ * @define {string} bloombox.DEBUG_PROPERTY Property to examine on the window
+ *         for global debug status opt-in.
  * @public
  */
-bloombox.DEBUG_PROPERTY = '__debug__';
+bloombox.DEBUG_PROPERTY = goog.define('bloombox.DEBUG_PROPERTY', '__debug__');
 
 
 /**
  * Global library version.
  *
- * @define {string} VERSION Version for library.
+ * @define {string} bloombox.VERSION Version for library.
  * @export
  */
-bloombox.VERSION = 'v2.0.0b2';
+bloombox.VERSION = goog.define('bloombox.VERSION', 'v2.1.0-rc1');
+
+
+/**
+ * Global library variant.
+ *
+ * @define {string} bloombox.VARIANT Global variant string.
+ * @export
+ */
+bloombox.VARIANT = goog.define('bloombox.VARIANT', 'full');
 
 
 /**
  * Internal build status. Set to true when building within the Bloombox Platform
  * codebase tree.
  *
- * @define {boolean} INTERNAL Internal flag.
+ * @define {boolean} bloombox.INTERNAL Internal flag.
  * @export
  */
-bloombox.INTERNAL = false;
-
-
-/**
- * Global API endpoint.
- *
- * @define {string} API_ENDPOINT Global API endpoint.
- * @export
- */
-bloombox.API_ENDPOINT = 'https://rpc.bloombox.cloud';
+bloombox.INTERNAL = goog.define('bloombox.INTERNAL', false);

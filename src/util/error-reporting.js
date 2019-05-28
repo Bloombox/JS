@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co.
  *
@@ -23,15 +22,12 @@
 
 /*global goog */
 
-goog.require('bloombox.DEBUG');
 goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.info');
-goog.require('bloombox.logging.log');
 
 goog.provide('stackdriver.ErrorReporter');
 goog.provide('stackdriver.StackdriverConfig');
 
-goog.provide('stackdriver.errorize');
 goog.provide('stackdriver.notifyFingerprint');
 goog.provide('stackdriver.protect');
 goog.provide('stackdriver.reportError');
@@ -62,23 +58,6 @@ stackdriver.StackdriverConfig;
  * @constructor
  */
 stackdriver.ErrorReporter = function ErrorReporter(config) {
-  if (!config.key && !config.targetUrl) {
-    throw new Error('Cannot initialize: No API key or target url provided.');
-  }
-  if (!config.projectId && !config.targetUrl) {
-    throw new Error('Cannot initialize: No project ID or target url provided.');
-  }
-
-  // noinspection JSUnresolvedVariable
-  if (typeof window['StackTrace'] === 'undefined') {
-    // Inform about missing dependency
-    bloombox.logging.warn('Unable to load Stackdriver Error Reporting. ' +
-      'make sure you loaded “stackdriver-errors-concat.js” ' +
-      'or “stackdriver-errors-concat.min.js”, or that you imported the ' +
-      '“stacktrace-js” module');
-    throw new Error('Unable to load Stackdriver.');
-  }
-
   /**
    * API key to use.
    *
@@ -151,12 +130,10 @@ stackdriver.ErrorReporter = function ErrorReporter(config) {
 /**
  * Report an error to the Stackdriver Error Reporting API
  *
- * @param {Error|String} errObj Error object or message string to report.
+ * @param {Error|string} errObj Error object or message string to report.
  */
 stackdriver.ErrorReporter.prototype.report = function(errObj) {
-  if (this.disabled || !errObj) {
-    return;
-  }
+  if (this.disabled || !errObj) return;
 
   let payload = {};
   payload['serviceContext'] = this.serviceContext;
@@ -176,15 +153,13 @@ stackdriver.ErrorReporter.prototype.report = function(errObj) {
     let errorMessageInfo = null;
     let errorName = null;
     if (errorMessage) {
+      errorMessageInfo = errorMessage;
+      errorName = 'InternalError';
+
       if (errorType) {
         errorMessageInfo = errorMessage;
         errorName = errorType.replace(/\$\$/g, '').replace(/\$/g, '.');
-        if (errorName[0] === '.') {
-          errorName = errorName.slice(1);
-        }
-      } else {
-        errorMessageInfo = errorMessage;
-        errorName = 'InternalError';
+        if (errorName[0] === '.') errorName = errorName.slice(1);
       }
     }
 
@@ -200,18 +175,6 @@ stackdriver.ErrorReporter.prototype.report = function(errObj) {
     }
   }
 
-  if (typeof err === 'string' || err instanceof String) {
-    // Transform the message in an error, use try/catch to make sure the
-    // stacktrace is populated.
-    try {
-      // noinspection ExceptionCaughtLocallyJS
-      throw new Error(err);
-    } catch (e) {
-      err = e;
-    }
-    // the first frame when using report() is always this library
-    firstFrameIndex = 2;
-  }
   let that = this;
   // This will use source maps and normalize the stack frames
   window['StackTrace']['fromError'](err).then(function(stack) {
@@ -307,58 +270,21 @@ stackdriver.setup = function(reporter) {
 /**
  * Report an error to the library-global error reporter.
  *
- * @param {Error|String} err Error to report.
+ * @param {Error|string} err Error to report.
  * @param {function(?)=} opt_op Operation the error happened in.
+ * @return {boolean} Whether the error was reported.
  * @public
  */
 stackdriver.reportError = function(err, opt_op) {
   let op = opt_op ? opt_op.name : null;
-  if (_REPORTER === null) {
-    // uh oh
-    bloombox.logging.error('Unable to report error: not ' +
-      'initialized.', err);
-  } else {
+  if (_REPORTER) {
     // report the error
     bloombox.logging.error('Reporting error encountered in' +
       (op ? ' protected function \'' + op + '\'.' :
             ' anonymous function.'), err);
     _REPORTER.report(err);
   }
-};
-
-
-/**
- * Enable an application-level exception as a recordable error.
- *
- * @param {function(new:Object, string, string=, number=)} ctor Constructor.
- * @return {function(string, string=, number=)} Error-ized constructor.
- */
-stackdriver.errorize = function(ctor) {
-  bloombox.logging.log('Errorizing exception: \'' +
-    ctor.name + '\'...');
-  /**
-   * @type {function(string, string=, number=)}
-   */
-  let wrapped = (function(message, fileName, lineNumber) {
-    let err = new Error(message, fileName, lineNumber);
-    let instance = new ctor(message, fileName, lineNumber);
-    Object.setPrototypeOf(err, Object.getPrototypeOf(instance));
-    err.cause = instance;
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(err, ctor);
-    }
-    return err;
-  });
-  wrapped.prototype = Object.create(Error.prototype, {
-    constructor: {
-      value: Error,
-      enumerable: false,
-      writable: false,
-      configurable: true
-    }
-  });
-  Object.setPrototypeOf(wrapped, Error);
-  return wrapped;
+  return true;
 };
 
 
@@ -383,18 +309,14 @@ stackdriver.notifyFingerprint = function(fingerprint) {
  */
 stackdriver.protect = function(operation) {
   let op = /** @type {function(*)} */ (operation);
-  let wrapped = (function() {
+  return (function() {
     try {
       // execute with given args
       return op.bind(arguments[0]).apply(Array.from(arguments).slice(1));
     } catch (err) {
-      if (bloombox.DEBUG) {
-        debugger;
-      }
       // handle with error reporting, then rethrow
       stackdriver.reportError(err, op);
       bloombox.logging.error(err);
     }
   });
-  return wrapped;
 };

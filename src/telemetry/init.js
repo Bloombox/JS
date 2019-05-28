@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
@@ -27,19 +26,16 @@
 
 goog.require('bloombox.config.active');
 
-goog.require('bloombox.logging.error');
 goog.require('bloombox.logging.log');
-goog.require('bloombox.logging.warn');
 
-goog.require('bloombox.telemetry.DEBUG');
+goog.require('bloombox.telemetry.Collection');
 goog.require('bloombox.telemetry.InternalCollection');
-goog.require('bloombox.telemetry.TELEMETRY_API_ENDPOINT');
-goog.require('bloombox.telemetry.VERSION');
 
 goog.require('bloombox.telemetry.didOptOut');
 goog.require('bloombox.telemetry.v1beta4.EventService');
 
 goog.provide('bloombox.telemetry.boot');
+goog.provide('bloombox.telemetry.events');
 goog.provide('bloombox.telemetry.sendInitialEvents');
 goog.provide('bloombox.telemetry.setup');
 goog.provide('bloombox.telemetry.setupPageTracking');
@@ -49,37 +45,15 @@ goog.provide('bloombox.telemetry.setupPageTracking');
  * Setup the Bloombox Telemetry API. Provide your API key and an endpoint if you
  * would like to override the default (most users should not need to).
  *
- * @param {string} partner Partner code to use.
- * @param {string} location Location code to use.
- * @param {string} apikey API key to use.
- * @param {function()} callback Callback dispatched when the Shop API is ready.
- * @param {string=} endpoint Override for endpoint. Uses default if unspecified.
+ * @param {function()} callback Callback dispatched when telemetry services are
+ *        ready for use.
  * @export
  */
-bloombox.telemetry.setup = function(partner,
-                                    location,
-                                    apikey,
-                                    callback,
-                                    endpoint) {
-  if (!partner || !location) {
-    bloombox.logging.error('Partner or location code is not defined.');
-    return;
-  }
-
-  let config = bloombox.config.active();
-  let merged = /** @type {bloombox.config.JSConfig} */ (
-    Object.assign({}, config, {'endpoints':
-      Object.assign({}, config.endpoints || {}, {
-        shop: endpoint || bloombox.telemetry.TELEMETRY_API_ENDPOINT})}));
-
-  bloombox.config.configure(merged);
-
-  bloombox.logging.log('Telemetry is ready for use.',
-    {'version': bloombox.telemetry.VERSION,
-      'debug': bloombox.telemetry.DEBUG,
-      'config': bloombox.config.active()});
+bloombox.telemetry.setup = function(callback) {
   callback();
-  bloombox.telemetry.boot();
+  setTimeout(function() {
+    bloombox.telemetry.boot();
+  }, 0);
 };
 
 
@@ -90,11 +64,7 @@ bloombox.telemetry.setup = function(partner,
  * @package
  */
 bloombox.telemetry.sendInitialEvents = function() {
-  if (bloombox.telemetry.didOptOut()) {
-    // user opted out of telemetry
-    bloombox.logging.warn(
-      'User opted-out of telemetry, skipping initial events.');
-  } else {
+  if (!bloombox.telemetry.didOptOut()) {
     const collection = bloombox.telemetry.Collection.named(
       bloombox.telemetry.InternalCollection.LIBRARY);
     // user has not yet opted out
@@ -156,10 +126,9 @@ bloombox.telemetry.urlDidChange_ = function() {
  * @private
  */
 bloombox.telemetry.checkURL_ = function() {
-  if (window.location.href !== bloombox.telemetry.lastURL_) {
+  if (window.location.href !== bloombox.telemetry.lastURL_)
     // update it
     bloombox.telemetry.urlDidChange_();
-  }
 
   // repeat the check in URL_CHECK_TICK_MS milliseconds
   setTimeout(bloombox.telemetry.checkURL_,
@@ -184,11 +153,7 @@ bloombox.telemetry.setupPageTracking = function() {
  * @public
  */
 bloombox.telemetry.boot = function() {
-  if (bloombox.telemetry.didOptOut()) {
-    // user opted out of telemetry
-    bloombox.logging.warn(
-      'User opted-out of telemetry, skipping initial ping.');
-  } else {
+  if (!bloombox.telemetry.didOptOut()) {
     // user has not yet opted out
     bloombox.logging.log('Sending initial telemetry ping...');
     bloombox.telemetry.events().ping(function(latency) {

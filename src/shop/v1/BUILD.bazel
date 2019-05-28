@@ -1,0 +1,22 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("//defs:lib.bzl", closure_js_library="js_library")
+
+
+closure_js_library(
+    name = "shop-v1",
+    srcs = ["shop-v1.js"],
+    deps = [
+        "//src/base:init",
+        "//src/base:config",
+        "//src/rpc:rpc",
+        "//src/shop:shop-api",
+        "//src/util:base64",
+        "//third_party:schema-js",
+        "//third_party:shop-service"])
+
+
+closure_js_library(
+    name = "v1",
+    exports = [":shop-v1"])

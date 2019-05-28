@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
@@ -26,8 +25,6 @@
 /*global goog */
 
 goog.require('bloombox.base.ServiceInterface');
-goog.require('bloombox.rpc.ScopedOptions');
-goog.require('bloombox.telemetry.TelemetryConfig');
 goog.require('bloombox.telemetry.TelemetryOptions');
 
 goog.require('proto.google.protobuf.Empty');
@@ -104,10 +101,10 @@ bloombox.telemetry.EventTelemetryAPI = (class EventTelemetry {
    *        append this event to. Users can prepare this object easily.
    * @param {Object=} payload Payload to send with the event.
    * @param {number=} occurred Occurrence timestamp for this event, in ms.
-   * @param {?bloombox.telemetry.TelemetryOptions=} options Config settings and
-   *        options for the telemetry API to apply to this individual RPC.
    * @param {?bloombox.telemetry.EventCallback=} callback Function to dispatch
    *        once a result or terminal error state has been reached. Optional.
+   * @param {?bloombox.telemetry.TelemetryOptions=} options Config settings and
+   *        options for the telemetry API to apply to this individual RPC.
    * @return {Promise<proto.google.protobuf.Empty>} Promise attached to the
    *         underlying RPC call.
    * @throws {bloombox.rpc.RPCException} If an error occurs preparing to send

@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
@@ -26,9 +25,8 @@
 /*global goog */
 
 goog.require('bloombox.base.ServiceInterface');
-goog.require('bloombox.rpc.ScopedOptions');
-goog.require('bloombox.telemetry.TelemetryConfig');
-goog.require('bloombox.telemetry.TelemetryOptions');
+
+goog.provide('bloombox.telemetry.CommercialTelemetryAPI');
 
 
 

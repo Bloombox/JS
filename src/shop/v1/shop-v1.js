@@ -26,6 +26,7 @@
 /*global goog */
 
 goog.require('bloombox.API_ENDPOINT');
+goog.require('bloombox.SERVICE_MODE');
 goog.require('bloombox.rpc.RPCException');
 goog.require('bloombox.rpc.context');
 goog.require('bloombox.rpc.metadata');
@@ -67,6 +68,7 @@ bloombox.shop.v1.Service = (class ShopV1 {
     /**
      * Active JS SDK configuration.
      *
+     * @const
      * @private
      * @type {bloombox.config.JSConfig}
      */
@@ -76,6 +78,7 @@ bloombox.shop.v1.Service = (class ShopV1 {
      * Service client, which is responsible for mediating calls between the RPC
      * server and the local RPC client.
      *
+     * @const
      * @private
      * @type {proto.bloombox.services.shop.v1.ShopPromiseClient}
      */
@@ -83,7 +86,7 @@ bloombox.shop.v1.Service = (class ShopV1 {
       new proto.bloombox.services.shop.v1.ShopPromiseClient(
         bloombox.API_ENDPOINT,
         null,
-        {'format': 'binary'}));
+        {'format': bloombox.SERVICE_MODE}));
   }
 
   // -- API: Shop Info -- //
@@ -97,6 +100,7 @@ bloombox.shop.v1.Service = (class ShopV1 {
    * the library-global partner and location values will be used. If you wish to
    * override these values, prepare a `ShopOptions` object and pass it in.
    *
+   * @override
    * @param {?bloombox.shop.InfoCallback=} callback Function to dispatch once
    *        either a response or terminal error condition are reached.
    * @param {?bloombox.shop.ShopOptions=} config Configuration options to apply
@@ -143,6 +147,7 @@ bloombox.shop.v1.Service = (class ShopV1 {
    * adherence to any set order minimum, either globally or for the zipcode in
    * question specifically.
    *
+   * @override
    * @param {string} zipcode U.S. zipcode to check with the server.
    * @param {?bloombox.shop.ZipcheckCallback=} callback Callback to dispatch
    *        once a response, or terminal error, are available.
@@ -195,6 +200,7 @@ bloombox.shop.v1.Service = (class ShopV1 {
    * to the partner and location settings), and is in good standing with the
    * retail partner.
    *
+   * @override
    * @param {string} email Email address to use to locate the user.
    * @param {?bloombox.shop.VerifyCallback=} callback Function to dispatch once
    *        a response or terminal error state is reached.

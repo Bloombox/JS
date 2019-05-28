@@ -7,10 +7,14 @@ function closureLibrary(path) {
 
 const closureBase = closureLibrary('goog/base.js');
 const closureDeps = closureLibrary('goog/deps.js');
+const closureLib = 'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js';
+const closure3rd = 'node_modules/closure-builder/third_party/closure-library/third_party/closure/**/*.js';
 
 let basePreprocessors = {};
 basePreprocessors[closureBase] = ['closure'];
 basePreprocessors[closureDeps] = ['closure-deps'];
+
+const serviceMode = 'binary';  // 'text' or 'binary'
 
 
 module.exports = function(config) {
@@ -26,21 +30,24 @@ module.exports = function(config) {
       // 1: closure base
       closureBase,
       {pattern: closureDeps, included: false, served: false},
+      {pattern: closureLib, included: false, served: true},
+      {pattern: closure3rd, included: false, served: true},
 
       // 2: protobuf JS, grpc web
       {pattern: 'third_party/protobuf/js/map.js', included: false},
       {pattern: 'third_party/protobuf/js/message.js', included: false},
       {pattern: 'third_party/protobuf/js/google/protobuf/*.js', included: false},
       {pattern: 'third_party/protobuf/js/binary/*.js', included: false},
-      {pattern: closureLibrary('goog/**/*.js'), included: false, served: true},
       {pattern: 'third_party/grpc-web/javascript/net/grpc/web/util/*.js', included: false},
       {pattern: 'third_party/grpc-web/javascript/net/grpc/web/*.js', included: false},
-      {pattern: 'third_party/schema/services/**/*.js', included: false},
+      {pattern: `third_party/schema/services/**/*.${serviceMode}.grpc.js`, included: false},
+      {pattern: `third_party/schema/services/**/*.stream.grpc.js`, included: false},
 
       // 3: schema, services
       {pattern: 'third_party/schema/*.js', included: false},
 
       // 4: source files (watched and served)
+      'third_party/stackdriver/error-reporting.js',
       {pattern: 'src/**/*.js', included: false},
       'entrypoint/full.js',
 
@@ -76,6 +83,9 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js': ['closure-deps'],
+      'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js': ['closure'],
+      'node_modules/closure-builder/third_party/closure-library/closure/third_party/goog/**/*.js': ['closure'],
       'tests/suites/**/*.js': ['closure', 'closure-iit'],
       'tests/*.js': ['closure', 'closure-iit'],
       'third_party/schema/*.js': ['closure'],
@@ -86,8 +96,6 @@ module.exports = function(config) {
       'third_party/schema/services/**/*.js': ['closure'],
       'third_party/grpc-web/javascript/net/grpc/web/util/*.js': ['closure'],
       'third_party/grpc-web/javascript/net/grpc/web/*.js': ['closure'],
-      'node_modules/closure-builder/third_party/closure-library/closure/goog/deps.js': ['closure-deps'],
-      'node_modules/closure-builder/third_party/closure-library/closure/goog/**/*.js': ['closure'],
       'src/**/*.js': ['closure', 'coverage'],
       'entrypoint/full.js': ['closure']
     },

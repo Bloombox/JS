@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
@@ -50,7 +49,8 @@ bloombox.telemetry.Collection = function Collection(name, opt_skipb64encode) {
    * Name for this collection.
    *
    * @type {string}
-   * @export
+   * @public
+   * @const
    */
   this.name = opt_skipb64encode ? name : bloombox.util.b64.encode(name);
 };
@@ -71,6 +71,7 @@ bloombox.telemetry.Collection.named = function(name) {
 /**
  * Export this `Collection` as an `analytics.Collection` message.
  *
+ * @override
  * @return {proto.bloombox.analytics.context.Collection} JS PB message.
  */
 bloombox.telemetry.Collection.prototype.export = function() {
@@ -84,6 +85,7 @@ bloombox.telemetry.Collection.prototype.export = function() {
  * Render this collection object into a JSON-serializable structure suitable for
  * use over-the-wire.
  *
+ * @override
  * @return {Object}
  * @public
  */

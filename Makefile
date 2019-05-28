@@ -3,7 +3,7 @@
 ## Bloombox: JS Client
 #
 
-VERSION ?= v2.0.0
+VERSION ?= v2.1.0-rc6
 TARGET ?= target
 VERBOSE ?= no
 RELEASE ?= no
@@ -119,6 +119,11 @@ sync-schema: submodules
 submodules:
 	@git submodule update --init
 
+third_party/idom/dist:
+	#@echo "Building Incremental DOM..."
+	#@cd third_party/idom && yarn && gulp js-closure
+	@echo "iDOM is ready."
+
 protobuf/js/node_modules:
 	@echo "Initializing ProtobufJS dependencies..."
 	@cd protobuf/js && npm install
@@ -157,10 +162,20 @@ release: build dependencies
 	@sed 's/__VERSION__/$(VERSION)/g' local/prod.html > $(TARGET)/prod.html
 	@echo "Build complete."
 	@mkdir -p public/client/
-	@cp -fv target/$(VERSION).min.js public/client/
-	@cp -fv target/$(VERSION)-debug.min.js public/client/
-	@cp -fv target/$(VERSION).min.js public/client.min.js
-	@cp -fv target/$(VERSION)-debug.min.js public/client-debug.min.js
+	@cd target && gzip -k9vf $(VERSION)-debug.min.js && \
+	                gzip -k9vf $(VERSION).min.js && \
+	                brotli -kvZf --lgwin=0 $(VERSION)-debug.min.js && \
+	                brotli -kvZf --lgwin=0 $(VERSION).min.js
+	@cp -f target/$(VERSION).min.* public/client/
+	@cp -f target/$(VERSION)-debug.min.* public/client/
+	@cp -f target/$(VERSION).min.js public/client.min.js
+	@cp -f target/$(VERSION)-debug.min.js public/client-debug.min.js
+	@cp -f target/$(VERSION).min.js.gz public/client.min.js.gz
+	@cp -f target/$(VERSION).min.js.br public/client.min.js.br
+	@cp -f target/$(VERSION)-debug.min.js public/client-debug.min.js
+	@cp -f target/$(VERSION)-debug.min.js.gz public/client-debug.min.js.gz
+	@cp -f target/$(VERSION)-debug.min.js.br public/client-debug.min.js.br
+	@du -h ./target/$(VERSION)*.min.*
 
 beta:
 	@echo "Building Bloombox JS (INTERNAL)..."
@@ -177,7 +192,7 @@ serve:
 publish-gcs:
 	@echo "Publishing library to GCS..."
 	@cd public && gsutil -h "Cache-Control: public, max-age=300, s-max-age=7200, stale-while-revalidate=3600, stale-if-error=3600" -m cp -a public-read -z html,js "./*" gs://origin.js.bloombox.cloud/
-	@cd public/client && gsutil -h "Cache-Control: public, immutable, max-age=31536000, s-max-age=31536000, stale-while-revalidate=31536000, stale-if-error=31536000" -m cp -a public-read -z js "./*.js" gs://origin.js.bloombox.cloud/client/
+	@cd public/client && gsutil -h "Cache-Control: public, immutable, max-age=31536000, s-max-age=31536000, stale-while-revalidate=31536000, stale-if-error=31536000" -m cp -a public-read -z js "./*.*" gs://origin.js.bloombox.cloud/client/
 
 publish: build release publish-gcs
 	@echo "Publishing private Bloombox JS..."

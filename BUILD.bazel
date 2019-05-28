@@ -1,0 +1,66 @@
+
+package(default_visibility = ["//visibility:public"])
+
+load("@io_bazel_rules_closure//closure:defs.bzl", "closure_js_binary", "closure_js_library")
+
+BASE_DEFS = [
+    "--define=bloombox.SERVICE_MODE=binary",
+    "--define=jspb.Message.SERIALIZE_EMPTY_TRAILING_FIELDS=false",
+    "--define=goog.net.XmlHttp.ASSUME_NATIVE_XHR=true",
+    "--define=goog.json.USE_NATIVE_JSON=true",
+    "--define=goog.TRUSTED_SITE=false",
+    "--define=goog.dom.classlist.ALWAYS_USE_DOM_TOKEN_LIST=true"
+]
+
+DEBUG_DEFS = [
+    "--define=goog.DEBUG=true",
+    "--define=bloombox.DEBUG=true",
+    "--define=goog.log.ENABLED=true"
+] + BASE_DEFS
+
+OPTIMIZED_DEFS = [
+    "--define=goog.DEBUG=false",
+    "--define=bloombox.DEBUG=false",
+    "--define=goog.log.ENABLED=false",
+] + BASE_DEFS
+
+
+closure_js_library(
+    name = "sources",
+    exports = [
+        "//src/base:base",
+        "//src/db:db",
+        "//src/rpc:rpc",
+        "//src/menu:menu",
+        "//src/shop:shop",
+        "//src/telemetry:telemetry"])
+
+
+closure_js_library(
+    name = "full",
+    exports = [
+        ":sources",
+        "//entrypoint:sdk-full"])
+
+
+## Target: Debug
+closure_js_binary(
+    name = "sdk-debug",
+    deps = [":full"],
+    debug = True,
+    defs = ["--define=bloombox.VARIANT='full'"] + DEBUG_DEFS,
+    entry_points = ["goog:bloombox.setup"],
+    dependency_mode = "STRICT",
+    compilation_level = "ADVANCED",
+    output_wrapper = "(function(){%output%}).call(this);")
+
+## Target: Optimized
+closure_js_binary(
+    name = "sdk",
+    deps = ["//entrypoint:sdk-full"],
+    debug = False,
+    defs = ["--define=bloombox.VARIANT='full'"] + OPTIMIZED_DEFS,
+    entry_points = ["goog:bloombox.setup"],
+    dependency_mode = "STRICT",
+    compilation_level = "ADVANCED",
+    output_wrapper = "(function(){%output%}).call(this);")

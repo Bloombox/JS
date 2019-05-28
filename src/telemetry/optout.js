@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019, Momentum Ideas, Co. All rights reserved.
  *
@@ -26,9 +25,6 @@
 
 goog.require('bloombox.logging.warn');
 
-goog.require('bloombox.telemetry.internals.disable');
-goog.require('bloombox.telemetry.internals.enabled');
-
 goog.provide('bloombox.telemetry.SESSION_STORAGE_OPTOUT_KEY');
 goog.provide('bloombox.telemetry.didOptOut');
 goog.provide('bloombox.telemetry.optout');
@@ -54,7 +50,7 @@ bloombox.telemetry.didOptOut = function() {
   let value = (
     window.sessionStorage
       .getItem(bloombox.telemetry.SESSION_STORAGE_OPTOUT_KEY));
-  return value === 'true' && !bloombox.telemetry.internals.enabled();
+  return value === 'true';
 };
 
 
@@ -65,7 +61,6 @@ bloombox.telemetry.didOptOut = function() {
  */
 bloombox.telemetry.optout = function() {
   bloombox.logging.warn('Opted-out of telemetry transmission.');
-  bloombox.telemetry.internals.disable();
   window.sessionStorage
       .setItem(bloombox.telemetry.SESSION_STORAGE_OPTOUT_KEY, 'false');
 };
