@@ -64,7 +64,7 @@ bloombox.DEBUG_PROPERTY = goog.define('bloombox.DEBUG_PROPERTY', '__debug__');
  * @define {string} bloombox.VERSION Version for library.
  * @export
  */
-bloombox.VERSION = goog.define('bloombox.VERSION', 'v2.1.0-rc1');
+bloombox.VERSION = goog.define('bloombox.VERSION', 'v2.1.1-rc1');
 
 
 /**
