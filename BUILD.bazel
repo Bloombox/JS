@@ -33,6 +33,7 @@ closure_js_library(
         "//src/rpc:rpc",
         "//src/menu:menu",
         "//src/shop:shop",
+        "//src/util:util",
         "//src/telemetry:telemetry"])
 
 

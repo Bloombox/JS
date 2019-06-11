@@ -37,7 +37,7 @@ goog.provide('bloombox.menu.RetrieveOptions');
 goog.provide('bloombox.menu.Section');
 
 
-// -- Definitions/ Structures -- //
+// -- Definitions / Structures -- //
 /**
  * Menu sections.
  *
@@ -301,11 +301,6 @@ bloombox.menu.RetrieveOptions = (
  * Defines the surface of the Menu API, which provides product/menu catalog data
  * to invoking code, at the level of a full menu, a menu section, or one or more
  * individual product records.
- *
- * This interface is implemented by two engines, one which supports JSON/REST
- * (this is considered a legacy adapter), and one which supports gRPC over both
- * binary and text. The implementation to this interface is selected from those
- * options at runtime based on support, or lack thereof, in the browser agent.
  *
  * @interface
  * @extends bloombox.base.ServiceInterface
