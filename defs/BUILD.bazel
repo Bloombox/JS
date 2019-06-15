@@ -1,6 +1,6 @@
 
 package(default_visibility = ["//visibility:public"])
 
-load("//defs:lib.bzl", _js_library="js_library", _DEFAULT_SUPPRESSIONS="DEFAULT_SUPRESSIONS")
+load("//defs:lib.bzl", _js_library="js_library", _DEFAULT_SUPPRESSIONS="DEFAULT_SUPPRESSIONS")
 closure_js_library = _js_library
 
