@@ -10,18 +10,18 @@ closure_js_library(
     deps = [
         "//src/base:init",
         "//src/db:init",
-        "//third_party:schema-js",
         "@io_bazel_rules_closure//closure/library/db:db",
         "@io_bazel_rules_closure//closure/library/pubsub:topicid",
-        "@io_bazel_rules_closure//closure/library/pubsub:typedpubsub"])
-        #"@io_bloombox_schema//sources/public/models/products/menu:Menu-closure_proto"])
+        "@io_bazel_rules_closure//closure/library/pubsub:typedpubsub",
+        "@io_bloombox_schema//sources/public/models/products/menu:Section-closure_proto",
+        "@io_bloombox_schema//sources/public/models/products/menu:Menu-closure_proto"])
 
 closure_js_library(
     name = "observable",
     srcs = ["observable.js"],
     deps = [
         "//src/base:logging",
-        "//third_party:schema-js",
+        "@io_bloombox_schema//sources/private/services/menu/v1beta1:Menu-closure_proto",
         "@com_google_grpc_web//javascript/net/grpc/web:statuscode",
         "@io_bazel_rules_closure//closure/library/db:db",
         "@io_bazel_rules_closure//closure/library/pubsub:topicid",
@@ -34,7 +34,7 @@ closure_js_library(
         "//src/db:init",
         "//src/util:base64",
         "//src/menu:menu-api",
-        "//third_party:schema-js"])
+        "@io_bloombox_schema//sources/private/services/menu/v1beta1:Menu-closure_proto"])
 
 closure_js_library(
     name = "remote-v1",
@@ -46,8 +46,9 @@ closure_js_library(
         "//src/rpc:rpc",
         "//src/menu:menu-api",
         "//src/util:base64",
-        "//third_party:schema-js",
-        "//third_party:menu-service"])
+        "//third_party:menu-service",
+        "@io_bloombox_schema//sources/private/services/menu/v1beta1:Menu-closure_proto",
+        "@io_bloombox_schema//sources/public/models/products/menu:Section-closure_proto"])
 
 
 closure_js_library(

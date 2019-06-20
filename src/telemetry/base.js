@@ -39,6 +39,8 @@ goog.provide('bloombox.telemetry.XHR_TIMEOUT');
 goog.require('bloombox.API_ENDPOINT');
 goog.require('bloombox.DEBUG');
 
+goog.require('proto.bloombox.services.telemetry.v1beta4.OperationStatus');
+
 
 
 /**

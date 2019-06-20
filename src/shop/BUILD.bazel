@@ -24,7 +24,6 @@ closure_js_library(
     name = "shop-api",
     srcs = ["shop-api.js"],
     deps = [
-        "//third_party:schema-js",
         "//src/base:service",
         "//src/rpc:rpc"])
 

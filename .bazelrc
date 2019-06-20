@@ -1,2 +1,3 @@
 build --verbose_failures
 build --sandbox_debug
+build --incompatible_depset_is_not_iterable=false

@@ -13,7 +13,18 @@ closure_js_library(
         "//src/menu:menu-api",
         "//src/util:exportable",
         "//src/util:serializable",
-        "//third_party:schema-js"])
+        "@io_bloombox_schema//sources/private/models/analytics:Context-closure_proto",
+        "@io_bloombox_schema//sources/private/models/analytics:Scope-closure_proto",
+        "@io_bloombox_schema//sources/private/models/analytics/context:Library-closure_proto",
+        "@io_bloombox_schema//sources/private/models/analytics/context:Application-closure_proto",
+        "@io_bloombox_schema//sources/private/models/analytics/context:Browser-closure_proto",
+        "@io_bloombox_schema//sources/private/models/analytics/context:NativeDevice-closure_proto",
+        "@io_bloombox_schema//sources/private/models/identity:UserKey-closure_proto",
+        "@io_bloombox_schema//sources/private/models/partner:LocationKey-closure_proto",
+        "@io_bloombox_schema//sources/private/models/partner:PartnerKey-closure_proto",
+        "@io_bloombox_schema//sources/private/models/partner:PartnerDevice-closure_proto",
+        "@io_bloombox_schema//sources/public/models/commerce:Order-closure_proto",
+        "@io_bloombox_schema//sources/public/models/structs:Version-closure_proto"])
 
 closure_js_library(
     name = "browser",
@@ -21,7 +32,8 @@ closure_js_library(
     deps = [
         "@io_bazel_rules_closure//closure/library/useragent:all_js",
         "@io_bazel_rules_closure//closure/library/labs/useragent:device",
-        "//third_party:schema-js"])
+        "@io_bloombox_schema//sources/private/models/analytics/context:Browser-closure_proto",
+        "@io_bloombox_schema//sources/public/models/structs:Version-closure_proto"])
 
 closure_js_library(
     name = "collection",
@@ -30,7 +42,7 @@ closure_js_library(
         "//src/util:exportable",
         "//src/util:serializable",
         "//src/util:base64",
-        "//third_party:schema-js"])
+        "@io_bloombox_schema//sources/private/models/analytics/context:Collection-closure_proto"])
 
 closure_js_library(
     name = "native",
@@ -38,12 +50,16 @@ closure_js_library(
     deps = [
         "@io_bazel_rules_closure//closure/library/useragent:all_js",
         "@io_bazel_rules_closure//closure/library/labs/useragent:device",
-        "//third_party:schema-js"])
+        "@io_bloombox_schema//sources/private/models/analytics/context:OS-closure_proto",
+        "@io_bloombox_schema//sources/private/models/analytics/context:NativeDevice-closure_proto",
+        "@io_bloombox_schema//sources/public/models/device:Device-closure_proto",
+        "@io_bloombox_schema//sources/public/models/structs:Version-closure_proto"])
 
 closure_js_library(
     name = "webapp",
     srcs = ["webapp.js"],
-    deps = ["//third_party:schema-js"])
+    deps = [
+        "@io_bloombox_schema//sources/private/models/analytics/context:Application-closure_proto"])
 
 closure_js_library(
     name = "state",
@@ -56,7 +72,7 @@ closure_js_library(
         "//src/telemetry/context:base",
         "//src/util:uuid",
         "//src/util:error-reporting",
-        "//third_party:schema-js"])
+        "@io_bloombox_schema//sources/private/models/analytics/context:Application-closure_proto"])
 
 
 closure_js_library(
