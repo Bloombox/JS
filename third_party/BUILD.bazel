@@ -12,20 +12,61 @@ GRPC_SUPPRESSIONS = [
   "JSC_UNUSED_PRIVATE_PROPERTY",
   "JSC_EXTRA_REQUIRE_WARNING"]
 
+
+
 closure_proto_library(
     name = "schema-proto",
-    deps = [
-        "@io_bloombox_schema//:Schema"])
+    deps = ["@io_bloombox_schema//:Schema"])
 
 closure_proto_library(
     name = "OpenCannabis-proto",
-    deps = [
-        "@io_bloombox_schema//:OpenCannabis"])
+    deps = ["@io_bloombox_schema//:OpenCannabis"])
 
 closure_proto_library(
     name = "Services-proto",
-    deps = [
-        "@io_bloombox_schema//:Services"])
+    deps = ["@io_bloombox_schema//:Services"])
+
+
+## Base Protos
+
+closure_proto_library(
+    name = "google-api-httpbody",
+    deps = ["@com_google_api//google/api:httpbody_proto"])
+
+closure_proto_library(
+    name = "google-api-annotations",
+    deps = ["@com_google_api//google/api:annotations_proto"])
+
+closure_proto_library(
+    name = "google-protobuf-empty",
+    deps = ["@com_google_protobuf//:empty_proto"])
+
+alias(name = "empty",
+      actual = "google-protobuf-empty")
+
+closure_proto_library(
+    name = "google-protobuf-field_mask",
+    deps = ["@com_google_protobuf//:field_mask_proto"])
+
+alias(name = "field_mask",
+      actual = "google-protobuf-field_mask")
+
+closure_proto_library(
+    name = "google-protobuf-struct",
+    deps = ["@com_google_protobuf//:struct_proto"])
+
+alias(name = "struct",
+      actual = "google-protobuf-struct")
+
+closure_proto_library(
+    name = "google-protobuf-any",
+    deps = ["@com_google_protobuf//:any_proto"])
+
+alias(name = "any",
+      actual = "google-protobuf-any")
+
+
+## Services & Schema
 
 closure_js_library(
     name = "schema-js",
@@ -48,8 +89,9 @@ closure_js_library(
         "schema/services/menu/v1beta1/menu-v1beta4.binary.grpc.js",
         "schema/services/menu/v1beta1/menu-v1beta4.stream.grpc.js"],
     deps = [
-        ":schema-js",
-        "//third_party/protobuf/js/google/protobuf:Empty-protojs",
+        ":empty",
+        ":google-api-httpbody",
+        "@io_bloombox_schema//sources/private/services/menu/v1beta1:Menu-closure_proto",
         "@com_google_grpc_web//javascript/net/grpc/web:error",
         "@com_google_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
         "@com_google_grpc_web//javascript/net/grpc/web:abstractclientbase",
@@ -61,7 +103,7 @@ closure_js_library(
     convention = "GOOGLE",
     srcs = ["schema/services/shop/v1/shop-v1.binary.grpc.js"],
     deps = [
-        ":schema-js",
+        "@io_bloombox_schema//sources/private/services/shop/v1:Shop-closure_proto",
         "@com_google_grpc_web//javascript/net/grpc/web:error",
         "@com_google_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
         "@com_google_grpc_web//javascript/net/grpc/web:abstractclientbase",
@@ -75,11 +117,14 @@ closure_js_library(
         "schema/services/telemetry/v1beta4/events-v1beta4.binary.grpc.js",
         "schema/services/telemetry/v1beta4/commercial-events-v1beta4.binary.grpc.js"],
     deps = [
-        ":schema-js",
+        ":empty",
+        "@io_bloombox_schema//sources/private/services/telemetry/v1beta4:GenericEvents-closure_proto",
+        "@io_bloombox_schema//sources/private/services/telemetry/v1beta4:EventTelemetry-closure_proto",
+        "@io_bloombox_schema//sources/private/services/telemetry/v1beta4:IdentityTelemetry-closure_proto",
+        "@io_bloombox_schema//sources/private/services/telemetry/v1beta4:CommercialTelemetry-closure_proto",
         "@com_google_grpc_web//javascript/net/grpc/web:error",
         "@com_google_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
         "@com_google_grpc_web//javascript/net/grpc/web:abstractclientbase",
         "@com_google_grpc_web//javascript/net/grpc/web:clientreadablestream",
-        "@io_bazel_rules_closure//closure/protobuf:jspb",
-        "//third_party/protobuf/js/google/protobuf:Empty-protojs"],
+        "@io_bazel_rules_closure//closure/protobuf:jspb"],
     suppress = GRPC_SUPPRESSIONS)
