@@ -13,7 +13,9 @@ closure_js_library(
         "//src/rpc:rpc",
         "//src/shop:shop-api",
         "//src/util:base64",
-        "//third_party:schema-js",
+        "@io_bloombox_schema//sources/private/models/partner:PartnerKey-closure_proto",
+        "@io_bloombox_schema//sources/private/models/partner:LocationKey-closure_proto",
+        "@io_bloombox_schema//sources/private/services/shop/v1:Shop-closure_proto",
         "//third_party:shop-service"])
 
 

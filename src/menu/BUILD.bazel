@@ -25,10 +25,10 @@ closure_js_library(
     name = "menu-api",
     srcs = ["menu-api.js"],
     deps = [
-        "//third_party:schema-js",
         "//src/base:service",
         "//src/rpc:rpc",
-        "//src/menu/v1beta1:observable"])
+        "//src/menu/v1beta1:observable",
+        "@io_bloombox_schema//sources/public/models/products/menu:Section-closure_proto"])
 
 
 closure_js_library(

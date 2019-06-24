@@ -14,8 +14,12 @@ closure_js_library(
         "//src/telemetry:telemetry-events-api",
         "//src/telemetry/context:state",
         "//src/util:uuid",
-        "//third_party:schema-js",
         "//third_party:telemetry-service",
+        "@io_bloombox_schema//sources/private/services/telemetry/v1beta4:GenericEvents-closure_proto",
+        "@io_bloombox_schema//sources/private/services/telemetry/v1beta4:EventTelemetry-closure_proto",
+        "@io_bloombox_schema//sources/private/models/analytics:Scope-closure_proto",
+        "@io_bloombox_schema//sources/private/models/analytics/generic:Event-closure_proto",
+        "@io_bloombox_schema//sources/public/models/temporal:Instant-closure_proto",
         "@com_google_grpc_web//javascript/net/grpc/web:clientreadablestream",
         "@io_bazel_rules_closure//closure/library/pubsub:topicid",
         "@io_bazel_rules_closure//closure/library/pubsub:typedpubsub"])
