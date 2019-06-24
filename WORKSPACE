@@ -13,15 +13,15 @@ local = True
 ## Closure Rules
 http_archive(
     name = "io_bazel_rules_closure",
-    url = "https://github.com/bloombox/rules_closure/archive/503bd4fa6b0493babb60921ace70150863555647.zip",
-    strip_prefix = "rules_closure-503bd4fa6b0493babb60921ace70150863555647",
-    sha256 = "e4b07331284e2b5bdcf3542a81b9f7e123d998cccf141095bd7deb201bcc268a")
+    url = "https://github.com/bloombox/rules_closure/archive/eb1a2be2124a6bbf03cb5cc0d235bbda1e662308.zip",
+    strip_prefix = "rules_closure-eb1a2be2124a6bbf03cb5cc0d235bbda1e662308",
+    sha256 = "f1d1254c537f48952d35498eeac8df1ae86e75013391e16c3edc119766c3bd92")
 
 http_archive(
     name = "build_bazel_rules_proto",
-    sha256 = "26ef80422c978cd0590734c103bc66dae6932989542845efb365fcc48b6d810f",
-    strip_prefix = "rules_proto-6b247dbf28aa3b6f485047c938731ec8c2453a83",
-    urls = ["https://github.com/Yannic/rules_proto/archive/6b247dbf28aa3b6f485047c938731ec8c2453a83.tar.gz"])
+    sha256 = None,
+    strip_prefix = "rules_proto-c5e0081628a2cbaf6855152ffa6a1984c2ff10a5",
+    urls = ["https://github.com/bloombox/rules_proto/archive/c5e0081628a2cbaf6855152ffa6a1984c2ff10a5.tar.gz"])
 
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 closure_repositories()
