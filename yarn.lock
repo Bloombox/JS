@@ -8916,10 +8916,10 @@ sver-compat@^1.5.0:
     es6-iterator "^2.0.1"
     es6-symbol "^3.1.1"
 
-swagger-client@^3.8.25:
-  version "3.8.25"
-  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.8.25.tgz#89cb58b000c103ee5e23accc13a9db1e686035e6"
-  integrity sha512-7ZtSSPnempsUbCAOJCQ6PyGaNkRoCm6ghOpJlI62ChfMGbLWtlOm8dLlgYiTkP9OAWuNHoRoTzOW14+QmZY1HA==
+swagger-client@^3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/swagger-client/-/swagger-client-3.9.0.tgz#b94ea65baa0194f4cb3fad2f8bd552c531d57e03"
+  integrity sha512-uyCq2xoaAtmE0oIQ0fCfnsDoy/v97ANnAZywtyk4yumBP74xXp4NFlpZaqZJHN9K9dbPzgs3MH98VocZeM0ExQ==
   dependencies:
     "@kyleshockey/js-yaml" "^1.0.1"
     "@kyleshockey/object-assign-deep" "^0.4.0"
@@ -8935,6 +8935,7 @@ swagger-client@^3.8.25:
     lodash "^4.16.2"
     qs "^6.3.0"
     querystring-browser "^1.0.4"
+    traverse "^0.6.6"
     url "^0.11.0"
     utf8-bytes "0.0.1"
     utfstring "^2.0.0"
@@ -8970,9 +8971,9 @@ swagger-tools@^0.10.4:
     z-schema "^3.15.4"
 
 swagger-ui@^3.22.1:
-  version "3.22.1"
-  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.22.1.tgz#5a2cc1d7fe3d6854bd09a7e2c2034ef68f3b1d34"
-  integrity sha512-dx5U5DNBOAgqUvcebpyHtztXx8NRuk9YrSqHoROV2iA8rzVaFimcsfYEu5o/ztsHDbLI2svhb5rC4iZeRPQC7w==
+  version "3.22.3"
+  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.22.3.tgz#e24f1573755a61216e0ec842c80ebef484bf38aa"
+  integrity sha512-JDyhQls7Zlhzwzkad58mmTvdYUqtJ7/7FM72w09vFmT/uNBLWM8JMk+9rs4v+nbN5/1hcWyHzAVvYr/91krsFg==
   dependencies:
     "@braintree/sanitize-url" "^2.0.2"
     "@kyleshockey/js-yaml" "^1.0.1"
@@ -9003,7 +9004,7 @@ swagger-ui@^3.22.1:
     remarkable "^1.7.1"
     reselect "^2.5.4"
     serialize-error "^2.1.0"
-    swagger-client "^3.8.25"
+    swagger-client "^3.9.0"
     url-parse "^1.4.3"
     xml-but-prettier "^1.0.1"
     zenscroll "^4.0.2"
