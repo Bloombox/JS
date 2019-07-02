@@ -9040,9 +9040,9 @@ swagger-tools@^0.10.4:
     z-schema "^3.15.4"
 
 swagger-ui@^3.22.1:
-  version "3.22.3"
-  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.22.3.tgz#e24f1573755a61216e0ec842c80ebef484bf38aa"
-  integrity sha512-JDyhQls7Zlhzwzkad58mmTvdYUqtJ7/7FM72w09vFmT/uNBLWM8JMk+9rs4v+nbN5/1hcWyHzAVvYr/91krsFg==
+  version "3.23.0"
+  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.23.0.tgz#baf085a094616bb7ac4916ac9e8e881f15cdd0c9"
+  integrity sha512-Q88wQtCWKFtmTg0LfnobTOnvPK3fxLIouzv5iRe8GHuuFXMcy3nm9F97JC2HYjSl2cezZGInzWe8SzVc1mfrPg==
   dependencies:
     "@braintree/sanitize-url" "^2.0.2"
     "@kyleshockey/js-yaml" "^1.0.1"
