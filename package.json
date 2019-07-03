@@ -24,7 +24,7 @@
     "gulp-if": "^2.0.2",
     "gulp-ignore": "^2.0.2",
     "gulp-jshint": "*",
-    "gulp-load-plugins": "^1.0.0",
+    "gulp-load-plugins": "^2.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sourcemaps": "^2.6.4",
     "js-dossier": "^0.12.1",
