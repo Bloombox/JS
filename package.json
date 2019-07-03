@@ -33,8 +33,6 @@
     "jshint-stylish": "*",
     "karma-closure": "https://github.com/sgammon/karma-closure.git",
     "mocha": "^6.1.4",
-    "swagger-tools": "^0.10.4",
-    "swagger-ui": "^3.22.1",
     "yargs": "^13.2.4"
   },
   "devDependencies": {
@@ -57,7 +55,6 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-opera-launcher": "^1.0.0",
     "karma-safari-launcher": "^1.0.0",
-    "karma-sauce-launcher": "^2.0.2",
     "minami": "^1.2.3"
   }
 }
