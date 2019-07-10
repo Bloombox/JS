@@ -4005,9 +4005,9 @@ growl@1.10.5:
   integrity sha512-qBr4OuELkhPenW6goKVXiv47US3clb3/IbuWF9KNKEijAy9oeHxU9IgzjvJhHkUzhaj7rOUD7+YGWqUjLp5oSA==
 
 grpc-web@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/grpc-web/-/grpc-web-1.0.4.tgz#dac13f3a1b42092595a8807f724aeaa5f5d6487a"
-  integrity sha512-CjIA05C1G9n0/aT5YrQ8SAYNh5foHZRVK+1yN81Ez9vpNQCmrvXCWQBOHlQK7tJg3EqC5m8F99XQRfAi+K8CyA==
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/grpc-web/-/grpc-web-1.0.5.tgz#7b5802ba1e0d933eb62e05dfb223447142e83b7f"
+  integrity sha512-d1+0OMqxNfW/ljtcIu/rKYyxrO7uy2A1FV4FQVAh3NXNPvpda/snsSv2+j1Yzko6sDLW7Ii5tKCgzPupVQtXUg==
 
 gtoken@^1.2.1:
   version "1.2.3"
