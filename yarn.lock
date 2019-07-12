@@ -3968,9 +3968,9 @@ google-p12-pem@^0.1.0:
     node-forge "^0.7.1"
 
 google-protobuf@^3.4.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.8.0.tgz#4fd2ee3a97751cb543dc5de85ffd264aff9f4980"
-  integrity sha512-tx39PTc//HaIT7K/baUF/8JYLGDozEi1e4xwPP1qSx3InP78cNpbSJpxiDsDMwj77qNOndVBDXnn7oi9zKxZew==
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.9.0.tgz#1f33e51e7993ea51e758a82650ad4347273b9bc6"
+  integrity sha512-/t/7NvL9jAmfXLdqJG7Nv2c5Z2GTdZSKi/T6kI3hpIS4yA6rXqBAMF4Yx39xbICWDgRv+R+Z79n7ZxuvoUQU4w==
 
 got@^6.7.1:
   version "6.7.1"
