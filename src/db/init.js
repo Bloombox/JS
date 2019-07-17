@@ -24,10 +24,12 @@
 
 goog.require('bloombox.logging.log');
 goog.require('bloombox.logging.warn');
+goog.forwardDeclare('bloombox.menu.setupMenuDb');
 
 goog.require('goog.async.Deferred');
 goog.require('goog.db');
 goog.require('goog.db.IndexedDb');
+goog.require('goog.db.ObjectStore');
 
 goog.provide('bloombox.db.DEBUG');
 goog.provide('bloombox.db.DEFAULT_STORE');
@@ -63,7 +65,7 @@ bloombox.db.DEBUG = goog.define('bloombox.db.DEBUG', false);
  * @define {number} bloombox.db.VERSION Version indicator for DB schema.
  * @export
  */
-bloombox.db.VERSION = goog.define('bloombox.db.VERSION', 1);
+bloombox.db.VERSION = goog.define('bloombox.db.VERSION', 2);
 
 
 /**
@@ -136,7 +138,10 @@ const databaseUpgradeNeeded = function(ev, db) {
   bloombox.logging.log('Initializing frontend database...',
     {'name': bloombox.db.DEFAULT_STORE, 'version': bloombox.db.VERSION});
   db.createObjectStore(bloombox.db.DEFAULT_STORE);
-  db.createObjectStore(bloombox.db.MENU_STORE);
+
+  // setup the menu store
+  const menuStore = db.createObjectStore(bloombox.db.MENU_STORE);
+  bloombox.menu.setupMenuDb(db, menuStore);
 };
 
 /**

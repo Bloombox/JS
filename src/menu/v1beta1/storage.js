@@ -29,6 +29,9 @@ goog.require('bloombox.db.MENU_STORE');
 goog.require('bloombox.db.acquire');
 
 goog.require('goog.db');
+goog.require('goog.db');
+goog.require('goog.db.IndexedDb');
+goog.require('goog.db.ObjectStore');
 
 goog.require('goog.pubsub.TopicId');
 goog.require('goog.pubsub.TypedPubSub');
@@ -36,7 +39,34 @@ goog.require('goog.pubsub.TypedPubSub');
 goog.require('proto.opencannabis.products.menu.MenuProduct');
 goog.require('proto.opencannabis.products.menu.section.Section');
 
+goog.provide('bloombox.menu.LocalMenuIndex');
+goog.provide('bloombox.menu.LocalMenuProperty');
 goog.provide('bloombox.menu.processMenu');
+goog.provide('bloombox.menu.setupMenuDb');
+
+
+/**
+ * Maps shortened property IDs to the properties they represent.
+ *
+ * @enum {!string}
+ */
+bloombox.menu.LocalMenuProperty = {
+  PAYLOAD: 'p',
+  MODIFIED: 'm',
+  KIND: 'k',
+  ID: 'i'
+};
+
+
+/**
+ * Index names enumerated to their shortened IDs.
+ *
+ * @enum {!string}
+ */
+bloombox.menu.LocalMenuIndex = {
+  ID: 'pid',
+  KIND: 'pkind'
+};
 
 
 goog.scope(function() {
@@ -127,10 +157,11 @@ goog.scope(function() {
 
     // store in local DB first (write it down)
     const data = product.serializeBinary();
-    const obj = {
-      'p': data,
-      'm': ts
-    };
+    const obj = {};
+    obj[bloombox.menu.LocalMenuProperty.ID] = keyId;
+    obj[bloombox.menu.LocalMenuProperty.MODIFIED] = ts;
+    obj[bloombox.menu.LocalMenuProperty.KIND] = keyKind;
+    obj[bloombox.menu.LocalMenuProperty.PAYLOAD] = data;
     store.put(obj, encodedKey);
 
     const productSpecificTopic = /**
@@ -236,5 +267,27 @@ goog.scope(function() {
       }
       return txn.wait();
     });
+  };
+
+  /**
+   * Setup the local menu object database, with any indexes it needs or other
+   * early configuration settings.
+   *
+   * @param {!goog.db.IndexedDb} db IndexedDB instance we are setting up.
+   * @param {!goog.db.ObjectStore} objectStore Object store we are setting up
+   *        for use as local menu storage.
+   */
+  bloombox.menu.setupMenuDb = function(db, objectStore) {
+    // create ID index
+    objectStore.createIndex(
+      bloombox.menu.LocalMenuIndex.ID,
+      bloombox.menu.LocalMenuProperty.ID,
+      {unique: true});
+
+    // create kind index
+    objectStore.createIndex(
+      bloombox.menu.LocalMenuIndex.KIND,
+      bloombox.menu.LocalMenuProperty.KIND,
+      {});
   };
 });

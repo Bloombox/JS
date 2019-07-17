@@ -500,5 +500,3 @@ console.log("Call the following to run a telemetry test: telemetry()");
 console.log("Call the following to run a menu test: menu()");
 console.log("Call the following to stream menu changes: stream()");
 console.log("Call the following to retrieve an order: getOrder()");
-
-stream();
