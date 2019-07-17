@@ -22,9 +22,9 @@
 
 /*global goog */
 
+goog.forwardDeclare('bloombox.menu.setupMenuDb');
 goog.require('bloombox.logging.log');
 goog.require('bloombox.logging.warn');
-goog.forwardDeclare('bloombox.menu.setupMenuDb');
 
 goog.require('goog.async.Deferred');
 goog.require('goog.db');
