@@ -151,7 +151,37 @@ goog.scope(function() {
      *         the underlying RPC, or during transmission.
      */
     product(key, callback, config) {
+      const that = this;
       return new Promise((resolve, reject) => {
+        /**
+         * Store a local object, after having fetched it from remote services.
+         *
+         * @param {!proto.bloombox.services.menu.v1beta1.GetProduct.Response} r
+         *        RPC response promise.
+         * @private
+         */
+        function storeLocal_(r) {
+          if (callback) callback(r, null);
+          resolve(r);
+        }
+
+        /**
+         * Fetch a product from remote services.
+         *
+         * @private
+         */
+        function fetchRemote_() {
+          // not found
+          that.remote.product(key, function(response, err) {
+            if (err) {
+              if (callback) callback(null, err);
+              reject(err);
+            } else {
+              storeLocal_(response);
+            }
+          }, config);
+        }
+
         bloombox.db.acquire((db) => {
           if (!db || config && config.fresh) this.remote.product(key,
             function(response, err) {
@@ -174,30 +204,28 @@ goog.scope(function() {
                 // @TODO check modified time
 
                 // found some data
-                const payload = /** @type {Uint8Array} */ (value['p']);
-                const msg = proto.opencannabis.products.menu.MenuProduct
-                  .deserializeBinary(payload);
+                const payload = /** @type {!Uint8Array|undefined} */ (value[
+                  bloombox.menu.LocalMenuProperty.PAYLOAD]);
+                if (!!payload) {
+                  const msg = proto.opencannabis.products.menu.MenuProduct
+                    .deserializeBinary(payload);
 
-                // synthesize a response
-                const response = (
-                  new proto.bloombox.services.menu.v1beta1.GetProduct.Response());
+                  // synthesize a response
+                  const response = (
+                    new proto.bloombox.services.menu.v1beta1.GetProduct.Response());
 
-                response.addProduct(msg);
-                response.setCached(true);
+                  response.addProduct(msg);
+                  response.setCached(true);
 
-                callback(response, null);
-                resolve(response);
+                  callback(response, null);
+                  resolve(response);
+                } else {
+                  // no locally-stored product. fetch remote.
+                  fetchRemote_();
+                }
               } else {
-                // not found
-                this.remote.product(key, function(response, err) {
-                  if (err) {
-                    if (callback) callback(null, err);
-                    reject(err);
-                  } else {
-                    if (callback) callback(response, null);
-                    resolve(response);
-                  }
-                }, config);
+                // not found locally at all. fetch remote.
+                fetchRemote_();
               }
             }, (err) => {
               bloombox.logging.warn(

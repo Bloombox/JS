@@ -29,7 +29,6 @@ goog.require('bloombox.logging.warn');
 goog.require('goog.async.Deferred');
 goog.require('goog.db');
 goog.require('goog.db.IndexedDb');
-goog.require('goog.db.ObjectStore');
 
 goog.provide('bloombox.db.DEBUG');
 goog.provide('bloombox.db.DEFAULT_STORE');

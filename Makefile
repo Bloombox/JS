@@ -148,6 +148,7 @@ build: dependencies
 	@echo "Copying test files..."
 	@cp -f local/test.js $(TARGET)/test.js
 	@sed 's/__VERSION__/$(VERSION)/g' local/index.html > $(TARGET)/index.html
+	@sed 's/__VERSION__/$(VERSION)/g' local/test.html > $(TARGET)/test.html
 	@echo "Build complete."
 
 release: build dependencies

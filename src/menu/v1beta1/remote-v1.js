@@ -26,6 +26,8 @@
 
 goog.require('bloombox.SERVICE_MODE');
 
+goog.require('bloombox.logging.log');
+
 goog.require('bloombox.menu.MenuAPI');
 goog.require('bloombox.menu.ObservableMenu');
 goog.require('bloombox.menu.RetrieveCallback');
@@ -155,6 +157,10 @@ goog.scope(function() {
     retrieve(callback, options) {
       const resolved = options || bloombox.menu.RetrieveOptions.defaults();
       const request = prepRetrieveRequest(resolved);
+      if (request.getKeysOnly() === true) {
+        bloombox.logging.log(
+          'Requesting keys-only menu...', {'options': options});
+      }
 
       const operation = (
         this.client.retrieve(request, bloombox.rpc.metadata(this.sdkConfig)));
@@ -165,7 +171,8 @@ goog.scope(function() {
       operation.then((resp) => {
         if (callback) {
           if (resp.hasCatalog()) {
-            const deferred = bloombox.menu.processMenu(resp.getCatalog());
+            const deferred = bloombox.menu.processMenu(
+              resp.getCatalog(), request.getKeysOnly());
             if (deferred) {
               deferred.addCallback(() => {
                 callback(resp, null);

@@ -29,10 +29,8 @@ goog.require('bloombox.db.MENU_STORE');
 goog.require('bloombox.db.acquire');
 
 goog.require('goog.db');
-goog.require('goog.db');
 goog.require('goog.db.IndexedDb');
 goog.require('goog.db.ObjectStore');
-
 goog.require('goog.pubsub.TopicId');
 goog.require('goog.pubsub.TypedPubSub');
 
@@ -142,8 +140,10 @@ goog.scope(function() {
    *        was fetched from the server, which we should process.
    * @param {!goog.db.ObjectStore} store Local store to write to.
    * @param {number} ts Timestamp to use for product writes.
+   * @param {boolean=} opt_keysOnly Flag to indicate the request was operating
+   *        in keys only mode, so a payload is not expected.
    */
-  function processProduct(product, store, ts) {
+  function processProduct(product, store, ts, opt_keysOnly) {
     const key = product.getKey();
     const keyId = key.getId();
     const keyKind = key.getType();
@@ -161,7 +161,8 @@ goog.scope(function() {
     obj[bloombox.menu.LocalMenuProperty.ID] = keyId;
     obj[bloombox.menu.LocalMenuProperty.MODIFIED] = ts;
     obj[bloombox.menu.LocalMenuProperty.KIND] = keyKind;
-    obj[bloombox.menu.LocalMenuProperty.PAYLOAD] = data;
+    if (!opt_keysOnly)
+      obj[bloombox.menu.LocalMenuProperty.PAYLOAD] = data;
     store.put(obj, encodedKey);
 
     const productSpecificTopic = /**
@@ -189,10 +190,12 @@ goog.scope(function() {
    *        to process as constituent products in `section`.
    * @param {!goog.db.ObjectStore} store Local store to write to.
    * @param {number} ts Timestamp to use for writes.
+   * @param {boolean=} opt_keysOnly Flag to indicate that we are operating in
+   *        keys-only mode, and so, we should not expect payloads back.
    */
-  function processSection(section, products, store, ts) {
+  function processSection(section, products, store, ts, opt_keysOnly) {
     products.map((item) => {
-      processProduct(item, store, ts);
+      processProduct(item, store, ts, opt_keysOnly);
     });
 
     bloombox.menu.feed.publish(sectionsTopic, section);
@@ -206,9 +209,10 @@ goog.scope(function() {
    *
    * @param {proto.opencannabis.products.menu.Menu} menu Menu payload to process
    *        for local indexing and storage.
+   * @param {boolean=} opt_keysOnly Flag to indicate keys-only mode.
    * @return {?goog.async.Deferred} Asynchronous operation to store menu.
    */
-  bloombox.menu.processMenu = function(menu) {
+  bloombox.menu.processMenu = function(menu, opt_keysOnly) {
     if (!menu.hasPayload()) return null;
 
     const sectioned = menu.getPayload();
@@ -254,7 +258,7 @@ goog.scope(function() {
             // @TODO(sgammon) support for custom sections
             if (sectionSpec.hasSection()) {
               processSection(
-                sectionSpec.getSection(), productList, store, ts);
+                sectionSpec.getSection(), productList, store, ts, opt_keysOnly);
             }
           }
         });

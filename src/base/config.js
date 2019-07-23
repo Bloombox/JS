@@ -49,7 +49,8 @@ bloombox.config.JSConfig;
  * @define {string} API_ENDPOINT Global API endpoint.
  * @export
  */
-bloombox.API_ENDPOINT = 'https://rpc.bloombox.cloud';
+bloombox.API_ENDPOINT =
+  goog.define('bloombox.API_ENDPOINT', 'https://rpc.bloombox.cloud');
 
 
 /**
