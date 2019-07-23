@@ -156,11 +156,14 @@ goog.scope(function() {
         /**
          * Store a local object, after having fetched it from remote services.
          *
-         * @param {!proto.bloombox.services.menu.v1beta1.GetProduct.Response} r
+         * @param {?proto.bloombox.services.menu.v1beta1.GetProduct.Response} r
          *        RPC response promise.
          * @private
          */
         function storeLocal_(r) {
+
+          // @TODO: store the object locally, fill in keys-only data
+
           if (callback) callback(r, null);
           resolve(r);
         }
