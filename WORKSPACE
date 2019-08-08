@@ -30,9 +30,16 @@ load("@io_bazel_rules_closure//closure:defs.bzl", "closure_register_toolchains")
 closure_register_toolchains()
 
 ## Schema
-local_repository(
-    name = "io_bloombox_schema",
-    path = "/workspace/Bloombox/schema")
+(local and
+    local_repository(
+        name = "io_bloombox_schema",
+        path = "/workspace/Bloombox/schema")
+or
+    git_repository(
+        name = "io_bloombox_schema",
+        remote = "git@github.com:bloombox/schema.git",
+        shallow_since = "1565293120 -0700",
+        commit = "dbf60846158432cda69c38b3e11535c56fa88f24"))
 
 ## Protobuf
 http_archive(
