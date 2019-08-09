@@ -13,6 +13,8 @@ const version = argv.libversion;
 if (typeof version !== 'string')
   throw 'Cannot resolve version.';
 
+const apiEndpoint = 'https://rpc.bloombox.cloud';
+
 const permutations = ['full'];
 
 const serviceMode = 'binary';  // 'text' or 'binary'
