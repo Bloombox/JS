@@ -39,7 +39,6 @@
     "@babel/core": "^7.0.0-beta.44",
     "@babel/preset-env": "^7.0.0-beta.44",
     "chai-as-promised": "^7.1.1",
-    "gulp-util": "^3.0.8",
     "jasmine-core": "^3.2.1",
     "karma": "^4.1.0",
     "karma-babel-preprocessor": "^8.0.0-beta.0",
