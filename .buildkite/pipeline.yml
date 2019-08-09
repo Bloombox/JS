@@ -1,0 +1,3 @@
+steps:
+  - command: "rm -fr third_party/grpc-web && bazel clean && bazel build //src/..."
+    label: "Bazel: Build"

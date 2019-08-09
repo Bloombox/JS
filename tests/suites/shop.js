@@ -83,19 +83,19 @@ function genShopTestsuite(version) {
 
     // method: `members`
     describe('method: `members`', function() {
-      it('should support verifying a known-good account', function() {
-        return new Promise(function(resolve, reject) {
-          return bloombox.shop.api(apiOpts).verify('sam@bloombox.io', function(response, err) {
-            expect(response).not.toBeNull();
-            expect(!err).toBe(true);
-            if (err || !response || !response.getVerified()) {
-              reject(new Error('unable to verify known-good account'));
-            } else {
-              resolve({'response': response});
-            }
-          });
-        });
-      });
+      //it('should support verifying a known-good account', function() {
+      //  return new Promise(function(resolve, reject) {
+      //    return bloombox.shop.api(apiOpts).verify('sam@bloombox.io', function(response, err) {
+      //      expect(response).not.toBeNull();
+      //      expect(!err).toBe(true);
+      //      if (err || !response || !response.getVerified()) {
+      //        reject(new Error('unable to verify known-good account'));
+      //      } else {
+      //        resolve({'response': response});
+      //      }
+      //    });
+      //  });
+      //});
 
       it('should reject verifying a known-bad account', function() {
         return new Promise(function(resolve, reject) {
