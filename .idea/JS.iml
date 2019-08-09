@@ -8,6 +8,8 @@
       <sourceFolder url="file://$MODULE_DIR$/entrypoint" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/.tpl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/content" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/bazel-JS/external/com_google_protobuf/examples/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bazel-JS/external/com_google_protobuf/examples/BUILD" />
       <excludeFolder url="file://$MODULE_DIR$/docs" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
