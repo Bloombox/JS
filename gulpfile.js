@@ -13,6 +13,8 @@ const version = argv.libversion;
 if (typeof version !== 'string')
   throw 'Cannot resolve version.';
 
+const apiEndpoint = 'https://rpc.bloombox.cloud';
+
 const permutations = ['full'];
 
 const serviceMode = 'binary';  // 'text' or 'binary'
@@ -27,6 +29,7 @@ function closureBuilder(entrypoint) {
   const isBeta = argv.buildtype === 'BETA' || argv.beta;
   const standardDefines = [
     `bloombox.SERVICE_MODE='${serviceMode}'`,
+    `bloombox.API_ENDPOINT=${apiEndpoint}`,
     'jspb.Message.SERIALIZE_EMPTY_TRAILING_FIELDS=false',
     'goog.net.XmlHttp.ASSUME_NATIVE_XHR=true',
     // 'goog.dom.animationFrame.polyfill.ENABLED=false',

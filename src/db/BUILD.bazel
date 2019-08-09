@@ -10,6 +10,7 @@ closure_js_library(
         "//src/base:logging",
         "@io_bazel_rules_closure//closure/library/db:db",
         "@io_bazel_rules_closure//closure/library/db:indexeddb",
+        "@io_bazel_rules_closure//closure/library/db:objectstore",
         "@io_bazel_rules_closure//third_party/closure/library/mochikit/async:deferred"])
 
 closure_js_library(

@@ -11,6 +11,8 @@ closure_js_library(
         "//src/base:init",
         "//src/db:init",
         "@io_bazel_rules_closure//closure/library/db:db",
+        "@io_bazel_rules_closure//closure/library/db:indexeddb",
+        "@io_bazel_rules_closure//closure/library/db:objectstore",
         "@io_bazel_rules_closure//closure/library/pubsub:topicid",
         "@io_bazel_rules_closure//closure/library/pubsub:typedpubsub",
         "@io_bloombox_schema//sources/public/models/products/menu:Section-closure_proto",
@@ -34,6 +36,7 @@ closure_js_library(
         "//src/db:init",
         "//src/util:base64",
         "//src/menu:menu-api",
+        "//src/base:logging",
         "@io_bloombox_schema//sources/private/services/menu/v1beta1:Menu-closure_proto"])
 
 closure_js_library(
@@ -46,6 +49,7 @@ closure_js_library(
         "//src/rpc:rpc",
         "//src/menu:menu-api",
         "//src/util:base64",
+        "//src/base:logging",
         "//third_party:menu-service",
         "@io_bloombox_schema//sources/private/services/menu/v1beta1:Menu-closure_proto",
         "@io_bloombox_schema//sources/public/models/products/menu:Section-closure_proto"])

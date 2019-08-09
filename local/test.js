@@ -137,6 +137,31 @@ function doMenuTest(callback) {
 
 
 /**
+ * Run a test that fetches menu data, but only keys.
+ */
+function doKeysOnlyMenuTest(callback) {
+  bloombox.setup(partnerCode, locationCode, apiKey, function() {
+    bloombox.menu.api().retrieve(function(menu, err) {
+      if (err) {
+        console.log(
+          '%cThere was an error retrieving menu data: ',
+          'color: red',
+          err);
+        callback();
+        return;
+      }
+      console.log(
+        '%cMenu data ready.',
+        'color: green',
+        menu);
+      callback();
+    }, bloombox.menu.RetrieveOptions.fromObject({
+      'keysOnly': true}));
+  }, {'beta': true});
+}
+
+
+/**
  * Run a test that errors in a protected method.
  */
 function doErrorTest() {
@@ -477,6 +502,10 @@ function menu() {
   doMenuTest(function() { });
 }
 
+function menuKeysOnly() {
+  doKeysOnlyMenuTest(function() { });
+}
+
 function telemetry() {
   doTelemetry();
 }
@@ -498,7 +527,6 @@ console.log("Call the following to run a verify test: verify()");
 console.log("Call the following to run a limited test: simple()");
 console.log("Call the following to run a telemetry test: telemetry()");
 console.log("Call the following to run a menu test: menu()");
+console.log("Call the following to run a keys-only menu test: menuKeysOnly()");
 console.log("Call the following to stream menu changes: stream()");
 console.log("Call the following to retrieve an order: getOrder()");
-
-stream();
