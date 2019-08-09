@@ -1,11 +1,16 @@
 # Bloombox for JavaScript
 
-[![Build Status](https://travis-ci.org/Bloombox/JS.svg?branch=master)](https://travis-ci.org/Bloombox/JS) [![npm](https://img.shields.io/npm/v/bloombox.svg)]() [![npm](https://img.shields.io/npm/dw/bloombox.svg)](https://github.com/bloombox/JS) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f3dd1253ff8140fd96ff1b4dad0afd2d)](https://www.codacy.com/app/bloombox/JS?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bloombox/JS&amp;utm_campaign=Badge_Grade) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Maintainability](https://api.codeclimate.com/v1/badges/b02d3e57e60d030bc818/maintainability)](https://codeclimate.com/github/Bloombox/JS/maintainability) [![codecov](https://codecov.io/gh/Bloombox/JS/branch/master/graph/badge.svg)](https://codecov.io/gh/Bloombox/JS)
+[![npm](https://img.shields.io/npm/v/bloombox.svg)]() [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f3dd1253ff8140fd96ff1b4dad0afd2d)](https://www.codacy.com/app/bloombox/JS?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Bloombox/JS&amp;utm_campaign=Badge_Grade) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Maintainability](https://api.codeclimate.com/v1/badges/b02d3e57e60d030bc818/maintainability)](https://codeclimate.com/github/Bloombox/JS/maintainability) [![codecov](https://codecov.io/gh/Bloombox/JS/branch/master/graph/badge.svg)](https://codecov.io/gh/Bloombox/JS)
+
 
 Latest Version: `__VERSION__`
 
 This package provides support for Bloombox APIs in browser-oriented JavaScript. It's built using the Closure stack from
 Google, including Closure Compiler, Library, builder, and so on. Made with love by [Bloombox](https://bloombox.cloud) in Sacramento, CA.
+
+##### Build Status
+- Gulp/NPM: [![Build Status](https://travis-ci.org/Bloombox/JS.svg?branch=master)](https://travis-ci.org/Bloombox/JS)
+- Bazel/Closure: [[![Build status](https://badge.buildkite.com/803b170410c68a4651f1545f9007407c69cfdebdb23b6ff2cf.svg)](https://buildkite.com/bloombox/js)](https://buildkite.com/bloombox/js)
 
 ### Using the code
 
