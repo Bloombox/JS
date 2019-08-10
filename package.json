@@ -22,7 +22,7 @@
     "gulp-cache": "^1.1.1",
     "gulp-clone": "^2.0.1",
     "gulp-if": "^3.0.0",
-    "gulp-ignore": "^2.0.2",
+    "gulp-ignore": "^3.0.0",
     "gulp-jshint": "*",
     "gulp-load-plugins": "^2.0.1",
     "gulp-rename": "^1.4.0",
