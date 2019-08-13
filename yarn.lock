@@ -605,10 +605,10 @@
     js-levenshtein "^1.1.3"
     semver "^5.5.0"
 
-"@babel/runtime@^7.4.5":
-  version "7.4.5"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.5.tgz#582bb531f5f9dc67d2fcb682979894f75e253f12"
-  integrity sha512-TuI4qpWZP6lGOGIuGWtp9sPluqYICmbk8T/1vpSysqJxRPkudh/ofFWyqdcMsDf2s7KvDL4/YHgKyvcS3g9CJQ==
+"@babel/runtime@^7.5.5":
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
+  integrity sha512-28QvEGyQyNkB0/m2B4FU7IEZGK2NUrcMtT6BZEFALTguLk+AUT6ofsHtPk5QyjAdUkpMJ+/Em+quwz4HOt30AQ==
   dependencies:
     regenerator-runtime "^0.13.2"
 
@@ -4157,11 +4157,11 @@ gtoken@^1.2.1:
     request "^2.72.0"
 
 gulp-cache@^1.1.1:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/gulp-cache/-/gulp-cache-1.1.2.tgz#22a4bdb50d5f96a173494c7fba383ccc51547340"
-  integrity sha512-Vq4G2ORM1VY2zCE7nfnpN4nviunnVHZnHlYE6DzHeiq4Y0307533h2FCm9qOV0ucFzcaa7RNACO9OYMKgOsY0g==
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/gulp-cache/-/gulp-cache-1.1.3.tgz#7c427670aad4d25364c3cc9c53e492b348190d27"
+  integrity sha512-NE814LdX1NWQn2sMzn+Rf673o4mqlgg7OyLf92oQ4KEl6DdPfduEGLNH+HexLVcFZXH93DBuxFOvpv4/Js5VaA==
   dependencies:
-    "@babel/runtime" "^7.4.5"
+    "@babel/runtime" "^7.5.5"
     cache-swap "^0.3.0"
     core-js "3"
     object.pick "^1.3.0"
