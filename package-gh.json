@@ -8,6 +8,9 @@
     "type": "git",
     "url": "https://github.com/Bloombox/JS.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "bugs": "https://github.com/Bloombox/JS/issues",
   "dependencies": {
     "chai": "^4.1.2",
