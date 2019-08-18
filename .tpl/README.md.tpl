@@ -10,7 +10,7 @@ Google, including Closure Compiler, Library, builder, and so on. Made with love 
 
 ##### Build Status
 - Gulp/NPM: [![Build Status](https://travis-ci.org/Bloombox/JS.svg?branch=master)](https://travis-ci.org/Bloombox/JS)
-- Bazel/Closure: [[![Build status](https://badge.buildkite.com/803b170410c68a4651f1545f9007407c69cfdebdb23b6ff2cf.svg)](https://buildkite.com/bloombox/js)](https://buildkite.com/bloombox/js)
+- Bazel/Closure: [[![Build status](https://badge.buildkite.com/803b170410c68a4651f1545f9007407c69cfdebdb23b6ff2cf.svg)](https://buildkite.com/bloombox/js)]
 
 ### Using the code
 
