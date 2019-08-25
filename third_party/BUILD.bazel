@@ -92,6 +92,7 @@ closure_js_library(
         ":empty",
         ":google-api-httpbody",
         "@io_bloombox_schema//sources/private/services/menu/v1beta1:Menu-closure_proto",
+        "@io_bloombox_schema//sources/private/services/menu/v1beta1:MenuStream-closure_proto",
         "@com_google_grpc_web//javascript/net/grpc/web:error",
         "@com_google_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
         "@com_google_grpc_web//javascript/net/grpc/web:abstractclientbase",
