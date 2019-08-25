@@ -1,19 +1,3 @@
-/*
- * Copyright 2019, Momentum Ideas, Co. All rights reserved.
- *
- * Source and object computer code contained herein is the private intellectual
- * property of Momentum Ideas Co, a Delaware Corporation. Use of this code in
- * source form requires permission in writing before use or the assembly,
- * distribution, or publishing of derivative works, for commercial purposes or
- * any other purpose, from a duly authorized officer of Momentum Ideas Co.
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 /**
  * @fileoverview gRPC-Web generated client stub for bloombox.services.menu.v1beta1
  * @enhanceable
@@ -33,7 +17,6 @@ goog.require('grpc.web.Error');
 goog.require('proto.bloombox.services.menu.v1beta1.CreateProduct.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.CreateProduct.Response');
 goog.require('proto.bloombox.services.menu.v1beta1.DeleteProduct.Request');
-goog.require('proto.bloombox.services.menu.v1beta1.GetCatalog.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.GetFeatured.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.GetFeatured.Response');
 goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.Request');
@@ -41,10 +24,10 @@ goog.require('proto.bloombox.services.menu.v1beta1.GetMenu.Response');
 goog.require('proto.bloombox.services.menu.v1beta1.GetProduct.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.GetProduct.Response');
 goog.require('proto.bloombox.services.menu.v1beta1.ProductStock.Request');
+goog.require('proto.bloombox.services.menu.v1beta1.ProductStock.Response');
 goog.require('proto.bloombox.services.menu.v1beta1.SearchMenu.Request');
 goog.require('proto.bloombox.services.menu.v1beta1.SearchMenu.Response');
 goog.require('proto.bloombox.services.menu.v1beta1.UpdateProduct.Request');
-goog.require('proto.google.api.HttpBody');
 goog.require('proto.google.protobuf.Empty');
 
 
@@ -346,61 +329,6 @@ proto.bloombox.services.menu.v1beta1.MenuPromiseClient.prototype.products =
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.bloombox.services.menu.v1beta1.GetCatalog.Request,
- *   !proto.google.api.HttpBody>}
- */
-const methodInfo_Menu_Catalog = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.google.api.HttpBody,
-  /** @param {!proto.bloombox.services.menu.v1beta1.GetCatalog.Request} request */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.google.api.HttpBody.deserializeBinary
-);
-
-
-/**
- * @param {!proto.bloombox.services.menu.v1beta1.GetCatalog.Request} request The
- *     request proto
- * @param {?Object<string, string>} metadata User defined
- *     call metadata
- * @param {function(?grpc.web.Error, ?proto.google.api.HttpBody)}
- *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.google.api.HttpBody>|undefined}
- *     The XHR Node Readable Stream
- */
-proto.bloombox.services.menu.v1beta1.MenuClient.prototype.catalog =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
-      '/bloombox.services.menu.v1beta1.Menu/Catalog',
-      request,
-      metadata || {},
-      methodInfo_Menu_Catalog,
-      callback);
-};
-
-
-/**
- * @param {!proto.bloombox.services.menu.v1beta1.GetCatalog.Request} request The
- *     request proto
- * @param {?Object<string, string>} metadata User defined
- *     call metadata
- * @return {!Promise<!proto.google.api.HttpBody>}
- *     A native promise that resolves to the response
- */
-proto.bloombox.services.menu.v1beta1.MenuPromiseClient.prototype.catalog =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
-      '/bloombox.services.menu.v1beta1.Menu/Catalog',
-      request,
-      metadata || {},
-      methodInfo_Menu_Catalog);
-};
-
-
-/**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
  *   !proto.bloombox.services.menu.v1beta1.SearchMenu.Request,
  *   !proto.bloombox.services.menu.v1beta1.SearchMenu.Response>}
  */
@@ -622,15 +550,15 @@ proto.bloombox.services.menu.v1beta1.MenuPromiseClient.prototype.remove =
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
  *   !proto.bloombox.services.menu.v1beta1.ProductStock.Request,
- *   !proto.google.protobuf.Empty>}
+ *   !proto.bloombox.services.menu.v1beta1.ProductStock.Response>}
  */
 const methodInfo_Menu_ProductStatus = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.google.protobuf.Empty,
+  proto.bloombox.services.menu.v1beta1.ProductStock.Response,
   /** @param {!proto.bloombox.services.menu.v1beta1.ProductStock.Request} request */
   function(request) {
     return request.serializeBinary();
   },
-  proto.google.protobuf.Empty.deserializeBinary
+  proto.bloombox.services.menu.v1beta1.ProductStock.Response.deserializeBinary
 );
 
 
@@ -639,9 +567,9 @@ const methodInfo_Menu_ProductStatus = new grpc.web.AbstractClientBase.MethodInfo
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.google.protobuf.Empty)}
+ * @param {function(?grpc.web.Error, ?proto.bloombox.services.menu.v1beta1.ProductStock.Response)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.google.protobuf.Empty>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.bloombox.services.menu.v1beta1.ProductStock.Response>|undefined}
  *     The XHR Node Readable Stream
  */
 proto.bloombox.services.menu.v1beta1.MenuClient.prototype.productStatus =
@@ -660,7 +588,7 @@ proto.bloombox.services.menu.v1beta1.MenuClient.prototype.productStatus =
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.google.protobuf.Empty>}
+ * @return {!Promise<!proto.bloombox.services.menu.v1beta1.ProductStock.Response>}
  *     A native promise that resolves to the response
  */
 proto.bloombox.services.menu.v1beta1.MenuPromiseClient.prototype.productStatus =
