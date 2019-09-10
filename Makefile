@@ -9,6 +9,7 @@ VERBOSE ?= no
 RELEASE ?= no
 PUBLIC ?= no
 DOCS ?= docs/
+CI ?= no
 
 PROTOC ?= $(shell which protoc)
 
@@ -32,6 +33,14 @@ CP_FLAGS ?= -frv
 else
 RM_FLAGS ?= -fr
 CP_FLAGS ?= -fr
+endif
+
+ifeq ($(CI),yes)
+KARMA = ./node_modules/karma/bin/karma
+KARMA_CONF = karma-ci.conf.js
+else
+KARMA = $(shell which karma)
+KARMA_CONF = karma.conf.js
 endif
 
 GULP_FLAGS ?= --libversion "$(VERSION)" --buildtype "$(GOAL)"
@@ -79,7 +88,7 @@ clean: clean-docs
 
 test:
 	@echo "Running testsuite..."
-	@karma start --browsers ChromeHeadless --single-run --no-auto-watch karma.conf.js
+	@$(KARMA) start --browsers ChromeHeadless --single-run --no-auto-watch $(KARMA_CONF)
 
 test-dev:
 	@echo "Running testsuite (dev mode)..."
