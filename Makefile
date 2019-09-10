@@ -36,8 +36,10 @@ CP_FLAGS ?= -fr
 endif
 
 ifeq ($(CI),yes)
+KARMA = ./node_modules/karma/bin/karma
 KARMA_CONF = karma-ci.conf.js
 else
+KARMA = $(shell which karma)
 KARMA_CONF = karma.conf.js
 endif
 
@@ -86,7 +88,7 @@ clean: clean-docs
 
 test:
 	@echo "Running testsuite..."
-	@karma start --browsers ChromeHeadless --single-run --no-auto-watch $(KARMA_CONF)
+	@$(KARMA) start --browsers ChromeHeadless --single-run --no-auto-watch $(KARMA_CONF)
 
 test-dev:
 	@echo "Running testsuite (dev mode)..."
