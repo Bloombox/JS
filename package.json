@@ -17,7 +17,7 @@
     "eslint-config-google": "^0.14.0",
     "firebase-tools": "^7.0.1",
     "google-protobuf": "^3.4.0",
-    "grpc-web": "^1.0.4",
+    "grpc-web": "^1.0.6",
     "gulp": "v4.0.2",
     "gulp-cache": "^1.1.1",
     "gulp-clone": "^2.0.1",

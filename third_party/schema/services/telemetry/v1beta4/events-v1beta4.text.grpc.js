@@ -1,3 +1,19 @@
+/*
+ * Copyright 2019, Momentum Ideas, Co.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * @fileoverview gRPC-Web generated client stub for bloombox.services.telemetry.v1beta4
  * @enhanceable
@@ -14,6 +30,8 @@ goog.require('grpc.web.GrpcWebClientBase');
 goog.require('grpc.web.AbstractClientBase');
 goog.require('grpc.web.ClientReadableStream');
 goog.require('grpc.web.Error');
+goog.require('grpc.web.MethodDescriptor');
+goog.require('grpc.web.MethodType');
 goog.require('proto.bloombox.services.telemetry.v1beta4.Event.BatchRequest');
 goog.require('proto.bloombox.services.telemetry.v1beta4.Event.Request');
 goog.require('proto.bloombox.services.telemetry.v1beta4.Exception');
@@ -100,6 +118,25 @@ proto.bloombox.services.telemetry.v1beta4.EventTelemetryPromiseClient =
 
 /**
  * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.telemetry.v1beta4.TelemetryPing.Request,
+ *   !proto.bloombox.services.telemetry.v1beta4.TelemetryPing.Response>}
+ */
+const methodDescriptor_EventTelemetry_Ping = new grpc.web.MethodDescriptor(
+  '/bloombox.services.telemetry.v1beta4.EventTelemetry/Ping',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.telemetry.v1beta4.TelemetryPing.Request,
+  proto.bloombox.services.telemetry.v1beta4.TelemetryPing.Response,
+  /** @param {!proto.bloombox.services.telemetry.v1beta4.TelemetryPing.Request} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.bloombox.services.telemetry.v1beta4.TelemetryPing.Response.deserializeBinary
+);
+
+
+/**
+ * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
  *   !proto.bloombox.services.telemetry.v1beta4.TelemetryPing.Request,
  *   !proto.bloombox.services.telemetry.v1beta4.TelemetryPing.Response>}
@@ -130,7 +167,7 @@ proto.bloombox.services.telemetry.v1beta4.EventTelemetryClient.prototype.ping =
       '/bloombox.services.telemetry.v1beta4.EventTelemetry/Ping',
       request,
       metadata || {},
-      methodInfo_EventTelemetry_Ping,
+      methodDescriptor_EventTelemetry_Ping,
       callback);
 };
 
@@ -149,8 +186,27 @@ proto.bloombox.services.telemetry.v1beta4.EventTelemetryPromiseClient.prototype.
       '/bloombox.services.telemetry.v1beta4.EventTelemetry/Ping',
       request,
       metadata || {},
-      methodInfo_EventTelemetry_Ping);
+      methodDescriptor_EventTelemetry_Ping);
 };
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.telemetry.v1beta4.Event.Request,
+ *   !proto.google.protobuf.Empty>}
+ */
+const methodDescriptor_EventTelemetry_Event = new grpc.web.MethodDescriptor(
+  '/bloombox.services.telemetry.v1beta4.EventTelemetry/Event',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.telemetry.v1beta4.Event.Request,
+  proto.google.protobuf.Empty,
+  /** @param {!proto.bloombox.services.telemetry.v1beta4.Event.Request} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.google.protobuf.Empty.deserializeBinary
+);
 
 
 /**
@@ -185,7 +241,7 @@ proto.bloombox.services.telemetry.v1beta4.EventTelemetryClient.prototype.event =
       '/bloombox.services.telemetry.v1beta4.EventTelemetry/Event',
       request,
       metadata || {},
-      methodInfo_EventTelemetry_Event,
+      methodDescriptor_EventTelemetry_Event,
       callback);
 };
 
@@ -204,8 +260,27 @@ proto.bloombox.services.telemetry.v1beta4.EventTelemetryPromiseClient.prototype.
       '/bloombox.services.telemetry.v1beta4.EventTelemetry/Event',
       request,
       metadata || {},
-      methodInfo_EventTelemetry_Event);
+      methodDescriptor_EventTelemetry_Event);
 };
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.telemetry.v1beta4.Event.BatchRequest,
+ *   !proto.bloombox.services.telemetry.v1beta4.TelemetryResponse>}
+ */
+const methodDescriptor_EventTelemetry_Batch = new grpc.web.MethodDescriptor(
+  '/bloombox.services.telemetry.v1beta4.EventTelemetry/Batch',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.telemetry.v1beta4.Event.BatchRequest,
+  proto.bloombox.services.telemetry.v1beta4.TelemetryResponse,
+  /** @param {!proto.bloombox.services.telemetry.v1beta4.Event.BatchRequest} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.bloombox.services.telemetry.v1beta4.TelemetryResponse.deserializeBinary
+);
 
 
 /**
@@ -240,7 +315,7 @@ proto.bloombox.services.telemetry.v1beta4.EventTelemetryClient.prototype.batch =
       '/bloombox.services.telemetry.v1beta4.EventTelemetry/Batch',
       request,
       metadata || {},
-      methodInfo_EventTelemetry_Batch,
+      methodDescriptor_EventTelemetry_Batch,
       callback);
 };
 
@@ -259,8 +334,27 @@ proto.bloombox.services.telemetry.v1beta4.EventTelemetryPromiseClient.prototype.
       '/bloombox.services.telemetry.v1beta4.EventTelemetry/Batch',
       request,
       metadata || {},
-      methodInfo_EventTelemetry_Batch);
+      methodDescriptor_EventTelemetry_Batch);
 };
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.telemetry.v1beta4.Exception,
+ *   !proto.google.protobuf.Empty>}
+ */
+const methodDescriptor_EventTelemetry_Error = new grpc.web.MethodDescriptor(
+  '/bloombox.services.telemetry.v1beta4.EventTelemetry/Error',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.telemetry.v1beta4.Exception,
+  proto.google.protobuf.Empty,
+  /** @param {!proto.bloombox.services.telemetry.v1beta4.Exception} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.google.protobuf.Empty.deserializeBinary
+);
 
 
 /**
@@ -295,7 +389,7 @@ proto.bloombox.services.telemetry.v1beta4.EventTelemetryClient.prototype.error =
       '/bloombox.services.telemetry.v1beta4.EventTelemetry/Error',
       request,
       metadata || {},
-      methodInfo_EventTelemetry_Error,
+      methodDescriptor_EventTelemetry_Error,
       callback);
 };
 
@@ -314,7 +408,7 @@ proto.bloombox.services.telemetry.v1beta4.EventTelemetryPromiseClient.prototype.
       '/bloombox.services.telemetry.v1beta4.EventTelemetry/Error',
       request,
       metadata || {},
-      methodInfo_EventTelemetry_Error);
+      methodDescriptor_EventTelemetry_Error);
 };
 
 

@@ -4,6 +4,7 @@
 [submodule "grpc-web"]
 	path = third_party/grpc-web
 	url = https://github.com/grpc/grpc-web.git
+	branch = master
 [submodule "third_party/idom"]
 	path = third_party/idom
 	url = https://github.com/google/incremental-dom

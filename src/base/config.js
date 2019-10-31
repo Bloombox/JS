@@ -50,7 +50,7 @@ bloombox.config.JSConfig;
  * @export
  */
 bloombox.API_ENDPOINT =
-  goog.define('bloombox.API_ENDPOINT', 'https://rpc.bloombox.cloud');
+  goog.define('bloombox.API_ENDPOINT', 'https://rpc.sandbox.bloombox.cloud');
 
 
 /**

@@ -20,37 +20,37 @@ function genMenuTestsuite(version) {
         });
       });
 
-      // it('should support local caching', function() {
-      //   return new Promise(function(resolve, reject) {
-      //     bloombox.menu.lastSeenFingerprint = null;  // reset state
-      //     let promise = bloombox.menu.api(apiOpts).retrieve(function(menu, err) {
-      //       expect(menu).not.toBeNull();
-      //     });
-      //     assert(promise, 'should get valid promise from initial menu fetch');
-      //     expect(promise).not.toBeNull();
-      //
-      //     promise.then(function() {
-      //       // after initial promise: fetch again
-      //       assert(bloombox.menu.lastSeenFingerprint != null,
-      //         'fingerprint should not be null after fetch');
-      //       expect(bloombox.menu.lastSeenFingerprint).not.toBeNull();
-      //       let fingerprint = bloombox.menu.lastSeenFingerprint;
-      //
-      //       return bloombox.menu.api(apiOpts).retrieve(function(menu2, err) {
-      //         if (err)
-      //           reject(new Error('unable to retrieve second menu: ' + err.toString()));
-      //         else if (menu2) {
-      //           expect(menu2).not.toBeNull();
-      //
-      //           // fingerprint should remain unchanged in between calls
-      //           let fingerprint2 = bloombox.menu.lastSeenFingerprint;
-      //           expect(fingerprint).toBe(fingerprint2);
-      //           resolve(menu2);
-      //         }
-      //       });
-      //     });
-      //   });
-      // });
+      it('should support local caching', function() {
+        return new Promise(function(resolve, reject) {
+          bloombox.menu.lastSeenFingerprint = null;  // reset state
+          let promise = bloombox.menu.api(apiOpts).retrieve(function(menu, err) {
+            expect(menu).not.toBeNull();
+          });
+          assert(promise, 'should get valid promise from initial menu fetch');
+          expect(promise).not.toBeNull();
+
+          promise.then(function() {
+            // after initial promise: fetch again
+            assert(bloombox.menu.lastSeenFingerprint != null,
+              'fingerprint should not be null after fetch');
+            expect(bloombox.menu.lastSeenFingerprint).not.toBeNull();
+            let fingerprint = bloombox.menu.lastSeenFingerprint;
+
+            return bloombox.menu.api(apiOpts).retrieve(function(menu2, err) {
+              if (err)
+                reject(new Error('unable to retrieve second menu: ' + err.toString()));
+              else if (menu2) {
+                expect(menu2).not.toBeNull();
+
+                // fingerprint should remain unchanged in between calls
+                let fingerprint2 = bloombox.menu.lastSeenFingerprint;
+                expect(fingerprint).toBe(fingerprint2);
+                resolve(menu2);
+              }
+            });
+          });
+        });
+      });
 
       it('should throw exceptions with accessible messages', function() {
         try {

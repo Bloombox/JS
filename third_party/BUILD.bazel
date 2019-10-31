@@ -86,8 +86,8 @@ closure_js_library(
     name = "menu-service",
     convention = "GOOGLE",
     srcs = [
-        "schema/services/menu/v1beta1/menu-v1beta4.binary.grpc.js",
-        "schema/services/menu/v1beta1/menu-v1beta4.stream.grpc.js"],
+        "schema/services/menu/v1beta1/menu-v1beta1.binary.grpc.js",
+        "schema/services/menu/v1beta1/menu-v1beta1.stream.grpc.js"],
     deps = [
         ":empty",
         ":google-api-httpbody",
