@@ -22,11 +22,11 @@
       "type" : 302
     },{
       "source" : "/beta.min.js",
-      "destination" : "/client/v2.1.1.min.js",
+      "destination" : "/client/v2.2.0-alpha1.min.js",
       "type" : 302
     },{
       "source" : "/beta-debug.min.js",
-      "destination" : "/client/v2.1.1-debug.min.js",
+      "destination" : "/client/v2.2.0-alpha1-debug.min.js",
       "type" : 302
     }]
   }
