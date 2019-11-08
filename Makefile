@@ -3,7 +3,7 @@
 ## Bloombox: JS Client
 #
 
-VERSION ?= v2.2.0-alpha1
+VERSION ?= v2.2.0-alpha2
 TARGET ?= target
 VERBOSE ?= no
 RELEASE ?= no
