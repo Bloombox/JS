@@ -138,9 +138,10 @@ stackdriver.ErrorReporter.prototype.report = function(errObj, opt_http) {
 
   let payload = {};
   payload['serviceContext'] = this.serviceContext;
-  payload['context'] = this.context;
-  payload['user'] = window['__bbxuser'] || undefined;
-  payload['reportLocation'] = {
+  payload['context'] = Object.assign({}, this.context);
+  if (!!window['__bbxuser'] && !payload['context']['user'])
+    payload['context']['user'] = window['__bbxuser'];
+  payload['context']['reportLocation'] = {
     'filePath': '@io_bloombox_sdk_js//src/util:error-reporting.js',
     'lineNumber': 135,
     'functionName': 'stackdriver.ErrorReporter.report'
