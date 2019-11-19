@@ -3,7 +3,7 @@
 ## Bloombox: JS Client
 #
 
-VERSION ?= v2.1.3
+VERSION ?= v2.2.0
 TARGET ?= target
 VERBOSE ?= no
 RELEASE ?= no
@@ -47,14 +47,14 @@ GULP_FLAGS ?= --libversion "$(VERSION)" --buildtype "$(GOAL)"
 GSUTIL_FLAGS ?= -h "Content-Type: text/javascript" -h "Cache-Control: $(CACHE_CONTROL)" cp -z js -a public-read
 
 
-all: $(GOAL)
+all: $(GOAL)  ## Build all JS client targets.
 	@echo "Bloombox JS is ready."
 
-serve-docs:
+serve-docs:  ## Serve the JS client docs locally.
 	@cd docs && python -m SimpleHTTPServer
 
 ifeq ($(PUBLIC),no)
-docs: $(DOCS)
+docs: $(DOCS)  ## Build the JS client docs.
 $(DOCS):
 	@mkdir -p $(DOCS)
 	@java -jar ./node_modules/js-dossier/dossier.jar -c dossier-dev.json
@@ -67,11 +67,11 @@ $(DOCS):
 	@java -jar ./node_modules/js-dossier/dossier.jar -c dossier-public.json
 	@cp ./content/docs.css docs/dossier.css
 
-publish-lib:
+publish-lib:  ## Publish the latest copy of the library.
 	@echo "Publishing library..."
 	@firebase deploy
 
-publish-docs: docs
+publish-docs: docs  ## Publish the latest copy of the docs.
 	@echo "Publishing docs..."
 	@cd $(DOCS) && git init && \
 	    git remote add origin git@github.com:bloombox/js.git && \
@@ -82,28 +82,27 @@ publish-docs: docs
 	@rm -fr $(DOCS)/.git
 endif
 
-clean: clean-docs
+clean: clean-docs  ## Clean built targets.
 	@echo "Cleaning targets..."
 	@-rm $(RM_FLAGS) $(TARGET)
 
-test:
+test:  ## Run unit and integration tests with Karma.
 	@echo "Running testsuite..."
 	@$(KARMA) start --browsers ChromeHeadless --single-run --no-auto-watch $(KARMA_CONF)
 
-test-dev:
+test-dev:  ## Run unit and integration tests with Karma, and keep them running.
 	@echo "Running testsuite (dev mode)..."
 	@karma start karma.conf.js
 
-
-clean-docs:
+clean-docs:  ## Clean any built JS client docs.
 	@echo "Cleaning docs..."
 	@rm -fr $(DOCS)
 
-distclean: clean
+distclean: clean  ## Clean any built targets and downloaded dependencies.
 	@echo "Cleaning dependencies..."
 	@-rm $(RM_FLAGS) node_modules protobuf/js/node_modules
 
-forceclean: distclean
+forceclean: distclean  ## Clean targets, dependencies, and force-reset/sanitize the codebase.
 	@echo "Cleaning submodules..."
 	@-rm $(RM_FLAGS) protobuf schema
 	@echo "Performing hard reset..."
@@ -115,17 +114,17 @@ node_modules/:
 	@echo "Installing Node modules..."
 	@yarn
 
-dependencies: node_modules/ submodules sources
+dependencies: node_modules/ submodules sources  ## Install Node.js modules and Git submodule dependencies.
 
-sources:
+sources:  ## Re-render sources like the README and license.
 	@echo "Rendering source templates..."
 	@sed 's/__VERSION__/$(VERSION)/g' .tpl/license.txt.tpl > src/license.txt
 	@cat third_party/stackdriver/error-reporting.js >> src/license.txt
 	@sed 's/__VERSION__/$(VERSION)/g' .tpl/README.md.tpl > README.md
 
-sync-schema: submodules
+sync-schema: submodules  ## Sync with current schema.
 
-submodules:
+submodules:  ## Install Git submodules.
 	@git submodule update --init
 
 third_party/idom/dist:
@@ -145,7 +144,7 @@ $(SCHEMA)/languages/js:
 	@$(MAKE) -C schema LANGUAGES=js TABLES=no
 	@rm -fr schema/languages/js/{browser,es6,closure,commonjs}
 
-build: dependencies
+build: dependencies  ## Build the JS client.
 	@echo "Building Bloombox JS..."
 	@mkdir -p $(TARGET)
 	@gulp $(GULP_FLAGS)
@@ -160,7 +159,7 @@ build: dependencies
 	@sed 's/__VERSION__/$(VERSION)/g' local/test.html > $(TARGET)/test.html
 	@echo "Build complete."
 
-release: build dependencies
+release: build dependencies  ## Build a version-stamped release of the JS client.
 	@echo "Copying debug build..."
 	@cp -fv target/$(VERSION).min.js target/$(VERSION)-debug.min.js
 	@echo "Building Bloombox JS (RELEASE)..."
@@ -187,7 +186,7 @@ release: build dependencies
 	@cp -f target/$(VERSION)-debug.min.js.br public/client-debug.min.js.br
 	@du -h ./target/$(VERSION)*.min.*
 
-beta:
+beta:  ## Build a Beta copy of the JS client.
 	@echo "Building Bloombox JS (INTERNAL)..."
 	@gulp --release --beta $(GULP_FLAGS)
 	@cp -fv target/$(VERSION).min.js target/internal.min.js
@@ -195,7 +194,7 @@ beta:
 	@cp -fv target/$(VERSION).min.js public/client/$(VERSION)-beta.min.js
 	@cp -fv target/$(VERSION).min.js public/client-beta.min.js
 
-serve:
+serve:  ## Serve the JS client local test harness.
 	@echo "Starting test server..."
 	@cd $(TARGET) && python -m SimpleHTTPServer
 
@@ -220,6 +219,9 @@ publish: build release publish-gcs
 	@#mv package-scoped.json package.json
 	@#echo "Library '$(VERSION)' published on NPM, with alias '$(ALIAS)'."
 
+help:  ## Print this help text.
+	@grep -E '^[a-z1-9A-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: docs publish build release
+
+.PHONY: docs publish build release help
 

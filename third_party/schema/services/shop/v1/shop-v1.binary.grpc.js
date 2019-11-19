@@ -1,3 +1,19 @@
+/*
+ * Copyright 2019, Momentum Ideas, Co.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * @fileoverview gRPC-Web generated client stub for bloombox.services.shop.v1
  * @enhanceable
@@ -14,6 +30,8 @@ goog.require('grpc.web.GrpcWebClientBase');
 goog.require('grpc.web.AbstractClientBase');
 goog.require('grpc.web.ClientReadableStream');
 goog.require('grpc.web.Error');
+goog.require('grpc.web.MethodDescriptor');
+goog.require('grpc.web.MethodType');
 goog.require('proto.bloombox.services.shop.v1.CheckZipcode.Request');
 goog.require('proto.bloombox.services.shop.v1.CheckZipcode.Response');
 goog.require('proto.bloombox.services.shop.v1.EnrollMember.Request');
@@ -107,6 +125,25 @@ proto.bloombox.services.shop.v1.ShopPromiseClient =
 
 /**
  * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.shop.v1.Ping.Request,
+ *   !proto.bloombox.services.shop.v1.Ping.Response>}
+ */
+const methodDescriptor_Shop_Ping = new grpc.web.MethodDescriptor(
+  '/bloombox.services.shop.v1.Shop/Ping',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.shop.v1.Ping.Request,
+  proto.bloombox.services.shop.v1.Ping.Response,
+  /** @param {!proto.bloombox.services.shop.v1.Ping.Request} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.bloombox.services.shop.v1.Ping.Response.deserializeBinary
+);
+
+
+/**
+ * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
  *   !proto.bloombox.services.shop.v1.Ping.Request,
  *   !proto.bloombox.services.shop.v1.Ping.Response>}
@@ -137,7 +174,7 @@ proto.bloombox.services.shop.v1.ShopClient.prototype.ping =
       '/bloombox.services.shop.v1.Shop/Ping',
       request,
       metadata || {},
-      methodInfo_Shop_Ping,
+      methodDescriptor_Shop_Ping,
       callback);
 };
 
@@ -156,8 +193,27 @@ proto.bloombox.services.shop.v1.ShopPromiseClient.prototype.ping =
       '/bloombox.services.shop.v1.Shop/Ping',
       request,
       metadata || {},
-      methodInfo_Shop_Ping);
+      methodDescriptor_Shop_Ping);
 };
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.shop.v1.ShopInfo.Request,
+ *   !proto.bloombox.services.shop.v1.ShopInfo.Response>}
+ */
+const methodDescriptor_Shop_ShopInfo = new grpc.web.MethodDescriptor(
+  '/bloombox.services.shop.v1.Shop/ShopInfo',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.shop.v1.ShopInfo.Request,
+  proto.bloombox.services.shop.v1.ShopInfo.Response,
+  /** @param {!proto.bloombox.services.shop.v1.ShopInfo.Request} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.bloombox.services.shop.v1.ShopInfo.Response.deserializeBinary
+);
 
 
 /**
@@ -192,7 +248,7 @@ proto.bloombox.services.shop.v1.ShopClient.prototype.shopInfo =
       '/bloombox.services.shop.v1.Shop/ShopInfo',
       request,
       metadata || {},
-      methodInfo_Shop_ShopInfo,
+      methodDescriptor_Shop_ShopInfo,
       callback);
 };
 
@@ -211,8 +267,27 @@ proto.bloombox.services.shop.v1.ShopPromiseClient.prototype.shopInfo =
       '/bloombox.services.shop.v1.Shop/ShopInfo',
       request,
       metadata || {},
-      methodInfo_Shop_ShopInfo);
+      methodDescriptor_Shop_ShopInfo);
 };
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.shop.v1.EnrollMember.Request,
+ *   !proto.bloombox.services.shop.v1.EnrollMember.Response>}
+ */
+const methodDescriptor_Shop_EnrollMember = new grpc.web.MethodDescriptor(
+  '/bloombox.services.shop.v1.Shop/EnrollMember',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.shop.v1.EnrollMember.Request,
+  proto.bloombox.services.shop.v1.EnrollMember.Response,
+  /** @param {!proto.bloombox.services.shop.v1.EnrollMember.Request} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.bloombox.services.shop.v1.EnrollMember.Response.deserializeBinary
+);
 
 
 /**
@@ -247,7 +322,7 @@ proto.bloombox.services.shop.v1.ShopClient.prototype.enrollMember =
       '/bloombox.services.shop.v1.Shop/EnrollMember',
       request,
       metadata || {},
-      methodInfo_Shop_EnrollMember,
+      methodDescriptor_Shop_EnrollMember,
       callback);
 };
 
@@ -266,8 +341,27 @@ proto.bloombox.services.shop.v1.ShopPromiseClient.prototype.enrollMember =
       '/bloombox.services.shop.v1.Shop/EnrollMember',
       request,
       metadata || {},
-      methodInfo_Shop_EnrollMember);
+      methodDescriptor_Shop_EnrollMember);
 };
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.shop.v1.CheckZipcode.Request,
+ *   !proto.bloombox.services.shop.v1.CheckZipcode.Response>}
+ */
+const methodDescriptor_Shop_CheckZipcode = new grpc.web.MethodDescriptor(
+  '/bloombox.services.shop.v1.Shop/CheckZipcode',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.shop.v1.CheckZipcode.Request,
+  proto.bloombox.services.shop.v1.CheckZipcode.Response,
+  /** @param {!proto.bloombox.services.shop.v1.CheckZipcode.Request} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.bloombox.services.shop.v1.CheckZipcode.Response.deserializeBinary
+);
 
 
 /**
@@ -302,7 +396,7 @@ proto.bloombox.services.shop.v1.ShopClient.prototype.checkZipcode =
       '/bloombox.services.shop.v1.Shop/CheckZipcode',
       request,
       metadata || {},
-      methodInfo_Shop_CheckZipcode,
+      methodDescriptor_Shop_CheckZipcode,
       callback);
 };
 
@@ -321,8 +415,27 @@ proto.bloombox.services.shop.v1.ShopPromiseClient.prototype.checkZipcode =
       '/bloombox.services.shop.v1.Shop/CheckZipcode',
       request,
       metadata || {},
-      methodInfo_Shop_CheckZipcode);
+      methodDescriptor_Shop_CheckZipcode);
 };
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.shop.v1.VerifyMember.Request,
+ *   !proto.bloombox.services.shop.v1.VerifyMember.Response>}
+ */
+const methodDescriptor_Shop_VerifyMember = new grpc.web.MethodDescriptor(
+  '/bloombox.services.shop.v1.Shop/VerifyMember',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.shop.v1.VerifyMember.Request,
+  proto.bloombox.services.shop.v1.VerifyMember.Response,
+  /** @param {!proto.bloombox.services.shop.v1.VerifyMember.Request} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.bloombox.services.shop.v1.VerifyMember.Response.deserializeBinary
+);
 
 
 /**
@@ -357,7 +470,7 @@ proto.bloombox.services.shop.v1.ShopClient.prototype.verifyMember =
       '/bloombox.services.shop.v1.Shop/VerifyMember',
       request,
       metadata || {},
-      methodInfo_Shop_VerifyMember,
+      methodDescriptor_Shop_VerifyMember,
       callback);
 };
 
@@ -376,8 +489,27 @@ proto.bloombox.services.shop.v1.ShopPromiseClient.prototype.verifyMember =
       '/bloombox.services.shop.v1.Shop/VerifyMember',
       request,
       metadata || {},
-      methodInfo_Shop_VerifyMember);
+      methodDescriptor_Shop_VerifyMember);
 };
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.shop.v1.SubmitOrder.Request,
+ *   !proto.bloombox.services.shop.v1.SubmitOrder.Response>}
+ */
+const methodDescriptor_Shop_SubmitOrder = new grpc.web.MethodDescriptor(
+  '/bloombox.services.shop.v1.Shop/SubmitOrder',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.shop.v1.SubmitOrder.Request,
+  proto.bloombox.services.shop.v1.SubmitOrder.Response,
+  /** @param {!proto.bloombox.services.shop.v1.SubmitOrder.Request} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.bloombox.services.shop.v1.SubmitOrder.Response.deserializeBinary
+);
 
 
 /**
@@ -412,7 +544,7 @@ proto.bloombox.services.shop.v1.ShopClient.prototype.submitOrder =
       '/bloombox.services.shop.v1.Shop/SubmitOrder',
       request,
       metadata || {},
-      methodInfo_Shop_SubmitOrder,
+      methodDescriptor_Shop_SubmitOrder,
       callback);
 };
 
@@ -431,8 +563,27 @@ proto.bloombox.services.shop.v1.ShopPromiseClient.prototype.submitOrder =
       '/bloombox.services.shop.v1.Shop/SubmitOrder',
       request,
       metadata || {},
-      methodInfo_Shop_SubmitOrder);
+      methodDescriptor_Shop_SubmitOrder);
 };
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.shop.v1.GetOrder.Request,
+ *   !proto.bloombox.services.shop.v1.GetOrder.Response>}
+ */
+const methodDescriptor_Shop_GetOrder = new grpc.web.MethodDescriptor(
+  '/bloombox.services.shop.v1.Shop/GetOrder',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.shop.v1.GetOrder.Request,
+  proto.bloombox.services.shop.v1.GetOrder.Response,
+  /** @param {!proto.bloombox.services.shop.v1.GetOrder.Request} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.bloombox.services.shop.v1.GetOrder.Response.deserializeBinary
+);
 
 
 /**
@@ -467,7 +618,7 @@ proto.bloombox.services.shop.v1.ShopClient.prototype.getOrder =
       '/bloombox.services.shop.v1.Shop/GetOrder',
       request,
       metadata || {},
-      methodInfo_Shop_GetOrder,
+      methodDescriptor_Shop_GetOrder,
       callback);
 };
 
@@ -486,7 +637,7 @@ proto.bloombox.services.shop.v1.ShopPromiseClient.prototype.getOrder =
       '/bloombox.services.shop.v1.Shop/GetOrder',
       request,
       metadata || {},
-      methodInfo_Shop_GetOrder);
+      methodDescriptor_Shop_GetOrder);
 };
 
 

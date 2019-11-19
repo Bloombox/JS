@@ -131,14 +131,22 @@ stackdriver.ErrorReporter = function ErrorReporter(config) {
  * Report an error to the Stackdriver Error Reporting API
  *
  * @param {Error|string} errObj Error object or message string to report.
+ * @param {!Object=} opt_http HTTP context parameters to use.
  */
-stackdriver.ErrorReporter.prototype.report = function(errObj) {
+stackdriver.ErrorReporter.prototype.report = function(errObj, opt_http) {
   if (this.disabled || !errObj) return;
 
   let payload = {};
   payload['serviceContext'] = this.serviceContext;
-  payload['context'] = this.context;
-  payload['context']['httpRequest'] = {
+  payload['context'] = Object.assign({}, this.context);
+  if (!!window['__bbxuser'] && !payload['context']['user'])
+    payload['context']['user'] = window['__bbxuser'];
+  payload['context']['reportLocation'] = {
+    'filePath': '@io_bloombox_sdk_js//src/util:error-reporting.js',
+    'lineNumber': 135,
+    'functionName': 'stackdriver.ErrorReporter.report'
+  };
+  payload['context']['httpRequest'] = opt_http || {
     'userAgent': window.navigator.userAgent,
     'url': window.location.href
   };

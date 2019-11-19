@@ -86,8 +86,8 @@ closure_js_library(
     name = "menu-service",
     convention = "GOOGLE",
     srcs = [
-        "schema/services/menu/v1beta1/menu-v1beta4.binary.grpc.js",
-        "schema/services/menu/v1beta1/menu-v1beta4.stream.grpc.js"],
+        "schema/services/menu/v1beta1/menu-v1beta1.binary.grpc.js",
+        "schema/services/menu/v1beta1/menu-v1beta1.stream.grpc.js"],
     deps = [
         ":empty",
         ":google-api-httpbody",
@@ -96,6 +96,8 @@ closure_js_library(
         "@com_google_grpc_web//javascript/net/grpc/web:error",
         "@com_google_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
         "@com_google_grpc_web//javascript/net/grpc/web:abstractclientbase",
+        "@com_google_grpc_web//javascript/net/grpc/web:methodtype",
+        "@com_google_grpc_web//javascript/net/grpc/web:methoddescriptor",
         "@com_google_grpc_web//javascript/net/grpc/web:clientreadablestream"],
     suppress = GRPC_SUPPRESSIONS)
 
@@ -108,6 +110,8 @@ closure_js_library(
         "@com_google_grpc_web//javascript/net/grpc/web:error",
         "@com_google_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
         "@com_google_grpc_web//javascript/net/grpc/web:abstractclientbase",
+        "@com_google_grpc_web//javascript/net/grpc/web:methodtype",
+        "@com_google_grpc_web//javascript/net/grpc/web:methoddescriptor",
         "@com_google_grpc_web//javascript/net/grpc/web:clientreadablestream"],
     suppress = GRPC_SUPPRESSIONS)
 
@@ -127,5 +131,7 @@ closure_js_library(
         "@com_google_grpc_web//javascript/net/grpc/web:grpcwebclientbase",
         "@com_google_grpc_web//javascript/net/grpc/web:abstractclientbase",
         "@com_google_grpc_web//javascript/net/grpc/web:clientreadablestream",
+        "@com_google_grpc_web//javascript/net/grpc/web:methodtype",
+        "@com_google_grpc_web//javascript/net/grpc/web:methoddescriptor",
         "@io_bazel_rules_closure//closure/protobuf:jspb"],
     suppress = GRPC_SUPPRESSIONS)

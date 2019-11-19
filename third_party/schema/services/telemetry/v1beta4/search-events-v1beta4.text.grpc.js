@@ -1,3 +1,19 @@
+/*
+ * Copyright 2019, Momentum Ideas, Co.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * @fileoverview gRPC-Web generated client stub for bloombox.services.telemetry.v1beta4
  * @enhanceable
@@ -14,6 +30,8 @@ goog.require('grpc.web.GrpcWebClientBase');
 goog.require('grpc.web.AbstractClientBase');
 goog.require('grpc.web.ClientReadableStream');
 goog.require('grpc.web.Error');
+goog.require('grpc.web.MethodDescriptor');
+goog.require('grpc.web.MethodType');
 goog.require('proto.bloombox.services.telemetry.v1beta4.SearchEvent.Query');
 goog.require('proto.bloombox.services.telemetry.v1beta4.SearchEvent.Result');
 goog.require('proto.google.protobuf.Empty');
@@ -96,6 +114,25 @@ proto.bloombox.services.telemetry.v1beta4.SearchTelemetryPromiseClient =
 
 /**
  * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.telemetry.v1beta4.SearchEvent.Query,
+ *   !proto.google.protobuf.Empty>}
+ */
+const methodDescriptor_SearchTelemetry_Query = new grpc.web.MethodDescriptor(
+  '/bloombox.services.telemetry.v1beta4.SearchTelemetry/Query',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.telemetry.v1beta4.SearchEvent.Query,
+  proto.google.protobuf.Empty,
+  /** @param {!proto.bloombox.services.telemetry.v1beta4.SearchEvent.Query} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.google.protobuf.Empty.deserializeBinary
+);
+
+
+/**
+ * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
  *   !proto.bloombox.services.telemetry.v1beta4.SearchEvent.Query,
  *   !proto.google.protobuf.Empty>}
@@ -126,7 +163,7 @@ proto.bloombox.services.telemetry.v1beta4.SearchTelemetryClient.prototype.query 
       '/bloombox.services.telemetry.v1beta4.SearchTelemetry/Query',
       request,
       metadata || {},
-      methodInfo_SearchTelemetry_Query,
+      methodDescriptor_SearchTelemetry_Query,
       callback);
 };
 
@@ -145,8 +182,27 @@ proto.bloombox.services.telemetry.v1beta4.SearchTelemetryPromiseClient.prototype
       '/bloombox.services.telemetry.v1beta4.SearchTelemetry/Query',
       request,
       metadata || {},
-      methodInfo_SearchTelemetry_Query);
+      methodDescriptor_SearchTelemetry_Query);
 };
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.bloombox.services.telemetry.v1beta4.SearchEvent.Result,
+ *   !proto.google.protobuf.Empty>}
+ */
+const methodDescriptor_SearchTelemetry_Result = new grpc.web.MethodDescriptor(
+  '/bloombox.services.telemetry.v1beta4.SearchTelemetry/Result',
+  grpc.web.MethodType.UNARY,
+  proto.bloombox.services.telemetry.v1beta4.SearchEvent.Result,
+  proto.google.protobuf.Empty,
+  /** @param {!proto.bloombox.services.telemetry.v1beta4.SearchEvent.Result} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.google.protobuf.Empty.deserializeBinary
+);
 
 
 /**
@@ -181,7 +237,7 @@ proto.bloombox.services.telemetry.v1beta4.SearchTelemetryClient.prototype.result
       '/bloombox.services.telemetry.v1beta4.SearchTelemetry/Result',
       request,
       metadata || {},
-      methodInfo_SearchTelemetry_Result,
+      methodDescriptor_SearchTelemetry_Result,
       callback);
 };
 
@@ -200,7 +256,7 @@ proto.bloombox.services.telemetry.v1beta4.SearchTelemetryPromiseClient.prototype
       '/bloombox.services.telemetry.v1beta4.SearchTelemetry/Result',
       request,
       metadata || {},
-      methodInfo_SearchTelemetry_Result);
+      methodDescriptor_SearchTelemetry_Result);
 };
 
 
