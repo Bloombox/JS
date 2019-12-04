@@ -3847,9 +3847,9 @@ fined@^1.0.1:
     parse-filepath "^1.0.1"
 
 firebase-tools@^7.0.1:
-  version "7.8.0"
-  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-7.8.0.tgz#64f0f974b6280b71eb094768dd2ce9fe20374cc3"
-  integrity sha512-1G+QXOvxdHDvlBsjMLJuLNdyrrRgaLOB05tnBDZ+Osoybg21wvmuj367Vs/4fsK+xt7CTWZJWApWHAQRPpw8Ow==
+  version "7.9.0"
+  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-7.9.0.tgz#32661980943f5ebbb2d82c126762c468ae0cff9c"
+  integrity sha512-dYxuFflaPAkic2KQyPJ6spox8KzlQRb4Xyk6oVDorBV0YmBIJ3VQhJYbwSZwwDlbCmiPiMXNBM26JUifp09Qfw==
   dependencies:
     "@google-cloud/pubsub" "^1.1.5"
     JSONStream "^1.2.1"
