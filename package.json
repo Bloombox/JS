@@ -25,7 +25,7 @@
     "gulp-ignore": "^3.0.0",
     "gulp-jshint": "*",
     "gulp-load-plugins": "^2.0.1",
-    "gulp-rename": "^1.4.0",
+    "gulp-rename": "^2.0.0",
     "gulp-sourcemaps": "^2.6.4",
     "js-dossier": "^0.15.0",
     "jsdoc": "^3.5.5",
