@@ -32,7 +32,7 @@
     "jshint": "^2.10.2",
     "jshint-stylish": "*",
     "karma-closure": "https://github.com/sgammon/karma-closure.git",
-    "mocha": "^6.1.4",
+    "mocha": "^7.0.1",
     "yargs": "^15.0.1"
   },
   "devDependencies": {
