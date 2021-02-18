@@ -4449,9 +4449,9 @@ google-p12-pem@^2.0.0:
     node-forge "^0.9.0"
 
 google-protobuf@^3.4.0:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.10.0.tgz#f36171128090615049f9b0e42252b1a10a4bc534"
-  integrity sha512-d0cMO8TJ6xtB/WrVHCv5U81L2ulX+aCD58IljyAN6mHwdHHJ2jbcauX5glvivi3s3hx7EYEo7eUA9WftzamMnw==
+  version "3.15.0"
+  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.15.0.tgz#2dddf32f6a5aec34f7cf71867cde6e4e54c0a30b"
+  integrity sha512-5R5vZ9pFfbsGS4yHl932PpKbAti2u4d6eyI+wIK0WMyvVaJK6Htkf1Z7QGbzgiccq3MjYByxSt/OtyV+prJD7g==
 
 got@^6.7.1:
   version "6.7.1"
